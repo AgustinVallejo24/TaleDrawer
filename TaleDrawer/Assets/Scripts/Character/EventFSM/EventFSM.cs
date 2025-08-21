@@ -9,9 +9,13 @@ public class EventFSM<T>
 	public EventFSM(StateE<T> initial)
 	{
 		current = initial;
-		current.Enter(default(T));
+		
 	}
 
+	public void EnterFirstState()
+    {
+		current.Enter(default(T));
+	}
 	public void SendInput(T input)
 	{
 		StateE<T> newState;
