@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Robin : Character
 {
+
+    
     protected override void Awake()
     {
-        _characterModel = new CharacterModel(this, _characterRigidbody);
+        characterModel = new CharacterModel(this, _characterRigidbody);
         base.Awake();
     }
     protected override void Start()

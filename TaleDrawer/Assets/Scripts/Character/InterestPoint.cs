@@ -1,11 +1,14 @@
 using UnityEngine;
-
+using UnityEngine.Events;
 public class InterestPoint : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public UnityEvent pointEvent;
+    public IEventObject eventObject;
+ 
+    protected virtual void Start()
     {
-        
+        if (eventObject != null)
+            pointEvent.AddListener(eventObject.Event);
     }
 
     // Update is called once per frame
@@ -13,4 +16,5 @@ public class InterestPoint : MonoBehaviour
     {
         
     }
+
 }

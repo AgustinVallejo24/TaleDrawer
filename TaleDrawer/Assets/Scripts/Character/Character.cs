@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 public class Character : MonoBehaviour
 {
     #region Variables
@@ -12,9 +13,9 @@ public class Character : MonoBehaviour
     [SerializeField] float _maxLife;
     protected float _currentLife;
     [SerializeField] float _jumpForce;
-    public float currentJumpForce;
+    public Vector2 currentJumpForce;
     [SerializeField] protected LayerMask _obstacleLayerMask;
-
+    [SerializeField] protected LayerMask _floorLayerMask;
     #endregion
 
     #region References
@@ -30,8 +31,8 @@ public class Character : MonoBehaviour
 
     PathFindingThetaStar _pathFinding;
     protected EventFSM<CharacterStates> _eventFSM;
-    protected CharacterModel _characterModel;
-    protected CharacterView _characterView;
+    public CharacterModel characterModel;
+    public CharacterView characterView;
     #endregion
 
 
@@ -40,6 +41,8 @@ public class Character : MonoBehaviour
     public List<InterestPoint> pointList;
     public Queue<InterestPoint> currentObjectivesQueue = new Queue<InterestPoint>();
     public Queue<InterestPoint> mainObjectivesQueue;
+
+    public static Character instance;
 
     #endregion
 
@@ -52,9 +55,12 @@ public class Character : MonoBehaviour
         }
         var Idle = new StateE<CharacterStates>("Idle");
         var Moving = new StateE<CharacterStates>("Moving");
+        var Wait = new StateE<CharacterStates>("Wait");
+        var Jumping = new StateE<CharacterStates>("Jumping");
         StateConfigurer.Create(Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(Moving).SetTransition(CharacterStates.Idle, Idle).Done();
-
+        StateConfigurer.Create(Moving).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Wait, Wait).Done();
+        StateConfigurer.Create(Wait).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Jumping, Jumping).Done();
+        StateConfigurer.Create(Jumping).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).Done();
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
         #region IDLE STATE
@@ -94,20 +100,76 @@ public class Character : MonoBehaviour
         Moving.OnUpdate += () => 
         {
             
+
+        };
+        Moving.OnFixedUpdate += () =>
+        {
             if (Vector2.Distance(currentObjectivesQueue.Peek().transform.position, transform.position) > 1)
             {
-
-                _characterModel.Move(currentObjectivesQueue.Peek().transform.position);
+                characterModel.Move(currentObjectivesQueue.Peek().transform.position);
             }
             else
             {
-                currentObjectivesQueue.Dequeue();
+              
+                
+                _eventFSM.SendInput(CharacterStates.Wait);
             }
         };
-
         Moving.OnExit += x => { };
 
         #endregion
+
+        #region WAIT STATE
+
+        Wait.OnEnter += x =>
+        {
+            Debug.Log("Entro aca");
+            _characterRigidbody.linearVelocity = Vector2.zero;
+            _currentState = CharacterStates.Wait;
+            currentObjectivesQueue.Peek().pointEvent.Invoke();
+            currentObjectivesQueue.Dequeue();
+
+        };
+
+        Wait.OnUpdate += () =>
+        {
+
+
+        };
+        Wait.OnFixedUpdate += () =>
+        {
+
+        };
+        Wait.OnExit += x => { };
+
+        #endregion
+
+        #region JUMPING STATE
+
+        Jumping.OnEnter += x =>
+        {
+
+            _currentState = CharacterStates.Jumping;
+
+
+        };
+
+        Jumping.OnUpdate += () =>
+        {
+            //if (Physics2D.Raycast(transform.position, Vector2.down, 2,_floorLayerMask))
+            //{
+            //    _eventFSM.SendInput(CharacterStates.Moving);
+            //}
+
+        };
+        Jumping.OnFixedUpdate += () =>
+        {
+
+        };
+        Jumping.OnExit += x => { };
+
+        #endregion
+
         _eventFSM.EnterFirstState();
 
        
@@ -115,7 +177,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        instance = this;
         _pathFinding = new PathFindingThetaStar(_obstacleLayerMask);
         _characterRigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -126,7 +188,24 @@ public class Character : MonoBehaviour
     
     public virtual void Update()
     {
-         _eventFSM.Update();
+        _eventFSM.Update();
+    }
+    private void FixedUpdate()
+    {
+        _eventFSM.FixedUpdate();
+    }
+    public void SendInputToFSM(CharacterStates newState)
+    {
+        _eventFSM.SendInput(newState);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(_currentState == CharacterStates.Jumping && collision.gameObject.layer == 6)
+        {
+            _eventFSM.SendInput(CharacterStates.Moving);
+        }
+       
     }
 }
 
@@ -134,4 +213,6 @@ public enum CharacterStates
 {
     Idle,
     Moving,
+    Wait,
+    Jumping,
 }
