@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Cinemachine;
 
 public class Character : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] float _maxSpeed;
     public float currentSpeed;
+    [SerializeField][Range(0, 0.5f)] float _smoothSpeed;
     [SerializeField] float _maxLife;
     protected float _currentLife;
     [SerializeField] float _jumpForce;
@@ -106,7 +108,8 @@ public class Character : MonoBehaviour
         {
             if (Vector2.Distance(currentObjectivesQueue.Peek().transform.position, transform.position) > 1)
             {
-                characterModel.Move(currentObjectivesQueue.Peek().transform.position);
+                //characterModel.Move(currentObjectivesQueue.Peek().transform.position);
+                characterModel.Move2(currentObjectivesQueue.Peek().transform.position, _smoothSpeed);
             }
             else
             {
@@ -199,11 +202,19 @@ public class Character : MonoBehaviour
         _eventFSM.SendInput(newState);
     }
 
+    public IEnumerator SendInputToFSM(CharacterStates newState, float time)
+    {
+        yield return new WaitForSeconds(time);
+        _eventFSM.SendInput(newState);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(_currentState == CharacterStates.Jumping && collision.gameObject.layer == 6)
         {
-            _eventFSM.SendInput(CharacterStates.Moving);
+            //_eventFSM.SendInput(CharacterStates.Moving);
+            StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+            
         }
        
     }
