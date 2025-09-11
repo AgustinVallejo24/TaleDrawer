@@ -44,9 +44,15 @@ public class Character : MonoBehaviour
     public Queue<InterestPoint> currentObjectivesQueue = new Queue<InterestPoint>();
     public Queue<InterestPoint> mainObjectivesQueue;
 
+    public Camera sceneCamera;
+
     public static Character instance;
 
     #endregion
+
+    [SerializeField] protected SpawningObject _objectToSpawn;
+    [SerializeField] protected Transform _spawningPoint;
+    bool ok = true;
 
     protected virtual void Awake()
     {
@@ -132,6 +138,13 @@ public class Character : MonoBehaviour
             currentObjectivesQueue.Peek().pointEvent.Invoke();
             currentObjectivesQueue.Dequeue();
 
+            if (ok)
+            {
+                ok = false;
+                
+                GameObject sObject = Instantiate(_objectToSpawn.gameObject, _spawningPoint.position, Quaternion.identity);
+            }
+
         };
 
         Wait.OnUpdate += () =>
@@ -192,6 +205,8 @@ public class Character : MonoBehaviour
     public virtual void Update()
     {
         _eventFSM.Update();
+
+        
     }
     private void FixedUpdate()
     {
