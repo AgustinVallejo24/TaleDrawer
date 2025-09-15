@@ -1892,6 +1892,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robin_TestSprite
       objectReference: {fileID: 0}
+    - target: {fileID: 2887967988050295289, guid: 9b244ffb8f7952f46b87146800d85d3d, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9094310368494708763, guid: 9b244ffb8f7952f46b87146800d85d3d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.42
