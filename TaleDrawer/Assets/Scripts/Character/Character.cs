@@ -23,8 +23,9 @@ public class Character : MonoBehaviour
     #region References
 
     [SerializeField] protected Rigidbody2D _characterRigidbody;
-    protected Animator _animator;
+    [SerializeField] protected Animator _animator;
     public CharacterStates _currentState;
+    [SerializeField] protected SpriteRenderer _characterSprite;
 
     #endregion
 
@@ -75,7 +76,7 @@ public class Character : MonoBehaviour
 
         Idle.OnEnter += x =>
         {
-            
+            //characterView.OnIdle();
             _currentState = CharacterStates.Idle;
             if (currentObjectivesQueue.Any())
             {
@@ -102,7 +103,7 @@ public class Character : MonoBehaviour
         {
             _currentState = CharacterStates.Moving;
 
-
+            characterView.OnMove();
         };
 
         Moving.OnUpdate += () => 
@@ -132,10 +133,15 @@ public class Character : MonoBehaviour
 
         Wait.OnEnter += x =>
         {
+            characterView.OnIdle();
             Debug.Log("Entro aca");
             _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Wait;
-            currentObjectivesQueue.Peek().pointEvent.Invoke();
+            if (currentObjectivesQueue.Peek().changeDirection)
+            {
+                characterView.FlipCharacter();
+            }
+            currentObjectivesQueue.Peek().pointEvent.Invoke();            
             currentObjectivesQueue.Dequeue();            
 
         };
@@ -188,9 +194,7 @@ public class Character : MonoBehaviour
     {
         instance = this;
         _pathFinding = new PathFindingThetaStar(_obstacleLayerMask);
-        _characterRigidbody = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
-       
+        _characterRigidbody = GetComponent<Rigidbody2D>();  
      
     }
 
