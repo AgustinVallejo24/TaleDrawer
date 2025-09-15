@@ -136,14 +136,7 @@ public class Character : MonoBehaviour
             _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Wait;
             currentObjectivesQueue.Peek().pointEvent.Invoke();
-            currentObjectivesQueue.Dequeue();
-
-            if (ok)
-            {
-                ok = false;
-                
-                GameObject sObject = Instantiate(_objectToSpawn.gameObject, _spawningPoint.position, Quaternion.identity);
-            }
+            currentObjectivesQueue.Dequeue();            
 
         };
 
@@ -215,6 +208,16 @@ public class Character : MonoBehaviour
     public void SendInputToFSM(CharacterStates newState)
     {
         _eventFSM.SendInput(newState);
+    }
+
+    public virtual void SpawnObject()
+    {
+        if (ok)
+        {
+            ok = false;
+
+            GameObject sObject = Instantiate(_objectToSpawn.gameObject, _spawningPoint.position, Quaternion.identity);
+        }
     }
 
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
