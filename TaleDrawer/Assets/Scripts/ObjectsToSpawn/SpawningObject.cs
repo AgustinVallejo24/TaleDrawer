@@ -24,8 +24,12 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     }
 
     public void OnDrag(PointerEventData eventData)
-    {        
-        gameObject.transform.position = new Vector3(sceneCamera.ScreenToWorldPoint(eventData.position).x, sceneCamera.ScreenToWorldPoint(eventData.position).y, 0f);
+    {  
+        if(SceneManager.instance.currentState == SceneStates.Dragging)
+        {
+            gameObject.transform.position = new Vector3(sceneCamera.ScreenToWorldPoint(eventData.position).x, sceneCamera.ScreenToWorldPoint(eventData.position).y, 0f);
+        }
+        
     }
 
     public void OnEndDrag(PointerEventData eventData)
