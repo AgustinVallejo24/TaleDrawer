@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-
+using UnityEditor;
 public static class ReferenceSymbolStorage
 {
     [Serializable]
@@ -19,12 +19,15 @@ public static class ReferenceSymbolStorage
 
         File.WriteAllText(path, json);
         Debug.Log("Symbols saved to: " + path);
+        AssetDatabase.Refresh();
     }
 
     public static List<ReferenceSymbol> LoadFromResources(string resourceName)
     {
         // Carga el archivo como TextAsset desde Resources
         TextAsset jsonFile = Resources.Load<TextAsset>(resourceName);
+
+        Debug.Log(AssetDatabase.GetAssetPath(jsonFile));
         if (jsonFile == null)
         {
             Debug.LogError("JSON not found in Resources: " + resourceName);
