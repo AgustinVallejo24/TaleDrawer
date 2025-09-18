@@ -133,6 +133,7 @@ public class Character : MonoBehaviour
 
         Wait.OnEnter += x =>
         {
+            SpawnObject();
             characterView.OnIdle();
             Debug.Log("Entro aca");
             _characterRigidbody.linearVelocity = Vector2.zero;

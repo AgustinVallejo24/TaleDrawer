@@ -34,6 +34,8 @@ public class ZernikeManager : MonoBehaviour
     public bool shouldLoad;
     string jsonPath;
 
+    [SerializeField] SpawnableManager _spawnableManager;
+
 
     void Start()
     {
@@ -237,12 +239,20 @@ public class ZernikeManager : MonoBehaviour
             // La forma coincide, ahora verificamos la orientación.
             if(rotationSensitivity && bestMatch.useRotation)
             {
+                if (bestMatch.symbolType != SpawnableObjectType.None)
+                {
+                    GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[bestMatch.symbolType].gameObject, _spawnableManager.spawningPos.position, Quaternion.identity);
+                }
                
                 text.text = $"Símbolo reconocido: {recognizedSymbolName}\nDistancia: {minDistance:F3}, Diferencia de distribución: {minDistributionDiference:F3}";
 
             }
             else
             {
+                if (bestMatch.symbolType != SpawnableObjectType.None)
+                {
+                    GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[bestMatch.symbolType].gameObject, _spawnableManager.spawningPos.position, Quaternion.identity);
+                }
                 text.text = $"Símbolo reconocido: {recognizedSymbolName}\nDistancia: {minDistance:F3}";
             }
 
@@ -273,6 +283,8 @@ public class ReferenceSymbol
 
  //   [HideInInspector]
     public List<double> momentMagnitudes;
+
+    public SpawnableObjectType symbolType;
 
 
     public ReferenceSymbol(string name, float[] rotDistribution, List<double> magnitudes,int strokesQ)

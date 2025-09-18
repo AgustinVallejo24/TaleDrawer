@@ -397,6 +397,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &312223542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 312223544}
+  - component: {fileID: 312223543}
+  m_Layer: 0
+  m_Name: SpawnableManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &312223543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312223542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a941d0be39d439445980829e683bad27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnableObjectDictionary:
+    m_keys: 01000000
+    m_values:
+    - {fileID: 3507290195105816913, guid: 98333fc8cd6d41c41bdc06bb9c2dff90, type: 3}
+  spawningPos: {fileID: 951709515}
+--- !u!4 &312223544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312223542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.62724, y: -1.70587, z: 16.56108}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &323877889
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +977,7 @@ MonoBehaviour:
     orientationThreshold: 0.2
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: V
     useRotation: 1
     isSymmetric: 0
@@ -937,6 +987,7 @@ MonoBehaviour:
     orientationThreshold: 0.2
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Circulo
     useRotation: 0
     isSymmetric: 1
@@ -946,6 +997,7 @@ MonoBehaviour:
     orientationThreshold: 360
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Cuadrado
     useRotation: 1
     isSymmetric: 0
@@ -955,6 +1007,7 @@ MonoBehaviour:
     orientationThreshold: 0.2
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Cuadrado
     useRotation: 1
     isSymmetric: 0
@@ -964,6 +1017,7 @@ MonoBehaviour:
     orientationThreshold: 0.2
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Cuadrado
     useRotation: 1
     isSymmetric: 0
@@ -973,6 +1027,7 @@ MonoBehaviour:
     orientationThreshold: 0.2
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Copa
     useRotation: 1
     isSymmetric: 0
@@ -982,6 +1037,7 @@ MonoBehaviour:
     orientationThreshold: 0.21
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: inf
     useRotation: 1
     isSymmetric: 0
@@ -991,6 +1047,7 @@ MonoBehaviour:
     orientationThreshold: 0.15
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Triangulo
     useRotation: 1
     isSymmetric: 0
@@ -1000,6 +1057,7 @@ MonoBehaviour:
     orientationThreshold: 0.2
     distribution: []
     momentMagnitudes: []
+    symbolType: 1
   - symbolName: espiral
     useRotation: 1
     isSymmetric: 0
@@ -1009,6 +1067,7 @@ MonoBehaviour:
     orientationThreshold: 0.15
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Casita
     useRotation: 1
     isSymmetric: 0
@@ -1018,6 +1077,7 @@ MonoBehaviour:
     orientationThreshold: 0.145
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Linea
     useRotation: 0
     isSymmetric: 0
@@ -1027,6 +1087,7 @@ MonoBehaviour:
     orientationThreshold: 0.6
     distribution: []
     momentMagnitudes: []
+    symbolType: 0
   - symbolName: Estrella
     useRotation: 1
     isSymmetric: 1
@@ -1036,7 +1097,9 @@ MonoBehaviour:
     orientationThreshold: 0.145
     distribution: []
     momentMagnitudes: []
-  shouldLoad: 0
+    symbolType: 0
+  shouldLoad: 1
+  _spawnableManager: {fileID: 312223543}
 --- !u!4 &585205193
 Transform:
   m_ObjectHideFlags: 0
@@ -1673,6 +1736,37 @@ MonoBehaviour:
   isPressed: 0
   dampenPress: 0
   sensitivity: 2
+--- !u!1 &951709514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 951709515}
+  m_Layer: 0
+  m_Name: SpawningPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &951709515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951709514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1165749131
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,3 +3419,5 @@ SceneRoots:
   - {fileID: 1970230724}
   - {fileID: 93971588}
   - {fileID: 1777243465}
+  - {fileID: 312223544}
+  - {fileID: 951709515}
