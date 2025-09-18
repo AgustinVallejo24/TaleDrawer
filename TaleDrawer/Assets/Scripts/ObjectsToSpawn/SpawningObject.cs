@@ -3,13 +3,13 @@ using UnityEngine.EventSystems;
 
 public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Camera sceneCamera;
-    Vector2 lastPos;
+    public Camera sceneCamera;    
+    public SpawnableObjectType myType;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        sceneCamera = Character.instance.sceneCamera;
+        sceneCamera = SceneManager.instance._sceneCamera;
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        SceneManager.instance.StateChanger(SceneStates.Game);
     }
 
     

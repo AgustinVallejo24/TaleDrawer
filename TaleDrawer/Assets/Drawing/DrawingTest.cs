@@ -24,6 +24,8 @@ public class DrawingTest : MonoBehaviour
     public ZernikeManager zRecognizer;
     public List<int> strokesPointsCount = new List<int>();
     public TMP_InputField symbolNameField;
+
+    [SerializeField] LayerMask _uiMask;
     void Start()
     {
         recognizebutton.buttonAction += OnConfirmDrawing;
@@ -93,6 +95,36 @@ public class DrawingTest : MonoBehaviour
 
         return results.Count > 0;
     }
+
+    bool IsTouchOverSpecificUI(Touch touch, int uiLayerIndex)
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = touch.position;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        // 1. Verificar si hay algún hit en la UI
+        if (results.Count == 0)
+        {
+            return false;
+        }
+
+        // 2. Verificar si el primer elemento detectado (el más cercano/superior)
+        //    está en la capa que te interesa.
+        RaycastResult closestHit = results[0];
+
+        // Convertir el índice de capa a nombre para la comparación (más seguro)
+        string targetLayerName = LayerMask.LayerToName(uiLayerIndex);
+
+        // Comprobar la capa del GameObject que recibió el toque
+        if (closestHit.gameObject != null && closestHit.gameObject.layer == uiLayerIndex)
+        {
+            return true;
+        }
+
+        return false;
+    }
     void Update()
     {
 
@@ -121,6 +153,10 @@ public class DrawingTest : MonoBehaviour
                 case TouchPhase.Began:
                     if (linerendererIndex < lineRenderer.Length)
                     {
+                        if (SceneManager.instance != null)
+                        {
+                            SceneManager.instance.StateChanger(SceneStates.Drawing);
+                        }
                         isDrawing = true;
                         currentStrokePoints.Clear();
                     }

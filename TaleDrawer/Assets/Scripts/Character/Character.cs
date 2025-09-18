@@ -51,9 +51,7 @@ public class Character : MonoBehaviour
 
     #endregion
 
-    [SerializeField] protected SpawningObject _objectToSpawn;
-    [SerializeField] protected Transform _spawningPoint;
-    bool ok = true;
+    
 
     protected virtual void Awake()
     {
@@ -132,8 +130,7 @@ public class Character : MonoBehaviour
         #region WAIT STATE
 
         Wait.OnEnter += x =>
-        {
-            SpawnObject();
+        {            
             characterView.OnIdle();
             Debug.Log("Entro aca");
             _characterRigidbody.linearVelocity = Vector2.zero;
@@ -213,17 +210,7 @@ public class Character : MonoBehaviour
     public void SendInputToFSM(CharacterStates newState)
     {
         _eventFSM.SendInput(newState);
-    }
-
-    public virtual void SpawnObject()
-    {
-        if (ok)
-        {
-            ok = false;
-
-            GameObject sObject = Instantiate(_objectToSpawn.gameObject, _spawningPoint.position, Quaternion.identity);
-        }
-    }
+    }   
 
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
     {

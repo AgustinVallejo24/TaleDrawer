@@ -29,4 +29,5 @@ public enum SpawnableObjectType
     None,
     Caja,
     Soga,
+    Character
 }

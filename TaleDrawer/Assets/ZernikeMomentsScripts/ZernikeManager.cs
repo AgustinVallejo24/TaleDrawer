@@ -35,6 +35,8 @@ public class ZernikeManager : MonoBehaviour
     string jsonPath;
 
     [SerializeField] SpawnableManager _spawnableManager;
+    [SerializeField] GameObject _sceneObjects;
+    [SerializeField] GameObject _drawingBackgound;
 
 
     void Start()
@@ -52,8 +54,20 @@ public class ZernikeManager : MonoBehaviour
         {
             referenceSymbols.Clear();
             referenceSymbols = ReferenceSymbolStorage.LoadFromResources("symbols");
+            if(_sceneObjects!= null)
+            {
+                _sceneObjects.SetActive(true);
+            }
+            else
+            {
+                if (_drawingBackgound != null)
+                {
+                    _drawingBackgound.SetActive(true);
+                }
+                UIDibujo.SetActive(true);
+            }
             UICarga.SetActive(false);
-            UIDibujo.SetActive(true);
+            
             DrawingTest.SetActive(true);
         }
     }
@@ -101,8 +115,22 @@ public class ZernikeManager : MonoBehaviour
            
             yield return null;
         }
+
+        if (_sceneObjects != null)
+        {
+            _sceneObjects.SetActive(true);
+        }
+        else
+        {
+            if (_drawingBackgound != null)
+            {
+                _drawingBackgound.SetActive(true);
+            }
+            
+            UIDibujo.SetActive(true);
+        }
         UICarga.SetActive(false);
-        UIDibujo.SetActive(true);
+        
         yield return new WaitForSeconds(.2f);
         DrawingTest.SetActive(true);
         ReferenceSymbolStorage.SaveSymbols(referenceSymbols, jsonPath);
@@ -231,6 +259,10 @@ public class ZernikeManager : MonoBehaviour
         {
             text.text = $"Símbolo no reconocido. Match más cercano: '{wrongSymbolName}' con distancia {wrongDistance:F3}";
             Debug.LogError("EEEEEEE ACAAAAAA");
+            if (SceneManager.instance != null)
+            {
+                SceneManager.instance.StateChanger(SceneStates.Game);
+            }
             return;
         }
         // 3. VERIFICACIÓN FINAL DESPUÉS DE ENCONTRAR EL MEJOR MATCH DE FORMA
@@ -242,6 +274,10 @@ public class ZernikeManager : MonoBehaviour
                 if (bestMatch.symbolType != SpawnableObjectType.None)
                 {
                     GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[bestMatch.symbolType].gameObject, _spawnableManager.spawningPos.position, Quaternion.identity);
+                    if(SceneManager.instance != null)
+                    {
+                        SceneManager.instance.StateChanger(SceneStates.Dragging);
+                    }
                 }
                
                 text.text = $"Símbolo reconocido: {recognizedSymbolName}\nDistancia: {minDistance:F3}, Diferencia de distribución: {minDistributionDiference:F3}";
@@ -252,6 +288,10 @@ public class ZernikeManager : MonoBehaviour
                 if (bestMatch.symbolType != SpawnableObjectType.None)
                 {
                     GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[bestMatch.symbolType].gameObject, _spawnableManager.spawningPos.position, Quaternion.identity);
+                    if (SceneManager.instance != null)
+                    {
+                        SceneManager.instance.StateChanger(SceneStates.Dragging);
+                    }
                 }
                 text.text = $"Símbolo reconocido: {recognizedSymbolName}\nDistancia: {minDistance:F3}";
             }
@@ -262,6 +302,11 @@ public class ZernikeManager : MonoBehaviour
 
             
             text.text = $"Símbolo no reconocido. Match más cercano: '{recognizedSymbolName}' con distancia {minDistance:F3}";
+
+            if (SceneManager.instance != null)
+            {
+                SceneManager.instance.StateChanger(SceneStates.Game);
+            }
         }
     }
 }
