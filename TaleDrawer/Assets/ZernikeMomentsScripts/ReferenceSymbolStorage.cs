@@ -27,7 +27,7 @@ public static class ReferenceSymbolStorage
         // Carga el archivo como TextAsset desde Resources
         TextAsset jsonFile = Resources.Load<TextAsset>(resourceName);
 
-        Debug.Log(AssetDatabase.GetAssetPath(jsonFile));
+        
         if (jsonFile == null)
         {
             Debug.LogError("JSON not found in Resources: " + resourceName);
