@@ -24,6 +24,7 @@ public class DrawingTest : MonoBehaviour
     public ZernikeManager zRecognizer;
     public List<int> strokesPointsCount = new List<int>();
     public TMP_InputField symbolNameField;
+    public bool detectTouch = false;
 
     [SerializeField] LayerMask _uiMask;
     void Start()
@@ -145,17 +146,23 @@ public class DrawingTest : MonoBehaviour
                 return;
             }
 
+            
 
             Vector2 pos = cam.ScreenToWorldPoint(touch.position);
 
+            
             switch (touch.phase)
             {
                 case TouchPhase.Began:
                     if (linerendererIndex < lineRenderer.Length)
-                    {
-                        if (SceneManager.instance != null)
+                    {                        
+                        if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
                         {
                             SceneManager.instance.StateChanger(SceneStates.Drawing);
+                        }
+                        if (!detectTouch)
+                        {
+                            return;
                         }
                         isDrawing = true;
                         currentStrokePoints.Clear();
@@ -461,7 +468,7 @@ public class DrawingTest : MonoBehaviour
                 Gizmos.DrawSphere(new Vector3(item.x, item.y, 0), 0.1f);
             }
         }
-    }
+    }    
 
     //IEnumerator Drawpoints()
     //{
