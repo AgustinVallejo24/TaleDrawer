@@ -159,11 +159,7 @@ public class DrawingTest : MonoBehaviour
                         if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
                         {
                             SceneManager.instance.StateChanger(SceneStates.Drawing);
-                        }
-                        if (!detectTouch)
-                        {
-                            return;
-                        }
+                        }                        
                         isDrawing = true;
                         currentStrokePoints.Clear();
                     }

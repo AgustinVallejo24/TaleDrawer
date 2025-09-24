@@ -7,13 +7,14 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     public Camera sceneCamera;    
     public SpawnableObjectType myType;
     Collider2D _myColl;
+    public bool objectIsTrigger;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sceneCamera = SceneManager.instance._sceneCamera;
         _myColl = GetComponent<Collider2D>();
-        _myColl.enabled = false;
+        _myColl.isTrigger = true;
     }
 
     // Update is called once per frame
@@ -40,7 +41,7 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     public void OnEndDrag(PointerEventData eventData)
     {
         SceneManager.instance.StateChanger(SceneStates.Game);
-        _myColl.enabled = false;
+        _myColl.isTrigger = objectIsTrigger;
     }
 
     

@@ -1,6 +1,8 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using DG.Tweening;
+using Unity.VisualScripting;
 
 public class SceneManager : MonoBehaviour
 {
@@ -9,12 +11,13 @@ public class SceneManager : MonoBehaviour
     [SerializeField] GameObject _drawingDraggingCanvas;
     [SerializeField] GameObject _drawingBackground;
     public Camera _sceneCamera;
-    float _blendBetweenCameras;
-    [SerializeField]private CinemachineCamera _drawingCamera;
-    private CinemachineFollow _drawingCFollowC;
+    float _blendBetweenCameras;    
     [SerializeField]private CinemachineCamera _playerCamera;
     private CinemachineFollow _playerCFollowC;
-    [SerializeField] Camera _dCamera;
+    
+    [SerializeField] float _playerCameraOriginalSize;
+    [SerializeField] float _playerCameraDrawingSize;
+    [SerializeField] float _cameraResizingTime;
     [Range(0.0f, 1.0f)]
     [SerializeField] float _timeSlowDown;
     public Character levelCharacter;
@@ -33,8 +36,8 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         _playerCFollowC = _playerCamera.GetComponent<CinemachineFollow>();
-        _drawingCFollowC = _drawingCamera.GetComponent<CinemachineFollow>();
-        _blendBetweenCameras = _sceneCamera.GetComponent<CinemachineBrain>().DefaultBlend.Time;
+        
+        
     }
 
     // Update is called once per frame
@@ -57,23 +60,18 @@ public class SceneManager : MonoBehaviour
                 ExitingDrawingState();
             }            
             _drawingBackground.SetActive(false);            
-            _drawingCFollowC.enabled = true;
-            //_drawingCamera.gameObject.SetActive(false);
-            //_dCamera.gameObject.SetActive(false);
-            //_playerCamera.gameObject.SetActive(true);            
+            
+                      
             _dTest.gameObject.SetActive(true);
             
             Time.timeScale = 1.0f;
         }
         else if(currentState == SceneStates.Drawing)
         {
-            StartCoroutine(DelayedCanvas());
-            //_playerCamera.gameObject.SetActive(false);
-            //_drawingCFollowC.enabled = false;
-            //_drawingCamera.gameObject.SetActive(true);
             
             _drawingBackground.SetActive(true);
-            
+            _drawingDraggingCanvas.SetActive(true);
+
             Time .timeScale = _timeSlowDown;
         }
         else if (currentState == SceneStates.Dragging)
@@ -84,18 +82,19 @@ public class SceneManager : MonoBehaviour
 
     void ExitingDrawingState()
     {
-        //_drawingDraggingCanvas.SetActive(false);
-        _dTest.detectTouch = false;
+        
+        _drawingDraggingCanvas.SetActive(false);        
         _dTest.gameObject.SetActive(false);
-    }
-    IEnumerator DelayedCanvas()
-    {        
-        //yield return new WaitForSecondsRealtime(_blendBetweenCameras);
-        yield return new WaitForSecondsRealtime(0f);
-        _drawingDraggingCanvas.SetActive(true);
-        _dTest.detectTouch = true;
+        
     }
 
+    
+    void EnteringDrawingState()
+    {
+       
+        
+        
+    }
 
 }
 

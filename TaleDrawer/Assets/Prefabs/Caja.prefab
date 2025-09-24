@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneCamera: {fileID: 0}
   myType: 0
+  objectIsTrigger: 0
 --- !u!61 &3094319763697518091
 BoxCollider2D:
   m_ObjectHideFlags: 0
