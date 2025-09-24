@@ -14,6 +14,7 @@ public class SceneManager : MonoBehaviour
     private CinemachineFollow _drawingCFollowC;
     [SerializeField]private CinemachineCamera _playerCamera;
     private CinemachineFollow _playerCFollowC;
+    [SerializeField] Camera _dCamera;
     [Range(0.0f, 1.0f)]
     [SerializeField] float _timeSlowDown;
     public Character levelCharacter;
@@ -57,8 +58,9 @@ public class SceneManager : MonoBehaviour
             }            
             _drawingBackground.SetActive(false);            
             _drawingCFollowC.enabled = true;
-            _drawingCamera.gameObject.SetActive(false);
-            _playerCamera.gameObject.SetActive(true);            
+            //_drawingCamera.gameObject.SetActive(false);
+            //_dCamera.gameObject.SetActive(false);
+            //_playerCamera.gameObject.SetActive(true);            
             _dTest.gameObject.SetActive(true);
             
             Time.timeScale = 1.0f;
@@ -66,9 +68,10 @@ public class SceneManager : MonoBehaviour
         else if(currentState == SceneStates.Drawing)
         {
             StartCoroutine(DelayedCanvas());
-            _playerCamera.gameObject.SetActive(false);
-            _drawingCFollowC.enabled = false;
-            _drawingCamera.gameObject.SetActive(true);
+            //_playerCamera.gameObject.SetActive(false);
+            //_drawingCFollowC.enabled = false;
+            //_drawingCamera.gameObject.SetActive(true);
+            
             _drawingBackground.SetActive(true);
             
             Time .timeScale = _timeSlowDown;
@@ -81,13 +84,14 @@ public class SceneManager : MonoBehaviour
 
     void ExitingDrawingState()
     {
-        _drawingDraggingCanvas.SetActive(false);
+        //_drawingDraggingCanvas.SetActive(false);
         _dTest.detectTouch = false;
         _dTest.gameObject.SetActive(false);
     }
     IEnumerator DelayedCanvas()
     {        
-        yield return new WaitForSecondsRealtime(_blendBetweenCameras);
+        //yield return new WaitForSecondsRealtime(_blendBetweenCameras);
+        yield return new WaitForSecondsRealtime(0f);
         _drawingDraggingCanvas.SetActive(true);
         _dTest.detectTouch = true;
     }
