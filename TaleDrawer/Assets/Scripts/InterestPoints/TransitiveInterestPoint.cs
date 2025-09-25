@@ -21,6 +21,7 @@ public class TransitiveInterestPoint : InterestPoint
         _nextZone.SetActive(true);
         _cameraTarget.Targets[0].Object = _target;
         _spawnableManager.spawningPos = _target;
+        Character.instance.SendInputToFSM(CharacterStates.Moving);
         _currentZone.SetActive(false);
     }
 }

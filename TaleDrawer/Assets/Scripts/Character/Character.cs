@@ -101,7 +101,15 @@ public class Character : MonoBehaviour
         {
             _currentState = CharacterStates.Moving;
 
-            characterView.OnMove();
+            if (currentObjectivesQueue.Any())
+            {
+                characterView.OnMove();
+            }
+            else
+            {
+                _eventFSM.SendInput(CharacterStates.Wait);
+            }
+            
         };
 
         Moving.OnUpdate += () => 
@@ -135,12 +143,28 @@ public class Character : MonoBehaviour
             Debug.Log("Entro aca");
             _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Wait;
-            if (currentObjectivesQueue.Peek().changeDirection)
+
+            if (currentObjectivesQueue.Any())
             {
-                characterView.FlipCharacter();
+                if (currentObjectivesQueue.Peek().changeDirection)
+                {
+                    characterView.FlipCharacter();
+                }
+
+                if (currentObjectivesQueue.Peek().hasEvent)
+                {
+                    currentObjectivesQueue.Peek().pointEvent.Invoke();
+                    currentObjectivesQueue.Dequeue();
+                }
+                else
+                {
+                    currentObjectivesQueue.Dequeue();
+                    _eventFSM.SendInput(CharacterStates.Moving);
+                }
             }
-            currentObjectivesQueue.Peek().pointEvent.Invoke();            
-            currentObjectivesQueue.Dequeue();            
+            
+            
+                        
 
         };
 
