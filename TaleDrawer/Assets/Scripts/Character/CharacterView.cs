@@ -9,6 +9,7 @@ public class CharacterView
     [Header("Anim References")]
     private string _runTrigger = "Run";
     private string _idleTrigger = "Idle";
+    private string _jumpTrigger = "Jump";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -29,5 +30,10 @@ public class CharacterView
     public void FlipCharacter()
     {
         _characterSprite.flipX = !_characterSprite.flipX;
+    }
+
+    public void OnJump()
+    {
+        _anim.SetTrigger(_jumpTrigger);
     }
 }

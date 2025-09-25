@@ -163,7 +163,7 @@ public class Character : MonoBehaviour
         {
 
             _currentState = CharacterStates.Jumping;
-
+            characterView.OnJump();
 
         };
 

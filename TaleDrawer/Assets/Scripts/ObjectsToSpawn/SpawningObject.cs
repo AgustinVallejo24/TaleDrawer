@@ -8,6 +8,8 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     public SpawnableObjectType myType;
     Collider2D _myColl;
     public bool objectIsTrigger;
+    Rigidbody2D _myrb;
+    public bool objectUseGravity;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,6 +17,14 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         sceneCamera = SceneManager.instance._sceneCamera;
         _myColl = GetComponent<Collider2D>();
         _myColl.isTrigger = true;
+
+        if(TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            _myrb = rb;
+
+            _myrb.gravityScale = 0;
+        }
+        
     }
 
     // Update is called once per frame
@@ -42,6 +52,11 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         SceneManager.instance.StateChanger(SceneStates.Game);
         _myColl.isTrigger = objectIsTrigger;
+        if (objectUseGravity && _myrb != null)
+        {
+            _myrb.gravityScale = 1;
+        }
+        
     }
 
     
