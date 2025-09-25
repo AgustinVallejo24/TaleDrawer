@@ -6,6 +6,23 @@ public class Subibaja : MonoBehaviour, IInteractable
     public List<Transform> sides;
     public bool left = true;
     public Animator animator;
+    public Collider2D leftCollider;
+    public Collider2D rightCollider;
+
+
+    private void Start()
+    {
+        if (left)
+        {
+            rightCollider.enabled = true;
+            leftCollider.enabled = false;
+        }
+        else
+        {
+            rightCollider.enabled = false;
+            leftCollider.enabled = true;
+        }
+    }
     public void Interact(SpawningObject interactor)
     {
         
@@ -27,6 +44,11 @@ public class Subibaja : MonoBehaviour, IInteractable
                 //interactor.transform.position = sides[1].position;
                 
                 animator.SetTrigger("Switch");
+                interactor.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+                interactor.transform.parent = this.transform;
+                rightCollider.enabled = true;
+                leftCollider.enabled = false;
+                left = false;
             }
             else if (closest == sides[1] && !left)
             {
@@ -34,7 +56,10 @@ public class Subibaja : MonoBehaviour, IInteractable
             }
             else
             {
-
+                rightCollider.enabled = false;
+                leftCollider.enabled = true;
+                animator.SetTrigger("Switch");
+                left = true;
             }
         }
     }
