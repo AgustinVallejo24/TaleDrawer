@@ -2693,7 +2693,7 @@ Transform:
   m_GameObject: {fileID: 644823502}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.73, y: -2.61679, z: 0.105639994}
+  m_LocalPosition: {x: 15.77, y: -2.61679, z: 0.105639994}
   m_LocalScale: {x: 1.0663121, y: 1.1345778, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2718,9 +2718,11 @@ MonoBehaviour:
   hasEvent: 1
   _target: {fileID: 592169159}
   _cameraTarget: {fileID: 1550255632}
+  _playerCamera: {fileID: 1438328251}
   _currentZone: {fileID: 227746981}
   _nextZone: {fileID: 157209017}
   _spawnableManager: {fileID: 1487176636}
+  _pencil: {fileID: 978309365}
 --- !u!212 &644823505
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4889,7 +4891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 5
-  currentSpeed: 250
+  currentSpeed: 300
   _smoothSpeed: 0.35
   _maxLife: 0
   _jumpForce: 0
