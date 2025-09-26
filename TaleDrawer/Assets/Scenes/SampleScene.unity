@@ -1575,28 +1575,20 @@ PrefabInstance:
       value: Subibaja
       objectReference: {fileID: 0}
     - target: {fileID: 4699632461207539972, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-      propertyPath: left
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4699632461207539972, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-      propertyPath: leftCollider
+      propertyPath: tpPoint
       value: 
-      objectReference: {fileID: 983756667}
+      objectReference: {fileID: 1543809877}
     - target: {fileID: 4699632461207539972, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-      propertyPath: rightCollider
+      propertyPath: interestPoint
       value: 
-      objectReference: {fileID: 983756666}
-    - target: {fileID: 5919420120123970960, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1543809878}
     - target: {fileID: 6323364979429214372, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8
+      value: 5.47
       objectReference: {fileID: 0}
     - target: {fileID: 6323364979429214372, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: -2.04
       objectReference: {fileID: 0}
     - target: {fileID: 6323364979429214372, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1629,10 +1621,6 @@ PrefabInstance:
     - target: {fileID: 6323364979429214372, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6380111276062742352, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4023,16 +4011,6 @@ Transform:
   - {fileID: 47698081}
   m_Father: {fileID: 1925854475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &983756666 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 6380111276062742352, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-  m_PrefabInstance: {fileID: 314411162}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &983756667 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5919420120123970960, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
-  m_PrefabInstance: {fileID: 314411162}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1002986818
 GameObject:
   m_ObjectHideFlags: 0
@@ -4928,7 +4906,7 @@ MonoBehaviour:
   _characterSprite: {fileID: 1806947319}
   pointList:
   - {fileID: 1564659401}
-  - {fileID: 1543809875}
+  - {fileID: 1543809878}
   - {fileID: 644823504}
   - {fileID: 852831087}
   sceneCamera: {fileID: 330585545}
@@ -5171,6 +5149,17 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   FollowOffset: {x: 0, y: 0, z: -10}
+--- !u!114 &1460859100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4699632461207539972, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
+  m_PrefabInstance: {fileID: 314411162}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8531a3ba250984b4180e39037420bb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1466780909
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,7 +5431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1543809877}
   - component: {fileID: 1543809876}
-  - component: {fileID: 1543809875}
+  - component: {fileID: 1543809878}
   m_Layer: 0
   m_Name: InterestPoint (2)
   m_TagString: Untagged
@@ -5450,23 +5439,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1543809875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543809874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2873b8712ce0f3542b9cca8b4057d034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  changeDirection: 0
-  hasEvent: 0
 --- !u!212 &1543809876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5537,6 +5509,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 227746982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1543809878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543809874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a27ba36cb701b14e96865dd252433ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1543809878}
+        m_TargetAssemblyTypeName: SubibajaEn_InterestPoint, Assembly-CSharp
+        m_MethodName: GetOnSubibaja
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  changeDirection: 0
+  hasEvent: 1
+  _myCharacter: {fileID: 0}
+  subibaja: {fileID: 1460859100}
+  left: 1
 --- !u!1 &1550255631
 GameObject:
   m_ObjectHideFlags: 0

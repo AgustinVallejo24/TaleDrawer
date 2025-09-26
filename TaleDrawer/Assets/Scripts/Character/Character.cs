@@ -64,10 +64,12 @@ public class Character : MonoBehaviour
         var Moving = new StateE<CharacterStates>("Moving");
         var Wait = new StateE<CharacterStates>("Wait");
         var Jumping = new StateE<CharacterStates>("Jumping");
+        var Stop = new StateE<CharacterStates>("Stop");
         StateConfigurer.Create(Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(Moving).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Wait, Wait).Done();
         StateConfigurer.Create(Wait).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Jumping, Jumping).Done();
-        StateConfigurer.Create(Jumping).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).Done();
+        StateConfigurer.Create(Jumping).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Stop, Stop).Done();
+        StateConfigurer.Create(Stop).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Wait, Stop).Done();
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
         #region IDLE STATE
@@ -207,6 +209,28 @@ public class Character : MonoBehaviour
 
         #endregion
 
+        #region STOP STATE
+
+        Stop.OnEnter += x =>
+        {
+
+            _currentState = CharacterStates.Stop;
+            characterView.OnIdle();
+
+        };
+
+        Stop.OnUpdate += () =>
+        {
+
+        };
+        Stop.OnFixedUpdate += () =>
+        {
+
+        };
+        Stop.OnExit += x => { };
+
+        #endregion
+
         _eventFSM.EnterFirstState();
 
        
@@ -242,7 +266,7 @@ public class Character : MonoBehaviour
         _eventFSM.SendInput(newState);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(_currentState == CharacterStates.Jumping && collision.gameObject.layer == 6)
         {
@@ -259,5 +283,6 @@ public enum CharacterStates
     Idle,
     Moving,
     Wait,
+    Stop,
     Jumping,
 }

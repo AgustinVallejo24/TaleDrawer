@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InterstPoint_Jump : InterestPoint
+public class Jump_InterestPoint : InterestPoint
 {
     [SerializeField] Transform _jumpPosition;
     protected override void Start()

@@ -9,7 +9,13 @@ public class Subibaja : MonoBehaviour, IInteractable
     public Collider2D leftCollider;
     public Collider2D rightCollider;
 
+    public Character myCharacter;
 
+    public SubibajaEn_InterestPoint interestPoint;
+    public Transform tpPoint;
+
+    public Collider2D characterDetector;
+    public bool isMoving;
     private void Start()
     {
         if (left)
@@ -28,6 +34,16 @@ public class Subibaja : MonoBehaviour, IInteractable
         
     }
 
+    public void OnMovingStateChange(bool sign)
+    {
+        if(myCharacter == null)
+        {
+            characterDetector.enabled = sign;
+            isMoving = sign;
+        }
+
+
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
        if(objectType == SpawnableObjectType.Caja)
