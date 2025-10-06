@@ -3,6 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class SceneManager : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class SceneManager : MonoBehaviour
 
     public static SceneManager instance;
 
+    Vector2 _clickPosition;
+    [SerializeField] float _clickRayLength;
+    [SerializeField] LayerMask _piso;
+
 
     private void Awake()
     {
@@ -43,7 +48,21 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.touchCount > 0 && currentState == SceneStates.Game)
+        {
+            UnityEngine.Touch touch = Input.GetTouch(0);
+            _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
+
+            RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
+
+            if (hit)
+            {
+                Character.instance.nextPosition = new Vector2(hit.point.x, hit.point.y);
+                
+                Character.instance.SendInputToFSM(CharacterStates.Moving);
+            }
+            
+        }
     }
 
     public void StateChanger(SceneStates state)

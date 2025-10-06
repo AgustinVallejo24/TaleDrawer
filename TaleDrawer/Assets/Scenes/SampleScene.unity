@@ -504,6 +504,10 @@ MonoBehaviour:
   _cameraResizingTime: 0.5
   _timeSlowDown: 0
   levelCharacter: {fileID: 1394210866}
+  _clickRayLength: 1
+  _piso:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &69473461
 Transform:
   m_ObjectHideFlags: 0
@@ -4902,6 +4906,7 @@ MonoBehaviour:
   _floorLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  nextPosition: {x: 0, y: 0}
   _characterRigidbody: {fileID: 1394210867}
   _animator: {fileID: 1806947318}
   _currentState: 0
@@ -5003,7 +5008,7 @@ Transform:
   m_GameObject: {fileID: 1394210864}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.4694, y: -1.72496, z: -0.13115}
+  m_LocalPosition: {x: -9.4694, y: -1.72496, z: 0}
   m_LocalScale: {x: 1.2351854, y: 2.4861605, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

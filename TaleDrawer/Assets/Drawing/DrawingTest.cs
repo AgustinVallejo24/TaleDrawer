@@ -135,7 +135,7 @@ public class DrawingTest : MonoBehaviour
         //}
 
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 10)
         {
             Touch touch = Input.GetTouch(0);
 

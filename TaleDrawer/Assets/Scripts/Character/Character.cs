@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
     public Vector2 currentJumpForce;
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
+    [SerializeField] public Vector2 nextPosition; 
     #endregion
 
     #region References
@@ -66,7 +67,7 @@ public class Character : MonoBehaviour
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
         StateConfigurer.Create(Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(Moving).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Wait, Wait).Done();
+        StateConfigurer.Create(Moving).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Wait, Wait).SetTransition(CharacterStates.Moving, Moving).Done();
         StateConfigurer.Create(Wait).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(Jumping).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Stop, Stop).Done();
         StateConfigurer.Create(Stop).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Wait, Stop).Done();
@@ -76,16 +77,16 @@ public class Character : MonoBehaviour
 
         Idle.OnEnter += x =>
         {
-            //characterView.OnIdle();
+            characterView.OnIdle();
             _currentState = CharacterStates.Idle;
-            if (currentObjectivesQueue.Any())
+            /*if (currentObjectivesQueue.Any())
             {
                 _eventFSM.SendInput(CharacterStates.Moving);
             }
             else
             {
                
-            }
+            }*/
         };
 
         Idle.OnUpdate += () => 
@@ -102,15 +103,15 @@ public class Character : MonoBehaviour
         Moving.OnEnter += x =>
         {
             _currentState = CharacterStates.Moving;
-
-            if (currentObjectivesQueue.Any())
+            characterView.OnMove();
+            /*if (currentObjectivesQueue.Any())
             {
                 characterView.OnMove();
             }
             else
             {
                 _eventFSM.SendInput(CharacterStates.Wait);
-            }
+            }*/
             
         };
 
@@ -121,7 +122,7 @@ public class Character : MonoBehaviour
         };
         Moving.OnFixedUpdate += () =>
         {
-            if (Vector2.Distance(currentObjectivesQueue.Peek().transform.position, transform.position) > 1)
+            /*if (Vector2.Distance(currentObjectivesQueue.Peek().transform.position, transform.position) > 1)
             {
                 //characterModel.Move(currentObjectivesQueue.Peek().transform.position);
                 characterModel.Move2(currentObjectivesQueue.Peek().transform.position, _smoothSpeed);
@@ -131,6 +132,16 @@ public class Character : MonoBehaviour
               
                 
                 _eventFSM.SendInput(CharacterStates.Wait);
+            }*/
+
+            if(Vector2.Distance(nextPosition, transform.position) > 1.3f)
+            {
+                //Debug.LogError(Vector2.Distance(nextPosition, transform.position));
+                characterModel.Move2(nextPosition, _smoothSpeed);
+            }
+            else
+            {
+                _eventFSM.SendInput(CharacterStates.Idle);
             }
         };
         Moving.OnExit += x => { };
@@ -240,7 +251,7 @@ public class Character : MonoBehaviour
     {
         instance = this;
         _pathFinding = new PathFindingThetaStar(_obstacleLayerMask);
-        _characterRigidbody = GetComponent<Rigidbody2D>();  
+        _characterRigidbody = GetComponent<Rigidbody2D>();          
      
     }
 
