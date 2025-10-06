@@ -18,7 +18,9 @@ public class Character : MonoBehaviour
     public Vector2 currentJumpForce;
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
-    [SerializeField] public Vector2 nextPosition; 
+    [SerializeField] public Vector2 nextPosition;
+    [SerializeField] public float yPositionOffset;
+    [SerializeField] Transform feetPosition;
     #endregion
 
     #region References
@@ -77,8 +79,9 @@ public class Character : MonoBehaviour
 
         Idle.OnEnter += x =>
         {
-            characterView.OnIdle();
+            
             _currentState = CharacterStates.Idle;
+            characterView.OnIdle();
             /*if (currentObjectivesQueue.Any())
             {
                 _eventFSM.SendInput(CharacterStates.Moving);
@@ -135,12 +138,12 @@ public class Character : MonoBehaviour
             }*/
 
             if(Vector2.Distance(nextPosition, transform.position) > 1.3f)
-            {
-                //Debug.LogError(Vector2.Distance(nextPosition, transform.position));
+            {                
                 characterModel.Move2(nextPosition, _smoothSpeed);
             }
             else
             {
+                //_characterRigidbody.linearVelocity = Vector2.zero;
                 _eventFSM.SendInput(CharacterStates.Idle);
             }
         };
@@ -251,7 +254,8 @@ public class Character : MonoBehaviour
     {
         instance = this;
         _pathFinding = new PathFindingThetaStar(_obstacleLayerMask);
-        _characterRigidbody = GetComponent<Rigidbody2D>();          
+        _characterRigidbody = GetComponent<Rigidbody2D>();
+        yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
      
     }
 

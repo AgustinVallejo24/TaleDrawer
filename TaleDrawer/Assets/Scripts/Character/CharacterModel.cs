@@ -33,8 +33,7 @@ public class CharacterModel
     public virtual void Move2(Vector2 objective, float smoothSpeed)
     {
         Vector2 direction = objective - new Vector2(_myCharacter.transform.position.x, _myCharacter.transform.position.y);
-        //_myRigidbody.linearVelocity = Vector2.ClampMagnitude(direction.normalized * _myCharacter.currentSpeed * 25 * Time.deltaTime, 4);        
-        //_myRigidbody.linearVelocity = Vector2.SmoothDamp(_myRigidbody.linearVelocity, direction.normalized, ref speed, smoothSpeed);
+        
         _myRigidbody.linearVelocity = Vector2.SmoothDamp(_myRigidbody.linearVelocity,
             Vector2.ClampMagnitude(direction.normalized * _myCharacter.currentSpeed * Time.deltaTime, 25), ref speed, smoothSpeed);
     }

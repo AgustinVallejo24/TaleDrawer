@@ -19,11 +19,13 @@ public class CharacterView
 
     public void OnMove()
     {
+        _anim.SetInteger("MovementState", 1);
         _anim.SetTrigger(_runTrigger);
     }
 
     public void OnIdle()
     {
+        _anim.SetInteger("MovementState", 0);
         _anim.SetTrigger(_idleTrigger);
     }
 

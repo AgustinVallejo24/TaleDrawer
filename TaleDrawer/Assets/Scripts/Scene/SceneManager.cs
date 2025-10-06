@@ -57,7 +57,7 @@ public class SceneManager : MonoBehaviour
 
             if (hit)
             {
-                Character.instance.nextPosition = new Vector2(hit.point.x, hit.point.y);
+                Character.instance.nextPosition = new Vector2(hit.point.x, hit.point.y + Character.instance.yPositionOffset);
                 
                 Character.instance.SendInputToFSM(CharacterStates.Moving);
             }

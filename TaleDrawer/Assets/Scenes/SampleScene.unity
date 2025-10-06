@@ -1491,6 +1491,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &272336207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272336208}
+  m_Layer: 0
+  m_Name: FeetPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &272336208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272336207}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.464, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1394210869}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &302052552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,6 +2183,10 @@ PrefabInstance:
     - target: {fileID: 7569735480298212611, guid: f4b80fa3ef28423439e6969e9ca771cc, type: 3}
       propertyPath: m_Name
       value: dirt1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569735480298212611, guid: f4b80fa3ef28423439e6969e9ca771cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7747646798281380966, guid: f4b80fa3ef28423439e6969e9ca771cc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4691,6 +4726,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dirt1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7569735480298212611, guid: f4b80fa3ef28423439e6969e9ca771cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7747646798281380966, guid: f4b80fa3ef28423439e6969e9ca771cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.258249
@@ -4907,6 +4946,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   nextPosition: {x: 0, y: 0}
+  yPositionOffset: 0
+  feetPosition: {fileID: 272336208}
   _characterRigidbody: {fileID: 1394210867}
   _animator: {fileID: 1806947318}
   _currentState: 0
@@ -5013,6 +5054,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1575674063}
+  - {fileID: 272336208}
   m_Father: {fileID: 1925854475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1394210870
