@@ -70,11 +70,26 @@ public class Character : MonoBehaviour
         var Wait = new StateE<CharacterStates>("Wait");
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
-        StateConfigurer.Create(Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(Moving).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Wait, Wait).SetTransition(CharacterStates.Moving, Moving).Done();
-        StateConfigurer.Create(Wait).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Jumping, Jumping).Done();
-        StateConfigurer.Create(Jumping).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Stop, Stop).Done();
-        StateConfigurer.Create(Stop).SetTransition(CharacterStates.Idle, Idle).SetTransition(CharacterStates.Moving, Moving).SetTransition(CharacterStates.Wait, Stop).Done();
+        StateConfigurer.Create(Idle)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Idle, Idle).Done();
+        StateConfigurer.Create(Moving)
+            .SetTransition(CharacterStates.Idle, Idle)
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Jumping, Jumping).Done();
+        StateConfigurer.Create(Wait)
+            .SetTransition(CharacterStates.Idle, Idle)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Jumping, Jumping).Done();
+        StateConfigurer.Create(Jumping)
+            .SetTransition(CharacterStates.Idle, Idle)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Stop, Stop).Done();
+        StateConfigurer.Create(Stop)
+            .SetTransition(CharacterStates.Idle, Idle)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Wait, Stop).Done();
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
         #region IDLE STATE
@@ -146,6 +161,29 @@ public class Character : MonoBehaviour
                 }
             }
 
+            if (_currentPath.Any())
+            {
+                if(Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
+                {
+                    characterView.FlipCharacter(1);
+                }
+                else
+                {
+                    characterView.FlipCharacter(-1);
+                }
+            }
+            else
+            {
+                if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
+                {
+                    characterView.FlipCharacter(1);
+                }
+                else
+                {
+                    characterView.FlipCharacter(-1);
+                }
+            }
+
 
             
         };
@@ -189,6 +227,15 @@ public class Character : MonoBehaviour
                         else
                         {
                             _currentPath.Remove(_currentPath.First());
+
+                            if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
+                            {
+                                characterView.FlipCharacter(1);
+                            }
+                            else
+                            {
+                                characterView.FlipCharacter(-1);
+                            }
                         }
 
                     }
@@ -199,6 +246,15 @@ public class Character : MonoBehaviour
                         {
                             _goToNextPosition = true;
                             _currentPath.Remove(_currentPath.First());
+
+                            if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
+                            {
+                                characterView.FlipCharacter(1);
+                            }
+                            else
+                            {
+                                characterView.FlipCharacter(-1);
+                            }
                         }
                         else
                         {
@@ -254,7 +310,7 @@ public class Character : MonoBehaviour
             {
                 if (currentObjectivesQueue.Peek().changeDirection)
                 {
-                    characterView.FlipCharacter();
+                    //characterView.FlipCharacter();
                 }
 
                 if (currentObjectivesQueue.Peek().hasEvent)
@@ -291,7 +347,7 @@ public class Character : MonoBehaviour
 
         Jumping.OnEnter += x =>
         {
-
+            _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
 

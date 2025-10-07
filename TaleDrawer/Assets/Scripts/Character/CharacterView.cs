@@ -29,9 +29,17 @@ public class CharacterView
         _anim.SetTrigger(_idleTrigger);
     }
 
-    public void FlipCharacter()
+    public void FlipCharacter(int movementSign)
     {
-        _characterSprite.flipX = !_characterSprite.flipX;
+        if(movementSign > 0)
+        {
+            _characterSprite.flipX = false;
+        }
+        else
+        {
+            _characterSprite.flipX = true;
+        }
+         
     }
 
     public void OnJump()
