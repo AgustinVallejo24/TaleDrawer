@@ -24,10 +24,7 @@ public class CustomNode : MonoBehaviour
 
     public void Jump()
     {
-        Debug.Log("Llego al salto");
-        Character.instance.SendInputToFSM(CharacterStates.Jumping);
-        Vector2 jumpPos = new Vector2(_jumpPosition.transform.position.x, _jumpPosition.transform.position.y);
-        Character.instance.characterModel.Jump(jumpPos, 1);
+        Character.instance.Jump(_jumpPosition.transform);
     }
 }
 

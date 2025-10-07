@@ -232,6 +232,15 @@ public class Character : MonoBehaviour
                         }
                         else
                         {
+                            if(_currentPath.Count == 2)
+                            {
+                                if(Vector2.Distance(CustomTools.ToVector2(transform.position), new Vector2(nextPosition.x,transform.position.y)) 
+                                < Vector2.Distance(new Vector2(_currentPath.Last().transform.position.x, transform.position.y), new Vector2(nextPosition.x, transform.position.y)))
+                                {
+                                    _currentPath.Remove(_currentPath.Last());
+                                    _goToNextPosition = true;
+                                }
+                            }
                             _currentPath.Remove(_currentPath.First());
 
                             if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
@@ -247,9 +256,12 @@ public class Character : MonoBehaviour
                     }
                     else if (_currentPath.Count == 1)
                     {
-                        if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
-                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition)))
+                        RaycastHit2D hit = Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
+                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition),10);
+               
+                        if (!hit) 
                         {
+                           
                             Debug.LogError("Lo veo");
                             _goToNextPosition = true;
                             _currentPath.Remove(_currentPath.First());
@@ -265,7 +277,7 @@ public class Character : MonoBehaviour
                         }
                         else
                         {
-                            
+                             Debug.Log(hit.transform.gameObject);
                             _currentPath.Remove(_currentPath.First());
                         }
                             
@@ -354,7 +366,7 @@ public class Character : MonoBehaviour
 
         Jumping.OnEnter += x =>
         {
-            _characterRigidbody.linearVelocity = Vector2.zero;
+       //     _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
 
@@ -362,10 +374,10 @@ public class Character : MonoBehaviour
 
         Jumping.OnUpdate += () =>
         {
-            if (Physics2D.Raycast(transform.position, Vector2.down, 2,_floorLayerMask))
-            {
-                _eventFSM.SendInput(CharacterStates.Moving);
-            }
+            //if (Physics2D.Raycast(transform.position, Vector2.down, 2,_floorLayerMask))
+            //{
+            //    _eventFSM.SendInput(CharacterStates.Moving);
+            //}
 
         };
         Jumping.OnFixedUpdate += () =>
@@ -451,6 +463,11 @@ public class Character : MonoBehaviour
         CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);        
         _currentPath = _pathFinding.AStar(start, goal);
 
+        if(Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
+            > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition))
+        {
+            _currentPath = _currentPath.SkipLast(1).ToList();
+        }
         if(_currentPath.Any())
         {
             return true;
@@ -475,7 +492,14 @@ public class Character : MonoBehaviour
         }
     }
 
-    
+    public void Jump(Transform jumpPos)
+    {
+        Debug.Log("Llego al salto");
+        Character.instance.SendInputToFSM(CharacterStates.Jumping);
+        _characterRigidbody.linearVelocity = Vector2.zero;
+     
+        Character.instance.characterModel.Jump(CustomTools.ToVector2(jumpPos.position), 1);
+    }
 }
 
 public enum CharacterStates
