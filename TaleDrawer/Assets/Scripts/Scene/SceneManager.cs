@@ -52,7 +52,7 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount > 0 && currentState == SceneStates.Game)
+        if(Input.touchCount > 0 && currentState == SceneStates.Game && (Character.instance._currentState == CharacterStates.Idle || Character.instance._currentState == CharacterStates.Moving))
         {
             UnityEngine.Touch touch = Input.GetTouch(0);
             _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
@@ -68,7 +68,7 @@ public class SceneManager : MonoBehaviour
                 }
                 else
                 {
-                    //NONO
+                    //NONO  Hace animacion de no poder llegar a la ubicacion.
                 }
                 
             }

@@ -65,6 +65,8 @@ public class Character : MonoBehaviour
         {
             currentObjectivesQueue.Enqueue(item);
         }
+
+        #region States Declarations
         var Idle = new StateE<CharacterStates>("Idle");
         var Moving = new StateE<CharacterStates>("Moving");
         var Wait = new StateE<CharacterStates>("Wait");
@@ -90,6 +92,7 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Wait, Stop).Done();
+        #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
         #region IDLE STATE
@@ -139,6 +142,7 @@ public class Character : MonoBehaviour
             }
             else if(_currentPath.Count > 1)
             {
+                //Quita el primer nodo si no tiene evento necesario, y si el personaje esta mas cerca del segundo nodo, que el primero del segundo.
                 if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent && 
                 _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
                 {
@@ -153,6 +157,7 @@ public class Character : MonoBehaviour
             }
             else
             {
+                //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.
                 if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition)))
                 {
@@ -161,6 +166,7 @@ public class Character : MonoBehaviour
                 }
             }
 
+            //Cambia la dirreccion del sprite.
             if (_currentPath.Any())
             {
                 if(Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
@@ -244,6 +250,7 @@ public class Character : MonoBehaviour
                         if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition)))
                         {
+                            Debug.LogError("Lo veo");
                             _goToNextPosition = true;
                             _currentPath.Remove(_currentPath.First());
 
