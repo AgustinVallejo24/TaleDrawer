@@ -1,8 +1,10 @@
-using System.Collections;
-using Unity.Cinemachine;
-using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
 public class SceneManager : MonoBehaviour
@@ -29,6 +31,8 @@ public class SceneManager : MonoBehaviour
     Vector2 _clickPosition;
     [SerializeField] float _clickRayLength;
     [SerializeField] LayerMask _piso;
+
+    [SerializeField]public List<CustomNode> nodes;
 
 
     private void Awake()
@@ -57,9 +61,16 @@ public class SceneManager : MonoBehaviour
 
             if (hit)
             {
-                Character.instance.nextPosition = new Vector2(hit.point.x, hit.point.y + Character.instance.yPositionOffset);
+                CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);                
+                if(Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.point.y)))
+                {
+                    Character.instance.SendInputToFSM(CharacterStates.Moving);
+                }
+                else
+                {
+                    //NONO
+                }
                 
-                Character.instance.SendInputToFSM(CharacterStates.Moving);
             }
             
         }
@@ -108,12 +119,14 @@ public class SceneManager : MonoBehaviour
     }
 
     
-    void EnteringDrawingState()
+    /*void EnteringDrawingState()
     {
        
         
         
-    }
+    }*/
+
+    
 
 
 }

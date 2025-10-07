@@ -19,8 +19,10 @@ public class Character : MonoBehaviour
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
     [SerializeField] public Vector2 nextPosition;
+    [SerializeField] bool _goToNextPosition;
     [SerializeField] public float yPositionOffset;
     [SerializeField] Transform feetPosition;
+    [SerializeField] List<CustomNode> _currentPath;
     #endregion
 
     #region References
@@ -35,7 +37,7 @@ public class Character : MonoBehaviour
 
     #region Side Scripts References
 
-    PathFindingThetaStar _pathFinding;
+    CustomPathfinding _pathFinding;
     protected EventFSM<CharacterStates> _eventFSM;
     public CharacterModel characterModel;
     public CharacterView characterView;
@@ -115,6 +117,36 @@ public class Character : MonoBehaviour
             {
                 _eventFSM.SendInput(CharacterStates.Wait);
             }*/
+
+            if (!_currentPath.Any())
+            {
+                _eventFSM.SendInput(CharacterStates.Idle);
+            }
+            else if(_currentPath.Count > 1)
+            {
+                if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent && 
+                _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
+                {
+                    if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
+                        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
+                        Vector2.Distance(CustomTools.ToVector2(transform.position),
+                        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)))
+                    {
+                        _currentPath.Remove(_currentPath.First());
+                    }
+                }
+            }
+            else
+            {
+                if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
+                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition)))
+                {
+                    _goToNextPosition = true;
+                    _currentPath.Remove(_currentPath.First());
+                }
+            }
+
+
             
         };
 
@@ -136,18 +168,76 @@ public class Character : MonoBehaviour
                 
                 _eventFSM.SendInput(CharacterStates.Wait);
             }*/
+            if (_currentPath.Any())
+            {
+                if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset), transform.position) > .7f)
+                {
+                    characterModel.Move2(_currentPath.First().transform.position, _smoothSpeed);
+                }
+                else
+                {
+                    if (_currentPath.Count > 1)
+                    {
+                        
+                        var neighbour = _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First();
+                        if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && neighbour.canDoEvent)
+                        {
+                            
+                            _currentPath.Remove(_currentPath.First());
+                            neighbour.nodeEvent.Invoke();
+                        }
+                        else
+                        {
+                            _currentPath.Remove(_currentPath.First());
+                        }
 
-            if(Vector2.Distance(nextPosition, transform.position) > 1.3f)
-            {                
-                characterModel.Move2(nextPosition, _smoothSpeed);
+                    }
+                    else if (_currentPath.Count == 1)
+                    {
+                        if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
+                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition)))
+                        {
+                            _goToNextPosition = true;
+                            _currentPath.Remove(_currentPath.First());
+                        }
+                        else
+                        {
+                            
+                            _currentPath.Remove(_currentPath.First());
+                        }
+                            
+                    }
+                    
+
+                    
+                }
             }
             else
             {
-                //_characterRigidbody.linearVelocity = Vector2.zero;
-                _eventFSM.SendInput(CharacterStates.Idle);
+                if (_goToNextPosition)
+                {
+                    if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y + yPositionOffset), transform.position) > .7f)
+                    {
+                        characterModel.Move2(nextPosition, _smoothSpeed);
+                    }
+                    else
+                    {
+                        _eventFSM.SendInput(CharacterStates.Idle);
+                    }
+                }
+                else
+                {
+                    _eventFSM.SendInput(CharacterStates.Idle);
+                }
+
             }
+            
         };
-        Moving.OnExit += x => { };
+        Moving.OnExit += x => 
+        {
+            _goToNextPosition = false;
+        
+        };
 
         #endregion
 
@@ -209,10 +299,10 @@ public class Character : MonoBehaviour
 
         Jumping.OnUpdate += () =>
         {
-            //if (Physics2D.Raycast(transform.position, Vector2.down, 2,_floorLayerMask))
-            //{
-            //    _eventFSM.SendInput(CharacterStates.Moving);
-            //}
+            if (Physics2D.Raycast(transform.position, Vector2.down, 2,_floorLayerMask))
+            {
+                _eventFSM.SendInput(CharacterStates.Moving);
+            }
 
         };
         Jumping.OnFixedUpdate += () =>
@@ -253,7 +343,7 @@ public class Character : MonoBehaviour
     protected virtual void Start()
     {
         instance = this;
-        _pathFinding = new PathFindingThetaStar(_obstacleLayerMask);
+        _pathFinding = new CustomPathfinding(_obstacleLayerMask);
         _characterRigidbody = GetComponent<Rigidbody2D>();
         yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
      
@@ -291,6 +381,38 @@ public class Character : MonoBehaviour
         }
        
     }
+
+    public bool GetPath(CustomNode goal, Vector2 nextPos)
+    {
+        nextPosition = nextPos;
+        CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);        
+        _currentPath = _pathFinding.AStar(start, goal);
+
+        if(_currentPath.Any())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool GetPath(CustomNode goal)
+    {
+        CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);
+        _currentPath = _pathFinding.AStar(start, goal);
+
+        if (_currentPath.Any())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    
 }
 
 public enum CharacterStates
