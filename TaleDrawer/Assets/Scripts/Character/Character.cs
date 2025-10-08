@@ -157,9 +157,9 @@ public class Character : MonoBehaviour
             }
             else
             {
-                //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.
+                //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.                
                 if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
-                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition)))
+                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10))
                 {
                     _goToNextPosition = true;
                     _currentPath.Remove(_currentPath.First());
@@ -169,6 +169,7 @@ public class Character : MonoBehaviour
             //Cambia la dirreccion del sprite.
             if (_currentPath.Any())
             {
+                
                 if(Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
                 {
                     characterView.FlipCharacter(1);
@@ -200,18 +201,7 @@ public class Character : MonoBehaviour
 
         };
         Moving.OnFixedUpdate += () =>
-        {
-            /*if (Vector2.Distance(currentObjectivesQueue.Peek().transform.position, transform.position) > 1)
-            {
-                //characterModel.Move(currentObjectivesQueue.Peek().transform.position);
-                characterModel.Move2(currentObjectivesQueue.Peek().transform.position, _smoothSpeed);
-            }
-            else
-            {
-              
-                
-                _eventFSM.SendInput(CharacterStates.Wait);
-            }*/
+        {            
             if (_currentPath.Any())
             {
                 if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset), transform.position) > .7f)
@@ -260,9 +250,7 @@ public class Character : MonoBehaviour
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition),10);
                
                         if (!hit) 
-                        {
-                           
-                            Debug.LogError("Lo veo");
+                        {                            
                             _goToNextPosition = true;
                             _currentPath.Remove(_currentPath.First());
 
@@ -291,17 +279,21 @@ public class Character : MonoBehaviour
             {
                 if (_goToNextPosition)
                 {
-                    if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y + yPositionOffset), transform.position) > .7f)
+                    if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y + yPositionOffset), transform.position) > .3f)
                     {
-                        characterModel.Move2(nextPosition, _smoothSpeed);
+                        //characterModel.Move2(nextPosition, _smoothSpeed);
+                        characterModel.Move(nextPosition);
+                        
                     }
                     else
                     {
+                        _characterRigidbody.linearVelocity = Vector2.zero;
                         _eventFSM.SendInput(CharacterStates.Idle);
                     }
                 }
                 else
                 {
+                    _characterRigidbody.linearVelocity = Vector2.zero;
                     _eventFSM.SendInput(CharacterStates.Idle);
                 }
 
@@ -463,7 +455,7 @@ public class Character : MonoBehaviour
         CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);        
         _currentPath = _pathFinding.AStar(start, goal);
 
-        if(Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
+        if(_currentPath.Count > 1 && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
             > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition))
         {
             _currentPath = _currentPath.SkipLast(1).ToList();
