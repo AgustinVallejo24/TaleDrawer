@@ -34,6 +34,7 @@ public class SceneManager : MonoBehaviour
 
     [SerializeField]public List<CustomNode> nodes;
 
+    public GameObject sticker;
 
     private void Awake()
     {
@@ -61,16 +62,24 @@ public class SceneManager : MonoBehaviour
 
             if (hit)
             {
+             
                 CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);                
-                if(Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.point.y)))
+                if(Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
                 {
                     Character.instance.SendInputToFSM(CharacterStates.Moving);
+                    sticker.transform.position = new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + .5f);
+                    sticker.SetActive(true);
                 }
                 else
                 {
+                    sticker.SetActive(false);
                     //NONO  Hace animacion de no poder llegar a la ubicacion.
                 }
                 
+            }
+            else
+            {
+                sticker.SetActive(false);
             }
             
         }

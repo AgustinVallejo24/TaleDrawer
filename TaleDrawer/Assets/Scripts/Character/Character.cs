@@ -279,9 +279,10 @@ public class Character : MonoBehaviour
             {
                 if (_goToNextPosition)
                 {
-                    if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y + yPositionOffset), transform.position) > .3f)
+                    if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y), transform.position) > .3f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
+                  
                         characterModel.Move(nextPosition);
                         
                     }
