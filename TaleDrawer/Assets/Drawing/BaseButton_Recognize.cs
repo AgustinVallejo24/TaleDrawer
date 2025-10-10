@@ -58,12 +58,13 @@ public class BaseButton_Recognize : MonoBehaviour
     public void onClickDown()
     {
         isPressed = true;
-        buttonAction.Invoke();
+        
     }
 
     public void onClickUp()
     {
         isPressed = false;
+      //  buttonAction.Invoke();
     }
 
 }

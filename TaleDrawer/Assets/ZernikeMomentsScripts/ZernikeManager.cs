@@ -68,7 +68,7 @@ public class ZernikeManager : MonoBehaviour
             }
             UICarga.SetActive(false);
             
-            DrawingTest.SetActive(true);
+         //   DrawingTest.SetActive(true);
         }
     }
 
@@ -132,7 +132,7 @@ public class ZernikeManager : MonoBehaviour
         UICarga.SetActive(false);
         
         yield return new WaitForSeconds(.2f);
-        DrawingTest.SetActive(true);
+  //      DrawingTest.SetActive(true);
         ReferenceSymbolStorage.SaveSymbols(referenceSymbols, jsonPath);
     }
     public void OnDrawingFinished(List<List<Vector2>> finishedPoints, int strokeQuantity)
@@ -262,6 +262,7 @@ public class ZernikeManager : MonoBehaviour
             if (SceneManager.instance != null)
             {
                 SceneManager.instance.StateChanger(SceneStates.Game);
+                
             }
             return;
         }

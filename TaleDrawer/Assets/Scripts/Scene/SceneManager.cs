@@ -34,6 +34,8 @@ public class SceneManager : MonoBehaviour
 
     [SerializeField]public List<CustomNode> nodes;
 
+    bool gameTouch;
+
     public GameObject sticker;
 
     private void Awake()
@@ -53,36 +55,82 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount > 0 && currentState == SceneStates.Game && (Character.instance._currentState == CharacterStates.Idle || Character.instance._currentState == CharacterStates.Moving))
+        
+        if(Input.touchCount > 0 && (Character.instance._currentState == CharacterStates.Idle || Character.instance._currentState == CharacterStates.Moving))
         {
             UnityEngine.Touch touch = Input.GetTouch(0);
-            _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
-
-            RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
-
-            if (hit)
+           
+            if (currentState == SceneStates.Drawing)
             {
-             
-                CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);                
-                if(Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
-                {
-                    Character.instance.SendInputToFSM(CharacterStates.Moving);
-                    sticker.transform.position = new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + .5f);
-                    sticker.SetActive(true);
-                }
-                else
-                {
-                    sticker.SetActive(false);
-                    //NONO  Hace animacion de no poder llegar a la ubicacion.
-                }
-                
+                _dTest.Draw(Input.touchCount, touch);
             }
-            else
+            switch (touch.phase)
             {
-                sticker.SetActive(false);
+                case TouchPhase.Began:
+                   if(currentState == SceneStates.Game)
+                    {
+                        gameTouch = true;
+                    }
+                    else
+                    {
+                        gameTouch = false;
+                    }
+                    break;
+
+                case TouchPhase.Moved:
+                    if(currentState == SceneStates.Game)
+                    {
+                        StateChanger(SceneStates.Drawing);
+                        _dTest.gameObject.SetActive(true);
+                    }
+                    break;
+                case TouchPhase.Stationary:
+
+                    break;
+
+                case TouchPhase.Ended:
+                   
+                    if (currentState == SceneStates.Game && gameTouch)
+                    {
+                     
+                        _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
+
+                        RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
+
+                        if (hit)
+                        {
+
+                            CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);
+                            if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
+                            {
+                                Character.instance.SendInputToFSM(CharacterStates.Moving);
+                                sticker.transform.position = new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + .5f);
+                                sticker.SetActive(true);
+                            }
+                            else
+                            {
+                                sticker.SetActive(false);
+                                
+                            }
+
+                        }
+                        else
+                        {
+                            sticker.SetActive(false);
+                        }
+                    }
+
+                    break;
+
+                case TouchPhase.Canceled:
+                    break;
+
             }
+
+
             
         }
+
     }
 
     public void StateChanger(SceneStates state)
@@ -94,14 +142,14 @@ public class SceneManager : MonoBehaviour
 
         if(currentState == SceneStates.Game)
         {
-            if(previousState != SceneStates.Dragging)
+            if(previousState == SceneStates.Drawing)
             {
                 ExitingDrawingState();
             }            
             _drawingBackground.SetActive(false);            
             
                       
-            _dTest.gameObject.SetActive(true);
+          //  _dTest.gameObject.SetActive(true);
             
             Time.timeScale = 1.0f;
         }
@@ -124,6 +172,7 @@ public class SceneManager : MonoBehaviour
         
         _drawingDraggingCanvas.SetActive(false);        
         _dTest.gameObject.SetActive(false);
+
         
     }
 
@@ -136,7 +185,6 @@ public class SceneManager : MonoBehaviour
     }*/
 
     
-
 
 }
 

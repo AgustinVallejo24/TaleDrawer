@@ -27,6 +27,7 @@ public class DrawingTest : MonoBehaviour
     public bool detectTouch = false;
 
     [SerializeField] LayerMask _uiMask;
+    public bool startDrawing;
     void Start()
     {
         recognizebutton.buttonAction += OnConfirmDrawing;
@@ -86,16 +87,7 @@ public class DrawingTest : MonoBehaviour
 
     //}
 
-    bool IsTouchOverUI(Touch touch)
-    {
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = touch.position;
 
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        return results.Count > 0;
-    }
 
     bool IsTouchOverSpecificUI(Touch touch, int uiLayerIndex)
     {
@@ -135,34 +127,41 @@ public class DrawingTest : MonoBehaviour
         //}
 
 
-        if (Input.touchCount > 10)
+    }
+
+    public void Draw(int touchCount, Touch touch)
+    {
+
+        if (touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
+   
 
             //  ignorar si el toque está sobre UI
-            if (IsTouchOverUI(touch))
+            if (CustomTools.IsTouchOverUI(touch))
             {
                 //Debug.Log("TOCOBOTON");
                 return;
             }
 
-            
+
 
             Vector2 pos = cam.ScreenToWorldPoint(touch.position);
-
             
+            if (linerendererIndex < lineRenderer.Length && !startDrawing)
+            {
+                startDrawing = true;
+                if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
+                {
+                    SceneManager.instance.StateChanger(SceneStates.Drawing);
+                }
+                isDrawing = true;
+                currentStrokePoints.Clear();
+            }
+
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    if (linerendererIndex < lineRenderer.Length)
-                    {                        
-                        if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
-                        {
-                            SceneManager.instance.StateChanger(SceneStates.Drawing);
-                        }                        
-                        isDrawing = true;
-                        currentStrokePoints.Clear();
-                    }
+
                     break;
 
                 case TouchPhase.Moved:
@@ -180,7 +179,7 @@ public class DrawingTest : MonoBehaviour
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     isDrawing = false;
-
+                    startDrawing = false;
                     if (linerendererIndex >= lineRenderer.Length) return;
 
 
@@ -211,8 +210,6 @@ public class DrawingTest : MonoBehaviour
             }
         }
     }
-
-
     void AddSmoothedPoint(Vector3 newPoint)
     {
         currentStrokePoints.Add(newPoint);
