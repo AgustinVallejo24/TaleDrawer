@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 306fe6cca4d013b48954f42b04b1366f
+guid: 5cfc16a706ae83d4abd2d6707fa43df3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: robin_jumpgrab_sheet_0
+      name: robin_climbup2_0
       rect:
         serializedVersion: 2
-        x: 106
-        y: 0
-        width: 320
-        height: 566
+        x: 276
+        y: 220
+        width: 316
+        height: 619
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 130784f48fca58d45a62a531f1a823f6
-      internalID: 1175966987
+      spriteID: 759e2ec22c4e26a408b5d987f29e38ba
+      internalID: 1499389118
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robin_jumpgrab_sheet_1
+      name: robin_climbup2_1
       rect:
         serializedVersion: 2
-        x: 744
-        y: 2
-        width: 401
-        height: 484
+        x: 981
+        y: 230
+        width: 314
+        height: 621
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f44c741643b99a499b5d457e5b64640
-      internalID: -451821851
+      spriteID: 11a6014129cf3a149a1fdb0a10668386
+      internalID: 406196643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robin_jumpgrab_sheet_2
+      name: robin_climbup2_2
       rect:
         serializedVersion: 2
-        x: 1422
-        y: 7
-        width: 402
-        height: 438
+        x: 1675
+        y: 225
+        width: 309
+        height: 630
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7224e1def6e797a43a236d35f393efab
-      internalID: 1138715332
+      spriteID: 7774d7d4fa7347e448872c404860c03c
+      internalID: -779872876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robin_jumpgrab_sheet_3
+      name: robin_climbup2_3
       rect:
         serializedVersion: 2
-        x: 2218
-        y: 135
-        width: 465
-        height: 670
+        x: 2378
+        y: 235
+        width: 302
+        height: 635
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,30 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d834fc1bf5e42f64bad2cd4e07664214
-      internalID: 979776801
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: robin_jumpgrab_sheet_4
-      rect:
-        serializedVersion: 2
-        x: 2921
-        y: 177
-        width: 446
-        height: 681
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8823afc08f1382144aea90f52bbc4a19
-      internalID: 328383830
+      spriteID: 444d7d8f7d5918843920a59631d0768a
+      internalID: -915280553
       vertices: []
       indices: 
       edges: []
@@ -210,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c03f5556694482d4fb081b4c895e6754
+    spriteID: f30ebd80e395a41489bf83dadf78ea1e
     internalID: 0
     vertices: []
     indices: 
@@ -222,11 +200,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      robin_jumpgrab_sheet_0: 1175966987
-      robin_jumpgrab_sheet_1: -451821851
-      robin_jumpgrab_sheet_2: 1138715332
-      robin_jumpgrab_sheet_3: 979776801
-      robin_jumpgrab_sheet_4: 328383830
+      robin_climbup2_0: 1499389118
+      robin_climbup2_1: 406196643
+      robin_climbup2_2: -779872876
+      robin_climbup2_3: -915280553
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
