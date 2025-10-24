@@ -16,6 +16,9 @@ public class Subibaja : MonoBehaviour, IInteractable
 
     public Collider2D characterDetector;
     public bool isMoving;
+
+    [SerializeField] CustomNode _leftNode;
+    [SerializeField] CustomNode _rightNode;
     private void Start()
     {
         if (left)
@@ -40,6 +43,7 @@ public class Subibaja : MonoBehaviour, IInteractable
         {
             characterDetector.enabled = sign;
             isMoving = sign;
+
         }
 
 
@@ -83,6 +87,14 @@ public class Subibaja : MonoBehaviour, IInteractable
     public void Interact(GameObject interactor)
     {
      
+    }
+
+    public void InteractWithPlayer()
+    {
+        Character character = Character.instance;
+        character.GetPath(_leftNode);
+        character.SendInputToFSM(CharacterStates.Moving);
+        
     }
 }
 
