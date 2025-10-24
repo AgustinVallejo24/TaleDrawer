@@ -38,6 +38,9 @@ public class SceneManager : MonoBehaviour
 
     public GameObject sticker;
 
+    public Vector2 touchPosition;
+
+    public float drawingThreshold;
     private void Awake()
     {
         instance = this;
@@ -67,8 +70,10 @@ public class SceneManager : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
+
                    if(currentState == SceneStates.Game)
                     {
+                        touchPosition = touch.position;
                         gameTouch = true;
                     }
                     else
@@ -78,7 +83,7 @@ public class SceneManager : MonoBehaviour
                     break;
 
                 case TouchPhase.Moved:
-                    if(currentState == SceneStates.Game)
+                    if(currentState == SceneStates.Game && Vector2.Distance(touchPosition, touch.position)> drawingThreshold)
                     {
                         StateChanger(SceneStates.Drawing);
                         _dTest.gameObject.SetActive(true);

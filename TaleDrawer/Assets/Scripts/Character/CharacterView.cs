@@ -10,6 +10,7 @@ public class CharacterView
     private string _runTrigger = "Run";
     private string _idleTrigger = "Idle";
     private string _jumpTrigger = "Jump";
+    private string _landTrigger = "Land";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -28,6 +29,12 @@ public class CharacterView
         _anim.SetInteger("MovementState", 0);
         _anim.SetTrigger(_idleTrigger);
     }
+
+    public void OnLand()
+    {
+        _anim.SetTrigger(_landTrigger);
+    }
+
 
     public void FlipCharacter(int movementSign)
     {

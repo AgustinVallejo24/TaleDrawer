@@ -74,7 +74,7 @@ public class Character : MonoBehaviour
         var Stop = new StateE<CharacterStates>("Stop");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Idle, Idle).Done();
+            .Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
@@ -127,6 +127,7 @@ public class Character : MonoBehaviour
         {
             _currentState = CharacterStates.Moving;
             characterView.OnMove();
+
             /*if (currentObjectivesQueue.Any())
             {
                 characterView.OnMove();
@@ -444,6 +445,7 @@ public class Character : MonoBehaviour
         if(_currentState == CharacterStates.Jumping && collision.gameObject.layer == 6)
         {
             //_eventFSM.SendInput(CharacterStates.Moving);
+            characterView.OnLand();
             StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
             
         }

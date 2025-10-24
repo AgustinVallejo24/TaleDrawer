@@ -5,7 +5,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11122
+                "instanceID": -22856
             },
             "Threshold": 0.36000001430511477,
             "strokes": 1,
@@ -135,7 +135,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11602
+                "instanceID": -23362
             },
             "Threshold": 0.30000001192092898,
             "strokes": 1,
@@ -265,7 +265,7 @@
             "useRotation": false,
             "isSymmetric": true,
             "templateTexture": {
-                "instanceID": -11606
+                "instanceID": -23366
             },
             "Threshold": 0.30000001192092898,
             "strokes": 1,
@@ -395,7 +395,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11610
+                "instanceID": -23370
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -518,14 +518,14 @@
                 0.00043908944901298075,
                 0.000088865351345804
             ],
-            "symbolType": 0
+            "symbolType": 1
         },
         {
             "symbolName": "Cuadrado",
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11614
+                "instanceID": -23374
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -648,14 +648,14 @@
                 0.0001903525933071419,
                 0.0003759913146495819
             ],
-            "symbolType": 0
+            "symbolType": 1
         },
         {
             "symbolName": "Cuadrado",
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11618
+                "instanceID": -23378
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -769,23 +769,23 @@
                 0.00044208283733277424,
                 0.00007658890264965322,
                 0.0007234848219982899,
-                0.0000055648652449195838,
+                0.0000055648652449195837,
                 0.0006943051941203375,
                 0.000012210074023608744,
                 0.0006943051941203375,
-                0.0000055648652449195838,
+                0.0000055648652449195837,
                 0.0007234848219982899,
                 0.00007658890264965322,
                 0.00044208283733277424
             ],
-            "symbolType": 0
+            "symbolType": 1
         },
         {
             "symbolName": "Copa",
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11622
+                "instanceID": -23382
             },
             "Threshold": 0.44999998807907107,
             "strokes": 3,
@@ -915,7 +915,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11626
+                "instanceID": -23386
             },
             "Threshold": 0.2199999988079071,
             "strokes": 1,
@@ -1045,7 +1045,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11630
+                "instanceID": -23390
             },
             "Threshold": 0.20000000298023225,
             "strokes": 1,
@@ -1168,14 +1168,14 @@
                 0.000050294072775358564,
                 0.00008087737506695008
             ],
-            "symbolType": 1
+            "symbolType": 0
         },
         {
             "symbolName": "espiral",
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11634
+                "instanceID": -23394
             },
             "Threshold": 0.11999999731779099,
             "strokes": 1,
@@ -1305,7 +1305,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11638
+                "instanceID": -23398
             },
             "Threshold": 0.25,
             "strokes": 4,
@@ -1435,7 +1435,7 @@
             "useRotation": false,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -11642
+                "instanceID": -23402
             },
             "Threshold": 0.3499999940395355,
             "strokes": 1,
@@ -1565,7 +1565,7 @@
             "useRotation": true,
             "isSymmetric": true,
             "templateTexture": {
-                "instanceID": -11646
+                "instanceID": -23406
             },
             "Threshold": 0.3499999940395355,
             "strokes": 1,
