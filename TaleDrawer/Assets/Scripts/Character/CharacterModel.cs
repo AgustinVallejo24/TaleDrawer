@@ -19,17 +19,26 @@ public class CharacterModel
         _myRigidbody.AddForce(_myCharacter.currentSpeed * direction.normalized * Time.deltaTime,ForceMode2D.Impulse);
     }
 
-    public void Jump(Vector2 jumpPosition,float duration)
-    {
-        _myCharacter.SendInputToFSM(CharacterStates.Jumping);
-        Vector2 direction = (jumpPosition - CustomTools.ToVector2(_myCharacter.transform.position)).normalized * _myCharacter.currentJumpForce.x + Vector2.up * _myCharacter.currentJumpForce.y;
-        _myRigidbody.AddForce(direction , ForceMode2D.Impulse);
-    }
+    //public void Jump(Vector2 jumpPosition)
+    //{
+    //    _myCharacter.SendInputToFSM(CharacterStates.Jumping);
+    //    Vector2 direction = (jumpPosition - CustomTools.ToVector2(_myCharacter.transform.position)).normalized * _myCharacter.currentJumpForce.x + Vector2.up * _myCharacter.currentJumpForce.y;
+    //    _myRigidbody.AddForce(direction , ForceMode2D.Impulse);
+    //}
+
     public void Jump(Vector2 jumpPosition,float horizontalJumpForce, float verticalJumpForce)
     {
         _myCharacter.SendInputToFSM(CharacterStates.Jumping);
         Vector2 direction = (jumpPosition - CustomTools.ToVector2(_myCharacter.transform.position)).normalized * horizontalJumpForce + Vector2.up * verticalJumpForce;
         _myRigidbody.AddForce(direction, ForceMode2D.Impulse);
+    }
+    public void Jump(Vector2 jumpPosition)
+    {
+        float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
+        _myCharacter.SendInputToFSM(CharacterStates.Jumping);
+        _myCharacter.transform.DOJump(jumpPosition, .5f * distance, 1, 1
+            ).SetEase(Ease.Linear);
+
     }
     public virtual void Move2(Vector2 objective, float smoothSpeed)
     {

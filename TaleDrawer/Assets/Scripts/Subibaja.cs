@@ -17,8 +17,8 @@ public class Subibaja : MonoBehaviour, IInteractable
     public Collider2D characterDetector;
     public bool isMoving;
 
-    [SerializeField] CustomNode _leftNode;
-    [SerializeField] CustomNode _rightNode;
+    [SerializeField] Subibaje_CustomNode _leftNode;
+    [SerializeField] Subibaje_CustomNode _rightNode;
     private void Start()
     {
         if (left)
@@ -91,10 +91,21 @@ public class Subibaja : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
+        Debug.LogError("SDAD");
         Character character = Character.instance;
         character.GetPath(_leftNode);
         character.SendInputToFSM(CharacterStates.Moving);
         
+    }
+
+
+    public void ChangeLeftNeightbours(int value)
+    {
+        _leftNode.SetNeghtboursBool(value);
+    }
+    public void ChangeRightNeightbours(int value)
+    {
+        _rightNode.SetNeghtboursBool(value);
     }
 }
 

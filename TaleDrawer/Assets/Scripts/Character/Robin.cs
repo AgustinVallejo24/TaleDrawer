@@ -1,8 +1,8 @@
 using UnityEngine;
-
+using DG.Tweening;
 public class Robin : Character
 {
-
+    public Sequence currentTween;
     
     protected override void Awake()
     {
@@ -33,17 +33,23 @@ public class Robin : Character
             {
                 Debug.LogError("entro");
                 _characterRigidbody.linearVelocity = Vector2.zero;
-                transform.position = subibaja.tpPoint.position;
+                DOTween.Kill(transform);
+                _currentPath.Clear();
                 transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
-                SendInputToFSM(CharacterStates.Stop);
+                SendInputToFSM(CharacterStates.Idle);
+                
             }
             else
             {
-                Debug.LogError("aca tambien");
-                subibaja.myCharacter = this;
-                _characterRigidbody.linearVelocity = Vector2.zero;
-                transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, subibaja.transform.rotation.z, transform.rotation.w);
-                transform.parent = subibaja.transform;
+                if(subibaja.myCharacter == null)
+                {
+                    Debug.LogError("aca tambien");
+                    subibaja.myCharacter = this;
+                    _characterRigidbody.linearVelocity = Vector2.zero;
+                    transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, subibaja.transform.rotation.z, transform.rotation.w);
+                    transform.parent = subibaja.transform;
+                }
+
 
             }
         }

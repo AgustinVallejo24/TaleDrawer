@@ -8,10 +8,10 @@ public class CustomNode : MonoBehaviour
     ///public List<CustomNode> neighbours;    
     public List<NeighbouringNodesAndActions> neighbours;
     [SerializeField] GameObject _jumpPosition;
-
+    public bool shouldWait;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         
     }
@@ -35,4 +35,11 @@ public struct NeighbouringNodesAndActions
     public UnityEvent nodeEvent;
     public bool canDoEvent;
     public int cost;
+    public NeighbouringNodesAndActions(CustomNode newNode, UnityEvent newEvent, bool newCanDoEvent, int newCost)
+    {
+        node = newNode;
+        nodeEvent = newEvent;
+        canDoEvent = newCanDoEvent;
+        cost = newCost;
+    }
 }

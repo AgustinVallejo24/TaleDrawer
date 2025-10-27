@@ -20,4 +20,14 @@ public class SubibajaAnimatorFunctions : MonoBehaviour
         }
        
     }
+    public void ChangeLeftNeightbours(int value)
+    {
+        Debug.LogError("Entro al evento de animacion");
+        subibaja.ChangeLeftNeightbours(value);
+    }
+    public void ChangeRightNeightbours(int value)
+    {
+        subibaja.ChangeRightNeightbours(value);
+    }
+
 }

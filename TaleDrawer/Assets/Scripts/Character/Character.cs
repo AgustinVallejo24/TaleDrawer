@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] float _maxSpeed;
     public float currentSpeed;
-    [SerializeField][Range(0, 0.5f)] float _smoothSpeed;
+    [SerializeField] [Range(0, 0.5f)] float _smoothSpeed;
     [SerializeField] float _maxLife;
     protected float _currentLife;
     [SerializeField] float _jumpForce;
@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
     [SerializeField] bool _goToNextPosition;
     [SerializeField] public float yPositionOffset;
     [SerializeField] Transform feetPosition;
-    [SerializeField] List<CustomNode> _currentPath;
+    [SerializeField] protected List<CustomNode> _currentPath;
     #endregion
 
     #region References
@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
     [SerializeField] protected Animator _animator;
     public CharacterStates _currentState;
     [SerializeField] protected SpriteRenderer _characterSprite;
-    
+    [SerializeField] LayerMask _walkableLayerMask;
     #endregion
 
 
@@ -56,11 +56,11 @@ public class Character : MonoBehaviour
 
     #endregion
 
-    
+    public bool test;
 
     protected virtual void Awake()
     {
-     
+
         foreach (var item in pointList)
         {
             currentObjectivesQueue.Enqueue(item);
@@ -72,13 +72,14 @@ public class Character : MonoBehaviour
         var Wait = new StateE<CharacterStates>("Wait");
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
+        var Landing = new StateE<CharacterStates>("Landing");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Moving, Moving)
+            //.SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -86,12 +87,18 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(Jumping)
             .SetTransition(CharacterStates.Idle, Idle)
+             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Landing, Landing)
             .SetTransition(CharacterStates.Stop, Stop).Done();
         StateConfigurer.Create(Stop)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Wait, Stop).Done();
+            .SetTransition(CharacterStates.Wait, Wait).Done();
+        StateConfigurer.Create(Landing)
+    .SetTransition(CharacterStates.Moving, Moving)
+    .SetTransition(CharacterStates.Wait, Wait)
+    .SetTransition(CharacterStates.Stop, Stop).Done();
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
@@ -99,7 +106,7 @@ public class Character : MonoBehaviour
 
         Idle.OnEnter += x =>
         {
-            
+
             _currentState = CharacterStates.Idle;
             characterView.OnIdle();
             /*if (currentObjectivesQueue.Any())
@@ -112,9 +119,9 @@ public class Character : MonoBehaviour
             }*/
         };
 
-        Idle.OnUpdate += () => 
+        Idle.OnUpdate += () =>
         {
-          
+
         };
 
         Idle.OnExit += x => { };
@@ -139,12 +146,13 @@ public class Character : MonoBehaviour
 
             if (!_currentPath.Any())
             {
+                Debug.LogError("primero");
                 _eventFSM.SendInput(CharacterStates.Idle);
             }
-            else if(_currentPath.Count > 1)
+            else if (_currentPath.Count > 1)
             {
                 //Quita el primer nodo si no tiene evento necesario, y si el personaje esta mas cerca del segundo nodo, que el primero del segundo.
-                if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent && 
+                if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
                 _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
                 {
                     if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
@@ -170,8 +178,8 @@ public class Character : MonoBehaviour
             //Cambia la dirreccion del sprite.
             if (_currentPath.Any())
             {
-                
-                if(Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
+
+                if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
                 {
                     characterView.FlipCharacter(1);
                 }
@@ -193,16 +201,16 @@ public class Character : MonoBehaviour
             }
 
 
-            
+
         };
 
-        Moving.OnUpdate += () => 
+        Moving.OnUpdate += () =>
         {
-            
+
 
         };
         Moving.OnFixedUpdate += () =>
-        {            
+        {
             if (_currentPath.Any())
             {
                 if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset), transform.position) > .7f)
@@ -213,19 +221,19 @@ public class Character : MonoBehaviour
                 {
                     if (_currentPath.Count > 1)
                     {
-                        
+
                         var neighbour = _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First();
                         if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && neighbour.canDoEvent)
                         {
-                            
+
                             _currentPath.Remove(_currentPath.First());
                             neighbour.nodeEvent.Invoke();
                         }
                         else
                         {
-                            if(_currentPath.Count == 2)
+                            if (_currentPath.Count == 2)
                             {
-                                if(Vector2.Distance(CustomTools.ToVector2(transform.position), new Vector2(nextPosition.x,transform.position.y)) 
+                                if (Vector2.Distance(CustomTools.ToVector2(transform.position), new Vector2(nextPosition.x, transform.position.y))
                                 < Vector2.Distance(new Vector2(_currentPath.Last().transform.position.x, transform.position.y), new Vector2(nextPosition.x, transform.position.y)))
                                 {
                                     _currentPath.Remove(_currentPath.Last());
@@ -248,10 +256,10 @@ public class Character : MonoBehaviour
                     else if (_currentPath.Count == 1)
                     {
                         RaycastHit2D hit = Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
-                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition),10);
-               
-                        if (!hit) 
-                        {                            
+                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10);
+
+                        if (!hit)
+                        {
                             _goToNextPosition = true;
                             _currentPath.Remove(_currentPath.First());
 
@@ -266,14 +274,14 @@ public class Character : MonoBehaviour
                         }
                         else
                         {
-                             Debug.Log(hit.transform.gameObject);
+                            Debug.Log(hit.transform.gameObject);
                             _currentPath.Remove(_currentPath.First());
                         }
-                            
-                    }
-                    
 
-                    
+                    }
+
+
+
                 }
             }
             else
@@ -283,29 +291,31 @@ public class Character : MonoBehaviour
                     if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y), transform.position) > .3f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
-                  
-                        characterModel.Move(nextPosition);
-                        
+
+                        characterModel.Move2(nextPosition, _smoothSpeed);
+
                     }
                     else
                     {
                         _characterRigidbody.linearVelocity = Vector2.zero;
+                        Debug.LogError("segundo");
                         _eventFSM.SendInput(CharacterStates.Idle);
                     }
                 }
                 else
                 {
                     _characterRigidbody.linearVelocity = Vector2.zero;
+                    Debug.LogError("tercero");
                     _eventFSM.SendInput(CharacterStates.Idle);
                 }
 
             }
-            
+
         };
-        Moving.OnExit += x => 
+        Moving.OnExit += x =>
         {
             _goToNextPosition = false;
-        
+
         };
 
         #endregion
@@ -313,33 +323,12 @@ public class Character : MonoBehaviour
         #region WAIT STATE
 
         Wait.OnEnter += x =>
-        {            
+        {
             characterView.OnIdle();
             Debug.Log("Entro aca");
             _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Wait;
 
-            if (currentObjectivesQueue.Any())
-            {
-                if (currentObjectivesQueue.Peek().changeDirection)
-                {
-                    //characterView.FlipCharacter();
-                }
-
-                if (currentObjectivesQueue.Peek().hasEvent)
-                {
-                    currentObjectivesQueue.Peek().pointEvent.Invoke();
-                    currentObjectivesQueue.Dequeue();
-                }
-                else
-                {
-                    currentObjectivesQueue.Dequeue();
-                    _eventFSM.SendInput(CharacterStates.Moving);
-                }
-            }
-            
-            
-                        
 
         };
 
@@ -356,11 +345,37 @@ public class Character : MonoBehaviour
 
         #endregion
 
+
+        #region LANDING STATE
+
+        Landing.OnEnter += x =>
+        {
+            characterView.OnLand();
+
+            _characterRigidbody.linearVelocity = Vector2.zero;
+            _currentState = CharacterStates.Landing;
+
+
+        };
+
+        Landing.OnUpdate += () =>
+        {
+
+
+        };
+        Landing.OnFixedUpdate += () =>
+        {
+
+        };
+        Landing.OnExit += x => { };
+
+        #endregion
+
         #region JUMPING STATE
 
         Jumping.OnEnter += x =>
         {
-       //     _characterRigidbody.linearVelocity = Vector2.zero;
+            //     _characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
 
@@ -406,7 +421,7 @@ public class Character : MonoBehaviour
 
         _eventFSM.EnterFirstState();
 
-       
+
     }
 
     protected virtual void Start()
@@ -415,10 +430,10 @@ public class Character : MonoBehaviour
         _pathFinding = new CustomPathfinding(_obstacleLayerMask);
         _characterRigidbody = GetComponent<Rigidbody2D>();
         yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
-     
+
     }
 
-    
+
     public virtual void Update()
     {
         _eventFSM.Update();
@@ -432,7 +447,7 @@ public class Character : MonoBehaviour
     public void SendInputToFSM(CharacterStates newState)
     {
         _eventFSM.SendInput(newState);
-    }   
+    }
 
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
     {
@@ -442,28 +457,39 @@ public class Character : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(_currentState == CharacterStates.Jumping && collision.gameObject.layer == 6)
+
+
+        if (_currentState == CharacterStates.Jumping && ((1 << collision.gameObject.layer) & _walkableLayerMask) != 0)
         {
-            //_eventFSM.SendInput(CharacterStates.Moving);
-            characterView.OnLand();
-            StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
-            
+            _eventFSM.SendInput(CharacterStates.Landing);
+
+            if (!_currentPath.First().shouldWait)
+            {
+
+                StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+            }
+            else
+            {
+                StartCoroutine(SendInputToFSM(CharacterStates.Wait, 0.2f));
+            }
+
+
         }
-       
+
     }
 
     public bool GetPath(CustomNode goal, Vector2 nextPos)
     {
         nextPosition = nextPos;
-        CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);        
+        CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);
         _currentPath = _pathFinding.AStar(start, goal);
 
-        if(_currentPath.Count > 1 && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
+        if (_currentPath.Count > 1 && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
             > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition))
         {
             _currentPath = _currentPath.SkipLast(1).ToList();
         }
-        if(_currentPath.Any())
+        if (_currentPath.Any())
         {
             return true;
         }
@@ -492,8 +518,8 @@ public class Character : MonoBehaviour
         Debug.Log("Llego al salto");
         Character.instance.SendInputToFSM(CharacterStates.Jumping);
         _characterRigidbody.linearVelocity = Vector2.zero;
-     
-        Character.instance.characterModel.Jump(CustomTools.ToVector2(jumpPos.position), 1);
+
+        characterModel.Jump(CustomTools.ToVector2(jumpPos.position));
     }
 }
 
@@ -504,4 +530,5 @@ public enum CharacterStates
     Wait,
     Stop,
     Jumping,
+    Landing,
 }

@@ -31,7 +31,7 @@ public class SceneManager : MonoBehaviour
     Vector2 _clickPosition;
     [SerializeField] float _clickRayLength;
     [SerializeField] LayerMask _piso;
-
+    [SerializeField] LayerMask _interactables;
     [SerializeField]public List<CustomNode> nodes;
 
     bool gameTouch;
@@ -59,7 +59,7 @@ public class SceneManager : MonoBehaviour
     void Update()
     {
         
-        if(Input.touchCount > 0 && (Character.instance._currentState == CharacterStates.Idle || Character.instance._currentState == CharacterStates.Moving))
+        if(Input.touchCount > 0 && (Character.instance._currentState == CharacterStates.Idle || Character.instance._currentState == CharacterStates.Moving || Character.instance._currentState == CharacterStates.Wait))
         {
             UnityEngine.Touch touch = Input.GetTouch(0);
            
@@ -97,32 +97,42 @@ public class SceneManager : MonoBehaviour
                    
                     if (currentState == SceneStates.Game && gameTouch)
                     {
-                     
                         _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
-
-                        RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
-
-                        if (hit)
+                        Ray interactionRay = _sceneCamera.ScreenPointToRay(touchPosition);
+                        var interactionHit = Physics2D.OverlapCircle(_clickPosition, 1f,_interactables);
+                     
+                        if(interactionHit != null && interactionHit.gameObject.TryGetComponent(out IInteractable interactable))
                         {
+                            interactable.InteractWithPlayer();
+                        }
+                        else
+                        {
+                            RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
 
-                            CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);
-                            if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
+                            if (hit)
                             {
-                                Character.instance.SendInputToFSM(CharacterStates.Moving);
-                                sticker.transform.position = new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + .5f);
-                                sticker.SetActive(true);
+
+                                CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);
+                                if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
+                                {
+                                    Character.instance.SendInputToFSM(CharacterStates.Moving);
+                                    sticker.transform.position = new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + .5f);
+                                    sticker.SetActive(true);
+                                }
+                                else
+                                {
+                                    sticker.SetActive(false);
+
+                                }
+
                             }
                             else
                             {
                                 sticker.SetActive(false);
-                                
                             }
+                        }
 
-                        }
-                        else
-                        {
-                            sticker.SetActive(false);
-                        }
+                       
                     }
 
                     break;

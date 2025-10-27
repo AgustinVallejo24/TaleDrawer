@@ -13,7 +13,7 @@ public class Jump_InterestPoint : InterestPoint
     {
         Debug.Log("Llego al salto");
         Vector2 jumpPos = new Vector2(_jumpPosition.transform.position.x, _jumpPosition.transform.position.y);
-        Character.instance.characterModel.Jump(jumpPos,1);
+        Character.instance.characterModel.Jump(jumpPos);
     }
 
 }

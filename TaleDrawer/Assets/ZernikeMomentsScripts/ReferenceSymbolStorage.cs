@@ -19,7 +19,7 @@ public static class ReferenceSymbolStorage
 
         File.WriteAllText(path, json);
         Debug.Log("Symbols saved to: " + path);
-        AssetDatabase.Refresh();
+     //   AssetDatabase.Refresh();
     }
 
     public static List<ReferenceSymbol> LoadFromResources(string resourceName)
