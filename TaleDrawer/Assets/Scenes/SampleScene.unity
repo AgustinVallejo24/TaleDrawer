@@ -1481,13 +1481,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 227746982}
     m_Modifications:
+    - target: {fileID: 503564201833465491, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.4399996
+      objectReference: {fileID: 0}
+    - target: {fileID: 503564201833465491, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.98
+      objectReference: {fileID: 0}
     - target: {fileID: 647186638418315343, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.08
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2036036931726567688, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_Name
       value: Subibaja
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597466840325236047, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.98
       objectReference: {fileID: 0}
     - target: {fileID: 4699632461207539972, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: tpPoint
@@ -1612,7 +1624,7 @@ PrefabInstance:
     - target: {fileID: 7995920737830418347, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: neighbours.Array.data[0].nodeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1126369325}
+      objectReference: {fileID: 694803744}
     - target: {fileID: 7995920737830418347, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: neighbours.Array.data[1].nodeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -1647,7 +1659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9018691431641374852, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.02
+      value: -0.61
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2821,6 +2833,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &694803743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 694803744}
+  m_Layer: 0
+  m_Name: JumpDownPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &694803744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694803743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.33, y: 0.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1126369325}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &778559008
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,7 +4801,8 @@ Transform:
   m_LocalPosition: {x: 4.82, y: -2.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 694803744}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1139918658
@@ -5201,7 +5245,7 @@ MonoBehaviour:
   yPositionOffset: 0
   feetPosition: {fileID: 272336208}
   _currentPath: []
-  _characterRigidbody: {fileID: 1394210867}
+  characterRigidbody: {fileID: 1394210867}
   _animator: {fileID: 1806947318}
   _currentState: 0
   _characterSprite: {fileID: 1806947319}
@@ -5215,6 +5259,7 @@ MonoBehaviour:
   - {fileID: 852831087}
   sceneCamera: {fileID: 330585545}
   test: 1
+  subibaja: {fileID: 0}
 --- !u!50 &1394210867
 Rigidbody2D:
   serializedVersion: 5
@@ -6031,7 +6076,7 @@ Transform:
   m_GameObject: {fileID: 1564659397}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.02825, y: -2.56, z: 0.105639994}
+  m_LocalPosition: {x: -8.52, y: -2.56, z: 0.105639994}
   m_LocalScale: {x: 1.0663121, y: 1.1345778, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

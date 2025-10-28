@@ -3,10 +3,10 @@ using DG.Tweening;
 public class Robin : Character
 {
     public Sequence currentTween;
-    
+    public Subibaja subibaja;
     protected override void Awake()
     {
-        characterModel = new CharacterModel(this, _characterRigidbody);
+        characterModel = new CharacterModel(this, characterRigidbody);
         characterView = new CharacterView(this, _animator, _characterSprite);
         base.Awake();
     }
@@ -27,31 +27,20 @@ public class Robin : Character
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-        if (collision.TryGetComponent(out Subibaja subibaja))
+        if (collision.TryGetComponent(out Subibaja newSubibaja))
         {
-            if (subibaja.isMoving)
+            
+            if (newSubibaja.isMoving && _currentState != CharacterStates.Wait)
             {
                 Debug.LogError("entro");
-                _characterRigidbody.linearVelocity = Vector2.zero;
+                characterRigidbody.linearVelocity = Vector2.zero;
                 DOTween.Kill(transform);
                 _currentPath.Clear();
                 transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
                 SendInputToFSM(CharacterStates.Idle);
                 
             }
-            else
-            {
-                if(subibaja.myCharacter == null)
-                {
-                    Debug.LogError("aca tambien");
-                    subibaja.myCharacter = this;
-                    _characterRigidbody.linearVelocity = Vector2.zero;
-                    transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, subibaja.transform.rotation.z, transform.rotation.w);
-                    transform.parent = subibaja.transform;
-                }
 
-
-            }
         }
     }
 

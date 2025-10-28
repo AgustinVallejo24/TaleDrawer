@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class CharacterView
 {
     Character _character;
@@ -22,17 +22,20 @@ public class CharacterView
     {
         _anim.SetInteger("MovementState", 1);
         _anim.SetTrigger(_runTrigger);
+        _character.StartCoroutine(CustomResetTrigger(_runTrigger));
     }
 
     public void OnIdle()
     {
         _anim.SetInteger("MovementState", 0);
         _anim.SetTrigger(_idleTrigger);
+        _character.StartCoroutine(CustomResetTrigger(_idleTrigger));
     }
 
     public void OnLand()
     {
         _anim.SetTrigger(_landTrigger);
+        _character.StartCoroutine(CustomResetTrigger(_landTrigger));
     }
 
 
@@ -51,6 +54,13 @@ public class CharacterView
 
     public void OnJump()
     {
-        _anim.SetTrigger(_jumpTrigger);
+        _anim.SetTrigger(_jumpTrigger); 
+        _character.StartCoroutine(CustomResetTrigger(_jumpTrigger));
+        
+    }
+    public IEnumerator CustomResetTrigger(string triggerName)
+    {
+        yield return new WaitForSeconds(.3f);
+        _anim.ResetTrigger(triggerName);
     }
 }

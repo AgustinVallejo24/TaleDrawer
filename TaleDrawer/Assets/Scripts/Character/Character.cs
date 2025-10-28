@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
 
     #region References
 
-    [SerializeField] protected Rigidbody2D _characterRigidbody;
+    [SerializeField] public Rigidbody2D characterRigidbody;
     [SerializeField] protected Animator _animator;
     public CharacterStates _currentState;
     [SerializeField] protected SpriteRenderer _characterSprite;
@@ -146,7 +146,7 @@ public class Character : MonoBehaviour
 
             if (!_currentPath.Any())
             {
-                Debug.LogError("primero");
+                
                 _eventFSM.SendInput(CharacterStates.Idle);
             }
             else if (_currentPath.Count > 1)
@@ -216,12 +216,13 @@ public class Character : MonoBehaviour
                 if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset), transform.position) > .7f)
                 {
                     characterModel.Move2(_currentPath.First().transform.position, _smoothSpeed);
+              
                 }
                 else
                 {
                     if (_currentPath.Count > 1)
                     {
-
+                       
                         var neighbour = _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First();
                         if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && neighbour.canDoEvent)
                         {
@@ -257,7 +258,7 @@ public class Character : MonoBehaviour
                     {
                         RaycastHit2D hit = Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10);
-
+                   
                         if (!hit)
                         {
                             _goToNextPosition = true;
@@ -286,6 +287,7 @@ public class Character : MonoBehaviour
             }
             else
             {
+                Debug.LogError("cuarto");
                 if (_goToNextPosition)
                 {
                     if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y), transform.position) > .3f)
@@ -297,14 +299,14 @@ public class Character : MonoBehaviour
                     }
                     else
                     {
-                        _characterRigidbody.linearVelocity = Vector2.zero;
+                        characterRigidbody.linearVelocity = Vector2.zero;
                         Debug.LogError("segundo");
                         _eventFSM.SendInput(CharacterStates.Idle);
                     }
                 }
                 else
                 {
-                    _characterRigidbody.linearVelocity = Vector2.zero;
+                    characterRigidbody.linearVelocity = Vector2.zero;
                     Debug.LogError("tercero");
                     _eventFSM.SendInput(CharacterStates.Idle);
                 }
@@ -326,7 +328,7 @@ public class Character : MonoBehaviour
         {
             characterView.OnIdle();
             Debug.Log("Entro aca");
-            _characterRigidbody.linearVelocity = Vector2.zero;
+            characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Wait;
 
 
@@ -352,7 +354,7 @@ public class Character : MonoBehaviour
         {
             characterView.OnLand();
 
-            _characterRigidbody.linearVelocity = Vector2.zero;
+            characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Landing;
 
 
@@ -428,7 +430,7 @@ public class Character : MonoBehaviour
     {
         instance = this;
         _pathFinding = new CustomPathfinding(_obstacleLayerMask);
-        _characterRigidbody = GetComponent<Rigidbody2D>();
+        characterRigidbody = GetComponent<Rigidbody2D>();
         yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
 
     }
@@ -459,23 +461,27 @@ public class Character : MonoBehaviour
     {
 
 
-        if (_currentState == CharacterStates.Jumping && ((1 << collision.gameObject.layer) & _walkableLayerMask) != 0)
-        {
-            _eventFSM.SendInput(CharacterStates.Landing);
+        //if (_currentState == CharacterStates.Jumping && ((1 << collision.gameObject.layer) & _walkableLayerMask) != 0)
+        //{
+        //    _eventFSM.SendInput(CharacterStates.Landing);
 
-            if (!_currentPath.First().shouldWait)
-            {
+        //    if (!_currentPath.First().shouldWait)
+        //    {
 
-                StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
-            }
-            else
-            {
-                StartCoroutine(SendInputToFSM(CharacterStates.Wait, 0.2f));
-            }
+        //        StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+        //    }
+        //    else
+        //    {
+        //        StartCoroutine(SendInputToFSM(CharacterStates.Wait, 0.2f));
+        //    }
 
 
-        }
+        //}
 
+    }
+    public void ClearPath()
+    {
+        _currentPath.Clear();
     }
 
     public bool GetPath(CustomNode goal, Vector2 nextPos)
@@ -512,14 +518,22 @@ public class Character : MonoBehaviour
             return false;
         }
     }
+    public void Land()
+    {
+        _eventFSM.SendInput(CharacterStates.Landing);
 
+
+            StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+
+           
+    }
     public void Jump(Transform jumpPos)
     {
         Debug.Log("Llego al salto");
         Character.instance.SendInputToFSM(CharacterStates.Jumping);
-        _characterRigidbody.linearVelocity = Vector2.zero;
+        characterRigidbody.linearVelocity = Vector2.zero;
 
-        characterModel.Jump(CustomTools.ToVector2(jumpPos.position));
+        characterModel.Jump(CustomTools.ToVector2(jumpPos.position), Land);
     }
 }
 
