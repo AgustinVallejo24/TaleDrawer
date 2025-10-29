@@ -31,6 +31,7 @@ public class SceneManager : MonoBehaviour
     Vector2 _clickPosition;
     [SerializeField] float _clickRayLength;
     [SerializeField] LayerMask _piso;
+    [SerializeField] LayerMask _clickable;
     [SerializeField] LayerMask _interactables;
     [SerializeField]public List<CustomNode> nodes;
 
@@ -51,8 +52,9 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         _playerCFollowC = _playerCamera.GetComponent<CinemachineFollow>();
-        
-        
+        _clickRayLength = levelCharacter.transform.localScale.y * 2;
+
+
     }
 
     // Update is called once per frame
@@ -98,7 +100,6 @@ public class SceneManager : MonoBehaviour
                     if (currentState == SceneStates.Game && gameTouch)
                     {
                         _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
-                        Ray interactionRay = _sceneCamera.ScreenPointToRay(touchPosition);
                         var interactionHit = Physics2D.OverlapCircle(_clickPosition, 1f,_interactables);
                      
                         if(interactionHit != null && interactionHit.gameObject.TryGetComponent(out IInteractable interactable))
@@ -107,8 +108,12 @@ public class SceneManager : MonoBehaviour
                         }
                         else
                         {
-                            RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
+                            var hit2 = Physics2D.OverlapCircle(_clickPosition, .2f, _clickable);
+                          
+                            if (!hit2) return;
 
+                            RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
+                          
                             if (hit)
                             {
 
@@ -116,7 +121,8 @@ public class SceneManager : MonoBehaviour
                                 if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
                                 {
                                     Character.instance.SendInputToFSM(CharacterStates.Moving);
-                                    sticker.transform.position = new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + .5f);
+                                    
+                                    sticker.transform.position = _clickPosition;
                                     sticker.SetActive(true);
                                 }
                                 else

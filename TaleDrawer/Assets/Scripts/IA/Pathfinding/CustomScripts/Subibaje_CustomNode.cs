@@ -34,6 +34,7 @@ public class Subibaje_CustomNode : CustomNode
         _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, subibaja.transform.rotation.z, transform.rotation.w);
         _myCharacter.transform.parent = subibaja.transform;
+        subibaja.hasPlayer = true;
         StartCoroutine(_myCharacter.SendInputToFSM(CharacterStates.Wait, 0.2f));
 
     }
@@ -42,6 +43,7 @@ public class Subibaje_CustomNode : CustomNode
         Debug.LogError("Entro al nuevo jump");
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
         _myCharacter.transform.parent = null;
+        subibaja.hasPlayer = false;
         _myCharacter.Jump(jumpPos);
     }
 
@@ -49,22 +51,16 @@ public class Subibaje_CustomNode : CustomNode
     {
         if(value == 0)
         {
-            var lowerNode = neighbours[0];
-            lowerNode.canDoEvent = true;
-            neighbours[0] = lowerNode;
-            var upperNode = neighbours[1];
-            upperNode.canDoEvent = false;
-            neighbours[1] = upperNode;
+            SetCanDoEvent(neighbours[0].node, true);
+            SetCanDoEvent(neighbours[1].node, false);
+
 
         }
         if (value == 1)
         {
-            var lowerNode = neighbours[1];
-            lowerNode.canDoEvent = true;
-            neighbours[1] = lowerNode;
-            var upperNode = neighbours[0];
-            upperNode.canDoEvent = false;
-            neighbours[0] = upperNode;
+            SetCanDoEvent(neighbours[1].node, true);
+            SetCanDoEvent(neighbours[0].node, false);
+
         }
 
     }

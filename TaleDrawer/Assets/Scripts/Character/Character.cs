@@ -213,9 +213,11 @@ public class Character : MonoBehaviour
         {
             if (_currentPath.Any())
             {
-                if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset), transform.position) > .7f)
+              
+                if (Mathf.Abs(_currentPath.First().transform.position.x - transform.position.x) > .4f || Mathf.Abs(_currentPath.First().transform.position.y - transform.position.y) > 3f)
                 {
                     characterModel.Move2(_currentPath.First().transform.position, _smoothSpeed);
+                
               
                 }
                 else
@@ -290,7 +292,8 @@ public class Character : MonoBehaviour
                 Debug.LogError("cuarto");
                 if (_goToNextPosition)
                 {
-                    if (Vector2.Distance(new Vector2(nextPosition.x, nextPosition.y), transform.position) > .3f)
+                   
+                    if (Mathf.Abs(nextPosition.x - transform.position.x) > .4f || Mathf.Abs(nextPosition.y - transform.position.y) > 3f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
 
@@ -511,6 +514,7 @@ public class Character : MonoBehaviour
 
         if (_currentPath.Any())
         {
+            nextPosition = goal.transform.position;
             return true;
         }
         else

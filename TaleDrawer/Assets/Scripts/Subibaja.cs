@@ -16,9 +16,12 @@ public class Subibaja : MonoBehaviour, IInteractable
 
     public Collider2D characterDetector;
     public bool isMoving;
+    public bool hasPlayer;
 
     [SerializeField] Subibaje_CustomNode _leftNode;
     [SerializeField] Subibaje_CustomNode _rightNode;
+    [SerializeField] CustomNode _entryLeftNode;
+    [SerializeField] CustomNode _entryRightNode;
     private void Start()
     {
         if (left)
@@ -93,19 +96,67 @@ public class Subibaja : MonoBehaviour, IInteractable
     {
         Debug.LogError("SDAD");
         Character character = Character.instance;
-        character.GetPath(_leftNode);
+        if (hasPlayer)
+        {
+            if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
+            {
+                character.GetPath(_leftNode);
+              
+            }
+            else
+            {
+                character.GetPath(_rightNode);
+            }
+        }
+        else
+        {
+            if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
+            {
+                character.GetPath(_rightNode);
+            }
+            else
+            {
+                character.GetPath(_leftNode);
+                
+            }
+        }
+
+      
         character.SendInputToFSM(CharacterStates.Moving);
         
     }
 
 
+
     public void ChangeLeftNeightbours(int value)
     {
         _leftNode.SetNeghtboursBool(value);
+        var newNeightbour = _entryLeftNode.neighbours[1];
+        if (value == 0)
+        {       
+            newNeightbour.canDoEvent = true;
+        }
+        else
+        {
+            newNeightbour.canDoEvent = false;
+        }
+        _entryLeftNode.neighbours[1] = newNeightbour;
+
     }
     public void ChangeRightNeightbours(int value)
     {
         _rightNode.SetNeghtboursBool(value);
+        var newNeightbour = _entryLeftNode.neighbours[0];
+        if (value == 0)
+        {
+            _entryLeftNode.SetCanDoEvent(_entryLeftNode.neighbours[0].node, true);
+        }
+        else
+        {
+            _entryLeftNode.SetCanDoEvent(_entryLeftNode.neighbours[0].node, false);
+        }
+     
+
     }
 }
 

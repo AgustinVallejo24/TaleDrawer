@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class CustomNode : MonoBehaviour
 {
@@ -25,6 +26,16 @@ public class CustomNode : MonoBehaviour
     public void Jump()
     {
         Character.instance.Jump(_jumpPosition.transform);
+    }
+
+    public void SetCanDoEvent(CustomNode customNode, bool value)
+    {
+        int index = neighbours.FindIndex(x => x.node == customNode);
+        if (index == -1) return;
+
+        var neighbour = neighbours[index];
+        neighbour.canDoEvent = value;
+        neighbours[index] = neighbour;
     }
 }
 
