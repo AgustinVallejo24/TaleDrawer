@@ -56,6 +56,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -77,6 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
@@ -104,9 +107,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneCamera: {fileID: 0}
-  myType: 0
+  myType: 1
   objectIsTrigger: 0
   objectUseGravity: 1
+  _mySpriteRenderer: {fileID: 3377796616050356430}
+  _interactuables:
+    serializedVersion: 2
+    m_Bits: 2048
+  _intrectableName: 
 --- !u!61 &3094319763697518091
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -249,6 +257,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+--- !u!212 &3377796616050356430 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+  m_PrefabInstance: {fileID: 2463512680086637237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6408505383317211065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8853991155800542476, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}

@@ -22,12 +22,12 @@ public class SpawnableManager : MonoBehaviour
 }
 
 [System.Serializable]
-
-
+[Flags]
 public enum SpawnableObjectType
 {
-    None,
-    Caja,
-    Soga,
-    Character
+    None = 0,
+    Caja = 1 << 0,
+    Soga = 1 << 1,
+    Character = 1 << 2,
+    All = ~0
 }
