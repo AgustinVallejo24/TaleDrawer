@@ -33,10 +33,14 @@ public class CharacterModel
         Vector2 direction = (jumpPosition - CustomTools.ToVector2(_myCharacter.transform.position)).normalized * horizontalJumpForce + Vector2.up * verticalJumpForce;
         _myRigidbody.AddForce(direction, ForceMode2D.Impulse);
     }
-    public void Jump(Vector2 jumpPosition, Action onComplete = null)
+    public void Jump(Vector2 jumpPosition, Action onComplete = null, bool toJumpingState = true)
     {
         float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
-        _myCharacter.SendInputToFSM(CharacterStates.Jumping);
+
+        if (toJumpingState)
+        {
+            _myCharacter.SendInputToFSM(CharacterStates.Jumping);
+        }        
 
         if (Mathf.Sign(jumpPosition.x - _myCharacter.transform.position.x) > 0)
         {

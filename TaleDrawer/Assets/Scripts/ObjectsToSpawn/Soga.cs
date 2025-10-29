@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Soga : SpawningObject, IInteractable
 {
-    public CustomNode _upperNode;
-    public CustomNode _lowerNode;
+    [SerializeField] Hook hook;
+    public Transform upperPoint;
+    public Transform lowerPoint;
 
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
@@ -22,6 +23,9 @@ public class Soga : SpawningObject, IInteractable
 
     public void InteractWithPlayer()
     {
-        
+        if(_currentInteractuable != null)
+        {
+            _currentInteractuable.InteractWithPlayer();
+        }
     }
 }

@@ -73,6 +73,8 @@ public class Character : MonoBehaviour
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
         var Landing = new StateE<CharacterStates>("Landing");
+        var OnRope = new StateE<CharacterStates>("OnRope");
+        var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .Done();
@@ -80,7 +82,8 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
             //.SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Jumping, Jumping).Done();
+            .SetTransition(CharacterStates.Jumping, Jumping)
+            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
@@ -96,9 +99,13 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Wait, Wait).Done();
         StateConfigurer.Create(Landing)
-    .SetTransition(CharacterStates.Moving, Moving)
-    .SetTransition(CharacterStates.Wait, Wait)
-    .SetTransition(CharacterStates.Stop, Stop).Done();
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Stop, Stop).Done();
+        StateConfigurer.Create(OnRope)           
+           .SetTransition(CharacterStates.Jumping, Jumping).Done();
+        StateConfigurer.Create(JumpingToRope)
+           .SetTransition(CharacterStates.OnRope, OnRope).Done();
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
@@ -402,6 +409,50 @@ public class Character : MonoBehaviour
 
         #endregion
 
+        #region ONROPE STATE
+
+        OnRope.OnEnter += x =>
+        {            
+            _currentState = CharacterStates.OnRope;
+            
+
+        };
+
+        OnRope.OnUpdate += () =>
+        {
+            
+
+        };
+        OnRope.OnFixedUpdate += () =>
+        {
+
+        };
+        OnRope.OnExit += x => { };
+
+        #endregion
+
+        #region JUMPINGTOROPE STATE
+
+        OnRope.OnEnter += x =>
+        {
+            _currentState = CharacterStates.JumpingToRope;
+
+
+        };
+
+        OnRope.OnUpdate += () =>
+        {
+
+
+        };
+        OnRope.OnFixedUpdate += () =>
+        {
+
+        };
+        OnRope.OnExit += x => { };
+
+        #endregion
+
         #region STOP STATE
 
         Stop.OnEnter += x =>
@@ -549,4 +600,6 @@ public enum CharacterStates
     Stop,
     Jumping,
     Landing,
+    OnRope,
+    JumpingToRope,
 }

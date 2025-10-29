@@ -58,9 +58,31 @@ public class CharacterView
         _character.StartCoroutine(CustomResetTrigger(_jumpTrigger));
         
     }
+
+    public void OnJumpingToRope()
+    {
+
+    }
+
+    public void OnRopeClimbing()
+    {
+
+    }
+
+    public void OnWaitingForRopeMovement()
+    {
+
+    }
+
+    public void OnExitingRope()
+    {
+
+    }
+
     public IEnumerator CustomResetTrigger(string triggerName)
     {
         yield return new WaitForSeconds(.3f);
         _anim.ResetTrigger(triggerName);
     }
+
 }
