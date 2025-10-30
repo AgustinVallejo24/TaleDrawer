@@ -82,12 +82,12 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
             //.SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
+            .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Jumping, Jumping).Done();
+            .SetTransition(CharacterStates.Jumping, Jumping)
+            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
         StateConfigurer.Create(Jumping)
             .SetTransition(CharacterStates.Idle, Idle)
              .SetTransition(CharacterStates.Wait, Wait)

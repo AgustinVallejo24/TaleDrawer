@@ -8,7 +8,7 @@ public class CustomNode : MonoBehaviour
 {
     ///public List<CustomNode> neighbours;    
     public List<NeighbouringNodesAndActions> neighbours;
-    [SerializeField] GameObject _jumpPosition;
+    [SerializeField] public GameObject _jumpPosition;
     public bool shouldWait;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

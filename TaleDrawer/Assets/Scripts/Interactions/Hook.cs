@@ -26,6 +26,11 @@ public class Hook : MonoBehaviour, IInteractable
         if (_posibleObjects.HasFlag(spawningObject.myType))
         {
             _attachedObject = spawningObject;
+            if(_attachedObject._myrb != null)
+            {
+                _attachedObject._myrb.gravityScale = 0;
+            }
+            _attachedObject._myColl.isTrigger = true;
             _attachedObject.gameObject.layer = 11;
             _attachedObject.transform.position = new Vector2(_hitch.transform.position.x, _hitch.transform.position.y - _attachedObject.transform.localScale.y);
             _lowerNode.SetCanDoEvent(_upperNode, true);
@@ -46,7 +51,7 @@ public class Hook : MonoBehaviour, IInteractable
     public void InteractWithPlayer()
     {
         Debug.LogError(_attachedObject.name);
-        if (Vector3.Distance(_character.transform.position, _upperNode.transform.position) > (Vector3.Distance(_character.transform.position, _lowerNode.transform.position)))
+        if (Mathf.Abs(_character.transform.position.y - _upperNode.transform.position.y) > Mathf.Abs(_character.transform.position.y - _lowerNode.transform.position.y))
         {
             _character.GetPath(_upperNode);
         }
@@ -58,15 +63,20 @@ public class Hook : MonoBehaviour, IInteractable
         _character.SendInputToFSM(CharacterStates.Moving);
     }
 
-    public void RopeMovement(Transform pointI, Transform pointF)
+    public void RopeMovement(Transform pointI, Transform pointF, Soga soga)
     {
         _character.SendInputToFSM(CharacterStates.OnRope);
-
+        soga.OnHasPlayer();
         _character.transform.DOMoveY(pointF.position.y, pointF.position.y - pointI.position.y)
-            .OnComplete(() => { _character.characterModel.Jump(_upperNode.transform.position, () => { _character.SendInputToFSM(CharacterStates.Wait); _character.characterRigidbody.gravityScale = 1; }, false);
-                _character.characterView.OnExitingRope();});
+            .OnComplete(() => { _character.characterModel.Jump(_upperNode._jumpPosition.transform.position, () => { _character.SendInputToFSM(CharacterStates.Wait); _character.characterRigidbody.gravityScale = 1; }, false);
+                _character.characterView.OnExitingRope(); _character.ClearPath(); soga.OnHasNotPlayer();
+            });
     }
 
+    public void StartRopeEvent()
+    {
+        StartCoroutine(IGetOnRope());
+    }
     public void GetOnRope()
     {
         if(_attachedObject.TryGetComponent(out Soga soga))
@@ -74,16 +84,24 @@ public class Hook : MonoBehaviour, IInteractable
             _character.SendInputToFSM(CharacterStates.JumpingToRope);
             _character.characterModel.Jump(soga.lowerPoint.position, 
                 () => { _character.characterRigidbody.gravityScale = 0; _character.characterView.OnWaitingForRopeMovement();
-                    StartCoroutine(StartRopeMovement(soga.lowerPoint, soga.upperPoint)); }, false);
+                    StartCoroutine(StartRopeMovement(soga.lowerPoint, soga.upperPoint, soga)); }, false);
         }
         
     }
 
-    IEnumerator StartRopeMovement(Transform p1, Transform p2)
+    IEnumerator StartRopeMovement(Transform p1, Transform p2, Soga soga)
     {
-        yield return new WaitForSeconds(0.5f);
+        _character.transform.DOKill();
+        yield return new WaitForSeconds(0.2f);
+        RopeMovement(p1, p2, soga);
+    }
 
-        RopeMovement(p1, p2);
+    public IEnumerator IGetOnRope()
+    {
+        _character.SendInputToFSM(CharacterStates.Wait);
+        yield return new WaitForSeconds(0.2f);
+
+        GetOnRope();
     }
     
 }

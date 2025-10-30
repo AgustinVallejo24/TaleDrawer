@@ -5,6 +5,7 @@ public class Soga : SpawningObject, IInteractable
     [SerializeField] Hook hook;
     public Transform upperPoint;
     public Transform lowerPoint;
+    [SerializeField] Animator _myAnim;
 
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
@@ -27,5 +28,17 @@ public class Soga : SpawningObject, IInteractable
         {
             _currentInteractuable.InteractWithPlayer();
         }
+    }
+
+    public void OnHasPlayer()
+    {
+        _myAnim.ResetTrigger("HasNotPlayer");
+        _myAnim.SetTrigger("HasPlayer");
+    }
+
+    public void OnHasNotPlayer()
+    {
+        _myAnim.ResetTrigger("HasPlayer");
+        _myAnim.SetTrigger("HasNotPlayer");
     }
 }
