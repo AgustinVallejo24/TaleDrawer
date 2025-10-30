@@ -71,6 +71,7 @@ public class CharacterModel
 
         if (distance <= stopThreshold)
         {
+          
             // Si estamos cerca, detenemos el personaje inmediatamente y salimos.
             _myRigidbody.linearVelocity = Vector2.zero;
             return;

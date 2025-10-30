@@ -8,20 +8,21 @@ public class Subibaje_CustomNode : CustomNode
     [SerializeField] Subibaja subibaja;
     [SerializeField] bool left;
 
-
+    private RelativeJoint2D joint;
     protected override void Start()
     {
         base.Start();
-
+        goalDelegate = subibaja.CreateJoint;
      
     }
     public void GetOnSubibaja()
     {
-        if (subibaja.left && left)
+        Debug.LogError("GETONSUBI");
+        if (left && subibaja.left)
         {
             _myCharacter.characterModel.Jump(subibaja.sides[0].position, ConfigurePlayer);
         }
-        else if (!subibaja.left && !left)
+        else if(!left && !subibaja.left)
         {
             _myCharacter.characterModel.Jump(subibaja.sides[1].position, ConfigurePlayer);
         }
@@ -29,13 +30,26 @@ public class Subibaje_CustomNode : CustomNode
 
     public void ConfigurePlayer()
     {
-        _myCharacter.ClearPath();
+
+
         _myCharacter.characterView.OnLand();
-        _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, subibaja.transform.rotation.z, transform.rotation.w);
         _myCharacter.transform.parent = subibaja.transform;
+        //   _myCharacter.characterRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX;
+       // subibaja.CreateJoint(_myCharacter.GetComponent<Rigidbody2D>());
+
         subibaja.hasPlayer = true;
-        StartCoroutine(_myCharacter.SendInputToFSM(CharacterStates.Wait, 0.2f));
+        if (_myCharacter.GetLastPathNode() == this)
+        {
+            goalDelegate?.Invoke();
+            _myCharacter.ClearPath();
+            StartCoroutine(_myCharacter.SendInputToFSM(CharacterStates.Wait, 0.2f));
+        }
+        else
+        {
+            StartCoroutine(_myCharacter.SendInputToFSM(CharacterStates.Moving, 0.2f));
+        }
+        
 
     }
     public void NewJump(Transform jumpPos)
@@ -43,25 +57,14 @@ public class Subibaje_CustomNode : CustomNode
         Debug.LogError("Entro al nuevo jump");
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
         _myCharacter.transform.parent = null;
+        Destroy(subibaja.myJoint);
         subibaja.hasPlayer = false;
         _myCharacter.Jump(jumpPos);
     }
-
-    public void SetNeghtboursBool(int value)
+    public void SetNeghtboursBool(CustomNode node,bool value)
     {
-        if(value == 0)
-        {
-            SetCanDoEvent(neighbours[0].node, true);
-            SetCanDoEvent(neighbours[1].node, false);
-
-
-        }
-        if (value == 1)
-        {
-            SetCanDoEvent(neighbours[1].node, true);
-            SetCanDoEvent(neighbours[0].node, false);
-
-        }
-
+        if (node == null) return;
+         SetCanDoEvent(node, true);
     }
+
 }

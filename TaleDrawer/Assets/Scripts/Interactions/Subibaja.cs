@@ -20,29 +20,56 @@ public class Subibaja : MonoBehaviour, IInteractable
 
     [SerializeField] Subibaje_CustomNode _leftNode;
     [SerializeField] Subibaje_CustomNode _rightNode;
-    [SerializeField] CustomNode _entryLeftNode;
-    [SerializeField] CustomNode _entryRightNode;
+    [SerializeField] CustomNode _entryLeftLowerNode;
+    [SerializeField] CustomNode _entryRightLowerNode;
+    [SerializeField] CustomNode _entryLeftUpperNode;
+    [SerializeField] CustomNode _entryRightUpperNode;
+    public NewSerializableDictionary<SubibajaStates, float> weightState = new NewSerializableDictionary<SubibajaStates, float>();
+    public SubibajaStates currentState;
+    public float weightThreshold;
+    [SerializeField] List<GameObject> currentObjects;
+    public RelativeJoint2D myJoint;
+    float currentZRot;
     private void Start()
     {
-        if (left)
+        //if (left)
+        //{
+        //    rightCollider.enabled = true;
+        //    leftCollider.enabled = false;
+        //}
+        //else
+        //{
+        //    rightCollider.enabled = false;
+        //    leftCollider.enabled = true;
+        //}
+        
+    }
+    private void Update()
+    {
+        currentZRot = transform.localEulerAngles.z;
+
+   
+        if(currentZRot < 17 && currentZRot > 9 && !left)
         {
-            rightCollider.enabled = true;
-            leftCollider.enabled = false;
+            left = true;
+            ChangeLeftNeightbours(0);
+            ChangeRightNeightbours(1);
         }
-        else
+        else if(currentZRot > 343 && currentZRot < 351 && left)
         {
-            rightCollider.enabled = false;
-            leftCollider.enabled = true;
+            left = false;
+            ChangeLeftNeightbours(1);
+            ChangeRightNeightbours(0);
         }
     }
     public void Interact(SpawningObject interactor)
     {
-        
+
     }
 
     public void OnMovingStateChange(bool sign)
     {
-        if(myCharacter == null)
+        if (myCharacter == null)
         {
             characterDetector.enabled = sign;
             isMoving = sign;
@@ -51,45 +78,111 @@ public class Subibaja : MonoBehaviour, IInteractable
 
 
     }
+
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
-       if(objectType == SpawnableObjectType.Caja)
-        {
 
-            var closest = sides.OrderBy(x => Vector2.Distance(x.position, interactor.transform.position)).First();
-            if (closest == sides[0] && left)
-            {
-                Debug.LogError("aaaaaaaa");
-                Destroy(interactor);
-            }
-            else if (closest == sides[1] && left)
-            {
-                //interactor.transform.position = sides[1].position;
-                
-                animator.SetTrigger("Switch");
-                interactor.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-                interactor.transform.parent = this.transform;
-                rightCollider.enabled = true;
-                leftCollider.enabled = false;
-                left = false;
-            }
-            else if (closest == sides[1] && !left)
-            {
-                Destroy(interactor);
-            }
-            else
-            {
-                rightCollider.enabled = false;
-                leftCollider.enabled = true;
-                animator.SetTrigger("Switch");
-                left = true;
-            }
+        interactor.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+
+        //if (!interactor.TryGetComponent<SpawningObject>(out SpawningObject myObject) || currentObjects.Contains(interactor)) return;
+
+        //float objectWeight = myObject.weight;
+
+        //if (objectWeight < weightThreshold) return;
+        //myObject.interactableDelegate += AddWeight;
+        //currentObjects.Add(interactor);
+
+        //var closest = sides.OrderBy(x => Vector2.Distance(x.position, interactor.transform.position)).First();
+        //if (closest == sides[0])
+        //{
+
+        //    weightState[SubibajaStates.Left] = weightState[SubibajaStates.Left] + objectWeight;
+        //    interactor.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        //    interactor.transform.parent = this.transform;
+
+
+
+        //}
+        //else if (closest == sides[1])
+        //{
+        //    weightState[SubibajaStates.Right] = weightState[SubibajaStates.Right] + objectWeight;
+        //    interactor.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        //    interactor.transform.parent = this.transform;
+
+        //}
+        //CheckWeight();
+
+    }
+    private void FixedUpdate()
+    {
+        if (hasPlayer)
+        {
+            myCharacter.transform.rotation = transform.rotation;
         }
     }
+    public void CheckWeight()
+    {
+        switch (currentState)
+        {
+            case SubibajaStates.Left:
+                if (weightState[SubibajaStates.Left] > weightState[SubibajaStates.Right])
+                {
 
+                }
+                else if (weightState[SubibajaStates.Left] == weightState[SubibajaStates.Right])
+                {
+                    currentState = SubibajaStates.Middle;
+                    animator.SetTrigger("SwitchMiddle");
+                }
+                else
+                {
+                    currentState = SubibajaStates.Right;
+                    animator.SetTrigger("SwitchRight");
+                }
+
+                break;
+            case SubibajaStates.Right:
+
+                if (weightState[SubibajaStates.Left] > weightState[SubibajaStates.Right])
+                {
+                    currentState = SubibajaStates.Left;
+                    animator.SetTrigger("SwitchLeft");
+                }
+                else if (weightState[SubibajaStates.Left] == weightState[SubibajaStates.Right])
+                {
+                    currentState = SubibajaStates.Middle;
+                    animator.SetTrigger("SwitchMiddle");
+                }
+                else
+                {
+
+                }
+                break;
+            case SubibajaStates.Middle:
+
+                if (weightState[SubibajaStates.Left] > weightState[SubibajaStates.Right])
+                {
+                    currentState = SubibajaStates.Left;
+                    animator.SetTrigger("SwitchLeft");
+                }
+                else if (weightState[SubibajaStates.Left] == weightState[SubibajaStates.Right])
+                {
+
+                }
+                else
+                {
+                    currentState = SubibajaStates.Right;
+                    animator.SetTrigger("SwitchRight");
+                }
+
+                break;
+            default:
+                break;
+        }
+    }
     public void Interact(GameObject interactor)
     {
-     
+
     }
 
     public void InteractWithPlayer()
@@ -101,11 +194,12 @@ public class Subibaja : MonoBehaviour, IInteractable
             if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
             {
                 character.GetPath(_leftNode);
-              
+                Destroy(myJoint);
             }
             else
             {
                 character.GetPath(_rightNode);
+                Destroy(myJoint);
             }
         }
         else
@@ -117,46 +211,85 @@ public class Subibaja : MonoBehaviour, IInteractable
             else
             {
                 character.GetPath(_leftNode);
-                
+
             }
         }
 
-      
+
         character.SendInputToFSM(CharacterStates.Moving);
-        
+
     }
 
+    public void AddWeight(float weightToAdd, GameObject myObject)
+    {
+        var closest = sides.OrderBy(x => Vector2.Distance(x.position, myObject.transform.position)).First();
+        if (closest == sides[0])
+        {
+            Mathf.Clamp(weightState[SubibajaStates.Left] + weightToAdd, 0, Mathf.Infinity);
+            weightState[SubibajaStates.Left] = weightState[SubibajaStates.Left] + weightToAdd;
+        }
+        else if (closest == sides[1])
+        {
+            weightState[SubibajaStates.Right] = weightState[SubibajaStates.Right] + weightToAdd;
+        }
+        currentObjects.Remove(myObject);
 
+        CheckWeight();
+    }
 
+    public void CreateJoint()
+    {
+        Debug.LogError("EntroACACACACA");
+        myJoint = gameObject.AddComponent<RelativeJoint2D>();
+        myJoint.connectedBody = myCharacter.characterRigidbody;
+        myJoint.autoConfigureOffset = true;
+
+        // Ajustes recomendados
+        myJoint.maxForce = 1000f;   // cuán fuerte lo “pega”
+        myJoint.maxTorque = 10;
+        myJoint.enableCollision = true;
+        hasPlayer = true;
+    }
+    public void DestroyJoint()
+    {
+        Destroy(myJoint);
+    }
     public void ChangeLeftNeightbours(int value)
     {
-        _leftNode.SetNeghtboursBool(value);
-        var newNeightbour = _entryLeftNode.neighbours[1];
+       
         if (value == 0)
-        {       
-            newNeightbour.canDoEvent = true;
+        {
+            _leftNode.SetNeghtboursBool(_entryLeftLowerNode, true);
+            _leftNode.SetNeghtboursBool(_entryLeftUpperNode, false);
         }
         else
         {
-            newNeightbour.canDoEvent = false;
+            _leftNode.SetNeghtboursBool(_entryLeftLowerNode, false);
+            _leftNode.SetNeghtboursBool(_entryLeftUpperNode, true);
         }
-        _entryLeftNode.neighbours[1] = newNeightbour;
+    
 
     }
     public void ChangeRightNeightbours(int value)
     {
-        _rightNode.SetNeghtboursBool(value);
-        var newNeightbour = _entryLeftNode.neighbours[0];
         if (value == 0)
         {
-            _entryLeftNode.SetCanDoEvent(_entryLeftNode.neighbours[0].node, true);
+            _rightNode.SetNeghtboursBool(_entryLeftLowerNode, true);
+            _rightNode.SetNeghtboursBool(_entryLeftUpperNode, false);
         }
         else
         {
-            _entryLeftNode.SetCanDoEvent(_entryLeftNode.neighbours[0].node, false);
+            _rightNode.SetNeghtboursBool(_entryLeftLowerNode, false);
+            _rightNode.SetNeghtboursBool(_entryLeftUpperNode, true);
         }
-     
+
 
     }
 }
 
+public enum SubibajaStates
+{
+    Left,
+    Right,
+    Middle,
+}

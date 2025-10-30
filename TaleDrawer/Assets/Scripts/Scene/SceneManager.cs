@@ -117,7 +117,7 @@ public class SceneManager : MonoBehaviour
                             if (hit)
                             {
 
-                                CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes);
+                                CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes.Where(x => x.isClickable == true).ToList());
                                 if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
                                 {
                                     Character.instance.SendInputToFSM(CharacterStates.Moving);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6221211027025981203}
   - component: {fileID: 3094319763697518091}
   - component: {fileID: 2840643262149740278}
+  - component: {fileID: 8770176681822110558}
   m_Layer: 7
   m_Name: Caja
   m_TagString: Untagged
@@ -108,13 +109,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneCamera: {fileID: 0}
   myType: 1
+  _myColl: {fileID: 0}
   objectIsTrigger: 0
+  _myrb: {fileID: 0}
   objectUseGravity: 1
   _mySpriteRenderer: {fileID: 3377796616050356430}
   _interactuables:
     serializedVersion: 2
     m_Bits: 2048
   _intrectableName: 
+  weight: 1.5
+  _objectMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &3094319763697518091
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +138,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -173,7 +180,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 4
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -188,6 +195,52 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &8770176681822110558
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359451980149846497}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 8055
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: -0.38}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &2463512680086637237
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 363733822532044883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.44, y: 0.52, z: 0}
+  m_LocalPosition: {x: -2.4399996, y: 0.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -127,7 +127,7 @@ Transform:
   m_GameObject: {fileID: 5452563917761855919}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.03, y: -0.019999862, z: 0}
+  m_LocalPosition: {x: 0.03, y: -0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -177,7 +177,7 @@ Transform:
   m_GameObject: {fileID: 6873689088784431009}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33, y: 0.54, z: 0}
+  m_LocalPosition: {x: 2.33, y: 0.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 7601641054257449698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -232,7 +232,37 @@ MonoBehaviour:
   - node: {fileID: 0}
     nodeEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7995920737830418347}
+          m_TargetAssemblyTypeName: Subibaje_CustomNode, Assembly-CSharp
+          m_MethodName: NewJump
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    canDoEvent: 1
+    cost: 0
+  - node: {fileID: 0}
+    nodeEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7995920737830418347}
+          m_TargetAssemblyTypeName: Subibaje_CustomNode, Assembly-CSharp
+          m_MethodName: NewJump
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     canDoEvent: 0
     cost: 0
   _jumpPosition: {fileID: 0}
@@ -389,8 +419,16 @@ MonoBehaviour:
   tpPoint: {fileID: 0}
   characterDetector: {fileID: 9011962693711939100}
   isMoving: 0
+  hasPlayer: 0
   _leftNode: {fileID: 7995920737830418347}
   _rightNode: {fileID: 457550691370889520}
+  _entryLeftNode: {fileID: 0}
+  _entryRightNode: {fileID: 0}
+  weightState:
+    keyValuePairs: []
+  currentState: 0
+  weightThreshold: 0
+  currentObjects: []
 --- !u!61 &8775810046938219561
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -563,7 +601,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -2.802639, y: 0.06126702}
+  m_Offset: {x: -3.32, y: -0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -573,7 +611,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.6279583, y: 1.5826645}
+  m_Size: {x: 0.33, y: 2.63}
   m_EdgeRadius: 0
 --- !u!61 &1624619182799764788
 BoxCollider2D:

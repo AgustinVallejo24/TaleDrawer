@@ -1,14 +1,14 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System;
 public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Camera sceneCamera;    
     public SpawnableObjectType myType;
-    Collider2D _myColl;
+    public Collider2D _myColl;
     public bool objectIsTrigger;
-    Rigidbody2D _myrb;
+    public Rigidbody2D _myrb;
     public bool objectUseGravity;
     [SerializeField] SpriteRenderer _mySpriteRenderer;
     [SerializeField] LayerMask _interactuables;
@@ -17,7 +17,8 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     Color _originalColor;
     bool _first = true;
     bool _second = true;
-
+    public float weight;
+    public Action<float, GameObject> interactableDelegate;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

@@ -250,6 +250,8 @@ public class Character : MonoBehaviour
                                     _goToNextPosition = true;
                                 }
                             }
+
+
                             _currentPath.Remove(_currentPath.First());
 
                             if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
@@ -267,10 +269,25 @@ public class Character : MonoBehaviour
                     {
                         RaycastHit2D hit = Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10);
-                   
+                        if (nextPosition != CustomTools.ToVector2(_currentPath.First().transform.position))
+                        {
+                            if (_currentPath.First().goalDelegate != null) 
+                            {
+                                Debug.LogError(_currentPath.First().goalDelegate);
+                                _currentPath.First().goalDelegate.Invoke();
+                            }
+                            else
+                            {
+                                Debug.LogError("NoTEngoFuncion");
+                            }
+                 
+                           
+                        }
+                           
                         if (!hit)
                         {
                             _goToNextPosition = true;
+
                             _currentPath.Remove(_currentPath.First());
 
                             if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
@@ -505,6 +522,17 @@ public class Character : MonoBehaviour
         _eventFSM.SendInput(newState);
     }
 
+    public CustomNode GetLastPathNode()
+    {
+        if (_currentPath.Any())
+        {
+            return _currentPath.Last();
+        }
+        else
+        {
+            return null;
+        }
+    }
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
     {
         yield return new WaitForSeconds(time);
@@ -544,7 +572,7 @@ public class Character : MonoBehaviour
         CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);
         _currentPath = _pathFinding.AStar(start, goal);
 
-        if (_currentPath.Count > 1 && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
+        if (_currentPath.Count > 1 && _currentPath.SkipLast(1).Last().isClickable && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
             > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition))
         {
             _currentPath = _currentPath.SkipLast(1).ToList();
