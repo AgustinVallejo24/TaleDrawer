@@ -194,12 +194,14 @@ public class Subibaja : MonoBehaviour, IInteractable
             if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
             {
                 character.GetPath(_leftNode);
-                Destroy(myJoint);
+                //character.characterModel.Flip(_leftNode.transform.position);
+              //  Destroy(myJoint);
             }
             else
             {
                 character.GetPath(_rightNode);
-                Destroy(myJoint);
+                //character.characterModel.Flip(_rightNode.transform.position);
+               // Destroy(myJoint);
             }
         }
         else

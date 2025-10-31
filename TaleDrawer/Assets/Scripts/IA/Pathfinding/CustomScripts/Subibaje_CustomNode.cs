@@ -17,17 +17,32 @@ public class Subibaje_CustomNode : CustomNode
     }
     public void GetOnSubibaja()
     {
-        Debug.LogError("GETONSUBI");
+   
         if (left && subibaja.left)
         {
             _myCharacter.characterModel.Jump(subibaja.sides[0].position, ConfigurePlayer);
+        }
+        else if (left && !subibaja.left)
+        {
+            _myCharacter.ClearPath();
+            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.SendInputToFSM(CharacterStates.Idle);
         }
         else if(!left && !subibaja.left)
         {
             _myCharacter.characterModel.Jump(subibaja.sides[1].position, ConfigurePlayer);
         }
+        else
+        {
+            _myCharacter.ClearPath();
+            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.SendInputToFSM(CharacterStates.Idle);
+        }
     }
-
+    public void GetOnSubibajaFromHeaven()
+    {
+        _myCharacter.characterModel.Jump(subibaja.sides[0].position, ConfigurePlayer);
+    }
     public void ConfigurePlayer()
     {
 

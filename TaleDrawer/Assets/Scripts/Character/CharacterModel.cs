@@ -62,6 +62,17 @@ public class CharacterModel
             onComplete?.Invoke();
             });
     }
+    public void Flip(Vector3 position)
+    {
+        if (Mathf.Sign(position.x - _myCharacter.transform.position.x) > 0)
+        {
+            _myCharacter.characterView.FlipCharacter(1);
+        }
+        else
+        {
+            _myCharacter.characterView.FlipCharacter(-1);
+        }
+    }
     public virtual void Move2(Vector2 objective, float smoothSpeed)
     {
         Vector2 currentPosition = _myRigidbody.position; // Usar Rigidbody.position para f�sica

@@ -102,7 +102,7 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Stop, Stop).Done();
-        StateConfigurer.Create(OnRope)           
+        StateConfigurer.Create(OnRope)
            .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(JumpingToRope)
            .SetTransition(CharacterStates.OnRope, OnRope).Done();
@@ -150,32 +150,61 @@ public class Character : MonoBehaviour
             {
                 _eventFSM.SendInput(CharacterStates.Wait);
             }*/
-
+            CustomNode lookAtNode = new CustomNode();
             if (!_currentPath.Any())
             {
-                
+
                 _eventFSM.SendInput(CharacterStates.Idle);
             }
             else if (_currentPath.Count > 1)
             {
                 //Quita el primer nodo si no tiene evento necesario, y si el personaje esta mas cerca del segundo nodo, que el primero del segundo.
-                if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
-                _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
+
+
+                if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
+                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
+                    Vector2.Distance(CustomTools.ToVector2(transform.position),
+                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)))
                 {
-                    if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
-                        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
-                        Vector2.Distance(CustomTools.ToVector2(transform.position),
-                        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)))
+                    if (_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
                     {
                         _currentPath.Remove(_currentPath.First());
+                        lookAtNode = _currentPath.First();
                     }
+                    else
+                    {
+                        lookAtNode = _currentPath.Skip(1).First();
+                    }
+                 
                 }
+                else
+                {
+                    lookAtNode = _currentPath.First();
+                }
+
+                //if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
+                //_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
+                //{
+                //    if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
+                //        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
+                //        Vector2.Distance(CustomTools.ToVector2(transform.position),
+                //        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)))
+                //    {
+                //        _currentPath.Remove(_currentPath.First());
+                //        lookAtNode = _currentPath.First();
+                //    }
+                //    else if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
+                //    _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() > 0)
+                //    {
+                //        lookAtNode = _currentPath.Skip(1).First();
+                //    }
+                //}
             }
             else
             {
                 //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.                
                 if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
-                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10))
+                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10) && nextPosition != CustomTools.ToVector2(_currentPath.Last().transform.position))
                 {
                     _goToNextPosition = true;
                     _currentPath.Remove(_currentPath.First());
@@ -186,7 +215,7 @@ public class Character : MonoBehaviour
             if (_currentPath.Any())
             {
 
-                if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
+                if (Mathf.Sign(lookAtNode.transform.position.x - transform.position.x) > 0)
                 {
                     characterView.FlipCharacter(1);
                 }
@@ -220,18 +249,21 @@ public class Character : MonoBehaviour
         {
             if (_currentPath.Any())
             {
-              
-                if (Mathf.Abs(_currentPath.First().transform.position.x - transform.position.x) > .4f || Mathf.Abs(_currentPath.First().transform.position.y - transform.position.y) > 3f)
+                float sqrDistanceToTarget = (CustomTools.ToVector2(_currentPath.First().transform.position) - (new Vector2(transform.position.x, feetPosition.position.y))).sqrMagnitude;
+
+
+
+                if (sqrDistanceToTarget > .5f)
                 {
+
                     characterModel.Move2(_currentPath.First().transform.position, _smoothSpeed);
-                
-              
+
                 }
                 else
                 {
                     if (_currentPath.Count > 1)
                     {
-                       
+
                         var neighbour = _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First();
                         if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && neighbour.canDoEvent)
                         {
@@ -244,7 +276,8 @@ public class Character : MonoBehaviour
                             if (_currentPath.Count == 2)
                             {
                                 if (Vector2.Distance(CustomTools.ToVector2(transform.position), new Vector2(nextPosition.x, transform.position.y))
-                                < Vector2.Distance(new Vector2(_currentPath.Last().transform.position.x, transform.position.y), new Vector2(nextPosition.x, transform.position.y)))
+                                < Vector2.Distance(new Vector2(_currentPath.Last().transform.position.x, transform.position.y), new Vector2(nextPosition.x, transform.position.y))
+                                && nextPosition != CustomTools.ToVector2(_currentPath.Last().transform.position))
                                 {
                                     _currentPath.Remove(_currentPath.Last());
                                     _goToNextPosition = true;
@@ -271,7 +304,7 @@ public class Character : MonoBehaviour
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10);
                         if (nextPosition != CustomTools.ToVector2(_currentPath.First().transform.position))
                         {
-                            if (_currentPath.First().goalDelegate != null) 
+                            if (_currentPath.First().goalDelegate != null)
                             {
                                 Debug.LogError(_currentPath.First().goalDelegate);
                                 _currentPath.First().goalDelegate.Invoke();
@@ -280,30 +313,30 @@ public class Character : MonoBehaviour
                             {
                                 Debug.LogError("NoTEngoFuncion");
                             }
-                 
-                           
-                        }
-                           
-                        if (!hit)
-                        {
-                            _goToNextPosition = true;
-
-                            _currentPath.Remove(_currentPath.First());
-
-                            if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
+                            if (!hit)
                             {
-                                characterView.FlipCharacter(1);
+                                _goToNextPosition = true;
+
+                                _currentPath.Remove(_currentPath.First());
+
+                                if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
+                                {
+                                    characterView.FlipCharacter(1);
+                                }
+                                else
+                                {
+                                    characterView.FlipCharacter(-1);
+                                }
                             }
                             else
                             {
-                                characterView.FlipCharacter(-1);
+                                Debug.Log(hit.transform.gameObject);
+                                _currentPath.Remove(_currentPath.First());
                             }
+
                         }
-                        else
-                        {
-                            Debug.Log(hit.transform.gameObject);
-                            _currentPath.Remove(_currentPath.First());
-                        }
+
+
 
                     }
 
@@ -316,11 +349,13 @@ public class Character : MonoBehaviour
                 Debug.LogError("cuarto");
                 if (_goToNextPosition)
                 {
-                   
-                    if (Mathf.Abs(nextPosition.x - transform.position.x) > .4f || Mathf.Abs(nextPosition.y - transform.position.y) > 3f)
+                    float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, feetPosition.position.y))).sqrMagnitude;
+
+
+
+                    if (sqrDistanceToTarget > 1f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
-
                         characterModel.Move2(nextPosition, _smoothSpeed);
 
                     }
@@ -429,15 +464,15 @@ public class Character : MonoBehaviour
         #region ONROPE STATE
 
         OnRope.OnEnter += x =>
-        {            
+        {
             _currentState = CharacterStates.OnRope;
-            
+
 
         };
 
         OnRope.OnUpdate += () =>
         {
-            
+
 
         };
         OnRope.OnFixedUpdate += () =>
@@ -606,9 +641,9 @@ public class Character : MonoBehaviour
         _eventFSM.SendInput(CharacterStates.Landing);
 
 
-            StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+        StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
 
-           
+
     }
     public void Jump(Transform jumpPos)
     {
