@@ -5192,7 +5192,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 950747523}
           m_TargetAssemblyTypeName: Hook, Assembly-CSharp
-          m_MethodName: GetOnRope
+          m_MethodName: StartRopeEvent
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7833,7 +7833,7 @@ MonoBehaviour:
           m_CallState: 2
     canDoEvent: 1
     cost: 0
-  - node: {fileID: 1204867074}
+  - node: {fileID: 1787002225}
     nodeEvent:
       m_PersistentCalls:
         m_Calls: []

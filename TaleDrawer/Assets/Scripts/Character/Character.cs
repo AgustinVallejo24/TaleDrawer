@@ -1,9 +1,8 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Cinemachine;
+using UnityEngine;
 
 public class Character : MonoBehaviour
 {
@@ -103,7 +102,8 @@ public class Character : MonoBehaviour
         StateConfigurer.Create(Landing)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Stop, Stop).Done();
+            .SetTransition(CharacterStates.Stop, Stop)
+            .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(OnRope)
            .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(JumpingToRope)
@@ -489,6 +489,7 @@ public class Character : MonoBehaviour
 
         OnRope.OnEnter += x =>
         {
+            
             _currentState = CharacterStates.OnRope;
 
 
@@ -622,7 +623,52 @@ public class Character : MonoBehaviour
     }
     public void ClearPath()
     {
+        
         _currentPath.Clear();
+    }
+
+
+    /// <summary>
+    /// Para comparar con el primer nodo del path el value debe ser 0, para comparar con el último nodo del path el value debe ser 1, y para saber si el path contiene al node el value debe ser 2, 
+    /// cualquier value diferente a los mencionados devuelve falso.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool ComparePathNodes(CustomNode node, int value, bool first = false)
+    {
+        if(value == 0)
+        {
+            /*if (!first)
+            {
+                first = true;
+                Debug.LogError("Comparo con el primero, y devuelvo " + ComparePathNodes(node, value, first));
+            } */           
+            return _currentPath.First().Equals(node);
+        }
+        else if(value == 1)
+        {
+            /*if (!first)
+            {
+                first = true;
+                Debug.LogError("Comparo con el último, y devuelvo " + ComparePathNodes(node, value, first));
+            }*/
+            return _currentPath.Last().Equals(node);
+        }
+        else if(value == 2)
+        {
+            /*if (!first)
+            {
+                first = true;
+                Debug.LogError("Comparo si esta dentro del path, y devuelvo " + ComparePathNodes(node, value, first));
+            }*/
+            return _currentPath.Contains(node);
+        }
+        else
+        {
+            Debug.LogError("No se compara el nodo de ninguna manera, por lo tanto se devuelve falso");
+            return false;
+        }
     }
 
     public bool GetPath(CustomNode goal, Vector2 nextPos)
@@ -664,8 +710,15 @@ public class Character : MonoBehaviour
     {
         _eventFSM.SendInput(CharacterStates.Landing);
 
-
-        StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+        if (_currentPath.Any())
+        {
+            StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
+        }
+        else
+        {
+            StartCoroutine(SendInputToFSM(CharacterStates.Idle, 0.2f));
+        }
+        
 
 
     }

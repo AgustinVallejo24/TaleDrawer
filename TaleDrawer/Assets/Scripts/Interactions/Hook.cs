@@ -66,10 +66,14 @@ public class Hook : MonoBehaviour, IInteractable
     public void RopeMovement(Transform pointI, Transform pointF, Soga soga)
     {
         _character.SendInputToFSM(CharacterStates.OnRope);
+        bool nextAction = _character.ComparePathNodes(_upperNode, 1);
         soga.OnHasPlayer();
         _character.transform.DOMoveY(pointF.position.y, pointF.position.y - pointI.position.y)
-            .OnComplete(() => { _character.characterModel.Jump(_upperNode._jumpPosition.transform.position, () => { _character.SendInputToFSM(CharacterStates.Wait); _character.characterRigidbody.gravityScale = 1; }, false);
-                _character.characterView.OnExitingRope(); _character.ClearPath(); soga.OnHasNotPlayer();
+            .OnComplete(() => { _character.characterModel.Jump(_upperNode._jumpPosition.transform.position, 
+                () => { if (nextAction && CustomTools.ToVector2(_upperNode.transform.position) == _character.nextPosition) { _character.ClearPath();/*_character.SendInputToFSM(CharacterStates.Wait);*/ } 
+                    _character.Land();
+                    _character.characterRigidbody.gravityScale = 1; });
+                _character.characterView.OnExitingRope(); soga.OnHasNotPlayer(); 
             });
     }
 

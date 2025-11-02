@@ -5,7 +5,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -28708
+                "instanceID": -92746
             },
             "Threshold": 0.36000001430511477,
             "strokes": 1,
@@ -135,7 +135,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29294
+                "instanceID": -93300
             },
             "Threshold": 0.30000001192092898,
             "strokes": 1,
@@ -265,7 +265,7 @@
             "useRotation": false,
             "isSymmetric": true,
             "templateTexture": {
-                "instanceID": -29298
+                "instanceID": -93304
             },
             "Threshold": 0.30000001192092898,
             "strokes": 1,
@@ -395,7 +395,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29302
+                "instanceID": -93308
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -525,7 +525,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29306
+                "instanceID": -93312
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -655,7 +655,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29310
+                "instanceID": -93316
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -785,7 +785,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29314
+                "instanceID": -93320
             },
             "Threshold": 0.44999998807907107,
             "strokes": 3,
@@ -915,7 +915,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29318
+                "instanceID": -93324
             },
             "Threshold": 0.2199999988079071,
             "strokes": 1,
@@ -1045,7 +1045,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29322
+                "instanceID": -93328
             },
             "Threshold": 0.20000000298023225,
             "strokes": 1,
@@ -1175,7 +1175,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29326
+                "instanceID": -93332
             },
             "Threshold": 0.11999999731779099,
             "strokes": 1,
@@ -1305,7 +1305,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29330
+                "instanceID": -93336
             },
             "Threshold": 0.25,
             "strokes": 4,
@@ -1435,7 +1435,7 @@
             "useRotation": false,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -29334
+                "instanceID": -93340
             },
             "Threshold": 0.3499999940395355,
             "strokes": 1,
@@ -1565,7 +1565,7 @@
             "useRotation": true,
             "isSymmetric": true,
             "templateTexture": {
-                "instanceID": -29338
+                "instanceID": -93344
             },
             "Threshold": 0.3499999940395355,
             "strokes": 1,
