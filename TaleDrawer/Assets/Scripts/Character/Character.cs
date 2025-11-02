@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] float _maxSpeed;
     public float currentSpeed;
-    [SerializeField] [Range(0, 0.5f)] float _smoothSpeed;
+    [SerializeField][Range(0, 0.5f)] float _smoothSpeed;
     [SerializeField] float _maxLife;
     protected float _currentLife;
     [SerializeField] float _jumpForce;
@@ -51,6 +51,8 @@ public class Character : MonoBehaviour
     public Queue<InterestPoint> mainObjectivesQueue;
 
     public Camera sceneCamera;
+    [SerializeField] CustomNode _lookAtNode = null;
+    [SerializeField] float _yDiffThreshold;
 
     public static Character instance;
 
@@ -150,7 +152,7 @@ public class Character : MonoBehaviour
             {
                 _eventFSM.SendInput(CharacterStates.Wait);
             }*/
-            CustomNode lookAtNode = new CustomNode();
+            
             if (!_currentPath.Any())
             {
 
@@ -164,22 +166,23 @@ public class Character : MonoBehaviour
                 if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
                     new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
                     Vector2.Distance(CustomTools.ToVector2(transform.position),
-                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)))
+                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) 
+                    &&  Math.Abs(_currentPath.First().transform.position.y - _currentPath.Skip(1).First().transform.position.y) < _yDiffThreshold)
                 {
                     if (_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
                     {
                         _currentPath.Remove(_currentPath.First());
-                        lookAtNode = _currentPath.First();
+                        _lookAtNode = _currentPath.First();
                     }
                     else
                     {
-                        lookAtNode = _currentPath.Skip(1).First();
+                        _lookAtNode = _currentPath.Skip(1).First();
                     }
                  
                 }
                 else
                 {
-                    lookAtNode = _currentPath.First();
+                    _lookAtNode = _currentPath.First();
                 }
 
                 //if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
@@ -214,15 +217,30 @@ public class Character : MonoBehaviour
             //Cambia la dirreccion del sprite.
             if (_currentPath.Any())
             {
-
-                if (Mathf.Sign(lookAtNode.transform.position.x - transform.position.x) > 0)
+                if(_lookAtNode != null)
                 {
-                    characterView.FlipCharacter(1);
+                    if (Mathf.Sign(_lookAtNode.transform.position.x - transform.position.x) > 0)
+                    {
+                        characterView.FlipCharacter(1);
+                    }
+                    else
+                    {
+                        characterView.FlipCharacter(-1);
+                    }
+
                 }
                 else
                 {
-                    characterView.FlipCharacter(-1);
+                    if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
+                    {
+                        characterView.FlipCharacter(1);
+                    }
+                    else
+                    {
+                        characterView.FlipCharacter(-1);
+                    }
                 }
+                
             }
             else
             {
@@ -283,18 +301,24 @@ public class Character : MonoBehaviour
                                     _goToNextPosition = true;
                                 }
                             }
-
-
-                            _currentPath.Remove(_currentPath.First());
-
-                            if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
-                            {
-                                characterView.FlipCharacter(1);
-                            }
                             else
                             {
-                                characterView.FlipCharacter(-1);
+                                _currentPath.Remove(_currentPath.First());
                             }
+
+
+                                
+
+                            
+                        }
+
+                        if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
+                        {
+                            characterView.FlipCharacter(1);
+                        }
+                        else
+                        {
+                            characterView.FlipCharacter(-1);
                         }
 
                     }
