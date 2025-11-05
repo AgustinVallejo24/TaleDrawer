@@ -14,6 +14,8 @@ public class PlacementGridManager : MonoBehaviour
     [Header("Configuración de Grilla")]
     [Tooltip("El tamaño de cada celda de la grilla (e.g., 1.0 para un tamaño estándar de celda).")]
     public float cellSize = 1f;
+    public float cellSizex = 1f;
+    public float cellSizey = 1f;
 
     [Tooltip("El número de celdas a generar en cada dirección (X e Y) alrededor del centro de la grilla/cámara.")]
     public int gridExtentx; // 15x15 = 225 puntos de grilla
@@ -47,8 +49,8 @@ public class PlacementGridManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            gridExtentx = (int)Mathf.Round(_mainCam.orthographicSize * _mainCam.aspect);
-            gridExtenty = (int)Mathf.Round(_mainCam.orthographicSize);
+            gridExtentx = Mathf.FloorToInt(_mainCam.orthographicSize * _mainCam.aspect);
+            gridExtenty = Mathf.FloorToInt(_mainCam.orthographicSize);
             gridCenter = _initialTraget.position;
             transform.position = gridCenter;
             placementPoints = new List<GridPoint>();
@@ -81,9 +83,9 @@ public class PlacementGridManager : MonoBehaviour
             gridContainer.transform.localRotation = Quaternion.identity;
 
             // Iteramos a través de la extensión definida
-            for (int x = -gridExtentx; x <= gridExtentx; x++)
+            for (int x = (int)(-gridExtentx / cellSizex); x <= (int)(gridExtentx / cellSizex); x++)
             {
-                for (int y = -gridExtenty; y <= gridExtenty; y++)
+                for (int y = (int)(-gridExtenty / cellSizey); y <= (int)(gridExtenty / cellSizey); y++)
                 {
                     // Calcula la posición relativa del punto
                     Vector2 localPoint = new Vector2(x * cellSize, y * cellSize);

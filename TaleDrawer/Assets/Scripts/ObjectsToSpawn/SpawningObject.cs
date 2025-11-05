@@ -22,6 +22,7 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     GridPoint _currentGridP;
     GridPoint _previousGridP;
     Vector2 _pointPos;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,9 +37,17 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
             _myrb.gravityScale = 0;
         }
-        
-        
-        
+
+        if (_myColl == null)
+        {
+            Debug.LogError("¡El objeto arrastrable necesita un Collider2D!");
+        }
+        else
+        {
+            // Debugging: Confirmar estado inicial del Collider
+            Debug.Log($"[Dragger Start] Collider inicializado. Estado: {_myColl.enabled}");
+        }
+
     }
 
     // Update is called once per frame
@@ -49,24 +58,35 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
-        _currentGridP = tuple.Item3;
-        if (_currentGridP == null)
-        {
-            _currentGridP = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity).Item3;
+        if(SceneManager.instance.currentState == SceneStates.Dragging)
+        {            
+            if (_myColl != null)
+            {                
+                _myColl.enabled = false;
+            }
+
+            var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
+            _currentGridP = tuple.Item3;
+            if (_currentGridP == null)
+            {
+                _currentGridP = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity).Item3;
+            }
+            else
+            {
+                _currentGridP.SelectAndDeselectPoint(tuple.Item1);
+                _pointPos = _currentGridP.transform.position;
+            }
+
+            Debug.Log("Arrastre iniciado y Collider deshabilitado.");
         }
-        else
-        {
-            _currentGridP.SelectAndDeselectPoint(tuple.Item1);
-            _pointPos = _currentGridP.transform.position;
-        }
+        
     }
 
     public void OnDrag(PointerEventData eventData)
     {  
+
         if(SceneManager.instance.currentState == SceneStates.Dragging)
-        {
-            
+        {            
             gameObject.transform.position = new Vector3(sceneCamera.ScreenToWorldPoint(eventData.position).x, sceneCamera.ScreenToWorldPoint(eventData.position).y, 0f);
 
             var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.y, _interactuables);
@@ -157,33 +177,52 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
-        _currentGridP = tuple.Item3;      
+        if(SceneManager.instance.currentState == SceneStates.Dragging)
+        {
+            var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
+            _currentGridP = tuple.Item3;
 
-        if(_currentInteractuable != null)
-        {
-            _currentInteractuable.Interact(this);
-            _currentGridP = null;
-        }
-        else if(_currentGridP != null && tuple.Item1)
-        {
-            _currentGridP.SelectAndDeselectPoint(false);
-            transform.position = new Vector3(_currentGridP.transform.position.x, _currentGridP.transform.position.y, 0);
-            /*_currentGridP = null;
-            _previousGridP = null;*/
-        }
-
-        if(_currentInteractuable != null || (_currentGridP != null && tuple.Item1))
-        {
-            SceneManager.instance.StateChanger(SceneStates.Game);
-            _mySpriteRenderer.color = _originalColor;
-            _myColl.isTrigger = objectIsTrigger;
-            _mySpriteRenderer.sortingOrder = 1;
-            if (objectUseGravity && _myrb != null)
+            if (_currentInteractuable != null)
             {
-                _myrb.gravityScale = 1;
+                _currentInteractuable.Interact(this);
+                _currentGridP = null;
             }
+            else if (_currentGridP != null && tuple.Item1)
+            {
+                _currentGridP.SelectAndDeselectPoint(false);
+                transform.position = new Vector3(_currentGridP.transform.position.x, _currentGridP.transform.position.y, 0);
+                /*_currentGridP = null;
+                _previousGridP = null;*/
+            }
+
+            if (_currentInteractuable != null || (_currentGridP != null && tuple.Item1))
+            {
+                SceneManager.instance.StateChanger(SceneStates.Game);
+                _mySpriteRenderer.color = _originalColor;
+                if (_myColl != null)
+                {
+                    _myColl.enabled = true;
+                    _myColl.isTrigger = objectIsTrigger;
+                }
+                _mySpriteRenderer.sortingOrder = 1;
+                if (objectUseGravity && _myrb != null)
+                {
+                    _myrb.gravityScale = 1;
+                }
+            }
+            else
+            {
+
+                if (_myColl != null)
+                {
+                    Debug.LogError("Me quedo vegetativo");
+                    _myColl.enabled = true;
+                }
+            }
+
+            Debug.Log("Arrastre finalizado y Collider habilitado. Objeto colocado.");
         }
+        
         
     }
 

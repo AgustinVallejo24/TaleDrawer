@@ -5837,7 +5837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eed27d71326ec24da3b2ee962d0a5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlacementGridManager
-  cellSize: 1
+  cellSize: 3
+  cellSizex: 3
+  cellSizey: 3
   gridExtentx: 0
   gridExtenty: 0
   collisionCheckRadius: 0.1
