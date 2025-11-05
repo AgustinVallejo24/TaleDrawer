@@ -166,8 +166,10 @@ public class SceneManager : MonoBehaviour
             if(previousState == SceneStates.Drawing)
             {
                 ExitingDrawingState();
-            }            
-            _drawingBackground.SetActive(false);            
+            }
+
+            PlacementGridManager.Instance.SetGridVisibility(false);
+                        
             
                       
           //  _dTest.gameObject.SetActive(true);
@@ -184,6 +186,8 @@ public class SceneManager : MonoBehaviour
         }
         else if (currentState == SceneStates.Dragging)
         {
+            PlacementGridManager.Instance.RefreshGridAvailability();
+            PlacementGridManager.Instance.SetGridVisibility(true);
             ExitingDrawingState();
         } 
     }
@@ -193,8 +197,9 @@ public class SceneManager : MonoBehaviour
         
         _drawingDraggingCanvas.SetActive(false);        
         _dTest.gameObject.SetActive(false);
+        _drawingBackground.SetActive(false);
 
-        
+
     }
 
     

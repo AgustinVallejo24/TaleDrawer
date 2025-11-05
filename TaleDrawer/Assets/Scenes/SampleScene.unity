@@ -5808,6 +5808,61 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4b80fa3ef28423439e6969e9ca771cc, type: 3}
+--- !u!1 &1383875810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1383875812}
+  - component: {fileID: 1383875811}
+  m_Layer: 0
+  m_Name: ObjectGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1383875811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383875810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eed27d71326ec24da3b2ee962d0a5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlacementGridManager
+  cellSize: 1
+  gridExtentx: 0
+  gridExtenty: 0
+  collisionCheckRadius: 0.1
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1120
+  _maxDistance: 2
+  _pointPrefab: {fileID: 1775451285757822746, guid: 61844dcc18e65ac4fbde61943a378240, type: 3}
+  _initialTraget: {fileID: 330585546}
+  _mainCam: {fileID: 330585545}
+--- !u!4 &1383875812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383875810}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1389952595
 GameObject:
   m_ObjectHideFlags: 0
@@ -8137,3 +8192,4 @@ SceneRoots:
   - {fileID: 1186473576}
   - {fileID: 521590123}
   - {fileID: 1862224750}
+  - {fileID: 1383875812}
