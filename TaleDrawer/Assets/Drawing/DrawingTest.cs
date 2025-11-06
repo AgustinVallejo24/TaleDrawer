@@ -129,6 +129,11 @@ public class DrawingTest : MonoBehaviour
 
     }
 
+
+    public void BeginDraw(Vector2 position)
+    {
+
+    }
     public void Draw(int touchCount, Touch touch)
     {
 

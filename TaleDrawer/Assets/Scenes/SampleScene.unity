@@ -480,6 +480,8 @@ GameObject:
   m_Component:
   - component: {fileID: 69473461}
   - component: {fileID: 69473460}
+  - component: {fileID: 69473463}
+  - component: {fileID: 69473462}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -519,7 +521,7 @@ MonoBehaviour:
     m_Bits: 4096
   _interactables:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2176
   nodes:
   - {fileID: 217188075}
   - {fileID: 931510068}
@@ -550,6 +552,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &69473462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69473459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 84da522952ca5df4da15c3512123fa97, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Dragging
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &69473463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69473459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877367f4a7206c649b1499a780c356cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  sceneManager: {fileID: 69473460}
+  currentDraggable: {fileID: 0}
+  _draggableItems:
+    serializedVersion: 2
+    m_Bits: 128
+  MoveMouse: {fileID: -4319702990522028616, guid: 84da522952ca5df4da15c3512123fa97, type: 3}
 --- !u!1 &72749079
 GameObject:
   m_ObjectHideFlags: 0
@@ -6980,6 +7030,14 @@ PrefabInstance:
     - target: {fileID: 2887967988050295289, guid: 9b244ffb8f7952f46b87146800d85d3d, type: 3}
       propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329737907926209094, guid: 9b244ffb8f7952f46b87146800d85d3d, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329737907926209094, guid: 9b244ffb8f7952f46b87146800d85d3d, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9094310368494708763, guid: 9b244ffb8f7952f46b87146800d85d3d, type: 3}
       propertyPath: m_LocalScale.x
