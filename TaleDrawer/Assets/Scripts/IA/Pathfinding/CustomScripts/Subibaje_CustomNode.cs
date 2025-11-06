@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Linq;
 public class Subibaje_CustomNode : CustomNode
 {
     [SerializeField] Subibaja _subibaja;
@@ -69,7 +69,20 @@ public class Subibaje_CustomNode : CustomNode
     }
     public void NewJump(Transform jumpPos)
     {
-        Debug.LogError("Entro al nuevo jump");
+        int index = 100;
+        index = neighbours.FindIndex(x => x.node == _myCharacter.GetCurrentPath().First());
+        if (index != 100)
+        {
+            Debug.LogError("Calculeelindex");
+            if (!neighbours[index].canDoEvent)
+            {
+                _myCharacter.ClearPath();
+                _myCharacter.SendInputToFSM(CharacterStates.Wait);
+                return;
+            }
+            
+
+        }
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
         _myCharacter.transform.parent = null;
         Destroy(subibaja.myJoint);
@@ -79,7 +92,7 @@ public class Subibaje_CustomNode : CustomNode
     public void SetNeghtboursBool(CustomNode node,bool value)
     {
         if (node == null) return;
-         SetCanDoEvent(node, true);
+         SetCanDoEvent(node, value);
     }
 
 }

@@ -22,6 +22,8 @@ public class Character : MonoBehaviour
     [SerializeField] public float yPositionOffset;
     [SerializeField] Transform feetPosition;
     [SerializeField] protected List<CustomNode> _currentPath;
+    public Action onMovingStart;
+    public Action onMovingEnd;
     #endregion
 
     #region References
@@ -403,6 +405,7 @@ public class Character : MonoBehaviour
         Moving.OnExit += x =>
         {
             _goToNextPosition = false;
+            onMovingEnd?.Invoke();
 
         };
 
@@ -721,6 +724,10 @@ public class Character : MonoBehaviour
         
 
 
+    }
+    public List<CustomNode> GetCurrentPath()
+    {
+        return _currentPath;
     }
     public void Jump(Transform jumpPos)
     {

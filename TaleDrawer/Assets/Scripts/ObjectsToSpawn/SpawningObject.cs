@@ -2,7 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
-public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class SpawningObject : MonoBehaviour
 {
     public Camera sceneCamera;    
     public SpawnableObjectType myType;
@@ -22,10 +22,11 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     GridPoint _currentGridP;
     GridPoint _previousGridP;
     Vector2 _pointPos;
-    
+    protected Character _myCharacter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _myCharacter = Character.instance;
         sceneCamera = SceneManager.instance._sceneCamera;
         _myColl = GetComponent<Collider2D>();        
         _myColl.isTrigger = true;
@@ -56,7 +57,7 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void OnBeginDrag()
     {
         if(SceneManager.instance.currentState == SceneStates.Dragging)
         {            
@@ -82,12 +83,12 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void OnDrag(Vector2 position)
     {  
 
         if(SceneManager.instance.currentState == SceneStates.Dragging)
         {            
-            gameObject.transform.position = new Vector3(sceneCamera.ScreenToWorldPoint(eventData.position).x, sceneCamera.ScreenToWorldPoint(eventData.position).y, 0f);
+           transform.position = Vector2.Lerp(transform.position, sceneCamera.ScreenToWorldPoint(position), .5f);
 
             var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.y, _interactuables);
             if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
@@ -175,10 +176,26 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag()
     {
         if(SceneManager.instance.currentState == SceneStates.Dragging)
         {
+            if (_myrb != null)
+            {
+                _myrb.position = transform.position; // Sincroniza directamente la posición del Rigidbody
+                Debug.LogWarning("[SYNC] Rigidbody position forced to sync.");
+            }
+            else
+            {
+                if (_myColl != null)
+                {
+                    _myColl.enabled = true; // Habilitar primero
+
+
+                    Physics2D.SyncTransforms();
+                    Debug.LogWarning("[SYNC] Forced Physics2D SyncTransforms after placement.");
+                }
+            }
             var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
             _currentGridP = tuple.Item3;
 
@@ -226,5 +243,8 @@ public class SpawningObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         
     }
 
-    
+    public void SyncColiiders()
+    {
+
+    }
 }
