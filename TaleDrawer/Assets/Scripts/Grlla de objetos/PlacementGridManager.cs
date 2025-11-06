@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 // Este script se encarga de la generación, actualización y chequeo de la grilla de colocación.
 public class PlacementGridManager : MonoBehaviour

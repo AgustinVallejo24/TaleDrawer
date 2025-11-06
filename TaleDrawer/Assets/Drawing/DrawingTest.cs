@@ -132,7 +132,68 @@ public class DrawingTest : MonoBehaviour
 
     public void BeginDraw(Vector2 position)
     {
+        if (CustomTools.IsTouchOverUI(position))
+        {
+            //Debug.Log("TOCOBOTON");
+            return;
+        }
 
+
+
+     
+
+        startDrawing = true;
+        if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
+        {
+            SceneManager.instance.StateChanger(SceneStates.Drawing);
+        }
+        isDrawing = true;
+        currentStrokePoints.Clear();
+    }
+
+    public void OnDraw(Vector2 position)
+    {
+        if (isDrawing)
+        {
+            Vector2 pos = cam.ScreenToWorldPoint(position);
+            if (currentPoints.Count == 0 || Vector2.Distance(currentPoints[^1], pos) > 0.001f)
+            {
+                AddSmoothedPoint(pos);
+
+            }
+        }
+    }
+    public void OnEndDrag()
+    {
+        isDrawing = false;
+        startDrawing = false;
+        if (linerendererIndex >= lineRenderer.Length) return;
+
+
+        if (GetLineLength(lineRenderer[linerendererIndex]) < 1.5f)
+        {
+            // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
+            foreach (var item in currentStrokePoints)
+            {
+                if (currentPoints.Contains(item))
+                {
+                    currentPoints.Remove(item);
+                }
+            }
+            currentStrokePoints.Clear();
+            lineRenderer[linerendererIndex].positionCount = 0;
+            return;
+        }
+
+        // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
+        strokesPointsCount.Add(currentStrokePoints.Count);
+        currentStrokePoints.Clear();
+
+        if (linerendererIndex < lineRenderer.Length)
+        {
+            linerendererIndex++;
+        }
+     
     }
     public void Draw(int touchCount, Touch touch)
     {

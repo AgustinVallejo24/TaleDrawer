@@ -24,6 +24,7 @@ public class Character : MonoBehaviour
     [SerializeField] protected List<CustomNode> _currentPath;
     public Action onMovingStart;
     public Action onMovingEnd;
+    public IInteractable currentInteractable;
     #endregion
 
     #region References
@@ -80,6 +81,7 @@ public class Character : MonoBehaviour
         var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
+             .SetTransition(CharacterStates.Jumping, Jumping)
             .Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -96,7 +98,7 @@ public class Character : MonoBehaviour
              .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Landing, Landing)
-            .SetTransition(CharacterStates.Stop, Stop).Done();
+            .Done();
         StateConfigurer.Create(Stop)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
@@ -117,7 +119,6 @@ public class Character : MonoBehaviour
 
         Idle.OnEnter += x =>
         {
-
             _currentState = CharacterStates.Idle;
             characterView.OnIdle();
             /*if (currentObjectivesQueue.Any())
@@ -390,6 +391,7 @@ public class Character : MonoBehaviour
                         characterRigidbody.linearVelocity = Vector2.zero;
                         Debug.LogError("segundo");
                         _eventFSM.SendInput(CharacterStates.Idle);
+                        onMovingEnd?.Invoke();
                     }
                 }
                 else
@@ -397,6 +399,7 @@ public class Character : MonoBehaviour
                     characterRigidbody.linearVelocity = Vector2.zero;
                     Debug.LogError("tercero");
                     _eventFSM.SendInput(CharacterStates.Idle);
+                    onMovingEnd?.Invoke();
                 }
 
             }
@@ -405,7 +408,7 @@ public class Character : MonoBehaviour
         Moving.OnExit += x =>
         {
             _goToNextPosition = false;
-            onMovingEnd?.Invoke();
+           
 
         };
 
@@ -467,6 +470,7 @@ public class Character : MonoBehaviour
         Jumping.OnEnter += x =>
         {
             //     _characterRigidbody.linearVelocity = Vector2.zero;
+   
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
 
@@ -582,6 +586,7 @@ public class Character : MonoBehaviour
     }
     public void SendInputToFSM(CharacterStates newState)
     {
+       
         _eventFSM.SendInput(newState);
     }
 

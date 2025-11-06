@@ -41,4 +41,9 @@ public class Soga : SpawningObject, IInteractable
         _myAnim.ResetTrigger("HasPlayer");
         _myAnim.SetTrigger("HasNotPlayer");
     }
+
+    public void InsideInteraction()
+    {
+       
+    }
 }

@@ -303,6 +303,11 @@ public class Subibaja : MonoBehaviour, IInteractable
 
 
     }
+
+    public void InsideInteraction()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 public enum SubibajaStates

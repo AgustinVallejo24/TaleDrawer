@@ -106,5 +106,9 @@ public class Hook : MonoBehaviour, IInteractable
 
         GetOnRope();
     }
-    
+
+    public void InsideInteraction()
+    {
+      
+    }
 }

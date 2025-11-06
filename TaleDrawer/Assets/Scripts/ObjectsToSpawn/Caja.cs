@@ -6,8 +6,8 @@ public class Caja : SpawningObject,IInteractable
     
     [SerializeField] LayerMask _clickableMask;
     [SerializeField] Transform _playerPos;
-    
 
+    [SerializeField] LayerMask _excludeLayers;
     private void OnDestroy()
     {
         interactableDelegate?.Invoke(-weight,gameObject);
@@ -33,8 +33,8 @@ public class Caja : SpawningObject,IInteractable
      
        if(Physics2D.OverlapCircle(transform.position,transform.localScale.x, _clickableMask))
         {
-           
-            Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
+           _excludeLayers = _myColl.excludeLayers ;
+             Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
             Debug.Log(newPos);
             newPos.y = _myColl.bounds.min.y;
             if(_myCharacter.transform.position.x > transform.position.x)
@@ -54,14 +54,58 @@ public class Caja : SpawningObject,IInteractable
 
     public void JumpOverBox()
     {
-        _myColl.excludeLayers = default;
-        _myCharacter.transform.DOJump(_playerPos.position, _myCharacter.currentJumpForce.y/3, 1, 1f).OnComplete(() =>
+        _myCharacter.onMovingEnd = null;
+
+        
+        _myCharacter.characterModel.Jump(_playerPos.position, () =>
         {
             // Llamar a OnLand
-
-
+            _myColl.excludeLayers = default;
+            _myCharacter.Land();
             // Ejecutar action si vino por parámetro
-            _myCharacter.onMovingEnd = null;
+            _myCharacter.currentInteractable = this;
         });
+        //_myCharacter.transform.DOJump(_playerPos.position, _myCharacter.currentJumpForce.y/3, 1, 1f).OnComplete(() =>
+        //{
+        //   //  Llamar a OnLand
+
+
+        // //     Ejecutar action si vino por parámetro
+        //    _myCharacter.currentInteractable = this;
+        //    _myCharacter.onMovingEnd = null;
+        //});
+    }
+    public void JumpOffBox()
+    {
+        Vector2 touchPos = SceneManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
+        _myCharacter.currentInteractable = null;
+        _myColl.excludeLayers = _excludeLayers;
+        if (touchPos.x > transform.position.x)
+        {
+            _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2,() =>
+        {
+
+                _myCharacter.Land();
+
+            });
+        }
+        else
+        {
+            _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
+            {
+
+                _myCharacter.Land();
+
+            });
+
+        }
+        
+
+    }
+
+    public void InsideInteraction()
+    {
+        
+        JumpOffBox();
     }
 }

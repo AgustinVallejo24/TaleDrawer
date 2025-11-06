@@ -7,9 +7,11 @@ public class InputManager : MonoBehaviour
     [SerializeField] LayerMask _draggableItems;
     Vector2 _clickPosition;
     [SerializeField] InputActionReference MoveMouse;
+    [SerializeField] InputActionReference Draw;
     void Start()
     {
         MoveMouse.action.performed += OnDrag;
+        Draw.action.performed += Drawing;
     }
 
     // Update is called once per frame
@@ -47,6 +49,20 @@ public class InputManager : MonoBehaviour
     {
 
     }
+    public void OnBeginDraw()
+    {
+   
+        sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
+    }
+    public void Drawing(InputAction.CallbackContext contex)
+    {
+     
+        sceneManager._dTest.OnDraw(contex.ReadValue<Vector2>());
+    }
+    public void OnEndDraw()
+    {
+        sceneManager._dTest.OnEndDrag();
+    }
     public void OnEndDrag()
     {
         if(currentDraggable != null)
@@ -55,5 +71,10 @@ public class InputManager : MonoBehaviour
             currentDraggable = null;
         }
 
+    }
+    public void OnMove()
+    {
+        Debug.LogError(sceneManager.playerInput.currentActionMap);
+        sceneManager.OnClick(Input.GetTouch(0).position);
     }
 }

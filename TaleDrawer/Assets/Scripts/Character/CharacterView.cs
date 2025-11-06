@@ -81,7 +81,7 @@ public class CharacterView
 
     public IEnumerator CustomResetTrigger(string triggerName)
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.4f);
         _anim.ResetTrigger(triggerName);
     }
 

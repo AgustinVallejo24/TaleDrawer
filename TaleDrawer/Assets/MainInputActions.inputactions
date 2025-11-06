@@ -80,6 +80,102 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Drawing",
+            "id": "9527cb7c-854b-4bc2-ba2f-bfa5dc01abeb",
+            "actions": [
+                {
+                    "name": "BeginDraw",
+                    "type": "Button",
+                    "id": "b38100f3-3249-4200-b170-8d8db03c319f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Draw",
+                    "type": "Value",
+                    "id": "ec026cae-ebbb-47e5-8715-09b868c53d3f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "EndDraw",
+                    "type": "Button",
+                    "id": "f2dd881b-b24e-49e6-8a4c-29fe935208b8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b93a1c34-2120-430b-aa2e-f9c62e541491",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeginDraw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e4ba7ec-49a3-4c0b-8c0e-1c6282060f2a",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Draw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a35eb11b-6089-41a1-b1eb-159598571380",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndDraw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Movement",
+            "id": "e6867d41-52d6-4945-9d61-80ed0e667910",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "3f69e664-47dd-449e-af67-7a9fbbc2a6b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dacf7841-a1c9-4857-8579-53c8f430dcd5",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

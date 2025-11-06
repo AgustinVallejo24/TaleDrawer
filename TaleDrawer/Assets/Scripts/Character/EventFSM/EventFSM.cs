@@ -18,6 +18,7 @@ public class EventFSM<T>
 	}
 	public void SendInput(T input)
 	{
+
 		StateE<T> newState;
 		//
 		if (current.CheckInput(input, out newState))

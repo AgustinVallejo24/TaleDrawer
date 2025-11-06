@@ -120,6 +120,7 @@ MonoBehaviour:
     m_Bits: 2048
   _intrectableName: 
   weight: 1.5
+  _spawned: 0
   _objectMask:
     serializedVersion: 2
     m_Bits: 128
@@ -127,6 +128,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   _playerPos: {fileID: 7008313088280711969}
+  _excludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &3094319763697518091
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -361,7 +365,7 @@ Transform:
   m_GameObject: {fileID: 3728152005837479210}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.023, y: 0.966, z: 0}
+  m_LocalPosition: {x: 0.023, y: 1.212, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
