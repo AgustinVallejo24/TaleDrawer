@@ -37,8 +37,7 @@ public class Hook : MonoBehaviour, IInteractable
         }
         else
         {
-            spawningObject._currentInteractuable = null;
-            spawningObject._intrectableName = "";
+            spawningObject.CantInteract();
         }
         
     }

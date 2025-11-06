@@ -167,7 +167,7 @@ public class PlacementGridManager : MonoBehaviour
         {
             Vector2 pos = CustomTools.ToVector2(current.transform.position);
             
-            if (IsPointValid(pos + gridCenter))
+            if (IsPointValid(pos))
             {
                 float dist = Vector2.Distance(pos, dragPosition);
 

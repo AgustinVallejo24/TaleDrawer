@@ -10,13 +10,13 @@ public class GridPoint : MonoBehaviour
     [SerializeField] int _originalOrderInLayer;
     [SerializeField] int _visibleOrderInLayer;
 
-    //[SerializeField] bool _blocked;
+    [SerializeField] public bool blocked;
     
 
     private void Start()
     {                
         _originalOrderInLayer = _myRend.sortingOrder;
-        //_blocked = false;
+        blocked = false;
         
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,12 +37,12 @@ public class GridPoint : MonoBehaviour
         if (!available)
         {
             _myRend.color = _blockedColor;
-            //_blocked = true;
+            blocked = true;
         }
         else
         {
             _myRend.color =_originalColor;
-            //_blocked = false;
+            blocked = false;
         }
     }
 

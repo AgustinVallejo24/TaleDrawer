@@ -23,6 +23,8 @@ public class SpawningObject : MonoBehaviour
     GridPoint _previousGridP;
     Vector2 _pointPos;
     protected Character _myCharacter;
+    [SerializeField]protected bool _spawned = false;
+    [SerializeField] protected LayerMask _objectMask;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,8 +61,9 @@ public class SpawningObject : MonoBehaviour
 
     public void OnBeginDrag()
     {
-        if(SceneManager.instance.currentState == SceneStates.Dragging)
-        {            
+        if(SceneManager.instance.currentState == SceneStates.Dragging && !_spawned)
+        {       
+            _mySpriteRenderer.color = _originalColor;
             if (_myColl != null)
             {                
                 _myColl.enabled = false;
@@ -74,7 +77,7 @@ public class SpawningObject : MonoBehaviour
             }
             else
             {
-                _currentGridP.SelectAndDeselectPoint(tuple.Item1);
+                //_currentGridP.SelectAndDeselectPoint(tuple.Item1);
                 _pointPos = _currentGridP.transform.position;
             }
 
@@ -86,7 +89,7 @@ public class SpawningObject : MonoBehaviour
     public void OnDrag(Vector2 position)
     {  
 
-        if(SceneManager.instance.currentState == SceneStates.Dragging)
+        if(SceneManager.instance.currentState == SceneStates.Dragging && !_spawned)
         {            
            transform.position = Vector2.Lerp(transform.position, sceneCamera.ScreenToWorldPoint(position), .5f);
 
@@ -100,15 +103,10 @@ public class SpawningObject : MonoBehaviour
                     _currentInteractuable = interctuable;
                     _intrectableName = _currentInteractuable.GetType().Name;
                     _mySpriteRenderer.color = Color.green;
-                    if(_currentGridP != null)
-                    {
-                        _currentGridP.SelectAndDeselectPoint(false);
-                    }
 
-                    if(_previousGridP != null)
-                    {
-                        _previousGridP.SelectAndDeselectPoint(false);
-                    }
+                    if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
+                    if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
+                    
                 }
                 
             }
@@ -152,7 +150,7 @@ public class SpawningObject : MonoBehaviour
 
                         if (_currentGridP != _previousGridP)
                         {
-                            _previousGridP.SelectAndDeselectPoint(false);
+                            if(!_previousGridP.blocked)_previousGridP.SelectAndDeselectPoint(false);
 
                             if (_currentGridP != null)
                             {
@@ -163,9 +161,9 @@ public class SpawningObject : MonoBehaviour
                         }
                     }
                     else
-                    {                        
-                        _previousGridP?.SelectAndDeselectPoint(false);
-                        _currentGridP?.SelectAndDeselectPoint(false);
+                    {
+                        if(_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
+                        if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
                     }
                     
 
@@ -178,7 +176,7 @@ public class SpawningObject : MonoBehaviour
 
     public void OnEndDrag()
     {
-        if(SceneManager.instance.currentState == SceneStates.Dragging)
+        if(SceneManager.instance.currentState == SceneStates.Dragging && !_spawned)
         {
             if (_myrb != null)
             {
@@ -214,6 +212,7 @@ public class SpawningObject : MonoBehaviour
 
             if (_currentInteractuable != null || (_currentGridP != null && tuple.Item1))
             {
+                _spawned = true;
                 SceneManager.instance.StateChanger(SceneStates.Game);
                 _mySpriteRenderer.color = _originalColor;
                 if (_myColl != null)
@@ -241,6 +240,30 @@ public class SpawningObject : MonoBehaviour
         }
         
         
+    }
+
+    public void CantInteract()
+    {
+        _mySpriteRenderer.color = Color.red;
+        _currentInteractuable = null;
+        _intrectableName = "";
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (_spawned)
+        {
+            if (collision.TryGetComponent(out IInteractable interactable))
+            {
+                interactable.Interact(myType, gameObject);
+            }
+            if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject) && Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y + .5f, _objectMask) && spawningObject.weight > 1f)
+            {
+                Destroy(spawningObject.gameObject);
+            }
+        }
+
+
     }
 
     public void SyncColiiders()

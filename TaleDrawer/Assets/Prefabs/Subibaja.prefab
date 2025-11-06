@@ -148,6 +148,7 @@ MonoBehaviour:
   neighbours: []
   _jumpPosition: {fileID: 0}
   shouldWait: 0
+  isClickable: 1
   _subibaja: {fileID: 4699632461207539972}
   _myCharacter: {fileID: 0}
   subibaja: {fileID: 0}
@@ -267,6 +268,7 @@ MonoBehaviour:
     cost: 0
   _jumpPosition: {fileID: 0}
   shouldWait: 1
+  isClickable: 1
   _subibaja: {fileID: 4699632461207539972}
   _myCharacter: {fileID: 0}
   subibaja: {fileID: 4699632461207539972}
@@ -422,13 +424,17 @@ MonoBehaviour:
   hasPlayer: 0
   _leftNode: {fileID: 7995920737830418347}
   _rightNode: {fileID: 457550691370889520}
-  _entryLeftNode: {fileID: 0}
-  _entryRightNode: {fileID: 0}
+  _entryLeftLowerNode: {fileID: 0}
+  _entryRightLowerNode: {fileID: 0}
+  _entryLeftUpperNode: {fileID: 0}
+  _entryRightUpperNode: {fileID: 0}
   weightState:
     keyValuePairs: []
   currentState: 0
   weightThreshold: 0
   currentObjects: []
+  myJoint: {fileID: 0}
+  _posibleObjects: 1
 --- !u!61 &8775810046938219561
 BoxCollider2D:
   m_ObjectHideFlags: 0

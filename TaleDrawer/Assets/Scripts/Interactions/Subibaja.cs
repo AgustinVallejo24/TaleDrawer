@@ -30,6 +30,7 @@ public class Subibaja : MonoBehaviour, IInteractable
     [SerializeField] List<GameObject> currentObjects;
     public RelativeJoint2D myJoint;
     float currentZRot;
+    [SerializeField] SpawnableObjectType _posibleObjects;
     private void Start()
     {
         //if (left)
@@ -62,9 +63,24 @@ public class Subibaja : MonoBehaviour, IInteractable
             ChangeRightNeightbours(0);
         }
     }
-    public void Interact(SpawningObject interactor)
+    public void Interact(SpawningObject spawningObject)
     {
-
+        if (_posibleObjects.HasFlag(spawningObject.myType))
+        {
+            if(Vector2.Distance(spawningObject.transform.position, _leftNode.transform.position) < Vector2.Distance(spawningObject.transform.position, _rightNode.transform.position))
+            {
+                spawningObject.transform.position = _leftNode.transform.position;
+            }
+            else
+            {
+                spawningObject.transform.position += _rightNode.transform.position;
+            }
+            
+        }
+        else
+        {
+            spawningObject.CantInteract();
+        }
     }
 
     public void OnMovingStateChange(bool sign)
