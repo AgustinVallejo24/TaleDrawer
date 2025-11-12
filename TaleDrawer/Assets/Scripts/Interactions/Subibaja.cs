@@ -98,6 +98,7 @@ public class Subibaja : MonoBehaviour, IInteractable
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
 
+        interactor.layer = 0;
         interactor.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
 
         //if (!interactor.TryGetComponent<SpawningObject>(out SpawningObject myObject) || currentObjects.Contains(interactor)) return;

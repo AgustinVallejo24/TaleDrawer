@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 public class Subibaje_CustomNode : CustomNode
 {
     [SerializeField] Subibaja _subibaja;
@@ -69,6 +70,18 @@ public class Subibaje_CustomNode : CustomNode
     }
     public void NewJump(Transform jumpPos)
     {
+        StartCoroutine(JumpCouroutine(jumpPos));
+    }
+    public void SetNeghtboursBool(CustomNode node,bool value)
+    {
+        if (node == null) return;
+         SetCanDoEvent(node, value);
+    }
+
+    public IEnumerator JumpCouroutine(Transform jumpPos)
+    {
+        _myCharacter.SendInputToFSM(CharacterStates.Wait);
+        yield return new WaitForSeconds(.3f);
         int index = 100;
         index = neighbours.FindIndex(x => x.node == _myCharacter.GetCurrentPath().First());
         if (index != 100)
@@ -78,9 +91,9 @@ public class Subibaje_CustomNode : CustomNode
             {
                 _myCharacter.ClearPath();
                 _myCharacter.SendInputToFSM(CharacterStates.Wait);
-                return;
+                yield break;
             }
-            
+
 
         }
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
@@ -89,10 +102,4 @@ public class Subibaje_CustomNode : CustomNode
         subibaja.hasPlayer = false;
         _myCharacter.Jump(jumpPos);
     }
-    public void SetNeghtboursBool(CustomNode node,bool value)
-    {
-        if (node == null) return;
-         SetCanDoEvent(node, value);
-    }
-
 }
