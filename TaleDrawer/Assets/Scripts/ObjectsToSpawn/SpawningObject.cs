@@ -197,18 +197,7 @@ public class SpawningObject : MonoBehaviour
             var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
             _currentGridP = tuple.Item3;
 
-            if (_currentInteractuable != null)
-            {
-                _currentInteractuable.Interact(this);
-                _currentGridP = null;
-            }
-            else if (_currentGridP != null && tuple.Item1)
-            {
-                _currentGridP.SelectAndDeselectPoint(false);
-                transform.position = new Vector3(_currentGridP.transform.position.x, _currentGridP.transform.position.y, 0);
-                /*_currentGridP = null;
-                _previousGridP = null;*/
-            }
+            
 
             if (_currentInteractuable != null || (_currentGridP != null && tuple.Item1))
             {
@@ -224,6 +213,19 @@ public class SpawningObject : MonoBehaviour
                 if (objectUseGravity && _myrb != null)
                 {
                     _myrb.gravityScale = 1;
+                }
+
+                if (_currentInteractuable != null)
+                {
+                    _currentInteractuable.Interact(this);
+                    _currentGridP = null;
+                }
+                else if (_currentGridP != null && tuple.Item1)
+                {
+                    _currentGridP.SelectAndDeselectPoint(false);
+                    transform.position = new Vector3(_currentGridP.transform.position.x, _currentGridP.transform.position.y, 0);
+                    /*_currentGridP = null;
+                    _previousGridP = null;*/
                 }
             }
             else

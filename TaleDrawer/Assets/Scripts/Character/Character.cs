@@ -173,7 +173,7 @@ public class Character : MonoBehaviour
                     &&  Math.Abs(_currentPath.First().transform.position.y - _currentPath.Skip(1).First().transform.position.y) < _yDiffThreshold)
                 {
                     if (_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
-                    {
+                    {                        
                         _currentPath.Remove(_currentPath.First());
                         _lookAtNode = _currentPath.First();
                     }
@@ -211,7 +211,7 @@ public class Character : MonoBehaviour
                 //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.                
                 if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10) && nextPosition != CustomTools.ToVector2(_currentPath.Last().transform.position))
-                {
+                {                    
                     _goToNextPosition = true;
                     _currentPath.Remove(_currentPath.First());
                 }
@@ -686,7 +686,8 @@ public class Character : MonoBehaviour
         _currentPath = _pathFinding.AStar(start, goal);
 
         if (_currentPath.Count > 1 && _currentPath.SkipLast(1).Last().isClickable && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
-            > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition))
+            > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition) 
+            && _currentPath.SkipLast(1).Last().neighbours.Where(x => x.node == _currentPath.Last()).Last().nodeEvent.GetPersistentEventCount() == 0)
         {
             _currentPath = _currentPath.SkipLast(1).ToList();
         }

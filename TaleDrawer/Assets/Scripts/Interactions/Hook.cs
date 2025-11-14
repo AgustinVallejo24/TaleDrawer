@@ -28,6 +28,7 @@ public class Hook : MonoBehaviour, IInteractable
             _attachedObject = spawningObject;
             if(_attachedObject._myrb != null)
             {
+                Debug.LogError("Entro a este if del orto");
                 _attachedObject._myrb.gravityScale = 0;
             }
             _attachedObject._myColl.isTrigger = true;
