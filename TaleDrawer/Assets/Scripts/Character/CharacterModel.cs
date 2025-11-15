@@ -36,7 +36,8 @@ public class CharacterModel
     public void Jump(Vector2 jumpPosition, Action onComplete = null, bool toJumpingState = true)
     {
         float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
-
+        _myCharacter.characterAudioSource.clip = _myCharacter.jumpSound;
+        _myCharacter.characterAudioSource.Play();
         if (toJumpingState)
         {
             _myCharacter.SendInputToFSM(CharacterStates.Jumping);

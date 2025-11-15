@@ -39,12 +39,12 @@ public class Caja : SpawningObject,IInteractable
             newPos.y = _myColl.bounds.min.y;
             if(_myCharacter.transform.position.x > transform.position.x)
             {
-                newPos.x += 0.3f;
+               // newPos.x += 0.01f;
                 
             }
             else
             {
-                newPos.x -= 0.3f;
+                //newPos.x -= 0.01f;
             }
             _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
@@ -55,16 +55,16 @@ public class Caja : SpawningObject,IInteractable
     public void JumpOverBox()
     {
         _myCharacter.onMovingEnd = null;
-
-        
-        _myCharacter.characterModel.Jump(_playerPos.position, () =>
-        {
-            // Llamar a OnLand
-            _myColl.excludeLayers = default;
-            _myCharacter.Land();
-            // Ejecutar action si vino por parámetro
-            _myCharacter.currentInteractable = this;
-        });
+        _myColl.excludeLayers = default;
+        _myCharacter.SendInputToFSM(CharacterStates.Climb);
+        //_myCharacter.characterModel.Jump(_playerPos.position, () =>
+        //{
+        //    // Llamar a OnLand
+        //    _myColl.excludeLayers = default;
+        //    _myCharacter.Land();
+        //    // Ejecutar action si vino por parámetro
+        //    _myCharacter.currentInteractable = this;
+        //});
         //_myCharacter.transform.DOJump(_playerPos.position, _myCharacter.currentJumpForce.y/3, 1, 1f).OnComplete(() =>
         //{
         //   //  Llamar a OnLand

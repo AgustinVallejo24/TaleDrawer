@@ -38,7 +38,11 @@ public class CharacterView
         _character.StartCoroutine(CustomResetTrigger(_landTrigger));
     }
 
-
+    public void OnClimb()
+    {
+        _anim.SetTrigger("Climb");
+        _character.StartCoroutine(CustomResetTrigger("Climb"));
+    }
     public void FlipCharacter(int movementSign)
     {
         if(movementSign > 0)

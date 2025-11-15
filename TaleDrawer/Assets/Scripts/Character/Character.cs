@@ -25,6 +25,8 @@ public class Character : MonoBehaviour
     public Action onMovingStart;
     public Action onMovingEnd;
     public IInteractable currentInteractable;
+    public AudioSource characterAudioSource;
+    public AudioClip jumpSound;
     #endregion
 
     #region References
@@ -46,7 +48,8 @@ public class Character : MonoBehaviour
     #endregion
 
 
-
+    public Transform visual;
+    private Vector3 lastPos;
     #region Level References
     public List<InterestPoint> pointList;
     public Queue<InterestPoint> currentObjectivesQueue = new Queue<InterestPoint>();
@@ -79,15 +82,18 @@ public class Character : MonoBehaviour
         var Landing = new StateE<CharacterStates>("Landing");
         var OnRope = new StateE<CharacterStates>("OnRope");
         var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
+        var Climb = new StateE<CharacterStates>("Climb");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
-            .Done();
+             .SetTransition(CharacterStates.Climb, Climb).Done();
+
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
             //.SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Jumping, Jumping).Done();
+            .SetTransition(CharacterStates.Jumping, Jumping)
+            .SetTransition(CharacterStates.Climb,Climb).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
@@ -112,6 +118,8 @@ public class Character : MonoBehaviour
            .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(JumpingToRope)
            .SetTransition(CharacterStates.OnRope, OnRope).Done();
+        StateConfigurer.Create(Climb)
+           .SetTransition(CharacterStates.Idle, OnRope).Done();
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
@@ -559,6 +567,28 @@ public class Character : MonoBehaviour
 
         #endregion
 
+        #region CLIMB STATE
+
+        Climb.OnEnter += x =>
+        {
+            Debug.LogError("CLIMBEO");
+            _currentState = CharacterStates.Climb;
+            characterView.OnClimb();
+
+        };
+
+        Climb.OnUpdate += () =>
+        {
+
+        };
+        Climb.OnFixedUpdate += () =>
+        {
+
+        };
+        Climb.OnExit += x => { };
+
+        #endregion
+
         _eventFSM.EnterFirstState();
 
 
@@ -679,6 +709,7 @@ public class Character : MonoBehaviour
         }
     }
 
+
     public bool GetPath(CustomNode goal, Vector2 nextPos)
     {
         nextPosition = nextPos;
@@ -755,4 +786,5 @@ public enum CharacterStates
     Landing,
     OnRope,
     JumpingToRope,
+    Climb
 }
