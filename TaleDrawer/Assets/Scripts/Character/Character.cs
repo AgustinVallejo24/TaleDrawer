@@ -64,7 +64,8 @@ public class Character : MonoBehaviour
     #endregion
 
     public bool test;
-
+    [SerializeField] LayerMask _CliffMask;
+    public Action climbAction;
     protected virtual void Awake()
     {
 
@@ -104,6 +105,7 @@ public class Character : MonoBehaviour
              .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Landing, Landing)
+            .SetTransition(CharacterStates.Climb, Climb)
             .Done();
         StateConfigurer.Create(Stop)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -119,7 +121,10 @@ public class Character : MonoBehaviour
         StateConfigurer.Create(JumpingToRope)
            .SetTransition(CharacterStates.OnRope, OnRope).Done();
         StateConfigurer.Create(Climb)
-           .SetTransition(CharacterStates.Idle, OnRope).Done();
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+           .SetTransition(CharacterStates.Idle, Idle).Done();
+
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
         _eventFSM = new EventFSM<CharacterStates>(Idle);
@@ -285,7 +290,7 @@ public class Character : MonoBehaviour
                 if (sqrDistanceToTarget > .5f)
                 {
 
-                    characterModel.Move2(_currentPath.First().transform.position, _smoothSpeed);
+                    characterModel.Move(_currentPath.First().transform.position, _smoothSpeed);
 
                 }
                 else
@@ -391,7 +396,7 @@ public class Character : MonoBehaviour
                     if (sqrDistanceToTarget > 1f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
-                        characterModel.Move2(nextPosition, _smoothSpeed);
+                        characterModel.Move(nextPosition, _smoothSpeed);
 
                     }
                     else
@@ -486,10 +491,7 @@ public class Character : MonoBehaviour
 
         Jumping.OnUpdate += () =>
         {
-            //if (Physics2D.Raycast(transform.position, Vector2.down, 2,_floorLayerMask))
-            //{
-            //    _eventFSM.SendInput(CharacterStates.Moving);
-            //}
+
 
         };
         Jumping.OnFixedUpdate += () =>
@@ -603,7 +605,10 @@ public class Character : MonoBehaviour
 
     }
 
-
+    public void ClimbCliff()
+    {
+        SendInputToFSM(CharacterStates.Climb);
+    }
     public virtual void Update()
     {
         _eventFSM.Update();

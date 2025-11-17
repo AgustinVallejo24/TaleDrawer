@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using System.Collections;
 public class Caja : SpawningObject,IInteractable
 {
     
     [SerializeField] LayerMask _clickableMask;
     [SerializeField] Transform _playerPos;
-
+    [SerializeField] LayerMask _eventMask;
     [SerializeField] LayerMask _excludeLayers;
+    [SerializeField] Vector2 _jumpPosition;
     private void OnDestroy()
     {
         interactableDelegate?.Invoke(-weight,gameObject);
@@ -37,15 +39,6 @@ public class Caja : SpawningObject,IInteractable
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
             Debug.Log(newPos);
             newPos.y = _myColl.bounds.min.y;
-            if(_myCharacter.transform.position.x > transform.position.x)
-            {
-               // newPos.x += 0.01f;
-                
-            }
-            else
-            {
-                //newPos.x -= 0.01f;
-            }
             _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
             _myCharacter.onMovingEnd = JumpOverBox; 
@@ -55,54 +48,108 @@ public class Caja : SpawningObject,IInteractable
     public void JumpOverBox()
     {
         _myCharacter.onMovingEnd = null;
+        _myCharacter.currentInteractable = this;
         _myColl.excludeLayers = default;
         _myCharacter.SendInputToFSM(CharacterStates.Climb);
-        //_myCharacter.characterModel.Jump(_playerPos.position, () =>
-        //{
-        //    // Llamar a OnLand
-        //    _myColl.excludeLayers = default;
-        //    _myCharacter.Land();
-        //    // Ejecutar action si vino por parámetro
-        //    _myCharacter.currentInteractable = this;
-        //});
-        //_myCharacter.transform.DOJump(_playerPos.position, _myCharacter.currentJumpForce.y/3, 1, 1f).OnComplete(() =>
-        //{
-        //   //  Llamar a OnLand
+        _myCharacter.StartCoroutine(RunToCenter());
 
-
-        // //     Ejecutar action si vino por parámetro
-        //    _myCharacter.currentInteractable = this;
-        //    _myCharacter.onMovingEnd = null;
-        //});
     }
     public void JumpOffBox()
     {
         Vector2 touchPos = SceneManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
         _myCharacter.currentInteractable = null;
         _myColl.excludeLayers = _excludeLayers;
-        if (touchPos.x > transform.position.x)
+        var eventObj = Physics2D.OverlapBox(transform.position,new Vector2(2,2),0,_eventMask).gameObject;
+        BoxEvent boxE = default;
+        if(eventObj!= null && eventObj.TryGetComponent(out BoxEvent boxEvent))
         {
-            _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2,() =>
+            _jumpPosition = CustomTools.ToVector2(boxEvent.jumpPosition.position);
+            boxE = boxEvent;
+        }
+        if(_jumpPosition != Vector2.zero)
         {
+            if(Mathf.Abs(transform.position.x - _jumpPosition.x) > Mathf.Abs(_jumpPosition.x - touchPos.x))
+            {
+                if (boxE.shouldClimb)
+                {
+                    _myCharacter.characterModel.Jump(_jumpPosition, () =>
+                    {
 
-                _myCharacter.Land();
+                        _myCharacter.SendInputToFSM(CharacterStates.Climb);
 
-            });
+                    });
+                }
+                else
+                {
+                    _myCharacter.characterModel.Jump(_jumpPosition, () =>
+                    {
+
+                        _myCharacter.Land();
+
+                    });
+                }
+
+            }
+            else
+            {
+                if (touchPos.x > transform.position.x)
+                {
+                    _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2, () =>
+                    {
+
+                        _myCharacter.Land();
+
+                    });
+                }
+                else
+                {
+                    _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
+                    {
+
+                        _myCharacter.Land();
+
+                    });
+
+                }
+            }
         }
         else
         {
-            _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
+            if (touchPos.x > transform.position.x)
             {
+                _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2, () =>
+                {
 
-                _myCharacter.Land();
+                    _myCharacter.Land();
 
-            });
+                });
+            }
+            else
+            {
+                _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
+                {
 
+                    _myCharacter.Land();
+
+                });
+
+            }
         }
+
         
 
     }
+    public IEnumerator RunToCenter()
+    {
+        yield return new WaitForSeconds(.9f);
+        _myCharacter.characterView.OnMove();
+        _myCharacter.transform.DOMove(new Vector2(transform.position.x, _myCharacter.transform.position.y), .3f);
+        yield return new WaitForSeconds(.3f);
+        _myCharacter.characterView.OnIdle();
+       _myCharacter.SendInputToFSM(CharacterStates.Wait);
 
+    }
+    
     public void InsideInteraction()
     {
         

@@ -20,8 +20,18 @@ public class CharacterRender : MonoBehaviour
     }
     public void TPChild()
     {
-        Debug.LogError("PAUSA");
-        _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 2 * Vector3.up;
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        if (renderer.flipX)
+        {
+            _character.transform.position = _character.transform.position + 1.5f * Vector3.left + 2 * Vector3.up;
+        }
+        else
+        {
+            _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 2 * Vector3.up;
+        }
+        
         transform.localPosition = new Vector3(0, 0, 0);
+        _character.climbAction?.Invoke();
     }
+
 }

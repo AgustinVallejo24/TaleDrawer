@@ -72,6 +72,28 @@ public class Subibaje_CustomNode : CustomNode
     {
         StartCoroutine(JumpCouroutine(jumpPos));
     }
+    public void CliffJump(Transform jumpPos)
+    {
+        _myCharacter.transform.parent = null;
+        _myCharacter.characterRigidbody.gravityScale = 0;
+        Destroy(subibaja.myJoint);
+        subibaja.hasPlayer = false;
+        _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
+        _myCharacter.climbAction = () =>
+        {
+            _myCharacter.SendInputToFSM(CharacterStates.Moving);
+            _myCharacter.characterRigidbody.gravityScale = 1;
+            _myCharacter.climbAction = null;
+        };
+        _myCharacter.characterModel.Jump(jumpPos.position, () =>
+        {
+
+            _myCharacter.SendInputToFSM(CharacterStates.Climb);
+
+
+        });
+    }
+   
     public void SetNeghtboursBool(CustomNode node,bool value)
     {
         if (node == null) return;
