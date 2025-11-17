@@ -29,5 +29,7 @@ public enum SpawnableObjectType
     Caja = 1 << 0,
     Soga = 1 << 1,
     Character = 1 << 2,
+    Piedra = 1 << 3,
+    Casco = 1 << 4,
     All = ~0
 }

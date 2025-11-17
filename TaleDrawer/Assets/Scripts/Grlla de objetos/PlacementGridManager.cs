@@ -127,11 +127,12 @@ public class PlacementGridManager : MonoBehaviour
     /// <summary>
     /// El item 1 de la tupla es para saber si se encontro un punto cercano, el item 2 es la posición mas cercana, y el item 3 es el punto de la grilla.
     /// 
-    /// El vector que se pide es el de la pocisión del objeto que se esta moviendo. El float que se le puede agregar es por si necesitamos una distancia maxima diferente.
+    /// El vector que se pide es el de la pocisión del objeto que se esta moviendo. El float que se le puede agregar es por si necesitamos una distancia maxima diferente. 
+    /// El bool que se le puede pasar es por si queremos que tome todos los puntos incluyendo los que no son validos.
     /// </summary>
     /// <param name="dragPosition"></param>
     /// <returns></returns>
-    public Tuple<bool, Vector2, GridPoint> FindNearestValidPlacement(Vector2 dragPosition, float maxDist = 0)
+    public Tuple<bool, Vector2, GridPoint> FindNearestValidPlacement(Vector2 dragPosition, float maxDist = 0, bool all = true)
     {
         if(maxDist == 0)
         {
@@ -163,44 +164,54 @@ public class PlacementGridManager : MonoBehaviour
             }
         }*/
 
-        /*var newList = placementPoints.Aggregate(FList.Create<Tuple<float,bool,Vector2, GridPoint>>(), (acum, current) =>
+        if (!all)
         {
-            Vector2 pos = CustomTools.ToVector2(current.transform.position);
-            
-            if (IsPointValid(pos))
+            var newList = placementPoints.Aggregate(FList.Create<Tuple<float, bool, Vector2, GridPoint>>(), (acum, current) =>
             {
-                float dist = Vector2.Distance(pos, dragPosition);
+                Vector2 pos = CustomTools.ToVector2(current.transform.position);
 
-                if(dist < maxDist)
+                if (IsPointValid(pos))
                 {
-                    return acum + Tuple.Create(dist, true, pos, current);
+                    float dist = Vector2.Distance(pos, dragPosition);
+
+                    if (dist < maxDist)
+                    {
+                        return acum + Tuple.Create(dist, true, pos, current);
+                    }
+                    else
+                    {
+                        return acum;
+                    }
+
                 }
                 else
                 {
                     return acum;
                 }
-                
-            }
-            else
+
+
+            }).OrderBy(x => x.Item1).Select(x => Tuple.Create(x.Item2, x.Item3, x.Item4));
+
+            if (newList.Any())
             {
-                return acum;
+                bestPosition = newList.First();
             }
+        }
+        else
+        {
+            bestPosition = placementPoints.Aggregate(FList.Create<Tuple<bool, Vector2, GridPoint>>(), (acum, current) =>
+            {
+                Vector2 pos = CustomTools.ToVector2(current.transform.position);
+                bool valid = IsPointValid(pos);
+
+                return acum + Tuple.Create(valid, pos, current);
+            }).OrderBy(x => Vector2.Distance(x.Item2, dragPosition)).First();
+        }
             
 
-        }).OrderBy(x => x.Item1).Select(x => Tuple.Create(x.Item2, x.Item3, x.Item4));*/
+            
 
-        bestPosition = placementPoints.Aggregate(FList.Create<Tuple<bool, Vector2, GridPoint>>(), (acum, current) =>
-        {
-            Vector2 pos = CustomTools.ToVector2(current.transform.position);
-            bool valid = IsPointValid(pos);
-
-            return acum + Tuple.Create(valid, pos, current);
-        }).OrderBy(x => Vector2.Distance(x.Item2, dragPosition)).First();
-
-        /*if (newList.Any())
-        {
-            bestPosition = newList.First();
-        } */       // Devolvemos el mejor punto encontrado. Si no encuentra ninguno, devuelve la posición de arrastre.
+              // Devolvemos el mejor punto encontrado. Si no encuentra ninguno, devuelve la posición de arrastre.
          
         return bestPosition;
     }

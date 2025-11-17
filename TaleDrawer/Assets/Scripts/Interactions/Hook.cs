@@ -29,8 +29,9 @@ public class Hook : MonoBehaviour, IInteractable
             if(_attachedObject._myrb != null)
             {
                 Debug.LogError("Entro a este if del orto");
-                _attachedObject._myrb.gravityScale = 0;
+                _attachedObject._myrb.gravityScale = 0;                
             }
+            _attachedObject.objectUseGravity = false;
             _attachedObject._myColl.isTrigger = true;
             _attachedObject.gameObject.layer = 11;
             _attachedObject.transform.position = new Vector2(_hitch.transform.position.x, _hitch.transform.position.y - _attachedObject.transform.localScale.y);

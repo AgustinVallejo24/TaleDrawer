@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using Unity.VisualScripting;
 public class SpawningObject : MonoBehaviour
 {
     public Camera sceneCamera;    
@@ -17,6 +18,9 @@ public class SpawningObject : MonoBehaviour
     Color _originalColor;
     bool _first = true;
     bool _second = true;
+    bool _third = true;
+    [SerializeField] bool _canIntercactWithPlayer;
+    [SerializeField] bool _interactingWithPlayer;
     public float weight;
     public Action<float, GameObject> interactableDelegate;
     GridPoint _currentGridP;
@@ -100,15 +104,32 @@ public class SpawningObject : MonoBehaviour
                 {
                     _first = false;
                     _second = true;
+                    _third = true;
                     _currentInteractuable = interctuable;
                     _intrectableName = _currentInteractuable.GetType().Name;
                     _mySpriteRenderer.color = Color.green;
-
+                    _interactingWithPlayer = false;
                     if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
                     if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
                     
                 }
                 
+            }
+            else if(_canIntercactWithPlayer && hit && hit.TryGetComponent<Character>(out Character character))
+            {
+                if (_third)
+                {
+                    _third = false;
+                    _first = true;
+                    _second = true;
+                    _interactingWithPlayer = true;
+                    _currentInteractuable = null;
+                    _intrectableName = "None";
+                    _mySpriteRenderer.color = Color.green;
+
+                    if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
+                    if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
+                }
             }
             else
             {
@@ -116,8 +137,10 @@ public class SpawningObject : MonoBehaviour
                 {
                     _second = false;
                     _first = true;
+                    _third = true;
                     _currentInteractuable = null;
                     _intrectableName = "None";
+                    _interactingWithPlayer = false;
                     _mySpriteRenderer.color = _originalColor;
                 }
 
@@ -150,7 +173,7 @@ public class SpawningObject : MonoBehaviour
 
                         if (_currentGridP != _previousGridP)
                         {
-                            if(!_previousGridP.blocked)_previousGridP.SelectAndDeselectPoint(false);
+                            if (!_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
 
                             if (_currentGridP != null)
                             {
@@ -162,13 +185,13 @@ public class SpawningObject : MonoBehaviour
                     }
                     else
                     {
-                        if(_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
+                        if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
                         if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
                     }
-                    
 
-                }              
-                
+
+                }
+
             }
         }
         
@@ -199,8 +222,9 @@ public class SpawningObject : MonoBehaviour
 
             
 
-            if (_currentInteractuable != null || (_currentGridP != null && tuple.Item1))
+            if (_currentInteractuable != null || (_currentGridP != null && tuple.Item1) || _interactingWithPlayer)
             {
+                
                 _spawned = true;
                 SceneManager.instance.StateChanger(SceneStates.Game);
                 _mySpriteRenderer.color = _originalColor;
@@ -215,7 +239,13 @@ public class SpawningObject : MonoBehaviour
                     _myrb.gravityScale = 1;
                 }
 
-                if (_currentInteractuable != null)
+                if (_canIntercactWithPlayer)
+                {
+                    InteractionWithPlayer();
+                    _currentGridP = null;
+                    _currentInteractuable = null;
+                }
+                else if (_currentInteractuable != null)
                 {
                     _currentInteractuable.Interact(this);
                     _currentGridP = null;
@@ -227,6 +257,8 @@ public class SpawningObject : MonoBehaviour
                     /*_currentGridP = null;
                     _previousGridP = null;*/
                 }
+
+
             }
             else
             {
@@ -246,12 +278,20 @@ public class SpawningObject : MonoBehaviour
 
     public void CantInteract()
     {
-        _mySpriteRenderer.color = Color.red;
+       // _mySpriteRenderer.color = Color.red;
         _currentInteractuable = null;
         _intrectableName = "";
+
+        var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity, false);
+        transform.position = new Vector3(tuple.Item3.transform.position.x, tuple.Item3.transform.position.y, 0);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void InteractionWithPlayer()
+    {
+
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (_spawned)
         {
@@ -266,6 +306,21 @@ public class SpawningObject : MonoBehaviour
         }
 
 
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_spawned)
+        {
+            if (collision.gameObject.TryGetComponent(out IInteractable interactable))
+            {
+                interactable.Interact(myType, gameObject);
+            }
+            /*if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject) && Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y + .5f, _objectMask) && spawningObject.weight > 1f)
+            {
+                Destroy(spawningObject.gameObject);
+            }*/
+        }
     }
 
     public void SyncColiiders()
