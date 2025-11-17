@@ -316,6 +316,10 @@ public class SpawningObject : MonoBehaviour
             {
                 interactable.Interact(myType, gameObject);
             }
+            else if(_canIntercactWithPlayer && collision.gameObject.TryGetComponent(out Character character))
+            {
+                InteractionWithPlayer();
+            }
             /*if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject) && Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y + .5f, _objectMask) && spawningObject.weight > 1f)
             {
                 Destroy(spawningObject.gameObject);

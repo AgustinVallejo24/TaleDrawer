@@ -563,6 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  _clicableStates: 5
   _dTest: {fileID: 978309366}
   _drawingDraggingCanvas: {fileID: 952169777}
   _drawingBackground: {fileID: 72749079}
@@ -5289,7 +5290,7 @@ MonoBehaviour:
     distribution: []
     momentMagnitudes: []
     symbolType: 0
-  shouldLoad: 0
+  shouldLoad: 1
   _spawnableManager: {fileID: 1487176636}
   _sceneObjects: {fileID: 1925854474}
   _drawingBackgound: {fileID: 72749079}
@@ -6271,6 +6272,7 @@ MonoBehaviour:
   _goToNextPosition: 1
   yPositionOffset: 0
   feetPosition: {fileID: 272336208}
+  helmetPosition: {fileID: 0}
   _currentPath: []
   characterAudioSource: {fileID: 1394210871}
   jumpSound: {fileID: 8300000, guid: 7986cbc2eaceee14682abd68248b8e5a, type: 3}

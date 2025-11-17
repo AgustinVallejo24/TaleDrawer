@@ -83,6 +83,11 @@ public class CharacterView
 
     }
 
+    public void OnEquippingHelmet()
+    {
+
+    }
+
     public IEnumerator CustomResetTrigger(string triggerName)
     {
         yield return new WaitForSeconds(.4f);

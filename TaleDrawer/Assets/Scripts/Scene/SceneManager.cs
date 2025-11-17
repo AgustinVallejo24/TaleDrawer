@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 public class SceneManager : MonoBehaviour
 {
     public SceneStates currentState;
+    [SerializeField] CharacterStates _clicableStates;
     public DrawingTest _dTest;
     [SerializeField] GameObject _drawingDraggingCanvas;
     [SerializeField] GameObject _drawingBackground;
@@ -157,7 +158,7 @@ public class SceneManager : MonoBehaviour
     public void OnClick(Vector2 position)
     {
 
-        if (currentState == SceneStates.Game)
+        if (currentState == SceneStates.Game && _clicableStates.HasFlag(Character.instance._currentState))
         {
             if(levelCharacter.currentInteractable != null)
             {

@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     [SerializeField] bool _goToNextPosition;
     [SerializeField] public float yPositionOffset;
     [SerializeField] Transform feetPosition;
+    [SerializeField] protected Transform helmetPosition;
     [SerializeField] protected List<CustomNode> _currentPath;
     public Action onMovingStart;
     public Action onMovingEnd;
@@ -84,22 +85,27 @@ public class Character : MonoBehaviour
         var OnRope = new StateE<CharacterStates>("OnRope");
         var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
         var Climb = new StateE<CharacterStates>("Climb");
+        var EquippingHelmet = new StateE<CharacterStates>("EquippingHelmet");
+
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
-             .SetTransition(CharacterStates.Climb, Climb).Done();
+             .SetTransition(CharacterStates.Climb, Climb)
+             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
 
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
             //.SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.Climb,Climb).Done();
+            .SetTransition(CharacterStates.Climb,Climb)
+            .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
+            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
+            .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Jumping)
             .SetTransition(CharacterStates.Idle, Idle)
              .SetTransition(CharacterStates.Wait, Wait)
@@ -121,6 +127,10 @@ public class Character : MonoBehaviour
         StateConfigurer.Create(JumpingToRope)
            .SetTransition(CharacterStates.OnRope, OnRope).Done();
         StateConfigurer.Create(Climb)
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+           .SetTransition(CharacterStates.Idle, Idle).Done();
+        StateConfigurer.Create(EquippingHelmet)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
            .SetTransition(CharacterStates.Idle, Idle).Done();
@@ -591,6 +601,27 @@ public class Character : MonoBehaviour
 
         #endregion
 
+        #region EQUIPPING HELMET STATE
+
+        EquippingHelmet.OnEnter += x =>
+        {            
+            _currentState = CharacterStates.EquippingHelmet;
+            characterView.OnEquippingHelmet();
+
+        };
+
+        EquippingHelmet.OnUpdate += () =>
+        {
+
+        };
+        EquippingHelmet.OnFixedUpdate += () =>
+        {
+
+        };
+        EquippingHelmet.OnExit += x => { };
+
+        #endregion
+
         _eventFSM.EnterFirstState();
 
 
@@ -781,15 +812,20 @@ public class Character : MonoBehaviour
     }
 }
 
+[System.Serializable]
+[Flags]
 public enum CharacterStates
 {
-    Idle,
-    Moving,
-    Wait,
-    Stop,
-    Jumping,
-    Landing,
-    OnRope,
-    JumpingToRope,
-    Climb
+    None = 0,
+    Idle = 1 << 0,
+    Moving = 1 << 1,
+    Wait = 1 << 2,
+    Stop = 1 << 3,
+    Jumping = 1 << 4,
+    Landing = 1 << 5,
+    OnRope = 1 << 6,
+    JumpingToRope = 1 << 7,
+    Climb = 1 << 8,
+    EquippingHelmet = 1 << 9,
+    All = ~0
 }

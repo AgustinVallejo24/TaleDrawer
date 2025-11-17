@@ -44,4 +44,11 @@ public class Robin : Character
         }
     }
 
+    public void PutOnHelmet(Transform helmet, Quaternion helmetRot)
+    {
+        SendInputToFSM(CharacterStates.EquippingHelmet);
+        helmet.transform.rotation = helmetRot;
+        helmet.transform.position = helmetPosition.position;
+        SendInputToFSM(CharacterStates.Moving);
+    }
 }
