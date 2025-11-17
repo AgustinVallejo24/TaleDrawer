@@ -85,13 +85,15 @@ public class Subibaje_CustomNode : CustomNode
             _myCharacter.characterRigidbody.gravityScale = 1;
             _myCharacter.climbAction = null;
         };
-        _myCharacter.characterModel.Jump(jumpPos.position, () =>
-        {
-
-            _myCharacter.SendInputToFSM(CharacterStates.Climb);
-
-
-        });
+        _myCharacter.characterModel.Jump(
+            jumpPos.position,
+            () =>
+            {
+                _myCharacter.SendInputToFSM(CharacterStates.Climb);
+            },
+            true,   // tercer parámetro: toJumpingState
+            0.5f    // cuarto parámetro: time
+        );
     }
    
     public void SetNeghtboursBool(CustomNode node,bool value)

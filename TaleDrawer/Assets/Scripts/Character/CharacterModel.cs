@@ -20,7 +20,7 @@ public class CharacterModel
         Vector2 direction = (jumpPosition - CustomTools.ToVector2(_myCharacter.transform.position)).normalized * horizontalJumpForce + Vector2.up * verticalJumpForce;
         _myRigidbody.AddForce(direction, ForceMode2D.Impulse);
     }
-    public void Jump(Vector2 jumpPosition, Action onComplete = null, bool toJumpingState = true)
+    public void Jump(Vector2 jumpPosition, Action onComplete = null, bool toJumpingState = true, float time = 1)
     {
         float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
         _myCharacter.characterAudioSource.clip = _myCharacter.jumpSound;
@@ -39,7 +39,7 @@ public class CharacterModel
             _myCharacter.characterView.FlipCharacter(-1);
         }
         _myCharacter.transform
-            .DOJump(jumpPosition, 0.5f * distance, 1, 1)
+            .DOJump(jumpPosition, 0.5f * distance, 1, time)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
