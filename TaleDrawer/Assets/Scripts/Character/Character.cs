@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -61,6 +62,8 @@ public class Character : MonoBehaviour
     [SerializeField] float _yDiffThreshold;
 
     public static Character instance;
+
+    public Casco helmet;
 
     #endregion
 
@@ -185,9 +188,9 @@ public class Character : MonoBehaviour
             else
             {
                 _eventFSM.SendInput(CharacterStates.Wait);
-            }*/
-
-            if (!_currentPath.Any())
+            }*/            
+            
+            if (!_currentPath.Any() && !_goToNextPosition)
             {
 
                 _eventFSM.SendInput(CharacterStates.Idle);
@@ -699,7 +702,29 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(time);
         _eventFSM.SendInput(newState);
     }
+    public void PutOnHelmet(Casco helm, Rigidbody2D rb)
+    {
+        SendInputToFSM(CharacterStates.EquippingHelmet);
+        helmet = helm;
+        helmet.transform.rotation = helmet.neededRot;
+        helmet.transform.position = helmetPosition.position;
+        helmet.transform.parent = transform;
+        Destroy(rb);
 
+        if (_currentPath.Any())
+        {
+            SendInputToFSM(CharacterStates.Moving);
+        }
+        else if(Vector2.Distance(CustomTools.ToVector2(transform.position), nextPosition) > 1f)
+        {
+            _goToNextPosition = true;
+            SendInputToFSM(CharacterStates.Moving);
+        }
+        else
+        {
+            SendInputToFSM(CharacterStates.Idle);
+        }
+    }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -721,6 +746,14 @@ public class Character : MonoBehaviour
 
         //}
 
+    }    
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent(out SpawningObject spawningObject))
+        {
+            spawningObject.InteractionWithPlayer();
+        }
     }
     public void ClearPath()
     {

@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Casco : SpawningObject
 {
-    [SerializeField] int _health;
-    [SerializeField] Quaternion neededRot;
+    [SerializeField] public int _health;
+    [SerializeField] public Quaternion neededRot;
 
 
-    protected override void InteractionWithPlayer()
+    public override void InteractionWithPlayer()
     {
-        if(Character.instance.TryGetComponent(out Robin rob))
+        if(Character.instance.helmet == null)
         {
-            rob.PutOnHelmet(transform, neededRot);
+            Character.instance.PutOnHelmet(this, _myrb);
         }
     }
     

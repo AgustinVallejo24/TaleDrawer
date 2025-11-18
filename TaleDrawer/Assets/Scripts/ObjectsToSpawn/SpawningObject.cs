@@ -98,6 +98,7 @@ public class SpawningObject : MonoBehaviour
            transform.position = Vector2.Lerp(transform.position, sceneCamera.ScreenToWorldPoint(position), .5f);
 
             var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.y, _interactuables);
+            
             if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
             {
                 if (_first)
@@ -239,7 +240,7 @@ public class SpawningObject : MonoBehaviour
                     _myrb.gravityScale = 1;
                 }
 
-                if (_canIntercactWithPlayer)
+                if (_interactingWithPlayer)
                 {
                     InteractionWithPlayer();
                     _currentGridP = null;
@@ -286,7 +287,7 @@ public class SpawningObject : MonoBehaviour
         transform.position = new Vector3(tuple.Item3.transform.position.x, tuple.Item3.transform.position.y, 0);
     }
 
-    protected virtual void InteractionWithPlayer()
+    public virtual void InteractionWithPlayer()
     {
 
     }
@@ -299,10 +300,11 @@ public class SpawningObject : MonoBehaviour
             {
                 interactable.Interact(myType, gameObject);
             }
-            if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject) && Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y + .5f, _objectMask) && spawningObject.weight > 1f)
+            else if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject) && Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y + .5f, _objectMask) && spawningObject.weight > 1f)
             {
                 Destroy(spawningObject.gameObject);
             }
+            
         }
 
 
@@ -316,10 +318,7 @@ public class SpawningObject : MonoBehaviour
             {
                 interactable.Interact(myType, gameObject);
             }
-            else if(_canIntercactWithPlayer && collision.gameObject.TryGetComponent(out Character character))
-            {
-                InteractionWithPlayer();
-            }
+            
             /*if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject) && Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y + .5f, _objectMask) && spawningObject.weight > 1f)
             {
                 Destroy(spawningObject.gameObject);
