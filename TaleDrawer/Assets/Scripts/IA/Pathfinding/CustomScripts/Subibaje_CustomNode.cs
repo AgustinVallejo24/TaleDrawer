@@ -74,6 +74,33 @@ public class Subibaje_CustomNode : CustomNode
     }
     public void CliffJump(Transform jumpPos)
     {
+        StartCoroutine(CliffJumpCoroutine(jumpPos));
+    }
+   
+    public void SetNeghtboursBool(CustomNode node,bool value)
+    {
+        if (node == null) return;
+         SetCanDoEvent(node, value);
+    }
+
+    public IEnumerator CliffJumpCoroutine(Transform jumpPos)
+    {
+        _myCharacter.SendInputToFSM(CharacterStates.Wait);
+        yield return new WaitForSeconds(.3f);
+        int index = 100;
+        index = neighbours.FindIndex(x => x.node == _myCharacter.GetCurrentPath().First());
+        if (index != 100)
+        {
+            Debug.LogError("Calculeelindex");
+            if (!neighbours[index].canDoEvent)
+            {
+                _myCharacter.ClearPath();
+                _myCharacter.SendInputToFSM(CharacterStates.Wait);
+                yield break;
+            }
+
+
+        }
         _myCharacter.transform.parent = null;
         _myCharacter.characterRigidbody.gravityScale = 0;
         Destroy(subibaja.myJoint);
@@ -95,13 +122,6 @@ public class Subibaje_CustomNode : CustomNode
             0.5f    // cuarto parámetro: time
         );
     }
-   
-    public void SetNeghtboursBool(CustomNode node,bool value)
-    {
-        if (node == null) return;
-         SetCanDoEvent(node, value);
-    }
-
     public IEnumerator JumpCouroutine(Transform jumpPos)
     {
         _myCharacter.SendInputToFSM(CharacterStates.Wait);

@@ -5,7 +5,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -313434
+                "instanceID": -95674
             },
             "Threshold": 0.36000001430511477,
             "strokes": 1,
@@ -135,7 +135,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314100
+                "instanceID": -96194
             },
             "Threshold": 0.30000001192092898,
             "strokes": 1,
@@ -265,7 +265,7 @@
             "useRotation": false,
             "isSymmetric": true,
             "templateTexture": {
-                "instanceID": -314104
+                "instanceID": -96198
             },
             "Threshold": 0.30000001192092898,
             "strokes": 1,
@@ -388,14 +388,14 @@
                 0.000117520709695081,
                 0.00006237361035328138
             ],
-            "symbolType": 0
+            "symbolType": 8
         },
         {
             "symbolName": "Cuadrado",
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314108
+                "instanceID": -96202
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -525,7 +525,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314112
+                "instanceID": -96206
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -655,7 +655,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314116
+                "instanceID": -96210
             },
             "Threshold": 0.15000000596046449,
             "strokes": 1,
@@ -769,11 +769,11 @@
                 0.00044208283733277424,
                 0.00007658890264965322,
                 0.0007234848219982899,
-                0.0000055648652449195837,
+                0.0000055648652449195838,
                 0.0006943051941203375,
                 0.000012210074023608744,
                 0.0006943051941203375,
-                0.0000055648652449195837,
+                0.0000055648652449195838,
                 0.0007234848219982899,
                 0.00007658890264965322,
                 0.00044208283733277424
@@ -785,7 +785,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314120
+                "instanceID": -96214
             },
             "Threshold": 0.44999998807907107,
             "strokes": 3,
@@ -915,7 +915,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314124
+                "instanceID": -96218
             },
             "Threshold": 0.2199999988079071,
             "strokes": 1,
@@ -1045,7 +1045,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314128
+                "instanceID": -96222
             },
             "Threshold": 0.20000000298023225,
             "strokes": 1,
@@ -1175,7 +1175,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314132
+                "instanceID": -96226
             },
             "Threshold": 0.11999999731779099,
             "strokes": 1,
@@ -1305,7 +1305,7 @@
             "useRotation": true,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314136
+                "instanceID": -96230
             },
             "Threshold": 0.25,
             "strokes": 4,
@@ -1435,7 +1435,7 @@
             "useRotation": false,
             "isSymmetric": false,
             "templateTexture": {
-                "instanceID": -314140
+                "instanceID": -96234
             },
             "Threshold": 0.3499999940395355,
             "strokes": 1,
@@ -1565,7 +1565,7 @@
             "useRotation": true,
             "isSymmetric": true,
             "templateTexture": {
-                "instanceID": -314144
+                "instanceID": -96238
             },
             "Threshold": 0.3499999940395355,
             "strokes": 1,

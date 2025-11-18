@@ -10,7 +10,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] float _maxSpeed;
     public float currentSpeed;
-    [SerializeField][Range(0, 0.5f)] float _smoothSpeed;
+    [SerializeField] [Range(0, 0.5f)] float _smoothSpeed;
     [SerializeField] float _maxLife;
     protected float _currentLife;
     [SerializeField] float _jumpForce;
@@ -67,6 +67,7 @@ public class Character : MonoBehaviour
     public bool test;
     [SerializeField] LayerMask _CliffMask;
     public Action climbAction;
+    public Lever currentLever;
     protected virtual void Awake()
     {
 
@@ -86,11 +87,12 @@ public class Character : MonoBehaviour
         var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
         var Climb = new StateE<CharacterStates>("Climb");
         var EquippingHelmet = new StateE<CharacterStates>("EquippingHelmet");
-
+        var DoingEvent = new StateE<CharacterStates>("DoingEvent");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
              .SetTransition(CharacterStates.Climb, Climb)
+             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
 
         StateConfigurer.Create(Moving)
@@ -98,13 +100,15 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Wait, Wait)
             //.SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.Climb,Climb)
+            .SetTransition(CharacterStates.Climb, Climb)
+             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
+            .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Jumping)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -134,6 +138,10 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
            .SetTransition(CharacterStates.Idle, Idle).Done();
+        StateConfigurer.Create(DoingEvent)
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Idle, Idle).Done();
 
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
@@ -178,7 +186,7 @@ public class Character : MonoBehaviour
             {
                 _eventFSM.SendInput(CharacterStates.Wait);
             }*/
-            
+
             if (!_currentPath.Any())
             {
 
@@ -192,11 +200,11 @@ public class Character : MonoBehaviour
                 if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
                     new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
                     Vector2.Distance(CustomTools.ToVector2(transform.position),
-                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) 
-                    &&  Math.Abs(_currentPath.First().transform.position.y - _currentPath.Skip(1).First().transform.position.y) < _yDiffThreshold)
+                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset))
+                    && Math.Abs(_currentPath.First().transform.position.y - _currentPath.Skip(1).First().transform.position.y) < _yDiffThreshold)
                 {
                     if (_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
-                    {                        
+                    {
                         _currentPath.Remove(_currentPath.First());
                         _lookAtNode = _currentPath.First();
                     }
@@ -204,7 +212,7 @@ public class Character : MonoBehaviour
                     {
                         _lookAtNode = _currentPath.Skip(1).First();
                     }
-                 
+
                 }
                 else
                 {
@@ -234,7 +242,7 @@ public class Character : MonoBehaviour
                 //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.                
                 if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
                             Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10) && nextPosition != CustomTools.ToVector2(_currentPath.Last().transform.position))
-                {                    
+                {
                     _goToNextPosition = true;
                     _currentPath.Remove(_currentPath.First());
                 }
@@ -243,7 +251,7 @@ public class Character : MonoBehaviour
             //Cambia la dirreccion del sprite.
             if (_currentPath.Any())
             {
-                if(_lookAtNode != null)
+                if (_lookAtNode != null)
                 {
                     if (Mathf.Sign(_lookAtNode.transform.position.x - transform.position.x) > 0)
                     {
@@ -266,7 +274,7 @@ public class Character : MonoBehaviour
                         characterView.FlipCharacter(-1);
                     }
                 }
-                
+
             }
             else
             {
@@ -333,9 +341,9 @@ public class Character : MonoBehaviour
                             }
 
 
-                                
 
-                            
+
+
                         }
 
                         if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
@@ -431,7 +439,7 @@ public class Character : MonoBehaviour
         Moving.OnExit += x =>
         {
             _goToNextPosition = false;
-           
+
 
         };
 
@@ -493,7 +501,7 @@ public class Character : MonoBehaviour
         Jumping.OnEnter += x =>
         {
             //     _characterRigidbody.linearVelocity = Vector2.zero;
-   
+
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
 
@@ -516,7 +524,7 @@ public class Character : MonoBehaviour
 
         OnRope.OnEnter += x =>
         {
-            
+
             _currentState = CharacterStates.OnRope;
 
 
@@ -604,7 +612,7 @@ public class Character : MonoBehaviour
         #region EQUIPPING HELMET STATE
 
         EquippingHelmet.OnEnter += x =>
-        {            
+        {
             _currentState = CharacterStates.EquippingHelmet;
             characterView.OnEquippingHelmet();
 
@@ -622,6 +630,25 @@ public class Character : MonoBehaviour
 
         #endregion
 
+        #region DOING EVENT
+
+        DoingEvent.OnEnter += x =>
+        {
+            _currentState = CharacterStates.DoingEvent;
+
+        };
+
+        DoingEvent.OnUpdate += () =>
+        {
+
+        };
+        DoingEvent.OnFixedUpdate += () =>
+        {
+
+        };
+        DoingEvent.OnExit += x => { };
+
+        #endregion
         _eventFSM.EnterFirstState();
 
 
@@ -652,7 +679,7 @@ public class Character : MonoBehaviour
     }
     public void SendInputToFSM(CharacterStates newState)
     {
-       
+
         _eventFSM.SendInput(newState);
     }
 
@@ -697,7 +724,7 @@ public class Character : MonoBehaviour
     }
     public void ClearPath()
     {
-        
+
         _currentPath.Clear();
     }
 
@@ -711,16 +738,16 @@ public class Character : MonoBehaviour
     /// <returns></returns>
     public bool ComparePathNodes(CustomNode node, int value, bool first = false)
     {
-        if(value == 0)
+        if (value == 0)
         {
             /*if (!first)
             {
                 first = true;
                 Debug.LogError("Comparo con el primero, y devuelvo " + ComparePathNodes(node, value, first));
-            } */           
+            } */
             return _currentPath.First().Equals(node);
         }
-        else if(value == 1)
+        else if (value == 1)
         {
             /*if (!first)
             {
@@ -729,7 +756,7 @@ public class Character : MonoBehaviour
             }*/
             return _currentPath.Last().Equals(node);
         }
-        else if(value == 2)
+        else if (value == 2)
         {
             /*if (!first)
             {
@@ -753,7 +780,7 @@ public class Character : MonoBehaviour
         _currentPath = _pathFinding.AStar(start, goal);
 
         if (_currentPath.Count > 1 && _currentPath.SkipLast(1).Last().isClickable && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
-            > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition) 
+            > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition)
             && _currentPath.SkipLast(1).Last().neighbours.Where(x => x.node == _currentPath.Last()).Last().nodeEvent.GetPersistentEventCount() == 0)
         {
             _currentPath = _currentPath.SkipLast(1).ToList();
@@ -794,7 +821,7 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(SendInputToFSM(CharacterStates.Idle, 0.2f));
         }
-        
+
 
 
     }
@@ -809,6 +836,11 @@ public class Character : MonoBehaviour
         characterRigidbody.linearVelocity = Vector2.zero;
 
         characterModel.Jump(CustomTools.ToVector2(jumpPos.position), Land);
+    }
+
+    public void SetAnimatorTrigger(string name)
+    {
+        _animator.SetTrigger(name);
     }
 }
 
@@ -827,5 +859,6 @@ public enum CharacterStates
     JumpingToRope = 1 << 7,
     Climb = 1 << 8,
     EquippingHelmet = 1 << 9,
+    DoingEvent = 1 << 10,
     All = ~0
 }
