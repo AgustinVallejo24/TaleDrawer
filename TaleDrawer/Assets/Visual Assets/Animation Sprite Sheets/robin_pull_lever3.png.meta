@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bc57f9d628ca6ba42af25ecad15cc7fe
+guid: 760f5b8733e50104b8cfba7e88e2e434
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,155 +97,221 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lever_pullingdown_0
+      name: robin_pull_lever3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.42208076}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be6c2bd551f9f5c4e848d37668bff0e6
-      internalID: 538594826
+      spriteID: 773e86ac1d48330458443ac32e99fe1b
+      internalID: -1939963831
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lever_pullingdown_1
+      name: robin_pull_lever3_1
       rect:
         serializedVersion: 2
-        x: 800
+        x: 810
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e40fce0516fd3f14497ce8f23e7d1034
-      internalID: -1297422896
+      spriteID: bd7efa84ab18a70498fa61a539063ffb
+      internalID: 1297546843
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lever_pullingdown_2
+      name: robin_pull_lever3_2
       rect:
         serializedVersion: 2
-        x: 1600
+        x: 1620
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76d0b1677da14dd488f2f7d9fe9ff35a
-      internalID: -464184949
+      spriteID: 5fcd07091e3f1ed428e65e7edb8b9785
+      internalID: -339758697
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lever_pullingdown_3
+      name: robin_pull_lever3_3
       rect:
         serializedVersion: 2
-        x: 2400
+        x: 2430
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7636d5021819de342ac86335a64d0676
-      internalID: 1149882490
+      spriteID: 5b4efdb482ce26e42ab76496fef67460
+      internalID: -566449196
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lever_pullingdown_4
+      name: robin_pull_lever3_4
       rect:
         serializedVersion: 2
-        x: 3200
+        x: 3240
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5919bf63a25c5fc439cae57a687eb715
-      internalID: -176355718
+      spriteID: dc2dec8acee66e74f86299af4bdc0da6
+      internalID: 1445971778
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lever_pullingdown_5
+      name: robin_pull_lever3_5
       rect:
         serializedVersion: 2
-        x: 4000
+        x: 4050
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 474d1289b74892341b780b248734ba17
-      internalID: 1422786
+      spriteID: f3b6b2d898f6c1849b96c129e6a79f26
+      internalID: -1579847903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lever_pullingdown_6
+      name: robin_pull_lever3_6
       rect:
         serializedVersion: 2
-        x: 4800
+        x: 4860
         y: 0
-        width: 800
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3261957876df8e84b91ea2acbebcf659
-      internalID: -1859805804
+      spriteID: 1e3b5aaaac12c874c8fe9e6e7570432e
+      internalID: -1465093284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: robin_pull_lever3_7
+      rect:
+        serializedVersion: 2
+        x: 5670
+        y: 0
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62e8fdb0e708ee34cb2a33fc5a5b71f6
+      internalID: -1537408167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: robin_pull_lever3_8
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 0
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f69eedaada426a45b54c6f326bfc129
+      internalID: 1451215246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: robin_pull_lever3_9
+      rect:
+        serializedVersion: 2
+        x: 7290
+        y: 0
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.2809745, y: 0.4220808}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28b8c6fa1f35dc344a1a926a3e325248
+      internalID: 1479616172
       vertices: []
       indices: 
       edges: []
@@ -254,7 +320,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 374e69f6ffd778d4c9d7696d802afa65
+    spriteID: 18e6b05feaac0c84abf3b98b2fc91589
     internalID: 0
     vertices: []
     indices: 
@@ -264,15 +330,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":7.0,"y":1.0},"gridSpriteSize":{"x":800.0,"y":1000.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":10.0,"y":1.0},"gridSpriteSize":{"x":810.0,"y":990.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      lever_pullingdown_0: 538594826
-      lever_pullingdown_1: -1297422896
-      lever_pullingdown_2: -464184949
-      lever_pullingdown_3: 1149882490
-      lever_pullingdown_4: -176355718
-      lever_pullingdown_5: 1422786
-      lever_pullingdown_6: -1859805804
+      robin_pull_lever3_0: -1939963831
+      robin_pull_lever3_1: 1297546843
+      robin_pull_lever3_2: -339758697
+      robin_pull_lever3_3: -566449196
+      robin_pull_lever3_4: 1445971778
+      robin_pull_lever3_5: -1579847903
+      robin_pull_lever3_6: -1465093284
+      robin_pull_lever3_7: -1537408167
+      robin_pull_lever3_8: 1451215246
+      robin_pull_lever3_9: 1479616172
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
