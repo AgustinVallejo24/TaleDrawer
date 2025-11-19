@@ -34,4 +34,12 @@ public class CharacterRender : MonoBehaviour
         _character.climbAction?.Invoke();
     }
 
+    public void PullLever()
+    {
+        _character.currentLever.ActivateLever();
+    }
+    public void GoToIdle()
+    {
+        _character.SendInputToFSM(CharacterStates.Idle);
+    }
 }

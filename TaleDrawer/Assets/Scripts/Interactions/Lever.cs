@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 public class Lever : MonoBehaviour, IInteractable
 {
     [SerializeField] LayerMask _clickableMask;
@@ -7,6 +8,9 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] Animator _animator;
     [SerializeField] bool _leverState;
     [SerializeField] Animator _door;
+    [SerializeField] Transform _playerPos;
+    [SerializeField] CustomNode _beforeDoor;
+    [SerializeField] CustomNode _afterDoor;
     public void InsideInteraction()
     {
         
@@ -29,9 +33,10 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        if (Physics2D.OverlapCircle(transform.position, transform.localScale.x, _clickableMask))
+        if (Physics2D.OverlapCircle(transform.position, transform.localScale.x, _clickableMask) && !_leverState)
         {
-            _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes.Where(x => x.isClickable == true).ToList()), transform.position);
+            Vector3 pos = (new Vector3(_myCharacter.transform.position.x, _playerPos.position.y, 0) - _playerPos.transform.position).normalized;
+            _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes.Where(x => x.isClickable == true).ToList()), _playerPos.position - pos*.5f);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
             _myCharacter.onMovingEnd = ActivatePlayerAnimation;
         }
@@ -40,22 +45,15 @@ public class Lever : MonoBehaviour, IInteractable
     public void ActivatePlayerAnimation()
     {
         _myCharacter.currentLever = this;
+        _myCharacter.onMovingEnd = null;
         _myCharacter.SendInputToFSM(CharacterStates.DoingEvent);
         _myCharacter.SetAnimatorTrigger("PullLever");
     }
 
     public void ActivateLever()
     {
-        if (_leverState)
-        {
-            _animator.SetTrigger("Up");
-        }
-        else
-        {
-            _animator.SetTrigger("Down");
-            _door.SetTrigger("Open");
-        }
-        _myCharacter.currentLever = null;
+        StartCoroutine(ActivateLeverCoroutine());
+        
     }
     void Start()
     {
@@ -68,4 +66,30 @@ public class Lever : MonoBehaviour, IInteractable
         
     }
     
+    public IEnumerator ActivateLeverCoroutine()
+    {
+        _myCharacter.currentLever = null;
+        
+        if (_leverState)
+        {
+            //_animator.SetTrigger("Up");
+        }
+        else
+        {
+
+            _animator.SetTrigger("Down");
+            _leverState = true;
+            yield return new WaitForSeconds(1f);
+            _door.SetTrigger("Open");
+            var beforeN = new NeighbouringNodesAndActions();
+            beforeN.node = _afterDoor;
+            beforeN.nodeEvent = new UnityEngine.Events.UnityEvent();
+            var afterN = new NeighbouringNodesAndActions();
+            afterN.node = _beforeDoor;
+            afterN.nodeEvent = new UnityEngine.Events.UnityEvent();
+            _beforeDoor.neighbours.Add(beforeN);
+            _afterDoor.neighbours.Add(afterN);
+            GetComponent<Collider2D>().enabled = false;
+        }
+    }
 }

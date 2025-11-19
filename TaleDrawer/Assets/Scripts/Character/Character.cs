@@ -195,8 +195,11 @@ public class Character : MonoBehaviour
 
                 _eventFSM.SendInput(CharacterStates.Idle);
             }
+
             else if (_currentPath.Count > 1)
             {
+
+
                 //Quita el primer nodo si no tiene evento necesario, y si el personaje esta mas cerca del segundo nodo, que el primero del segundo.
 
 
@@ -221,6 +224,8 @@ public class Character : MonoBehaviour
                 {
                     _lookAtNode = _currentPath.First();
                 }
+
+        
 
                 //if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
                 //_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
@@ -304,11 +309,11 @@ public class Character : MonoBehaviour
         {
             if (_currentPath.Any())
             {
-                float sqrDistanceToTarget = (CustomTools.ToVector2(_currentPath.First().transform.position) - (new Vector2(transform.position.x, feetPosition.position.y))).sqrMagnitude;
+                float sqrDistanceToTarget = (CustomTools.ToVector2(_currentPath.First().transform.position) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
 
+         
 
-
-                if (sqrDistanceToTarget > .5f)
+                if (sqrDistanceToTarget > .15f)
                 {
 
                     characterModel.Move(_currentPath.First().transform.position, _smoothSpeed);
@@ -316,6 +321,7 @@ public class Character : MonoBehaviour
                 }
                 else
                 {
+                    Debug.LogError(sqrDistanceToTarget);
                     if (_currentPath.Count > 1)
                     {
 
@@ -336,6 +342,10 @@ public class Character : MonoBehaviour
                                 {
                                     _currentPath.Remove(_currentPath.Last());
                                     _goToNextPosition = true;
+                                }
+                                else
+                                {
+                                    _currentPath.Remove(_currentPath.First());
                                 }
                             }
                             else
@@ -410,11 +420,11 @@ public class Character : MonoBehaviour
                 Debug.LogError("cuarto");
                 if (_goToNextPosition)
                 {
-                    float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, feetPosition.position.y))).sqrMagnitude;
+                    float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
 
 
 
-                    if (sqrDistanceToTarget > 1f)
+                    if (sqrDistanceToTarget > .1f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
                         characterModel.Move(nextPosition, _smoothSpeed);

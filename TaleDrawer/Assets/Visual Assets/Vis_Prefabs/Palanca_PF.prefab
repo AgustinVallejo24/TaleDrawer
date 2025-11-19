@@ -111,7 +111,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 538594826, guid: bc57f9d628ca6ba42af25ecad15cc7fe, type: 3}
   m_Color: {r: 0.7924528, g: 0.6538197, b: 0.4448202, a: 1}
   m_FlipX: 0
@@ -145,6 +145,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4910009142478180677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6941148829258143615}
+  m_Layer: 0
+  m_Name: PlayerPo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6941148829258143615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910009142478180677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.05, y: -3.11, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7565639844442342099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5515980645697666138
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +185,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7565639844442342099}
-  m_Layer: 0
+  - component: {fileID: 8466931597552323968}
+  - component: {fileID: 262289622845430627}
+  m_Layer: 11
   m_Name: Palanca_PF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,13 +204,82 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.8, y: 0.36, z: 0}
-  m_LocalScale: {x: 0.9162913, y: 0.9162913, z: 0.9162913}
+  m_LocalScale: {x: 0.506994, y: 0.506994, z: 0.506994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6925327006671348594}
   - {fileID: 6080103678615596673}
+  - {fileID: 6941148829258143615}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8466931597552323968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515980645697666138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae707fd828a0b94396793db33e02323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lever
+  _clickableMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  _myCharacter: {fileID: 0}
+  _animator: {fileID: 5462233199955595859}
+  _leverState: 0
+  _door: {fileID: 0}
+  _playerPos: {fileID: 6941148829258143615}
+  _beforeDoor: {fileID: 0}
+  _afterDoor: {fileID: 0}
+--- !u!61 &262289622845430627
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515980645697666138}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.035523653, y: 0.4618094}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 2.1778736, y: 3.1551104}
+  m_EdgeRadius: 0
 --- !u!1 &7613399965842924778
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +358,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 1229685563, guid: 9797c5eec84026c41991713bf3935059, type: 3}
   m_Color: {r: 0.745283, g: 0.61521155, b: 0.4464667, a: 1}
   m_FlipX: 0
