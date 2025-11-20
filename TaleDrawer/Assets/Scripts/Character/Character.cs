@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     [SerializeField] public Vector2 nextPosition;
     [SerializeField] bool _goToNextPosition;
     [SerializeField] public float yPositionOffset;
+    [SerializeField] float _distToNodeThreshold;
     [SerializeField] Transform feetPosition;
     [SerializeField] protected Transform helmetPosition;
     [SerializeField] protected List<CustomNode> _currentPath;
@@ -29,6 +30,7 @@ public class Character : MonoBehaviour
     public IInteractable currentInteractable;
     public AudioSource characterAudioSource;
     public AudioClip jumpSound;
+    
     #endregion
 
     #region References
@@ -313,7 +315,7 @@ public class Character : MonoBehaviour
 
          
 
-                if (sqrDistanceToTarget > .15f)
+                if (sqrDistanceToTarget > _distToNodeThreshold)
                 {
 
                     characterModel.Move(_currentPath.First().transform.position, _smoothSpeed);
@@ -405,6 +407,10 @@ public class Character : MonoBehaviour
                                 _currentPath.Remove(_currentPath.First());
                             }
 
+                        }
+                        else
+                        {
+                            _currentPath.Remove(_currentPath.First());
                         }
 
 

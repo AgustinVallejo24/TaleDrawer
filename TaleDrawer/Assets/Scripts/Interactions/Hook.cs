@@ -51,7 +51,7 @@ public class Hook : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        Debug.LogError(_attachedObject.name);
+        
         if (Mathf.Abs(_character.transform.position.y - _upperNode.transform.position.y) > Mathf.Abs(_character.transform.position.y - _lowerNode.transform.position.y))
         {
             _character.GetPath(_upperNode);

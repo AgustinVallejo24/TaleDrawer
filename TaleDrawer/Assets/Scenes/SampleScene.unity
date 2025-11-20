@@ -5991,6 +5991,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Casco
       objectReference: {fileID: 0}
+    - target: {fileID: 2359451980149846497, guid: 1a736b14f70756a42897da070b461663, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6003551055875638059, guid: 1a736b14f70756a42897da070b461663, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -6350,6 +6354,7 @@ MonoBehaviour:
   _currentPath: []
   characterAudioSource: {fileID: 1394210871}
   jumpSound: {fileID: 8300000, guid: 7986cbc2eaceee14682abd68248b8e5a, type: 3}
+  _distToNodeThreshold: 0.15
   characterRigidbody: {fileID: 1394210867}
   _animator: {fileID: 1806947318}
   _currentState: 0
