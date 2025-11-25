@@ -14,6 +14,7 @@ public class SceneManager : MonoBehaviour
     public DrawingTest _dTest;
     [SerializeField] GameObject _drawingDraggingCanvas;
     [SerializeField] GameObject _drawingBackground;
+    [SerializeField] GameObject _blurEffect;
     public Camera _sceneCamera;
     float _blendBetweenCameras;    
     [SerializeField]private CinemachineCamera _playerCamera;
@@ -158,7 +159,7 @@ public class SceneManager : MonoBehaviour
     public void OnClick(Vector2 position)
     {
 
-        if (currentState == SceneStates.Game && _clicableStates.HasFlag(Character.instance._currentState))
+        if (currentState == SceneStates.Game && _clicableStates.HasFlag(Character.instance._currentState) && !_dTest.isDrawing)
         {
             if(levelCharacter.currentInteractable != null)
             {
@@ -242,10 +243,11 @@ public class SceneManager : MonoBehaviour
         }
         else if(currentState == SceneStates.Drawing)
         {
-            
-            _drawingBackground.SetActive(true);
-            _drawingDraggingCanvas.SetActive(true);
-            playerInput.SwitchCurrentActionMap("Drawing");
+
+            //  _drawingBackground.SetActive(true);
+            _blurEffect.SetActive(true);
+           // _drawingDraggingCanvas.SetActive(true);
+          //  playerInput.SwitchCurrentActionMap("Drawing");
             Time .timeScale = _timeSlowDown;
         }
         else if (currentState == SceneStates.Dragging)
@@ -259,7 +261,7 @@ public class SceneManager : MonoBehaviour
 
     void ExitingDrawingState()
     {
-        
+        _blurEffect.SetActive(false);
         _drawingDraggingCanvas.SetActive(false);        
         _drawingBackground.SetActive(false);
 

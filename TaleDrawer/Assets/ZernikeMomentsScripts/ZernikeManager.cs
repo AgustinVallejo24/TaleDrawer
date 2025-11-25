@@ -280,6 +280,10 @@ public class ZernikeManager : MonoBehaviour
                         SceneManager.instance.StateChanger(SceneStates.Dragging);
                     }
                 }
+                else
+                {
+                    SceneManager.instance.StateChanger(SceneStates.Game);
+                }
                
                 text.text = $"Símbolo reconocido: {recognizedSymbolName}\nDistancia: {minDistance:F3}, Diferencia de distribución: {minDistributionDiference:F3}";
 
@@ -293,6 +297,10 @@ public class ZernikeManager : MonoBehaviour
                     {
                         SceneManager.instance.StateChanger(SceneStates.Dragging);
                     }
+                }
+                else
+                {
+                    SceneManager.instance.StateChanger(SceneStates.Game);
                 }
                 text.text = $"Símbolo reconocido: {recognizedSymbolName}\nDistancia: {minDistance:F3}";
             }

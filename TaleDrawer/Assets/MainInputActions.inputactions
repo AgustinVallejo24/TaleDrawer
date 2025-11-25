@@ -84,70 +84,8 @@
         {
             "name": "Drawing",
             "id": "9527cb7c-854b-4bc2-ba2f-bfa5dc01abeb",
-            "actions": [
-                {
-                    "name": "BeginDraw",
-                    "type": "Button",
-                    "id": "b38100f3-3249-4200-b170-8d8db03c319f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Draw",
-                    "type": "Value",
-                    "id": "ec026cae-ebbb-47e5-8715-09b868c53d3f",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "EndDraw",
-                    "type": "Button",
-                    "id": "f2dd881b-b24e-49e6-8a4c-29fe935208b8",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press(behavior=1)",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "b93a1c34-2120-430b-aa2e-f9c62e541491",
-                    "path": "<Pointer>/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BeginDraw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8e4ba7ec-49a3-4c0b-8c0e-1c6282060f2a",
-                    "path": "<Pointer>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Draw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a35eb11b-6089-41a1-b1eb-159598571380",
-                    "path": "<Pointer>/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "EndDraw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "actions": [],
+            "bindings": []
         },
         {
             "name": "Movement",
@@ -159,7 +97,34 @@
                     "id": "3f69e664-47dd-449e-af67-7a9fbbc2a6b9",
                     "expectedControlType": "",
                     "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EndDraw",
+                    "type": "Button",
+                    "id": "58ecf1b1-d4c0-43f4-8ca5-b791b1e5c077",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.3,behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Draw",
+                    "type": "Value",
+                    "id": "bb6197b2-e589-4a25-9c1e-1c3d46f50e5c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
                     "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "BeginDraw",
+                    "type": "Button",
+                    "id": "d5c5c75c-78c6-4ba8-bc08-adc99c44cce7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -172,6 +137,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f9bc6d5-d87f-4145-9ab3-a4a6ca924512",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndDraw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "513d0ad6-41c5-41f3-8675-5819dff3ef6b",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Draw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c10d6c8b-ffc1-4830-a488-cce7012c6ee4",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeginDraw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -17,7 +17,7 @@ public class DrawingTest : MonoBehaviour
 
     private List<Vector2> currentPoints = new();
     private List<Vector2> currentStrokePoints = new();
-    private bool isDrawing = false;
+    public bool isDrawing = false;
     List<Vector2> greenPoints = new List<Vector2>();
     List<Vector2> redPoints = new List<Vector2>();
     List<List<Vector2>> listaDeListas = new List<List<Vector2>>();
@@ -28,6 +28,10 @@ public class DrawingTest : MonoBehaviour
 
     [SerializeField] LayerMask _uiMask;
     public bool startDrawing;
+    public bool startTimer = false;
+    public float recognitionTime;
+    float timer;
+    public Image fillImage;
     void Start()
     {
         recognizebutton.buttonAction += OnConfirmDrawing;
@@ -37,58 +41,7 @@ public class DrawingTest : MonoBehaviour
         }
     }
 
-    //void Update()
-    //{
-
-    //    if (Input.GetMouseButtonDown(0) && linerendererIndex < lineRenderer.Length)
-    //    {
-    //        isDrawing = true;
-    //        //lineRenderer[linerendererIndex].SetPosition(0, cam.ScreenToWorldPoint(Input.mousePosition));
-
-    //    }
-    //    else if (Input.GetMouseButtonUp(0))
-    //    {
-    //        isDrawing = false;
-
-
-    //       // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
-    //        strokesPointsCount.Add(currentStrokePoints.Count);
-    //        currentStrokePoints.Clear();
-
-    //        if (linerendererIndex < lineRenderer.Length)
-    //        {
-    //            linerendererIndex++;
-    //        }
-
-
-
-
-
-    //        //   var result = recognizer.RecognizeCurrentDrawing();
-    //        //Debug.Log("Resultado reconocimiento: " + result);
-    //    }
-
-    //    if (isDrawing)
-    //    {
-    //        Vector2 pos = cam.ScreenToWorldPoint(Input.mousePosition);
-    //        if (currentPoints.Count == 0 || Vector2.Distance(currentPoints[^1], pos) > 0.1f)
-    //        {
-    //            //currentPoints.Add(pos);
-    //            //currentStrokePoints.Add(pos);
-    //            AddSmoothedPoint(pos);
-    //        }
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Space) && currentPoints.Any())
-    //    {
-    //        OnConfirmDrawing();
-
-    //    }
-
-    //}
-
-
-
+ 
     bool IsTouchOverSpecificUI(Touch touch, int uiLayerIndex)
     {
         PointerEventData eventData = new PointerEventData(EventSystem.current);
@@ -121,6 +74,21 @@ public class DrawingTest : MonoBehaviour
     void Update()
     {
 
+        if (startTimer)
+        {
+            if (timer < recognitionTime)
+            {
+                timer += Time.fixedDeltaTime;
+                fillImage.fillAmount = timer / recognitionTime;
+            }
+            else
+            {
+                timer = 0;
+                startTimer = false;
+                fillImage.fillAmount = 0;
+                OnConfirmDrawing();
+            }
+        }
         //if (recognizebutton.isPressed)
         //{
         //    OnConfirmDrawing();
@@ -153,6 +121,8 @@ public class DrawingTest : MonoBehaviour
 
     public void OnDraw(Vector2 position)
     {
+        Debug.Log("TOCOBOTON");
+
         if (isDrawing)
         {
             Vector2 pos = cam.ScreenToWorldPoint(position);
@@ -161,39 +131,67 @@ public class DrawingTest : MonoBehaviour
                 AddSmoothedPoint(pos);
 
             }
+
+        }
+        else
+        {
+            if (CustomTools.IsTouchOverUI(position))
+            {
+                //Debug.Log("TOCOBOTON");
+                return;
+            }
+
+            startTimer = false;
+            timer = 0;
+            fillImage.fillAmount = 0;
+
+
+            startDrawing = true;
+            if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
+            {
+                SceneManager.instance.StateChanger(SceneStates.Drawing);
+            }
+            isDrawing = true;
+            currentStrokePoints.Clear();
         }
     }
     public void OnEndDrag()
     {
-        isDrawing = false;
-        startDrawing = false;
-        if (linerendererIndex >= lineRenderer.Length) return;
-
-
-        if (GetLineLength(lineRenderer[linerendererIndex]) < 1.5f)
+        if (isDrawing)
         {
-            // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
-            foreach (var item in currentStrokePoints)
+            isDrawing = false;
+            startDrawing = false;
+            startTimer = true;
+
+            if (linerendererIndex >= lineRenderer.Length) return;
+
+
+            if (GetLineLength(lineRenderer[linerendererIndex]) < 1.5f)
             {
-                if (currentPoints.Contains(item))
+                // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
+                foreach (var item in currentStrokePoints)
                 {
-                    currentPoints.Remove(item);
+                    if (currentPoints.Contains(item))
+                    {
+                        currentPoints.Remove(item);
+                    }
                 }
+                currentStrokePoints.Clear();
+                lineRenderer[linerendererIndex].positionCount = 0;
+                return;
             }
+
+            // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
+            strokesPointsCount.Add(currentStrokePoints.Count);
             currentStrokePoints.Clear();
-            lineRenderer[linerendererIndex].positionCount = 0;
-            return;
+
+            if (linerendererIndex < lineRenderer.Length)
+            {
+                linerendererIndex++;
+            }
+
         }
 
-        // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
-        strokesPointsCount.Add(currentStrokePoints.Count);
-        currentStrokePoints.Clear();
-
-        if (linerendererIndex < lineRenderer.Length)
-        {
-            linerendererIndex++;
-        }
-     
     }
     public void Draw(int touchCount, Touch touch)
     {

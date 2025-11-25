@@ -38,7 +38,7 @@ public class Caja : SpawningObject,IInteractable
            _excludeLayers = _myColl.excludeLayers ;
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
             Debug.Log(newPos);
-            newPos.y = _myColl.bounds.min.y;
+            newPos.y = transform.position.y;
             _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
             _myCharacter.onMovingEnd = JumpOverBox; 

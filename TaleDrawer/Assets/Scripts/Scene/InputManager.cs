@@ -8,6 +8,13 @@ public class InputManager : MonoBehaviour
     Vector2 _clickPosition;
     [SerializeField] InputActionReference MoveMouse;
     [SerializeField] InputActionReference Draw;
+    [Header("Settings")]
+    public float dragThreshold = 20f;
+
+    private Vector2 startPos;
+    private bool isDragging = false;
+    private bool pointerDown = false;
+
     void Start()
     {
         MoveMouse.action.performed += OnDrag;
@@ -15,9 +22,20 @@ public class InputManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+
+    private void Update()
     {
-        
+        if (!pointerDown) return;
+
+        Vector2 currentPos = Draw.action.ReadValue<Vector2>();
+        float distance = Vector2.Distance(currentPos, startPos);
+
+        if (!isDragging && distance > dragThreshold)
+        {
+            isDragging = true;
+        }
+
     }
 
     public void OnBeginDrag()
@@ -51,16 +69,22 @@ public class InputManager : MonoBehaviour
     }
     public void OnBeginDraw()
     {
-   
-        sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
+        pointerDown = true;
+      //  sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
     }
     public void Drawing(InputAction.CallbackContext contex)
     {
-     
-        sceneManager._dTest.OnDraw(contex.ReadValue<Vector2>());
+
+        if (isDragging)
+        {
+            sceneManager._dTest.OnDraw(contex.ReadValue<Vector2>());
+        }
+        
     }
     public void OnEndDraw()
     {
+        pointerDown = false;
+        isDragging = false;
         sceneManager._dTest.OnEndDrag();
     }
     public void OnEndDrag()
