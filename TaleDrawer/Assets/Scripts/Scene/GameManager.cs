@@ -262,8 +262,8 @@ public class GameManager : MonoBehaviour
     void ExitingDrawingState()
     {
         _blurEffect.SetActive(false);
-        _drawingDraggingCanvas.SetActive(false);        
-        _drawingBackground.SetActive(false);
+        //_drawingDraggingCanvas.SetActive(false);        
+        //_drawingBackground.SetActive(false);
 
 
     }

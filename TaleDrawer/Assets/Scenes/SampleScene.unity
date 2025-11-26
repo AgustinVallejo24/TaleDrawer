@@ -632,7 +632,7 @@ MonoBehaviour:
     m_Bits: 128
   MoveMouse: {fileID: -4319702990522028616, guid: 84da522952ca5df4da15c3512123fa97, type: 3}
   Draw: {fileID: -2981392519116198209, guid: 84da522952ca5df4da15c3512123fa97, type: 3}
-  dragThreshold: 20
+  dragThreshold: 800
 --- !u!114 &69473464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2971,7 +2971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &591477740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6366,7 +6366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1338066942
 Animator:
   serializedVersion: 7
@@ -6481,7 +6481,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.8113208, g: 0.686849, b: 0.27171594, a: 1}
   m_FlipX: 0

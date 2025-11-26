@@ -37,6 +37,14 @@ public class Caja : SpawningObject,IInteractable
         {
            _excludeLayers = _myColl.excludeLayers ;
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
+            if(_myCharacter.transform.position.x < transform.position.x)
+            {
+                newPos -= Vector2.right *.6f;
+            }
+            else
+            {
+                newPos += Vector2.right * .6f;
+            }
             Debug.Log(newPos);
             newPos.y = transform.position.y;
             _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
@@ -49,7 +57,7 @@ public class Caja : SpawningObject,IInteractable
     {
         _myCharacter.onMovingEnd = null;
         _myCharacter.currentInteractable = this;
-        _myColl.excludeLayers = default;
+   //     _myColl.excludeLayers = default;
         _myCharacter.SendInputToFSM(CharacterStates.Climb);
         _myCharacter.StartCoroutine(RunToCenter());
 
@@ -59,7 +67,8 @@ public class Caja : SpawningObject,IInteractable
         Vector2 touchPos = GameManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
         _myCharacter.currentInteractable = null;
         _myColl.excludeLayers = _excludeLayers;
-        var eventObj = Physics2D.OverlapBox(transform.position,new Vector2(2,2),0,_eventMask).gameObject;
+        var eventObj = Physics2D.OverlapBox(transform.position,new Vector2(2,2),0,_eventMask);
+
         BoxEvent boxE = default;
         if(eventObj!= null && eventObj.TryGetComponent(out BoxEvent boxEvent))
         {
@@ -141,7 +150,9 @@ public class Caja : SpawningObject,IInteractable
     }
     public IEnumerator RunToCenter()
     {
-        yield return new WaitForSeconds(.9f);
+        yield return new WaitForSeconds(.5f);
+        _myColl.excludeLayers = default;
+        yield return new WaitForSeconds(.4f);
         _myCharacter.characterView.OnMove();
         _myCharacter.transform.DOMove(new Vector2(transform.position.x, _myCharacter.transform.position.y), .3f);
         yield return new WaitForSeconds(.3f);

@@ -78,7 +78,7 @@ public class DrawingTest : MonoBehaviour
         {
             if (timer < recognitionTime)
             {
-                timer += Time.fixedDeltaTime;
+                timer += Time.unscaledDeltaTime*10;
                 fillImage.fillAmount = timer / recognitionTime;
             }
             else
