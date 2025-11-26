@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.InputSystem;
-public class SceneManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public SceneStates currentState;
     [SerializeField] CharacterStates _clicableStates;
@@ -28,7 +28,7 @@ public class SceneManager : MonoBehaviour
     public Character levelCharacter;
     public PlayerInput playerInput;
 
-    public static SceneManager instance;
+    public static GameManager instance;
 
     Vector2 _clickPosition;
     [SerializeField] float _clickRayLength;

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] SceneManager sceneManager;
+    [SerializeField] GameManager sceneManager;
     public SpawningObject currentDraggable;
     [SerializeField] LayerMask _draggableItems;
     Vector2 _clickPosition;

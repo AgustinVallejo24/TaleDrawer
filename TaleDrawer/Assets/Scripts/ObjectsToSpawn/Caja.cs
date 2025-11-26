@@ -39,7 +39,7 @@ public class Caja : SpawningObject,IInteractable
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
             Debug.Log(newPos);
             newPos.y = transform.position.y;
-            _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
+            _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
             _myCharacter.onMovingEnd = JumpOverBox; 
         }
@@ -56,7 +56,7 @@ public class Caja : SpawningObject,IInteractable
     }
     public void JumpOffBox()
     {
-        Vector2 touchPos = SceneManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
+        Vector2 touchPos = GameManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
         _myCharacter.currentInteractable = null;
         _myColl.excludeLayers = _excludeLayers;
         var eventObj = Physics2D.OverlapBox(transform.position,new Vector2(2,2),0,_eventMask).gameObject;

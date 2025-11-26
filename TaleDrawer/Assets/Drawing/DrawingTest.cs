@@ -111,9 +111,9 @@ public class DrawingTest : MonoBehaviour
      
 
         startDrawing = true;
-        if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
+        if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
         {
-            SceneManager.instance.StateChanger(SceneStates.Drawing);
+            GameManager.instance.StateChanger(SceneStates.Drawing);
         }
         isDrawing = true;
         currentStrokePoints.Clear();
@@ -147,9 +147,9 @@ public class DrawingTest : MonoBehaviour
 
 
             startDrawing = true;
-            if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
+            if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
             {
-                SceneManager.instance.StateChanger(SceneStates.Drawing);
+                GameManager.instance.StateChanger(SceneStates.Drawing);
             }
             isDrawing = true;
             currentStrokePoints.Clear();
@@ -214,9 +214,9 @@ public class DrawingTest : MonoBehaviour
             if (linerendererIndex < lineRenderer.Length && !startDrawing)
             {
                 startDrawing = true;
-                if (SceneManager.instance != null && SceneManager.instance.currentState != SceneStates.Drawing)
+                if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
                 {
-                    SceneManager.instance.StateChanger(SceneStates.Drawing);
+                    GameManager.instance.StateChanger(SceneStates.Drawing);
                 }
                 isDrawing = true;
                 currentStrokePoints.Clear();
@@ -414,6 +414,7 @@ public class DrawingTest : MonoBehaviour
         else
         {
             resultText.text = "Trazo demasiado corto";
+            GameManager.instance.StateChanger(SceneStates.Game);
             currentPoints.Clear();
             strokesPointsCount.Clear();
             foreach (var item in listaDeListas)

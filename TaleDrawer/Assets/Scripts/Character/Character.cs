@@ -825,7 +825,7 @@ public class Character : MonoBehaviour
     public bool GetPath(CustomNode goal, Vector2 nextPos)
     {
         nextPosition = nextPos;
-        CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);
+        CustomNode start = CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes);
         _currentPath = _pathFinding.AStar(start, goal);
 
         if (_currentPath.Count > 1 && _currentPath.SkipLast(1).Last().isClickable && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
@@ -845,7 +845,7 @@ public class Character : MonoBehaviour
     }
     public bool GetPath(CustomNode goal)
     {
-        CustomNode start = CustomTools.GetClosestNode(transform.position, SceneManager.instance.nodes);
+        CustomNode start = CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes);
         _currentPath = _pathFinding.AStar(start, goal);
 
         if (_currentPath.Any())

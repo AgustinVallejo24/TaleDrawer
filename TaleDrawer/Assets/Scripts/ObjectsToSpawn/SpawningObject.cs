@@ -33,7 +33,7 @@ public class SpawningObject : MonoBehaviour
     void Start()
     {
         _myCharacter = Character.instance;
-        sceneCamera = SceneManager.instance._sceneCamera;
+        sceneCamera = GameManager.instance._sceneCamera;
         _myColl = GetComponent<Collider2D>();        
         _myColl.isTrigger = true;
         _originalColor = _mySpriteRenderer.color;
@@ -65,7 +65,7 @@ public class SpawningObject : MonoBehaviour
 
     public void OnBeginDrag()
     {
-        if(SceneManager.instance.currentState == SceneStates.Dragging && !_spawned)
+        if(GameManager.instance.currentState == SceneStates.Dragging && !_spawned)
         {       
             _mySpriteRenderer.color = _originalColor;
             if (_myColl != null)
@@ -93,7 +93,7 @@ public class SpawningObject : MonoBehaviour
     public void OnDrag(Vector2 position)
     {  
 
-        if(SceneManager.instance.currentState == SceneStates.Dragging && !_spawned)
+        if(GameManager.instance.currentState == SceneStates.Dragging && !_spawned)
         {            
            transform.position = Vector2.Lerp(transform.position, sceneCamera.ScreenToWorldPoint(position), .5f);
 
@@ -200,7 +200,7 @@ public class SpawningObject : MonoBehaviour
 
     public void OnEndDrag()
     {
-        if(SceneManager.instance.currentState == SceneStates.Dragging && !_spawned)
+        if(GameManager.instance.currentState == SceneStates.Dragging && !_spawned)
         {
             if (_myrb != null)
             {
@@ -227,7 +227,7 @@ public class SpawningObject : MonoBehaviour
             {
                 
                 _spawned = true;
-                SceneManager.instance.StateChanger(SceneStates.Game);
+                GameManager.instance.StateChanger(SceneStates.Game);
                 _mySpriteRenderer.color = _originalColor;
                 if (_myColl != null)
                 {
