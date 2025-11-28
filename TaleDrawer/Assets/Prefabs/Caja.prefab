@@ -119,6 +119,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   _intrectableName: 
+  _canIntercactWithPlayer: 0
+  _interactingWithPlayer: 0
   weight: 1.5
   _spawned: 0
   _objectMask:
@@ -387,6 +389,14 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: feddfd3bafb2c2042bc2923bc0f9f4fd, type: 2}
     - target: {fileID: 8069003938951658806, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
       propertyPath: m_Name
       value: Box

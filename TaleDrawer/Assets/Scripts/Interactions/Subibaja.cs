@@ -50,7 +50,7 @@ public class Subibaja : MonoBehaviour, IInteractable
         currentZRot = transform.localEulerAngles.z;
 
    
-        if(currentZRot < 17 && currentZRot > 9 && !left)
+        if(((currentZRot < 17 && currentZRot > 9) || currentZRot > 356) && !left)
         {
             left = true;
             ChangeLeftNeightbours(0);
