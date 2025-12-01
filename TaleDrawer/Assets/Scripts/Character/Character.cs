@@ -24,7 +24,7 @@ public class Character : MonoBehaviour
     [SerializeField] float _distToNodeThreshold;
     [SerializeField] Transform feetPosition;
     [SerializeField] protected Transform helmetPosition;
-    [SerializeField] protected List<CustomNode> _currentPath;
+    [SerializeField] public List<CustomNode> _currentPath;
     public Action onMovingStart;
     public Action onMovingEnd;
     public IInteractable currentInteractable;
@@ -134,6 +134,7 @@ public class Character : MonoBehaviour
         StateConfigurer.Create(OnRope)
            .SetTransition(CharacterStates.Jumping, Jumping).Done();
         StateConfigurer.Create(JumpingToRope)
+           .SetTransition(CharacterStates.Moving, Moving)
            .SetTransition(CharacterStates.OnRope, OnRope).Done();
         StateConfigurer.Create(Climb)
             .SetTransition(CharacterStates.Wait, Wait)
@@ -263,18 +264,20 @@ public class Character : MonoBehaviour
             {
                 if (_lookAtNode != null)
                 {
+                    
                     if (Mathf.Sign(_lookAtNode.transform.position.x - transform.position.x) > 0)
                     {
                         characterView.FlipCharacter(1);
                     }
                     else
-                    {
+                    {                        
                         characterView.FlipCharacter(-1);
                     }
 
                 }
                 else
                 {
+                    
                     if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
                     {
                         characterView.FlipCharacter(1);
@@ -288,6 +291,7 @@ public class Character : MonoBehaviour
             }
             else
             {
+               
                 if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
                 {
                     characterView.FlipCharacter(1);
@@ -361,12 +365,13 @@ public class Character : MonoBehaviour
 
                         }
 
+                        
                         if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
                         {
                             characterView.FlipCharacter(1);
                         }
                         else
-                        {
+                        {                            
                             characterView.FlipCharacter(-1);
                         }
 
@@ -391,13 +396,13 @@ public class Character : MonoBehaviour
                                 _goToNextPosition = true;
 
                                 _currentPath.Remove(_currentPath.First());
-
+                                
                                 if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
                                 {
                                     characterView.FlipCharacter(1);
                                 }
                                 else
-                                {
+                                {                                    
                                     characterView.FlipCharacter(-1);
                                 }
                             }
@@ -564,24 +569,29 @@ public class Character : MonoBehaviour
 
         #region JUMPINGTOROPE STATE
 
-        OnRope.OnEnter += x =>
+        JumpingToRope.OnEnter += x =>
         {
+            characterRigidbody.gravityScale = 0;
             
             _currentState = CharacterStates.JumpingToRope;
 
             characterView.OnRopeEventMovement();
         };
 
-        OnRope.OnUpdate += () =>
+        JumpingToRope.OnUpdate += () =>
         {
 
 
         };
-        OnRope.OnFixedUpdate += () =>
+        JumpingToRope.OnFixedUpdate += () =>
         {
 
         };
-        OnRope.OnExit += x => { };
+
+        JumpingToRope.OnExit += x => 
+        {
+            characterRigidbody.gravityScale = 1;
+        };
 
         #endregion
 

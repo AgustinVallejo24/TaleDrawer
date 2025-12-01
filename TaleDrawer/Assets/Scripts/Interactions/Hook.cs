@@ -80,7 +80,8 @@ public class Hook : MonoBehaviour, IInteractable
 
     public void StartRopeEvent()
     {
-        _character.SendInputToFSM(CharacterStates.JumpingToRope);
+        StartCoroutine(IGetOnRope());
+        
     }
     public void GetOnRope()
     {
@@ -106,8 +107,8 @@ public class Hook : MonoBehaviour, IInteractable
     {
         _character.SendInputToFSM(CharacterStates.Wait);
         yield return new WaitForSeconds(0.2f);
-
-        GetOnRope();
+        _character.SendInputToFSM(CharacterStates.JumpingToRope);
+        //GetOnRope();
     }
 
     public void InsideInteraction()

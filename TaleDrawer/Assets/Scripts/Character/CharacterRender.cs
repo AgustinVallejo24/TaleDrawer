@@ -1,5 +1,6 @@
+using System.Collections;
 using UnityEngine;
-
+using System.Linq;
 public class CharacterRender : MonoBehaviour
 {
     [SerializeField] Character _character;
@@ -45,6 +46,22 @@ public class CharacterRender : MonoBehaviour
 
     public void GoToMoving()
     {
+        _character.SendInputToFSM(CharacterStates.Moving);
+    }
+
+    public void ExitRope()
+    {
+        StartCoroutine(IExitRope());
+    }
+
+    private IEnumerator IExitRope()
+    {
+        _character.transform.position = transform.position;
+        transform.position = _character.transform.position;
+        _character.transform.position = _character._currentPath.First().transform.position;
+
+        yield return new WaitForSeconds(0.2f);
+
         _character.SendInputToFSM(CharacterStates.Moving);
     }
 }

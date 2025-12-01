@@ -60,8 +60,8 @@ public class CharacterView
             _characterSprite.flipX = false;
         }
         else
-        {
-            _characterSprite.flipX = true;
+        {            
+            _characterSprite.flipX = true;            
         }
          
     }
