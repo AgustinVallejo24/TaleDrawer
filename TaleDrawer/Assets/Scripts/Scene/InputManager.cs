@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
     public float dragThreshold = 20f;
 
     private Vector2 startPos;
-    private bool isDragging = false;
+    public bool isDragging = false;
     private bool pointerDown = false;
 
     void Start()
@@ -28,11 +28,12 @@ public class InputManager : MonoBehaviour
     {
         if (!pointerDown) return;
 
-        Vector2 currentPos = Draw.action.ReadValue<Vector2>();
+        Vector2 currentPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
         float distance = Vector2.Distance(currentPos, startPos);
 
         if (!isDragging && distance > dragThreshold)
         {
+            Debug.LogError(distance);
             isDragging = true;
         }
 
@@ -70,6 +71,7 @@ public class InputManager : MonoBehaviour
     public void OnBeginDraw()
     {
         pointerDown = true;
+        startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
       //  sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
     }
     public void Drawing(InputAction.CallbackContext contex)
