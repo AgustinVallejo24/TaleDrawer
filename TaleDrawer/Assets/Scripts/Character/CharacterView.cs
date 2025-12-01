@@ -11,6 +11,10 @@ public class CharacterView
     private string _idleTrigger = "Idle";
     private string _jumpTrigger = "Jump";
     private string _landTrigger = "Land";
+    private string _jumpToRopeTrigger = "JumpToRope";
+    private string _climbRopeTrigger = "ClimbRope";
+    private string _idleClimbTrigger = "IdleClimb";
+    private string _ropeEventTrigger = "RopeEventMovement";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -30,6 +34,12 @@ public class CharacterView
         _anim.SetInteger("MovementState", 0);
         _anim.SetTrigger(_idleTrigger);
         _character.StartCoroutine(CustomResetTrigger(_idleTrigger));
+    }
+
+    public void OnIdleClimb()
+    {
+        _anim.SetTrigger(_idleClimbTrigger);
+        //_character.StartCoroutine(CustomResetTrigger(_idleClimbTrigger));
     }
 
     public void OnLand()
@@ -65,23 +75,20 @@ public class CharacterView
 
     public void OnJumpingToRope()
     {
-
+        _anim.SetTrigger(_jumpToRopeTrigger);
+        //_character.StartCoroutine(CustomResetTrigger(_jumpToRopeTrigger));
     }
 
     public void OnRopeClimbing()
     {
-
+        _anim.SetTrigger(_climbRopeTrigger);
+        _character.StartCoroutine(CustomResetTrigger(_climbRopeTrigger));
     }
 
-    public void OnWaitingForRopeMovement()
+    public void OnRopeEventMovement()
     {
-
-    }
-
-    public void OnExitingRope()
-    {
-
-    }
+        _anim.SetTrigger(_ropeEventTrigger);
+    }    
 
     public void OnEquippingHelmet()
     {

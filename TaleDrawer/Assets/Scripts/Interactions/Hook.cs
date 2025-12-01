@@ -74,21 +74,22 @@ public class Hook : MonoBehaviour, IInteractable
                 () => { if (nextAction && CustomTools.ToVector2(_upperNode.transform.position) == _character.nextPosition) { _character.ClearPath();/*_character.SendInputToFSM(CharacterStates.Wait);*/ } 
                     _character.Land();
                     _character.characterRigidbody.gravityScale = 1; });
-                _character.characterView.OnExitingRope(); soga.OnHasNotPlayer(); 
+                 soga.OnHasNotPlayer(); 
             });
     }
 
     public void StartRopeEvent()
     {
-        StartCoroutine(IGetOnRope());
+        _character.SendInputToFSM(CharacterStates.JumpingToRope);
     }
     public void GetOnRope()
     {
         if(_attachedObject.TryGetComponent(out Soga soga))
         {
             _character.SendInputToFSM(CharacterStates.JumpingToRope);
+            _character.characterView.OnJumpingToRope();
             _character.characterModel.Jump(soga.lowerPoint.position, 
-                () => { _character.characterRigidbody.gravityScale = 0; _character.characterView.OnWaitingForRopeMovement();
+                () => { _character.characterRigidbody.gravityScale = 0;;
                     StartCoroutine(StartRopeMovement(soga.lowerPoint, soga.upperPoint, soga)); }, false);
         }
         
@@ -97,7 +98,7 @@ public class Hook : MonoBehaviour, IInteractable
     IEnumerator StartRopeMovement(Transform p1, Transform p2, Soga soga)
     {
         _character.transform.DOKill();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
         RopeMovement(p1, p2, soga);
     }
 

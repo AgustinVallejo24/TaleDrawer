@@ -545,7 +545,7 @@ public class Character : MonoBehaviour
         {
 
             _currentState = CharacterStates.OnRope;
-
+            characterView.OnRopeClimbing();
 
         };
 
@@ -566,9 +566,10 @@ public class Character : MonoBehaviour
 
         OnRope.OnEnter += x =>
         {
+            
             _currentState = CharacterStates.JumpingToRope;
 
-
+            characterView.OnRopeEventMovement();
         };
 
         OnRope.OnUpdate += () =>

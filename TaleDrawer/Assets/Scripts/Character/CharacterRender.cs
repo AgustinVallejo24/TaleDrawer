@@ -42,4 +42,9 @@ public class CharacterRender : MonoBehaviour
     {
         _character.SendInputToFSM(CharacterStates.Idle);
     }
+
+    public void GoToMoving()
+    {
+        _character.SendInputToFSM(CharacterStates.Moving);
+    }
 }
