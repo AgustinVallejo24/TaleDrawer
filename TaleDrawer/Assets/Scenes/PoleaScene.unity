@@ -2414,10 +2414,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 15351
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -2460,7 +2460,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5132,7 +5132,7 @@ MonoBehaviour:
   - sprite: {fileID: 52276860}
     type: 1
   - sprite: {fileID: 102601291}
-    type: 9
+    type: 8
 --- !u!1 &1003800976
 GameObject:
   m_ObjectHideFlags: 0
@@ -5746,7 +5746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4819939146897208970, guid: afb96767edcd75b4bbc962e05c4c78bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.3817499
+      value: -4.84
       objectReference: {fileID: 0}
     - target: {fileID: 4819939146897208970, guid: afb96767edcd75b4bbc962e05c4c78bd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7752,7 +7752,7 @@ Transform:
   m_GameObject: {fileID: 1605212075}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.019760966, y: 0.8634763, z: 0}
+  m_LocalPosition: {x: -0.019760966, y: 0.24, z: 0}
   m_LocalScale: {x: -1.046233, y: 1.046233, z: 1.046233}
   m_ConstrainProportionsScale: 0
   m_Children:
