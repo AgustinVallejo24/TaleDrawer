@@ -284,5 +284,7 @@ public enum SceneStates
 {
     Game,
     Drawing,
-    Dragging
+    Dragging,
+    Event,
+    GameOver
 }

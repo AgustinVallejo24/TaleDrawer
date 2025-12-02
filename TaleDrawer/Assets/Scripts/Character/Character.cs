@@ -98,6 +98,7 @@ public class Character : MonoBehaviour
              .SetTransition(CharacterStates.Jumping, Jumping)
              .SetTransition(CharacterStates.Climb, Climb)
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
+             .SetTransition(CharacterStates.Stop, Stop)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
 
         StateConfigurer.Create(Moving)
@@ -107,6 +108,7 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.Climb, Climb)
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
+             .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -114,6 +116,7 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
+            .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Jumping)
             .SetTransition(CharacterStates.Idle, Idle)
