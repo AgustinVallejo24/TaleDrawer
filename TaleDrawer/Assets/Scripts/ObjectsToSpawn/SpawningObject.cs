@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 using Unity.VisualScripting;
-public class SpawningObject : MonoBehaviour
+public class SpawningObject : MonoBehaviour, IDeletable
 {
     public Camera sceneCamera;    
     public SpawnableObjectType myType;
@@ -61,6 +61,11 @@ public class SpawningObject : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public virtual void Delete()
+    {
+
     }
 
     public void OnBeginDrag()

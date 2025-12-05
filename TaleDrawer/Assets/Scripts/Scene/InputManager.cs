@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.UI;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] GameManager sceneManager;
@@ -8,13 +11,19 @@ public class InputManager : MonoBehaviour
     Vector2 _clickPosition;
     [SerializeField] InputActionReference MoveMouse;
     [SerializeField] InputActionReference Draw;
+
     [Header("Settings")]
     public float dragThreshold = 20f;
 
     private Vector2 startPos;
+    private Vector2 startWorldPos;
     public bool isDragging = false;
+    public Rubber rubber;
     private bool pointerDown = false;
+    public EventSystem eventSystem;
+    public GraphicRaycaster raycaster;
 
+    public Canvas canvas;
     void Start()
     {
         MoveMouse.action.performed += OnDrag;
@@ -64,22 +73,51 @@ public class InputManager : MonoBehaviour
             // currentDraggable.transform.position = Vector2.Lerp(currentDraggable.transform.position,_clickPosition,20*Time.unscaledDeltaTime);
         }
     }
-    private void OnDrag(InputAction inputAction)
-    {
 
-    }
     public void OnBeginDraw()
     {
         pointerDown = true;
         startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
-      //  sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
+        startWorldPos = Input.GetTouch(0).position;
+
+        PointerEventData data = new PointerEventData(eventSystem);
+        data.position = startWorldPos;
+
+        List<RaycastResult> resultados = new List<RaycastResult>();
+        raycaster.Raycast(data, resultados);
+
+        foreach (var r in resultados)
+        {
+            if (r.gameObject.TryGetComponent(out Rubber rub) && !rub.isMoving)
+            {
+                rubber = rub;
+            }
+        }
+
+        //  sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
     }
     public void Drawing(InputAction.CallbackContext contex)
     {
 
         if (isDragging)
         {
-            sceneManager._dTest.OnDraw(contex.ReadValue<Vector2>());
+            if (rubber != null)
+            {
+ 
+                rubber.OnDrag(contex);
+
+            }
+            else
+            {
+                sceneManager._dTest.OnDraw(contex.ReadValue<Vector2>());
+            }
+ 
+
+
+
+        
+
+            
         }
         
     }
@@ -87,6 +125,12 @@ public class InputManager : MonoBehaviour
     {
         pointerDown = false;
         isDragging = false;
+        if(rubber != null)
+        {
+            rubber.OnRelease();
+            rubber = null;
+        }
+        
         sceneManager._dTest.OnEndDrag();
     }
     public void OnEndDrag()
@@ -95,12 +139,14 @@ public class InputManager : MonoBehaviour
         {
             currentDraggable.OnEndDrag();
             currentDraggable = null;
+           
         }
 
     }
     public void OnMove()
     {
         Debug.LogError(sceneManager.playerInput.currentActionMap);
+        if(rubber==null)
         sceneManager.OnClick(Input.GetTouch(0).position);
     }
 }

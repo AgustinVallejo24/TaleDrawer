@@ -160,7 +160,15 @@ public class Caja : SpawningObject,IInteractable
        _myCharacter.SendInputToFSM(CharacterStates.Wait);
 
     }
-    
+    public override void Delete()
+    {
+        base.Delete();
+        if(Character.instance.currentInteractable == (IInteractable)this)
+        {
+            Character.instance.currentInteractable = null;
+        }
+        Destroy(gameObject);
+    }
     public void InsideInteraction()
     {
         

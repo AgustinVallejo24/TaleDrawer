@@ -22,7 +22,11 @@ public class Net : MonoBehaviour, IInteractable
         {
             if(objectType == item.type)
             {
-                item.sprite.enabled = true;
+                item.poleyObject.Activation(true);
+            }
+            else
+            {
+                item.poleyObject.Activation(false);
             }
         }
     }
@@ -48,6 +52,6 @@ public class Net : MonoBehaviour, IInteractable
 [System.Serializable]
 public struct ObjectsAndTypes
 {
-    public SpriteRenderer sprite;
+    public PoleyObject poleyObject;
     public SpawnableObjectType type;
 }
