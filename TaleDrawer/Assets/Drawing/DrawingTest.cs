@@ -1,30 +1,32 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using System.Collections;
-using UnityEngine.EventSystems;
+using System;
+//using System.Diagnostics;
+using UnityEngine.UI;
 public class DrawingTest : MonoBehaviour
 {
-    public LineRenderer[] lineRenderer;
-    public int linerendererIndex;
-    public LineRenderer recognitionLineRenderer;
-    public TMP_Text resultText;
-    public Camera cam;
-    //public GestureRecognizer recognizer;
-    public BaseButton_Recognize recognizebutton;
 
-    private List<Vector2> currentPoints = new();
-    private List<Vector2> currentStrokePoints = new();
-    public bool isDrawing = false;
-    List<Vector2> greenPoints = new List<Vector2>();
-    List<Vector2> redPoints = new List<Vector2>();
-    List<List<Vector2>> listaDeListas = new List<List<Vector2>>();
+
+    [SerializeField] LineRenderer lRPrefab;
+    [SerializeField] LineRenderer lRPrefabRT;
+    [SerializeField] RenderTexture renderTexture;
+    public TMP_Text resultText;
     public ZernikeManager zRecognizer;
-    public List<int> strokesPointsCount = new List<int>();
-    public TMP_InputField symbolNameField;
-    public bool detectTouch = false;
+
+    public Camera cam;
+    private List<Vector2> currentPoints = new List<Vector2>();
+    private List<Vector2> currentStrokePoints = new List<Vector2>();
+    public bool isDrawing = false;
+
+    private List<LineRenderer> _lineRenderers = new List<LineRenderer>(0);
+    private List<LineRenderer> _renderTexturelineRenderers = new List<LineRenderer>(0);
+    private LineRenderer currentLR;
+    List<List<Vector2>> listaDeListas = new List<List<Vector2>>();
+    private int _linerendererIndex;
+    private List<int> _strokesPointsCount = new List<int>();
 
     [SerializeField] LayerMask _uiMask;
     public bool startDrawing;
@@ -32,44 +34,13 @@ public class DrawingTest : MonoBehaviour
     public float recognitionTime;
     float timer;
     public Image fillImage;
-    void Start()
+
+    private void Start()
     {
-        recognizebutton.buttonAction += OnConfirmDrawing;
-        for (int i = 0; i < 4; i++)
-        {
-            listaDeListas.Add(new List<Vector2>());
-        }
-    }
-
- 
-    bool IsTouchOverSpecificUI(Touch touch, int uiLayerIndex)
-    {
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = touch.position;
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        // 1. Verificar si hay algún hit en la UI
-        if (results.Count == 0)
-        {
-            return false;
-        }
-
-        // 2. Verificar si el primer elemento detectado (el más cercano/superior)
-        //    está en la capa que te interesa.
-        RaycastResult closestHit = results[0];
-
-        // Convertir el índice de capa a nombre para la comparación (más seguro)
-        string targetLayerName = LayerMask.LayerToName(uiLayerIndex);
-
-        // Comprobar la capa del GameObject que recibió el toque
-        if (closestHit.gameObject != null && closestHit.gameObject.layer == uiLayerIndex)
-        {
-            return true;
-        }
-
-        return false;
+        //cam = Camera.main;
+        var lineR = Instantiate(lRPrefab, transform);
+        _lineRenderers.Add(lineR);
+        currentLR = lineR;
     }
     void Update()
     {
@@ -78,7 +49,7 @@ public class DrawingTest : MonoBehaviour
         {
             if (timer < recognitionTime)
             {
-                timer += Time.unscaledDeltaTime*10;
+                timer += Time.unscaledDeltaTime * 10;
                 fillImage.fillAmount = timer / recognitionTime;
             }
             else
@@ -89,39 +60,12 @@ public class DrawingTest : MonoBehaviour
                 OnConfirmDrawing();
             }
         }
-        //if (recognizebutton.isPressed)
-        //{
-        //    OnConfirmDrawing();
-        //}
 
 
     }
-
-
-    public void BeginDraw(Vector2 position)
-    {
-        if (CustomTools.IsTouchOverUI(position))
-        {
-            //Debug.Log("TOCOBOTON");
-            return;
-        }
-
-
-
-     
-
-        startDrawing = true;
-        if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
-        {
-            GameManager.instance.StateChanger(SceneStates.Drawing);
-        }
-        isDrawing = true;
-        currentStrokePoints.Clear();
-    }
-
     public void OnDraw(Vector2 position)
     {
-        Debug.Log("TOCOBOTON");
+        // Debug.Log("TOCOBOTON");
 
         if (isDrawing)
         {
@@ -163,10 +107,10 @@ public class DrawingTest : MonoBehaviour
             startDrawing = false;
             startTimer = true;
 
-            if (linerendererIndex >= lineRenderer.Length) return;
+            if (_linerendererIndex >= _lineRenderers.Count) return;
 
 
-            if (GetLineLength(lineRenderer[linerendererIndex]) < 1.5f)
+            if (GetLineLength(_lineRenderers[_linerendererIndex]) < 1.5f)
             {
                 // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
                 foreach (var item in currentStrokePoints)
@@ -177,103 +121,34 @@ public class DrawingTest : MonoBehaviour
                     }
                 }
                 currentStrokePoints.Clear();
-                lineRenderer[linerendererIndex].positionCount = 0;
+                _lineRenderers[_linerendererIndex].positionCount = 0;
                 return;
             }
-
-            // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
-            strokesPointsCount.Add(currentStrokePoints.Count);
+            listaDeListas.Add(new List<Vector2>());
+             listaDeListas[_linerendererIndex] = GestureProcessor.Normalize(listaDeListas[_linerendererIndex]);
+            _strokesPointsCount.Add(currentStrokePoints.Count);
             currentStrokePoints.Clear();
-
-            if (linerendererIndex < lineRenderer.Length)
-            {
-                linerendererIndex++;
-            }
+            var lineR = Instantiate(lRPrefab, transform);
+            _lineRenderers.Add(lineR);
+            _linerendererIndex++;
+            currentLR = lineR;
+            //if (_linerendererIndex < _lineRenderers.Count)
+            //{
+            //    _linerendererIndex++;
+            //}
 
         }
-
     }
-    public void Draw(int touchCount, Touch touch)
+
+
+    bool IsPointerOverUI()
     {
-
-        if (touchCount > 0)
-        {
-   
-
-            //  ignorar si el toque está sobre UI
-            if (CustomTools.IsTouchOverUI(touch))
-            {
-                //Debug.Log("TOCOBOTON");
-                return;
-            }
-
-
-
-            Vector2 pos = cam.ScreenToWorldPoint(touch.position);
-            
-            if (linerendererIndex < lineRenderer.Length && !startDrawing)
-            {
-                startDrawing = true;
-                if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
-                {
-                    GameManager.instance.StateChanger(SceneStates.Drawing);
-                }
-                isDrawing = true;
-                currentStrokePoints.Clear();
-            }
-
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-
-                    break;
-
-                case TouchPhase.Moved:
-                case TouchPhase.Stationary:
-                    if (isDrawing)
-                    {
-                        if (currentPoints.Count == 0 || Vector2.Distance(currentPoints[^1], pos) > 0.001f)
-                        {
-                            AddSmoothedPoint(pos);
-
-                        }
-                    }
-                    break;
-
-                case TouchPhase.Ended:
-                case TouchPhase.Canceled:
-                    isDrawing = false;
-                    startDrawing = false;
-                    if (linerendererIndex >= lineRenderer.Length) return;
-
-
-                    if (GetLineLength(lineRenderer[linerendererIndex]) < 1.5f)
-                    {
-                        // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
-                        foreach (var item in currentStrokePoints)
-                        {
-                            if (currentPoints.Contains(item))
-                            {
-                                currentPoints.Remove(item);
-                            }
-                        }
-                        currentStrokePoints.Clear();
-                        lineRenderer[linerendererIndex].positionCount = 0;
-                        return;
-                    }
-
-                    // listaDeListas[linerendererIndex] = GestureProcessor.Normalize(listaDeListas[linerendererIndex]);
-                    strokesPointsCount.Add(currentStrokePoints.Count);
-                    currentStrokePoints.Clear();
-
-                    if (linerendererIndex < lineRenderer.Length)
-                    {
-                        linerendererIndex++;
-                    }
-                    break;
-            }
-        }
+        return UnityEngine.EventSystems.EventSystem.current != null &&
+               UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
     }
+
+
+
     void AddSmoothedPoint(Vector3 newPoint)
     {
         currentStrokePoints.Add(newPoint);
@@ -285,16 +160,16 @@ public class DrawingTest : MonoBehaviour
         {
             // primer punto del trazo inicializamos el LineRenderer
 
-            lineRenderer[linerendererIndex].positionCount = 1;
-            lineRenderer[linerendererIndex].SetPosition(0, newPoint);
+            _lineRenderers[_linerendererIndex].positionCount = 1;
+            _lineRenderers[_linerendererIndex].SetPosition(0, newPoint);
             return;
         }
 
         if (count < 4)
         {
             // si todavía no hay suficientes puntos para interpolar, solo agrego directo
-            lineRenderer[linerendererIndex].positionCount++;
-            lineRenderer[linerendererIndex].SetPosition(lineRenderer[linerendererIndex].positionCount - 1, newPoint);
+            _lineRenderers[_linerendererIndex].positionCount++;
+            _lineRenderers[_linerendererIndex].SetPosition(_lineRenderers[_linerendererIndex].positionCount - 1, newPoint);
             return;
         }
 
@@ -315,59 +190,50 @@ public class DrawingTest : MonoBehaviour
                 (-p0 + 3f * p1 - 3f * p2 + p3) * t * t * t
             );
 
-            lineRenderer[linerendererIndex].positionCount++;
-            lineRenderer[linerendererIndex].SetPosition(lineRenderer[linerendererIndex].positionCount - 1, point);
+            _lineRenderers[_linerendererIndex].positionCount++;
+            _lineRenderers[_linerendererIndex].SetPosition(_lineRenderers[_linerendererIndex].positionCount - 1, point);
 
         }
 
 
     }
 
-    public void SaveSymbol()
+
+
+
+    public ReferenceSymbol ReturnNewSymbol(string symbolName, bool shouldRender)
     {
         if (currentPoints.Any())
         {
-            var normalizedPositions = GestureProcessor.Normalize(currentPoints);
-            for (int i = 0; i < strokesPointsCount.Count; i++)
+            var normalizedPositions = DrawNormalizer.Normalize(currentPoints);
+            for (int i = 0; i < _strokesPointsCount.Count; i++)
             {
-                if (strokesPointsCount[i] == 0) continue;
-                for (int j = 0; j < strokesPointsCount[i]; j++)
+                if (shouldRender)
+                {
+                    _renderTexturelineRenderers.Add(Instantiate(lRPrefabRT, transform));
+                    _renderTexturelineRenderers[i].positionCount = _strokesPointsCount[i];
+                }
+
+                if (_strokesPointsCount[i] == 0) continue;
+                for (int j = 0; j < _strokesPointsCount[i]; j++)
                 {
                     listaDeListas[i].Add(normalizedPositions[j]);
+                    if (shouldRender)
+                    {
+                        _renderTexturelineRenderers[i].SetPosition(j, normalizedPositions[j]);
+                    }
 
                 }
-                normalizedPositions = normalizedPositions.Skip(strokesPointsCount[i]).ToList();
+                normalizedPositions = normalizedPositions.Skip(_strokesPointsCount[i]).ToList();
             }
 
 
-            zRecognizer.SaveSymbol(listaDeListas, linerendererIndex,symbolNameField.text);
-            symbolNameField.text = "";
-            currentPoints.Clear();
-            strokesPointsCount.Clear();
-            foreach (var item in listaDeListas)
-            {
-                item.Clear();
-            }
-            linerendererIndex = 0;
-            foreach (var item in lineRenderer)
-            {
-                item.positionCount = 0;
-            }
+
+            return zRecognizer.ReturnNewSymbol(listaDeListas, _lineRenderers.Count - 1, symbolName, "symbolID");
         }
         else
         {
-            resultText.text = "Trazo demasiado corto";
-            currentPoints.Clear();
-            strokesPointsCount.Clear();
-            foreach (var item in listaDeListas)
-            {
-                item.Clear();
-            }
-            linerendererIndex = 0;
-            foreach (var item in lineRenderer)
-            {
-                item.positionCount = 0;
-            }
+            return null;
         }
     }
     float GetLineLength(LineRenderer line)
@@ -382,161 +248,87 @@ public class DrawingTest : MonoBehaviour
     public void OnConfirmDrawing()
     {
 
-
-        if (currentPoints.Any()) 
+        if (currentPoints.Any())
         {
-            var normalizedPositions = GestureProcessor.Normalize(currentPoints);
-            for (int i = 0; i < strokesPointsCount.Count; i++)
+            var normalizedPositions = DrawNormalizer.Normalize(currentPoints);
+            for (int i = 0; i < _strokesPointsCount.Count; i++)
             {
-                if (strokesPointsCount[i] == 0) continue;
-                for (int j = 0; j < strokesPointsCount[i]; j++)
+                if (_strokesPointsCount[i] == 0) continue;
+                for (int j = 0; j < _strokesPointsCount[i]; j++)
                 {
                     listaDeListas[i].Add(normalizedPositions[j]);
-                    
+
                 }
-                normalizedPositions = normalizedPositions.Skip(strokesPointsCount[i]).ToList();
+                normalizedPositions = normalizedPositions.Skip(_strokesPointsCount[i]).ToList();
             }
-          
-         
-            zRecognizer.OnDrawingFinished(listaDeListas, linerendererIndex);
+
+            zRecognizer.OnDrawingFinished(listaDeListas, _lineRenderers.Count - 1); ;
             currentPoints.Clear();
-            strokesPointsCount.Clear();
+            _strokesPointsCount.Clear();
             foreach (var item in listaDeListas)
             {
                 item.Clear();
             }
-            linerendererIndex = 0;
-            foreach (var item in lineRenderer)
+            _linerendererIndex = 0;
+            _lineRenderers[0].positionCount = 0;
+            var count = _lineRenderers.Count;
+            for (int i = 1; i < count; i++)
             {
-                item.positionCount = 0;
+                Destroy(_lineRenderers[1].gameObject);
+                _lineRenderers.RemoveAt(1);
             }
+
+            currentLR = _lineRenderers[0];
         }
         else
         {
             resultText.text = "Trazo demasiado corto";
-            GameManager.instance.StateChanger(SceneStates.Game);
             currentPoints.Clear();
-            strokesPointsCount.Clear();
+            _strokesPointsCount.Clear();
             foreach (var item in listaDeListas)
             {
                 item.Clear();
             }
-            linerendererIndex = 0;
-            foreach (var item in lineRenderer)
+            _linerendererIndex = 0;
+            _lineRenderers[0].positionCount = 0;
+            foreach (var item in _lineRenderers.Skip(1))
             {
-                item.positionCount = 0;
+                _lineRenderers.Remove(item);
+                Destroy(item.gameObject);
             }
+            currentLR = _lineRenderers[0];
         }
     }
-    private class PointData
+
+
+    public void ClearAllLineRenderers(bool clearRenderDraw)
     {
-        public Vector2 point;
-        public float area;
+        currentPoints.Clear();
+        _strokesPointsCount.Clear();
+        foreach (var item in listaDeListas)
+        {
+            item.Clear();
+        }
+        _linerendererIndex = 0;
+        _lineRenderers[0].positionCount = 0;
+        var count = _lineRenderers.Count;
+        for (int i = 1; i < count; i++)
+        {
+            Destroy(_lineRenderers[1].gameObject);
+            _lineRenderers.RemoveAt(1);
+        }
+
+        currentLR = _lineRenderers[0];
+        if (clearRenderDraw)
+        {
+            foreach (var item in _renderTexturelineRenderers)
+            {
+                Destroy(item.gameObject);
+            }
+            _renderTexturelineRenderers.Clear();
+        }
+
+
     }
 
-    // Método principal para simplificar el trazo
-    public static List<Vector2> Simplify(List<Vector2> points, float tolerance)
-    {
-        if (points.Count < 3)
-        {
-            return points;
-        }
-
-        List<PointData> pointData = new List<PointData>();
-        for (int i = 0; i < points.Count; i++)
-        {
-            pointData.Add(new PointData { point = points[i] });
-        }
-
-        // Calcular el área de cada punto
-        for (int i = 1; i < pointData.Count - 1; i++)
-        {
-            pointData[i].area = CalculateTriangleArea(pointData[i - 1].point, pointData[i].point, pointData[i + 1].point);
-        }
-
-        // Puntos de inicio y fin siempre se mantienen
-        pointData[0].area = float.MaxValue;
-        pointData[pointData.Count - 1].area = float.MaxValue;
-
-        // Bucle principal para eliminar puntos
-        while (true)
-        {
-            int minIndex = -1;
-            float minArea = float.MaxValue;
-
-            for (int i = 1; i < pointData.Count - 1; i++)
-            {
-                if (pointData[i].area < minArea)
-                {
-                    minArea = pointData[i].area;
-                    minIndex = i;
-                }
-            }
-
-            if (minIndex == -1 || minArea > tolerance)
-            {
-                break; // Se detiene cuando el área más pequeña es mayor que la tolerancia
-            }
-
-            // Eliminar el punto con la menor área
-            pointData.RemoveAt(minIndex);
-
-            // Recalcular el área de los vecinos del punto eliminado
-            if (minIndex > 0 && minIndex < pointData.Count - 1)
-            {
-                pointData[minIndex].area = CalculateTriangleArea(pointData[minIndex - 1].point, pointData[minIndex].point, pointData[minIndex + 1].point);
-                if (minIndex > 1)
-                {
-                    pointData[minIndex - 1].area = CalculateTriangleArea(pointData[minIndex - 2].point, pointData[minIndex - 1].point, pointData[minIndex].point);
-                }
-            }
-        }
-
-        // Convertir los datos a la lista de puntos final
-        List<Vector2> simplifiedPoints = new List<Vector2>();
-        foreach (var data in pointData)
-        {
-            simplifiedPoints.Add(data.point);
-        }
-
-        return simplifiedPoints;
-    }
-
-    // Método para calcular el área de un triángulo usando las coordenadas
-    private static float CalculateTriangleArea(Vector2 p1, Vector2 p2, Vector2 p3)
-    {
-        return Mathf.Abs(p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) * 0.5f;
-    }
-    void OnDrawGizmos()
-    {
-        if (greenPoints != null)
-        {
-            Gizmos.color = Color.green;
-            foreach (var item in greenPoints)
-            {
-                Gizmos.DrawSphere(new Vector3(item.x, item.y, 0), 0.1f);
-            }
-        }
-
-        if (redPoints != null)
-        {
-            Gizmos.color = Color.red;
-            foreach (var item in redPoints)
-            {
-                Gizmos.DrawSphere(new Vector3(item.x, item.y, 0), 0.1f);
-            }
-        }
-    }    
-
-    //IEnumerator Drawpoints()
-    //{
-    //    var normalizedPositions = GestureProcessor.Normalize(currentPoints);
-    //    recognitionLineRenderer.positionCount = normalizedPositions.Count;
-    //    for (int i = 0; i < normalizedPositions.Count; i++)
-    //    {
-    //        recognitionLineRenderer.SetPosition(i, normalizedPositions[i]);
-    //    }
-    //    yield return new WaitForSeconds(.1f);
-    //    zRecognizer.OnDrawingFinished(normalizedPositions);
-    //}
 }

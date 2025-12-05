@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour
     public Vector2 touchPosition;
 
     public float drawingThreshold;
+
+
+    [SerializeField] SpawnableManager _spawnableManager;
+    [SerializeField] ZernikeManager _zernikeManager;
     private void Awake()
     {
         instance = this;
@@ -55,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         _playerCFollowC = _playerCamera.GetComponent<CinemachineFollow>();
         _clickRayLength = levelCharacter.transform.localScale.y * 2;
-
+        _zernikeManager.recognitionAction = SpawnObject;
 
     }
 
@@ -207,6 +211,14 @@ public class GameManager : MonoBehaviour
 
 
         }
+    }
+
+    public void SpawnObject(SpawnableObjectType objectType)
+    {
+        GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _spawnableManager.spawningPos.position, Quaternion.identity);
+
+        StateChanger(SceneStates.Dragging);
+      
     }
     public void ChangeToDrawingState()
     {
