@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class Polea : MonoBehaviour, IInteractable
 {
     public Transform jumpPos;
@@ -8,6 +8,7 @@ public class Polea : MonoBehaviour, IInteractable
     public bool hasPlayer;
     public float platformWeight;
     public float netWeight;
+    public List<NodesAndSections> nodeList;
     public void InsideInteraction()
     {
         
@@ -44,16 +45,90 @@ public class Polea : MonoBehaviour, IInteractable
         if (weightDifference > 4)
         {
             anim.SetTrigger("High");
+            NodeActivation("High");
         }
         else if (weightDifference <= 4 && weightDifference > 2)
         {
             anim.SetTrigger("Middle");
+            NodeActivation("Middle");
         }
         else
         {
             anim.SetTrigger("Low");
+            NodeActivation("Low");
         }
     }
 
+
+    public void NodeActivation(string section)
+    {
+        foreach (var item in nodeList)
+        {
+            if(section == "Low")
+            {
+                if (item.section != "Low")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        platformNode.SetCanDoEvent(node, false);
+                    }
+                }
+            }
+            else if(section == "Middle")
+            {
+                if (item.section == "Middle")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        platformNode.SetCanDoEvent(node, true);
+
+                    }
+                }
+                else if(item.section == "High")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        platformNode.SetCanDoEvent(node, false);
+                    }
+                }
+                else if (item.section == "Low")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        node.SetCanDoEvent(platformNode, false);
+                    }
+                }
+            }
+            else if (section == "High")
+            {
+                if (item.section == "High")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        platformNode.SetCanDoEvent(node, true);
+                    }
+                }
+                else if (item.section == "Middle" || item.section == "Low")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        node.SetCanDoEvent(platformNode, false);
+                    }
+                }
+
+            }
+
+        }
+
+    }
     
+}
+
+
+[System.Serializable]
+public struct NodesAndSections
+{
+    public string section;
+    public List<CustomNode> nodes;
+
 }

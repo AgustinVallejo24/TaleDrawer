@@ -102,7 +102,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
         {            
            transform.position = Vector2.Lerp(transform.position, sceneCamera.ScreenToWorldPoint(position), .5f);
 
-            var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.y, _interactuables);
+            var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.y/2, _interactuables);
             
             if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
             {
