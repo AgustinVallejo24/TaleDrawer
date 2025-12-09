@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnObject(SpawnableObjectType objectType)
     {
-        GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _spawnableManager.spawningPos.position, Quaternion.identity);
+        GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
 
         StateChanger(SceneStates.Dragging);
       

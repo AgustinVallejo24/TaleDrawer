@@ -17,7 +17,8 @@ public class DrawingTest : MonoBehaviour
     public ZernikeManager zRecognizer;
 
     public Camera cam;
-    private List<Vector2> currentPoints = new List<Vector2>();
+    private List<Vector2> currentPoints = new List<Vector2>(); 
+    private List<Vector2> currentPointsCentroid = new List<Vector2>();
     private List<Vector2> currentStrokePoints = new List<Vector2>();
     public bool isDrawing = false;
 
@@ -35,6 +36,7 @@ public class DrawingTest : MonoBehaviour
     float timer;
     public Image fillImage;
 
+    public Vector2 currentCentroid;
     private void Start()
     {
         //cam = Camera.main;
@@ -73,6 +75,7 @@ public class DrawingTest : MonoBehaviour
             if (currentPoints.Count == 0 || Vector2.Distance(currentPoints[^1], pos) > 0.001f)
             {
                 AddSmoothedPoint(pos);
+                currentPointsCentroid.Add(Camera.main.ScreenToWorldPoint(position));
 
             }
 
@@ -250,6 +253,7 @@ public class DrawingTest : MonoBehaviour
 
         if (currentPoints.Any())
         {
+            currentCentroid = CalcularCentroGeometrico(currentPointsCentroid);
             var normalizedPositions = DrawNormalizer.Normalize(currentPoints);
             for (int i = 0; i < _strokesPointsCount.Count; i++)
             {
@@ -261,6 +265,8 @@ public class DrawingTest : MonoBehaviour
                 }
                 normalizedPositions = normalizedPositions.Skip(_strokesPointsCount[i]).ToList();
             }
+
+            
 
             zRecognizer.OnDrawingFinished(listaDeListas, _lineRenderers.Count - 1); ;
             currentPoints.Clear();
@@ -300,7 +306,130 @@ public class DrawingTest : MonoBehaviour
         }
     }
 
+   
+    public Vector2 CalcularCentroGeometrico(List<Vector2> puntos)
+    {
+        if (puntos == null || puntos.Count == 0)
+        {
+            return Vector2.zero; // O manejar el error apropiadamente
+        }
 
+        // 1. Inicializar los valores de Bounding Box.
+        // Se inicializan con el primer punto.
+        Vector2 minBounds = puntos[0];
+        Vector2 maxBounds = puntos[0];
+
+        // 2. Iterar sobre todos los puntos para encontrar el min y max.
+        for (int i = 1; i < puntos.Count; i++)
+        {
+            Vector2 p = puntos[i];
+
+            // Encontrar el valor mínimo para cada eje
+            minBounds.x = Mathf.Min(minBounds.x, p.x);
+            minBounds.y = Mathf.Min(minBounds.y, p.y);
+
+            // Encontrar el valor máximo para cada eje
+            maxBounds.x = Mathf.Max(maxBounds.x, p.x);
+            maxBounds.y = Mathf.Max(maxBounds.y, p.y);
+
+        }
+
+        // 3. El centro es el punto medio entre min y max.
+        // Vector3.Lerp(a, b, 0.5f) también es una forma limpia de hacer esto.
+        Vector2 centroGeometrico = (minBounds + maxBounds) / 2f;
+        DebuggearBoundingBox(minBounds, maxBounds, 0f);
+        return centroGeometrico;
+    }
+
+    public void DebuggearBoundingBox(Vector2 minBounds, Vector2 maxBounds, float zAltura = 0f)
+    {
+        // Convertir los límites 2D a esquinas 3D para dibujar
+        Vector3 cornerA = new Vector3(minBounds.x, minBounds.y, zAltura); // Abajo-Izquierda
+        Vector3 cornerB = new Vector3(maxBounds.x, minBounds.y, zAltura); // Abajo-Derecha
+        Vector3 cornerC = new Vector3(maxBounds.x, maxBounds.y, zAltura); // Arriba-Derecha
+        Vector3 cornerD = new Vector3(minBounds.x, maxBounds.y, zAltura); // Arriba-Izquierda
+
+        // Dibujar las 4 líneas del rectángulo
+
+        // Línea 1: Abajo-Izquierda (A) a Abajo-Derecha (B)
+        Debug.DrawLine(cornerA, cornerB, Color.yellow, 3f, false);
+
+        // Línea 2: Abajo-Derecha (B) a Arriba-Derecha (C)
+        Debug.DrawLine(cornerB, cornerC, Color.yellow, 3f, false);
+
+        // Línea 3: Arriba-Derecha (C) a Arriba-Izquierda (D)
+        Debug.DrawLine(cornerC, cornerD, Color.yellow, 3f, false);
+
+        // Línea 4: Arriba-Izquierda (D) a Abajo-Izquierda (A)
+        Debug.DrawLine(cornerD, cornerA, Color.yellow, 3f, false);
+
+        // Opcional: Dibujar el Centroide Calculado (el centro del cuadrado)
+        Vector2 centro = (minBounds + maxBounds) / 2f;
+        Vector3 centro3D = new Vector3(centro.x, centro.y, zAltura);
+
+        // Dibujar una "cruz" en el centroide
+        Debug.DrawLine(centro3D - Vector3.right * 0.1f, centro3D + Vector3.right * 0.1f, Color.red, 0f, false);
+        Debug.DrawLine(centro3D - Vector3.up * 0.1f, centro3D + Vector3.up * 0.1f, Color.red, 0f, false);
+    }
+    Vector3 CalcularCentroBoundingBox(List<LineRenderer> lineas)
+    {
+        bool any = false;
+        float minX = float.PositiveInfinity, minY = float.PositiveInfinity, minZ = float.PositiveInfinity;
+        float maxX = float.NegativeInfinity, maxY = float.NegativeInfinity, maxZ = float.NegativeInfinity;
+
+        foreach (var lr in lineas)
+        {
+            if (lr == null) continue;
+            int n = lr.positionCount;
+            if (n == 0) continue;
+
+            Vector3[] pts = new Vector3[n];
+            lr.GetPositions(pts);
+            for (int i = 0; i < n; i++)
+            {
+                Vector3 p = lr.useWorldSpace ? pts[i] : lr.transform.TransformPoint(pts[i]);
+                any = true;
+                if (p.x < minX) minX = p.x;
+                if (p.y < minY) minY = p.y;
+                if (p.z < minZ) minZ = p.z;
+                if (p.x > maxX) maxX = p.x;
+                if (p.y > maxY) maxY = p.y;
+                if (p.z > maxZ) maxZ = p.z;
+            }
+        }
+
+        if (!any) return Vector3.zero;
+        return new Vector3((minX + maxX) / 2f, (minY + maxY) / 2f, (minZ + maxZ) / 2f);
+    }
+
+    public  Vector3 CentroPonderadoPorLongitud(List<LineRenderer> lineRenderers)
+    {
+        Vector3 sumMidTimesLen = Vector3.zero;
+        float totalLen = 0f;
+
+        foreach (var lr in lineRenderers)
+        {
+            if (lr == null) continue;
+            int n = lr.positionCount;
+            if (n < 2) continue;
+
+            Vector3[] pts = new Vector3[n];
+            lr.GetPositions(pts);
+            for (int i = 0; i < n - 1; i++)
+            {
+                Vector3 p0 = lr.useWorldSpace ? pts[i] : lr.transform.TransformPoint(pts[i]);
+                Vector3 p1 = lr.useWorldSpace ? pts[i + 1] : lr.transform.TransformPoint(pts[i + 1]);
+                float segLen = Vector3.Distance(p0, p1);
+                if (segLen <= 0f) continue;
+                Vector3 mid = (p0 + p1) * 0.5f;
+                sumMidTimesLen += mid * segLen;
+                totalLen += segLen;
+            }
+        }
+
+        if (totalLen == 0f) return Vector3.zero;
+        return sumMidTimesLen / totalLen;
+    }
     public void ClearAllLineRenderers(bool clearRenderDraw)
     {
         currentPoints.Clear();
