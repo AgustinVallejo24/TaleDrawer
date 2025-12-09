@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class CardSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
-    [SerializeField] private float _verticalMovement = 3.5f;
+    //[SerializeField] private float _verticalMovement = 3.5f;
     [SerializeField] private float _moveTime = 0.1f;
     [Range(0f, 2f), SerializeField] private float _scaleAmount = 1.1f;
 

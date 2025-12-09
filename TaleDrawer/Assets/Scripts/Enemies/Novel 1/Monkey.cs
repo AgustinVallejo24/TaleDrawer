@@ -11,40 +11,27 @@ public class Monkey : Enemy
     [SerializeField] Character _character;
     [SerializeField] SpawnableObjectType _dangerousObjects;
 
-    private IEnumerator Start()
+
+    protected override void Awake()
+    {
+        _fsm = new FSM();
+
+        _fsm.AddState(FSMStates.IdleState, new MonkeyIdleState(this, _character));
+        _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
+        _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
+        _fsm.ChangeState(FSMStates.IdleState);
+    }
+    protected override void Start()
     {        
         if( _hasHelmet)
         {
             _helmet.SetActive(true);
-        }
-
-        while (true)
-        {
-            if(Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask))
-            {
-                EnemyEvent();
-            }
-
-            yield return new WaitForSeconds(0.3f);
-        }
+        }        
     }
 
     protected override void EnemyEvent()
     {
-        GameManager.instance.StateChanger(SceneStates.GameOver);
-        _character.SendInputToFSM(CharacterStates.Stop);
-        _character._currentPath = null;
-        _character.characterRigidbody.linearVelocity = Vector3.zero;
-        if(_character.transform.position.x >=  transform.position.x)
-        {
-            transform.DOMoveX(_character.transform.position.x - 1, 1).OnComplete(() => { Debug.LogError("GameOver"); });
-        }
-        else
-        {
-            transform.DOMoveX(_character.transform.position.x + 1, 1).OnComplete(() => { Debug.LogError("GameOver"); });
-        }
-        
-
+        _fsm.ChangeState(FSMStates.AttackState);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -59,12 +46,27 @@ public class Monkey : Enemy
             }
             else
             {
-                TakeDamage(2);
+                TakeDamage(2, true);
                 
             }
                 
         }
         
     }
+
+    
+
+    public IEnumerator StartBehaviour()
+    {
+        while (true)
+        {
+            if (Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask))
+            {
+                EnemyEvent();
+            }
+
+            yield return new WaitForSeconds(0.3f);
+        }
+    }    
 
 }
