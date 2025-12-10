@@ -20,13 +20,8 @@ public class MonkeyDeathState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.DeathState;
-        Destroy(_myMonkey.gameObject);
-    }
-
-    private void Destroy(object gameObject)
-    {
-        throw new NotImplementedException();
-    }
+        _myMonkey.DeathEvent();
+    }   
 
     public override void OnExit()
     {

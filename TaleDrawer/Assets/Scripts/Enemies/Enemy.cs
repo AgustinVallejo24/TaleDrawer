@@ -45,10 +45,15 @@ public abstract class Enemy : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject);
+                DeathEvent();
             }
             
         }
+    }
+
+    public virtual void DeathEvent()
+    {
+        Destroy(gameObject);
     }
 
     public virtual void CoroutineManager(IEnumerator cou, bool stop = false)
