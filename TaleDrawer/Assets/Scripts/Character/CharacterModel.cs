@@ -64,13 +64,14 @@ public class CharacterModel
     public virtual void Move(Vector2 objective, float smoothSpeed)
     {
         Vector2 currentPosition = _myRigidbody.position; // Usar Rigidbody.position para f�sica
-        Vector2 direction = objective - currentPosition;
+        Vector2 direction = new Vector2(objective.x,_myCharacter.transform.position.y) - currentPosition;
         float distance = direction.magnitude;
         float stopThreshold = 0.1f; // Distancia m�nima para considerar que ya llegamos
 
         if (distance <= stopThreshold)
         {
-          
+
+            Debug.LogError("LACONCHA");
             // Si estamos cerca, detenemos el personaje inmediatamente y salimos.
             _myRigidbody.linearVelocity = Vector2.zero;
             return;
@@ -91,10 +92,26 @@ public class CharacterModel
         // **Importante:** Usamos _myRigidbody.velocity, no linearVelocity, 
         // y la variable 'speed' debe ser un Vector2 pasado por ref, no un float.
         Vector2 currentVelocity = _myRigidbody.linearVelocity;
-        //Vector2 smoothVelocity; // Variable para la velocidad actual (ref) del SmoothDamp.
 
+        RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position + targetVelocity.normalized * .2f, Vector2.down, 2f, _myCharacter.floorLayerMask);
+
+        if (hit)
+        {
+      //      Debug.LogError(hit.transform.gameObject.name);
+            Vector2 tangent = Vector2.Perpendicular(hit.normal).normalized;
+
+            if (Vector2.Dot(tangent, direction) < 0)
+               tangent = -tangent;
+
+            targetVelocity = tangent * targetSpeed;
+        }
+        //Vector2 smoothVelocity; // Variable para la velocidad actual (ref) del SmoothDamp.
+        Debug.DrawLine(_myCharacter.transform.position, CustomTools.ToVector2(_myCharacter.transform.position) + Vector2.down);
+        Debug.DrawLine(_myCharacter.transform.position, CustomTools.ToVector2(_myCharacter.transform.position) + targetVelocity);
         // Necesitas una variable de tipo Vector2 para el ref. 
         // Decl�rala a nivel de clase/componente: private Vector2 _smoothDampVelocity;
+
+        //  _myRigidbody.MovePosition(_myRigidbody.position + direction.normalized * Time.deltaTime * targetSpeed);
 
         _myRigidbody.linearVelocity = Vector2.SmoothDamp(
             currentVelocity,

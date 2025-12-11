@@ -38,6 +38,7 @@ public class DrawingTest : MonoBehaviour
     public Vector2 currentCentroid;
 
     public GameObject spawnParticleSystem;
+    public GameObject cloudParticleSystem;
     private void Start()
     {
         //cam = Camera.main;
@@ -344,7 +345,7 @@ public class DrawingTest : MonoBehaviour
         }
 
         currentLR = _lineRenderers[0];
-
+    
         currentLR.material.SetFloat("_NoiseStrenght", 1);
     }
     public void ClearAllLineRenderers(bool clearRenderDraw)
@@ -397,10 +398,17 @@ public class DrawingTest : MonoBehaviour
 
         }
 
+        bool first = true;
         while (time < 1)
         {
             float t = 1 - time / 1;
 
+            if(time > .5f && first)
+            {
+                first = false;
+
+                GameManager.instance.SpawnObject(objectType);
+            }
             foreach (var mat in materials)
                 mat.SetFloat("_NoiseStrenght", t);
 
@@ -413,7 +421,7 @@ public class DrawingTest : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(.1f);
         ResetLineRenderers();
-        GameManager.instance.SpawnObject(objectType);
+       
     }
 
     private void SpawnParticlesOnLine(LineRenderer lr, SpawnableObjectType objectType)
@@ -444,14 +452,14 @@ public class DrawingTest : MonoBehaviour
 
             var emitParams = new ParticleSystem.EmitParams();
             emitParams.position = point;
-            emitParams.velocity = dir * dist; // <---- velocidad proporcional a distancia
+            emitParams.velocity = dir * dist *2; // <---- velocidad proporcional a distancia
 
 
             var ps = go.GetComponent<ParticleSystem>().main;
 
-            ps.startSpeed = dist; 
+            ps.startSpeed = dist * 2; 
         }
     }
-
+    
 }
 

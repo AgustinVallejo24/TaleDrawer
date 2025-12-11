@@ -4,7 +4,10 @@ public class Roca : SpawningObject
 {
     [SerializeField] SpawnableObjectType _objectsToDestroy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+    public override void Paint()
+    {
+        StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
+    }
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);

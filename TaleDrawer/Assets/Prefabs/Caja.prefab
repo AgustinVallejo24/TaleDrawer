@@ -126,6 +126,7 @@ MonoBehaviour:
   _objectMask:
     serializedVersion: 2
     m_Bits: 128
+  clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   _clickableMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -499,6 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a2065581ab7b94a9f1e2b89f368064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Paint
+  cloudParticleSystem: {fileID: 0}
   firstStripeInitialValue: 0
 --- !u!4 &6408505383317211065 stripped
 Transform:

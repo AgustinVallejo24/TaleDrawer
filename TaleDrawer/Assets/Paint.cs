@@ -5,6 +5,7 @@ public class Paint : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     SpriteRenderer _myRenderer;
+    public GameObject cloudParticleSystem;
 
     public float firstStripeInitialValue;
     void Start()
@@ -38,10 +39,11 @@ public class Paint : MonoBehaviour
 
         //_myRenderer.material.DOFloat(0f, "_ThirdStripe", 1.3f).SetUpdate(true);
         //yield return new WaitForSecondsRealtime(1.3f);
-        _myRenderer.material.DOFloat(1.4f, "_MaskValue", 1.1f).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(1.1f);
+        _myRenderer.material.DOFloat(1.4f, "_MaskValue", .7f).SetUpdate(true);
+        yield return new WaitForSecondsRealtime(.7f);
         GameManager.instance.StateChanger(SceneStates.Dragging);
 
         transform.gameObject.layer = 7;
+
     }
 }

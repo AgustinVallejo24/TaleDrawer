@@ -41,6 +41,7 @@ public class Caja : SpawningObject,IInteractable
         {
            _excludeLayers = _myColl.excludeLayers ;
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
+            newPos.y = _myCharacter.transform.position.y;
             if(_myCharacter.transform.position.x < transform.position.x)
             {
                 newPos -= Vector2.right *.6f;
@@ -50,7 +51,7 @@ public class Caja : SpawningObject,IInteractable
                 newPos += Vector2.right * .6f;
             }
             Debug.Log(newPos);
-            newPos.y = transform.position.y;
+          //  newPos.y = transform.position.y;
             _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
             _myCharacter.onMovingEnd = JumpOverBox; 
@@ -79,8 +80,9 @@ public class Caja : SpawningObject,IInteractable
             _jumpPosition = CustomTools.ToVector2(boxEvent.jumpPosition.position);
             boxE = boxEvent;
         }
-        if(_jumpPosition != Vector2.zero)
+        if (_jumpPosition != Vector2.zero)
         {
+
             if(Mathf.Abs(transform.position.x - _jumpPosition.x) > Mathf.Abs(_jumpPosition.x - touchPos.x))
             {
                 if (boxE.shouldClimb)
@@ -118,7 +120,7 @@ public class Caja : SpawningObject,IInteractable
                 {
                     _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
                     {
-
+                        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                         _myCharacter.Land();
 
                     });
@@ -132,7 +134,7 @@ public class Caja : SpawningObject,IInteractable
             {
                 _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2, () =>
                 {
-
+                 
                     _myCharacter.Land();
 
                 });

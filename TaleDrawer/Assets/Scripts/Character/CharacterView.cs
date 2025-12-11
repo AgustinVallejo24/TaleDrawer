@@ -53,6 +53,7 @@ public class CharacterView
     }
     public void FlipCharacter(int movementSign)
     {
+        _character.flipSign = movementSign;
         if(movementSign > 0)
         {
             _characterSprite.flipX = false;

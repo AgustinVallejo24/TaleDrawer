@@ -73,7 +73,12 @@ public class Character : MonoBehaviour
     [SerializeField] LayerMask _CliffMask;
     public Action climbAction;
     public Lever currentLever;
+
     public Hook currentHook;
+    public Collider2D currentMovePosObj;
+
+    public LayerMask floorLayerMask;
+    public int flipSign;
     protected virtual void Awake()
     {
 
@@ -437,7 +442,7 @@ public class Character : MonoBehaviour
                 {
                     float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
 
-
+                    nextPosition.y = currentMovePosObj.bounds.max.y + 1.3f;
 
                     if (sqrDistanceToTarget > .1f)
                     {

@@ -7,6 +7,6 @@ public class Trap : MonoBehaviour
  
     public void ShootProjectile()
     {
-        Instantiate(_projectile);
+        Instantiate(_projectile,_spawnPos.position, _projectile.transform.rotation);
     }
 }

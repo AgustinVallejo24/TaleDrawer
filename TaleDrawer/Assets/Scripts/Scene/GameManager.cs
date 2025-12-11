@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
     public float drawingThreshold;
 
+ 
+
 
     [SerializeField] SpawnableManager _spawnableManager;
     [SerializeField] ZernikeManager _zernikeManager;
@@ -64,101 +66,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-        //if(Input.touchCount > 0 && (Character.instance._currentState == CharacterStates.Idle || Character.instance._currentState == CharacterStates.Moving || Character.instance._currentState == CharacterStates.Wait))
-        //{
-        //    UnityEngine.Touch touch = Input.GetTouch(0);
-           
-        //    //if (currentState == SceneStates.Drawing)
-        //    //{
-        //    //    _dTest.Draw(Input.touchCount, touch);
-        //    //}
-        //    switch (touch.phase)
-        //    {
-        //        case UnityEngine.TouchPhase.Began:
-
-        //           if(currentState == SceneStates.Game)
-        //            {
-        //                touchPosition = touch.position;
-        //                gameTouch = true;
-        //            }
-        //            else
-        //            {
-        //                gameTouch = false;
-        //            }
-        //            break;
-
-        //        case UnityEngine.TouchPhase.Moved:
-        //            //if(currentState == SceneStates.Game && Vector2.Distance(touchPosition, touch.position)> drawingThreshold)
-        //            //{
-        //            //    StateChanger(SceneStates.Drawing);
-        //            //    _dTest.gameObject.SetActive(true);
-        //            //}
-        //            break;
-        //        case UnityEngine.TouchPhase.Stationary:
-
-        //            break;
-
-        //        case UnityEngine.TouchPhase.Ended:
-                   
-        //            if (currentState == SceneStates.Game && gameTouch)
-        //            {
-        //                _clickPosition = _sceneCamera.ScreenToWorldPoint(touch.position);
-        //                var interactionHit = Physics2D.OverlapCircle(_clickPosition, 1f,_interactables);
-                     
-        //                if(interactionHit != null && interactionHit.gameObject.TryGetComponent(out IInteractable interactable))
-        //                {
-        //                    interactable.InteractWithPlayer();
-        //                }
-        //                else
-        //                {
-        //                    var hit2 = Physics2D.OverlapCircle(_clickPosition, .2f, _clickable);
-                          
-        //                    if (!hit2) return;
-
-        //                    RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
-                          
-        //                    if (hit)
-        //                    {
-
-        //                        CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes.Where(x => x.isClickable == true).ToList());
-        //                        if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
-        //                        {
-        //                            Character.instance.SendInputToFSM(CharacterStates.Moving);
-                                    
-        //                            sticker.transform.position = _clickPosition;
-        //                            sticker.SetActive(true);
-        //                        }
-        //                        else
-        //                        {
-        //                            sticker.SetActive(false);
-
-        //                        }
-
-        //                    }
-        //                    else
-        //                    {
-        //                        sticker.SetActive(false);
-        //                    }
-        //                }
-
-                       
-        //            }
-
-        //            break;
-
-        //        case UnityEngine.TouchPhase.Canceled:
-        //            break;
-
-        //    }
-
-
-            
-        //}
-
-    }
+   
 
     public void OnClick(Vector2 position)
     {
@@ -183,14 +91,25 @@ public class GameManager : MonoBehaviour
 
                 if (!hit2) return;
 
-                RaycastHit2D hit = Physics2D.Raycast(_clickPosition, Vector2.down, _clickRayLength, _piso);
+                ContactFilter2D filter = new ContactFilter2D();
+                filter.SetLayerMask(_piso);   // Tu layer mask
+                filter.useTriggers = false;
 
-                if (hit)
+                RaycastHit2D[] results = new RaycastHit2D[1];
+
+                int hits = Physics2D.Raycast(_clickPosition, Vector2.down, filter, results, _clickRayLength);
+
+
+    
+                if (hits>0)
                 {
-
+                    
+                    RaycastHit2D hit = results[0];
+                    Debug.LogError(hit.collider);
                     CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes.Where(x => x.isClickable == true).ToList());
-                    if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1f)))
+                    if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1.3f)))
                     {
+                        Character.instance.currentMovePosObj = hit.collider;
                         Character.instance.SendInputToFSM(CharacterStates.Moving);
 
                         sticker.transform.position = _clickPosition;

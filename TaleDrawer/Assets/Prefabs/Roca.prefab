@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6848212615971580415}
   - component: {fileID: 1337668233349944033}
   - component: {fileID: 1421006262212829309}
-  - component: {fileID: 3094319763697518091}
   - component: {fileID: 2840643262149740278}
   - component: {fileID: 786474697652240843}
+  - component: {fileID: 8343609023112341446}
   m_Layer: 7
   m_Name: Roca
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.83, y: 2.61, z: 0}
-  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6408505383317211065}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 1410508424, guid: 6ca2cb88594918b40a4d114a572e7cba, type: 3}
   m_Color: {r: 0.6415094, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Roca
   sceneCamera: {fileID: 0}
   myType: 8
-  _myColl: {fileID: 3094319763697518091}
+  _myColl: {fileID: 0}
   objectIsTrigger: 0
   _myrb: {fileID: 2840643262149740278}
   objectUseGravity: 1
@@ -125,53 +125,8 @@ MonoBehaviour:
   _objectMask:
     serializedVersion: 2
     m_Bits: 128
+  clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   _objectsToDestroy: 17
---- !u!61 &3094319763697518091
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2359451980149846497}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 1024
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.003592968, y: 0.0036070347}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.1125529, y: 1.108144}
-  m_EdgeRadius: 0
 --- !u!50 &2840643262149740278
 Rigidbody2D:
   serializedVersion: 5
@@ -335,6 +290,61 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!60 &8343609023112341446
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359451980149846497}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.98, y: 1.85}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.17886727, y: 0.43369696}
+      - {x: -0.10106076, y: 0.38662198}
+      - {x: -0.49319005, y: -0.12033922}
+      - {x: -0.42342186, y: -0.3370073}
+      - {x: 0.09074104, y: -0.46001375}
+      - {x: 0.42827192, y: -0.3420321}
+      - {x: 0.49776646, y: -0.13577537}
+      - {x: 0.40184334, y: 0.12002671}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5605569686714251139
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +356,8 @@ GameObject:
   - component: {fileID: 6408505383317211065}
   - component: {fileID: 3377796616050356430}
   - component: {fileID: 8818772534546665188}
-  m_Layer: 0
+  - component: {fileID: 5742865774487588651}
+  m_Layer: 17
   m_Name: Piedrita
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +404,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: -876546973899608171, guid: d514791f2c233f147a0fe958ae8b79c1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -415,7 +426,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1141098130, guid: 26c5d1527f330394a9974e8ecb96c0f9, type: 3}
+  m_Sprite: {fileID: 1410508424, guid: 6ca2cb88594918b40a4d114a572e7cba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -440,7 +451,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 3377796616050356430}
   _textures:
-  - {fileID: -142260087, guid: 81675f6b6cad8594ba062af89c792620, type: 3}
-  - {fileID: 1141098130, guid: 26c5d1527f330394a9974e8ecb96c0f9, type: 3}
+  - {fileID: 1410508424, guid: 6ca2cb88594918b40a4d114a572e7cba, type: 3}
   isActive: 1
   _delay: 1
+--- !u!114 &5742865774487588651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605569686714251139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a2065581ab7b94a9f1e2b89f368064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Paint
+  cloudParticleSystem: {fileID: 0}
+  firstStripeInitialValue: 0

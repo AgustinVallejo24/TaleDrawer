@@ -29,8 +29,12 @@ public class SpawningObject : MonoBehaviour, IDeletable
     protected Character _myCharacter;
     [SerializeField]protected bool _spawned = false;
     [SerializeField] protected LayerMask _objectMask;
+
     [SerializeField] public Animator myAnim;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    public ExplosionParticle clouds;
+
     void Start()
     {
         _myCharacter = Character.instance;
@@ -66,7 +70,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     public virtual void Delete()
     {
-
+        Instantiate(clouds, transform.position, Quaternion.identity);
     }
 
     public virtual void Paint()
@@ -156,21 +160,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _mySpriteRenderer.color = _originalColor;
                 }
 
-                /*if(_currentGridP == null)
-                {
-                    var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity);
-                    _currentGridP = tuple.Item3;
-                    if (_currentGridP != null)
-                    {
-                        _currentGridP.SelectAndDeselectPoint(tuple.Item1);
-                        _pointPos = _currentGridP.transform.position;
-                    }
 
-                    if(_previousGridP != null)
-                    {
-                        _previousGridP.SelectAndDeselectPoint(false);
-                    }
-                }*/
                 if (Vector2.Distance(_currentGridP.transform.position, transform.position) > 0.7)
                 {
                     var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
@@ -239,6 +229,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                 
                 _spawned = true;
                 GameManager.instance.StateChanger(SceneStates.Game);
+                Instantiate(clouds,transform.position,Quaternion.identity);
                 _mySpriteRenderer.material.SetFloat("_NoiseValue", 0);
                 _mySpriteRenderer.color = _originalColor;
                 if (_myColl != null)
