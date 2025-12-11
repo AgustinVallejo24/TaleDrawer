@@ -8,6 +8,12 @@ public class Roca : SpawningObject
     {
         StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
     }
+
+    public override void Delete()
+    {
+        base.Delete();
+        Destroy(gameObject);
+    }
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);

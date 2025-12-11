@@ -70,6 +70,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     public virtual void Delete()
     {
+      
         Instantiate(clouds, transform.position, Quaternion.identity);
     }
 
