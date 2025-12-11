@@ -18,7 +18,6 @@ public class DrawingTest : MonoBehaviour
 
     public Camera cam;
     private List<Vector2> currentPoints = new List<Vector2>(); 
-    private List<Vector2> currentPointsCentroid = new List<Vector2>();
     private List<Vector2> currentStrokePoints = new List<Vector2>();
     public bool isDrawing = false;
 
@@ -37,6 +36,8 @@ public class DrawingTest : MonoBehaviour
     public Image fillImage;
 
     public Vector2 currentCentroid;
+
+    public GameObject spawnParticleSystem;
     private void Start()
     {
         //cam = Camera.main;
@@ -75,7 +76,7 @@ public class DrawingTest : MonoBehaviour
             if (currentPoints.Count == 0 || Vector2.Distance(currentPoints[^1], pos) > 0.001f)
             {
                 AddSmoothedPoint(pos);
-                currentPointsCentroid.Add(Camera.main.ScreenToWorldPoint(position));
+         
 
             }
 
@@ -253,7 +254,7 @@ public class DrawingTest : MonoBehaviour
 
         if (currentPoints.Any())
         {
-            currentCentroid = CalcularCentroGeometrico(currentPointsCentroid);
+            currentCentroid = CalcularCentroGeometrico(currentPoints);
             var normalizedPositions = DrawNormalizer.Normalize(currentPoints);
             for (int i = 0; i < _strokesPointsCount.Count; i++)
             {
@@ -275,16 +276,7 @@ public class DrawingTest : MonoBehaviour
             {
                 item.Clear();
             }
-            _linerendererIndex = 0;
-            _lineRenderers[0].positionCount = 0;
-            var count = _lineRenderers.Count;
-            for (int i = 1; i < count; i++)
-            {
-                Destroy(_lineRenderers[1].gameObject);
-                _lineRenderers.RemoveAt(1);
-            }
 
-            currentLR = _lineRenderers[0];
         }
         else
         {
@@ -337,98 +329,21 @@ public class DrawingTest : MonoBehaviour
         // 3. El centro es el punto medio entre min y max.
         // Vector3.Lerp(a, b, 0.5f) también es una forma limpia de hacer esto.
         Vector2 centroGeometrico = (minBounds + maxBounds) / 2f;
-        DebuggearBoundingBox(minBounds, maxBounds, 0f);
         return centroGeometrico;
     }
 
-    public void DebuggearBoundingBox(Vector2 minBounds, Vector2 maxBounds, float zAltura = 0f)
+    public void ResetLineRenderers()
     {
-        // Convertir los límites 2D a esquinas 3D para dibujar
-        Vector3 cornerA = new Vector3(minBounds.x, minBounds.y, zAltura); // Abajo-Izquierda
-        Vector3 cornerB = new Vector3(maxBounds.x, minBounds.y, zAltura); // Abajo-Derecha
-        Vector3 cornerC = new Vector3(maxBounds.x, maxBounds.y, zAltura); // Arriba-Derecha
-        Vector3 cornerD = new Vector3(minBounds.x, maxBounds.y, zAltura); // Arriba-Izquierda
-
-        // Dibujar las 4 líneas del rectángulo
-
-        // Línea 1: Abajo-Izquierda (A) a Abajo-Derecha (B)
-        Debug.DrawLine(cornerA, cornerB, Color.yellow, 3f, false);
-
-        // Línea 2: Abajo-Derecha (B) a Arriba-Derecha (C)
-        Debug.DrawLine(cornerB, cornerC, Color.yellow, 3f, false);
-
-        // Línea 3: Arriba-Derecha (C) a Arriba-Izquierda (D)
-        Debug.DrawLine(cornerC, cornerD, Color.yellow, 3f, false);
-
-        // Línea 4: Arriba-Izquierda (D) a Abajo-Izquierda (A)
-        Debug.DrawLine(cornerD, cornerA, Color.yellow, 3f, false);
-
-        // Opcional: Dibujar el Centroide Calculado (el centro del cuadrado)
-        Vector2 centro = (minBounds + maxBounds) / 2f;
-        Vector3 centro3D = new Vector3(centro.x, centro.y, zAltura);
-
-        // Dibujar una "cruz" en el centroide
-        Debug.DrawLine(centro3D - Vector3.right * 0.1f, centro3D + Vector3.right * 0.1f, Color.red, 0f, false);
-        Debug.DrawLine(centro3D - Vector3.up * 0.1f, centro3D + Vector3.up * 0.1f, Color.red, 0f, false);
-    }
-    Vector3 CalcularCentroBoundingBox(List<LineRenderer> lineas)
-    {
-        bool any = false;
-        float minX = float.PositiveInfinity, minY = float.PositiveInfinity, minZ = float.PositiveInfinity;
-        float maxX = float.NegativeInfinity, maxY = float.NegativeInfinity, maxZ = float.NegativeInfinity;
-
-        foreach (var lr in lineas)
+        _linerendererIndex = 0;
+        _lineRenderers[0].positionCount = 0;
+        var count = _lineRenderers.Count;
+        for (int i = 1; i < count; i++)
         {
-            if (lr == null) continue;
-            int n = lr.positionCount;
-            if (n == 0) continue;
-
-            Vector3[] pts = new Vector3[n];
-            lr.GetPositions(pts);
-            for (int i = 0; i < n; i++)
-            {
-                Vector3 p = lr.useWorldSpace ? pts[i] : lr.transform.TransformPoint(pts[i]);
-                any = true;
-                if (p.x < minX) minX = p.x;
-                if (p.y < minY) minY = p.y;
-                if (p.z < minZ) minZ = p.z;
-                if (p.x > maxX) maxX = p.x;
-                if (p.y > maxY) maxY = p.y;
-                if (p.z > maxZ) maxZ = p.z;
-            }
+            Destroy(_lineRenderers[1].gameObject);
+            _lineRenderers.RemoveAt(1);
         }
 
-        if (!any) return Vector3.zero;
-        return new Vector3((minX + maxX) / 2f, (minY + maxY) / 2f, (minZ + maxZ) / 2f);
-    }
-
-    public  Vector3 CentroPonderadoPorLongitud(List<LineRenderer> lineRenderers)
-    {
-        Vector3 sumMidTimesLen = Vector3.zero;
-        float totalLen = 0f;
-
-        foreach (var lr in lineRenderers)
-        {
-            if (lr == null) continue;
-            int n = lr.positionCount;
-            if (n < 2) continue;
-
-            Vector3[] pts = new Vector3[n];
-            lr.GetPositions(pts);
-            for (int i = 0; i < n - 1; i++)
-            {
-                Vector3 p0 = lr.useWorldSpace ? pts[i] : lr.transform.TransformPoint(pts[i]);
-                Vector3 p1 = lr.useWorldSpace ? pts[i + 1] : lr.transform.TransformPoint(pts[i + 1]);
-                float segLen = Vector3.Distance(p0, p1);
-                if (segLen <= 0f) continue;
-                Vector3 mid = (p0 + p1) * 0.5f;
-                sumMidTimesLen += mid * segLen;
-                totalLen += segLen;
-            }
-        }
-
-        if (totalLen == 0f) return Vector3.zero;
-        return sumMidTimesLen / totalLen;
+        currentLR = _lineRenderers[0];
     }
     public void ClearAllLineRenderers(bool clearRenderDraw)
     {
@@ -459,5 +374,82 @@ public class DrawingTest : MonoBehaviour
 
 
     }
+    public void StartDissolve(SpawnableObjectType objectType)
+    {
+        StartCoroutine(DissolveLines(objectType));
+    }
+
+    private IEnumerator DissolveLines(SpawnableObjectType objectType)
+    {
+        float time = 0f;
+
+        // Instanciar materiales
+        List<Material> materials = new List<Material>();
+        foreach (var lr in _lineRenderers)
+        {
+            if(lr.positionCount > 5) 
+            {
+                materials.Add(lr.material);
+                SpawnParticlesOnLine(lr, objectType);
+            }
+
+        }
+
+        while (time < 1)
+        {
+            float t = 1 - time / 1;
+
+            foreach (var mat in materials)
+                mat.SetFloat("_NoiseStrenght", t);
+
+            time += Time.unscaledDeltaTime; 
+            yield return null;
+        }
+
+        foreach (var mat in materials)
+            mat.SetFloat("_NoiseStrenght", 0f);
+
+        yield return new WaitForSecondsRealtime(.1f);
+        ResetLineRenderers();
+        GameManager.instance.SpawnObject(objectType);
+    }
+
+    private void SpawnParticlesOnLine(LineRenderer lr, SpawnableObjectType objectType)
+    {
+        int count = lr.positionCount;
+        if (count < 2)
+            return;
+
+    
+        Vector3 centroid = CalcularCentroGeometrico(currentPoints);
+
+        // ---- Spawn de partículas ----
+        for (int i = 0; i < 20; i++)
+        {
+            float t = (float)i / (20 - 1);
+            Vector3 point = lr.GetPosition(i*count/20);
+            Vector3 rawDir = (centroid - point);
+
+           // Dirección hacia el centroide
+            Vector3 dir = (centroid - point).normalized;
+
+            // Instanciar la partícula (prefab debe contener ParticleSystem)
+            GameObject go = Instantiate(spawnParticleSystem, point, Quaternion.identity);
+            // rotación: forward = projDir, up = plane normal (así queda orientado en el plano)
+            go.transform.rotation = Quaternion.LookRotation(rawDir);
+
+            float dist = Vector2.Distance(centroid, point);
+
+            var emitParams = new ParticleSystem.EmitParams();
+            emitParams.position = point;
+            emitParams.velocity = dir * dist; // <---- velocidad proporcional a distancia
+
+
+            var ps = go.GetComponent<ParticleSystem>().main;
+
+            ps.startSpeed = dist; 
+        }
+    }
 
 }
+

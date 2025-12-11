@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         _playerCFollowC = _playerCamera.GetComponent<CinemachineFollow>();
         _clickRayLength = levelCharacter.transform.localScale.y * 2;
-        _zernikeManager.recognitionAction = SpawnObject;
+        _zernikeManager.recognitionAction = _dTest.StartDissolve;
 
     }
 
@@ -215,9 +215,13 @@ public class GameManager : MonoBehaviour
 
     public void SpawnObject(SpawnableObjectType objectType)
     {
-        GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
+          GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
 
-        StateChanger(SceneStates.Dragging);
+
+
+          newObj.GetComponent<SpawningObject>().Paint();
+
+        // StateChanger(SceneStates.Dragging);
       
     }
     public void ChangeToDrawingState()
@@ -274,6 +278,7 @@ public class GameManager : MonoBehaviour
     void ExitingDrawingState()
     {
         _blurEffect.SetActive(false);
+        _dTest.ResetLineRenderers();
         //_drawingDraggingCanvas.SetActive(false);        
         //_drawingBackground.SetActive(false);
 

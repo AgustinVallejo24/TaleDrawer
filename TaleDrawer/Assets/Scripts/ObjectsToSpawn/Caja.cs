@@ -30,6 +30,10 @@ public class Caja : SpawningObject,IInteractable
         
     }
 
+    public override void Paint()
+    {
+        StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
+    }
     public void InteractWithPlayer()
     {
      

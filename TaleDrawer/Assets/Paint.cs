@@ -5,10 +5,15 @@ public class Paint : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     SpriteRenderer _myRenderer;
+
+    public float firstStripeInitialValue;
     void Start()
     {
-        _myRenderer = GetComponent<SpriteRenderer>();
-        StartCoroutine(PaintSprite());
+        //_myRenderer = GetComponent<SpriteRenderer>();
+        //Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        //Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        //_myRenderer.material.SetTexture("_MainTex", tex);
+        //StartCoroutine(PaintSprite());
     }
 
     // Update is called once per frame
@@ -19,11 +24,24 @@ public class Paint : MonoBehaviour
 
     public IEnumerator PaintSprite()
     {
+        _myRenderer = GetComponent<SpriteRenderer>();
+        Sprite sprite = _myRenderer.sprite;
 
-        _myRenderer.material.DOFloat(.6f, "_FirstStripe", 1.3f);
-        yield return new WaitForSeconds(1f);
-        _myRenderer.material.DOFloat(-.5f, "_SecondStripe", 1.3f);
-        yield return new WaitForSeconds(1.3f);
-        _myRenderer.material.DOFloat(0, "_ThirdStripe", 1.3f);
+        Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        _myRenderer.material.SetTexture("_MainTex", tex);
+
+        //_myRenderer.material.DOFloat(.6f, "_FirstStripe", 1.3f).SetUpdate(true);
+        //yield return new WaitForSecondsRealtime(1f);
+
+        //_myRenderer.material.DOFloat(-.5f, "_SecondStripe", 1.3f).SetUpdate(true);
+        //yield return new WaitForSecondsRealtime(1.3f);
+
+        //_myRenderer.material.DOFloat(0f, "_ThirdStripe", 1.3f).SetUpdate(true);
+        //yield return new WaitForSecondsRealtime(1.3f);
+        _myRenderer.material.DOFloat(1.4f, "_MaskValue", 1.1f).SetUpdate(true);
+        yield return new WaitForSecondsRealtime(1.1f);
+        GameManager.instance.StateChanger(SceneStates.Dragging);
+
+        transform.gameObject.layer = 7;
     }
 }

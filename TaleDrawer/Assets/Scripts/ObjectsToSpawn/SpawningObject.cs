@@ -68,6 +68,11 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     }
 
+    public virtual void Paint()
+    {
+       GameManager.instance.StateChanger(SceneStates.Dragging);
+    }
+
     public void OnBeginDrag()
     {
         if(GameManager.instance.currentState == SceneStates.Dragging && !_spawned)
@@ -233,6 +238,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                 
                 _spawned = true;
                 GameManager.instance.StateChanger(SceneStates.Game);
+                _mySpriteRenderer.material.SetFloat("_NoiseValue", 0);
                 _mySpriteRenderer.color = _originalColor;
                 if (_myColl != null)
                 {

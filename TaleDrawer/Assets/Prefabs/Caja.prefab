@@ -386,6 +386,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 6848212615971580415}
     m_Modifications:
     - target: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -865313835, guid: 3d87110b89aa58d498b6558dff8df5bb, type: 3}
+    - target: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
@@ -396,10 +400,22 @@ PrefabInstance:
     - target: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: -876546973899608171, guid: d514791f2c233f147a0fe958ae8b79c1, type: 3}
+    - target: {fileID: 5532116869280103170, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      propertyPath: _textures.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532116869280103170, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      propertyPath: '_textures.Array.data[0]'
+      value: 
+      objectReference: {fileID: -865313835, guid: 3d87110b89aa58d498b6558dff8df5bb, type: 3}
     - target: {fileID: 8069003938951658806, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
       propertyPath: m_Name
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 8069003938951658806, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8853991155800542476, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
       propertyPath: m_LocalScale.x
@@ -456,13 +472,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8069003938951658806, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2609408433827142045}
   m_SourcePrefab: {fileID: 100100000, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
 --- !u!212 &3377796616050356430 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 923378226419382907, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
   m_PrefabInstance: {fileID: 2463512680086637237}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5605569686714251139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8069003938951658806, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
+  m_PrefabInstance: {fileID: 2463512680086637237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2609408433827142045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605569686714251139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a2065581ab7b94a9f1e2b89f368064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Paint
+  firstStripeInitialValue: 0
 --- !u!4 &6408505383317211065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8853991155800542476, guid: 67303dd258cde8e4982cb8dba88111cf, type: 3}
