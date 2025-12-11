@@ -4,6 +4,7 @@ public class Robin : Character
 {
     public Sequence currentTween;
     public Subibaja subibaja;
+    
     protected override void Awake()
     {
         characterModel = new CharacterModel(this, characterRigidbody);

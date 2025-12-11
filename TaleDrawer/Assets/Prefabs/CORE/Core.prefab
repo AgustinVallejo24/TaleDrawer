@@ -933,6 +933,7 @@ MonoBehaviour:
   zRecognizer: {fileID: 3441223574253749270}
   cam: {fileID: 5778659055715900441}
   isDrawing: 0
+  currentLR: {fileID: 0}
   _uiMask:
     serializedVersion: 2
     m_Bits: 247
@@ -941,6 +942,7 @@ MonoBehaviour:
   recognitionTime: 10
   fillImage: {fileID: 2105568729051889942}
   currentCentroid: {x: 0, y: 0}
+  spawnParticleSystem: {fileID: 1067365246810025147, guid: 00f04c3c527f6c347a310d2cbff6d8ae, type: 3}
 --- !u!1 &2566015974520559922
 GameObject:
   m_ObjectHideFlags: 0

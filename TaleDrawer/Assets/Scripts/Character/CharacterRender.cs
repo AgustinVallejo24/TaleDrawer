@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 public class CharacterRender : MonoBehaviour
 {
     [SerializeField] Character _character;
@@ -54,14 +55,19 @@ public class CharacterRender : MonoBehaviour
         StartCoroutine(IExitRope());
     }
 
+    public void CurrentRopeAnimationStatus(int value)
+    {
+        _character.currentHook.RopeAnimationManager(value);
+    }
+
     private IEnumerator IExitRope()
     {
-        _character.transform.position = transform.position;
-        transform.position = _character.transform.position;
-        _character.transform.position = _character._currentPath.First().transform.position;
+        _character.transform.position = _character.currentHook.rope.upperPoint.position;
+        transform.position = _character.transform.position;        
 
         yield return new WaitForSeconds(0.2f);
 
         _character.SendInputToFSM(CharacterStates.Moving);
+        _character.currentHook = null;
     }
 }

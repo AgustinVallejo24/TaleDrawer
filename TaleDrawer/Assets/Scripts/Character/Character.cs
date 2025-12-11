@@ -73,6 +73,7 @@ public class Character : MonoBehaviour
     [SerializeField] LayerMask _CliffMask;
     public Action climbAction;
     public Lever currentLever;
+    public Hook currentHook;
     protected virtual void Awake()
     {
 
@@ -114,7 +115,7 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
+            .SetTransition(CharacterStates.OnRope, OnRope)
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
@@ -135,10 +136,10 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(OnRope)
-           .SetTransition(CharacterStates.Jumping, Jumping).Done();
-        StateConfigurer.Create(JumpingToRope)
-           .SetTransition(CharacterStates.Moving, Moving)
-           .SetTransition(CharacterStates.OnRope, OnRope).Done();
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Stop, Stop)
+            .SetTransition(CharacterStates.Idle, Idle).Done();                   
         StateConfigurer.Create(Climb)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
@@ -553,7 +554,7 @@ public class Character : MonoBehaviour
         {
 
             _currentState = CharacterStates.OnRope;
-            characterView.OnRopeClimbing();
+            
 
         };
 

@@ -10,9 +10,7 @@ public class CharacterView
     private string _runTrigger = "Run";
     private string _idleTrigger = "Idle";
     private string _jumpTrigger = "Jump";
-    private string _landTrigger = "Land";
-    private string _jumpToRopeTrigger = "JumpToRope";
-    private string _climbRopeTrigger = "ClimbRope";
+    private string _landTrigger = "Land";    
     private string _idleClimbTrigger = "IdleClimb";
     private string _ropeEventTrigger = "RopeEventMovement";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
@@ -71,19 +69,7 @@ public class CharacterView
         _anim.SetTrigger(_jumpTrigger); 
         _character.StartCoroutine(CustomResetTrigger(_jumpTrigger));
         
-    }
-
-    public void OnJumpingToRope()
-    {
-        _anim.SetTrigger(_jumpToRopeTrigger);
-        //_character.StartCoroutine(CustomResetTrigger(_jumpToRopeTrigger));
-    }
-
-    public void OnRopeClimbing()
-    {
-        _anim.SetTrigger(_climbRopeTrigger);
-        _character.StartCoroutine(CustomResetTrigger(_climbRopeTrigger));
-    }
+    }    
 
     public void OnRopeEventMovement()
     {

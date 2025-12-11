@@ -29,6 +29,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
     protected Character _myCharacter;
     [SerializeField]protected bool _spawned = false;
     [SerializeField] protected LayerMask _objectMask;
+    [SerializeField] public Animator myAnim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
