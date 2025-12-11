@@ -23,7 +23,7 @@ public class DrawingTest : MonoBehaviour
 
     private List<LineRenderer> _lineRenderers = new List<LineRenderer>(0);
     private List<LineRenderer> _renderTexturelineRenderers = new List<LineRenderer>(0);
-    private LineRenderer currentLR;
+    public LineRenderer currentLR;
     List<List<Vector2>> listaDeListas = new List<List<Vector2>>();
     private int _linerendererIndex;
     private List<int> _strokesPointsCount = new List<int>();
@@ -68,7 +68,7 @@ public class DrawingTest : MonoBehaviour
     }
     public void OnDraw(Vector2 position)
     {
-        // Debug.Log("TOCOBOTON");
+         Debug.Log("TOCOBOTON");
 
         if (isDrawing)
         {
@@ -344,6 +344,8 @@ public class DrawingTest : MonoBehaviour
         }
 
         currentLR = _lineRenderers[0];
+
+        currentLR.material.SetFloat("_NoiseStrenght", 1);
     }
     public void ClearAllLineRenderers(bool clearRenderDraw)
     {
@@ -421,7 +423,7 @@ public class DrawingTest : MonoBehaviour
             return;
 
     
-        Vector3 centroid = CalcularCentroGeometrico(currentPoints);
+        Vector3 centroid = currentCentroid;
 
         // ---- Spawn de partículas ----
         for (int i = 0; i < 20; i++)
