@@ -44,11 +44,11 @@ public class Caja : SpawningObject,IInteractable
             newPos.y = _myCharacter.transform.position.y;
             if(_myCharacter.transform.position.x < transform.position.x)
             {
-                newPos -= Vector2.right *.6f;
+                newPos -= Vector2.right *.8f;
             }
             else
             {
-                newPos += Vector2.right * .6f;
+                newPos += Vector2.right * .8f;
             }
             Debug.Log(newPos);
           //  newPos.y = transform.position.y;
@@ -60,6 +60,12 @@ public class Caja : SpawningObject,IInteractable
 
     public void JumpOverBox()
     {
+        float sign = Mathf.Sign(_myCharacter.transform.position.x - transform.position.x);
+        if (_myCharacter.flipSign == sign)
+        {
+            _myCharacter.characterView.FlipCharacter(Mathf.RoundToInt(-sign));
+
+        }
         _myCharacter.onMovingEnd = null;
         _myCharacter.currentInteractable = this;
    //     _myColl.excludeLayers = default;

@@ -63,7 +63,7 @@ public class CharacterRender : MonoBehaviour
     private IEnumerator IExitRope()
     {
         _character.transform.position = _character.currentHook.rope.upperPoint.position;
-        transform.position = _character.transform.position;        
+        transform.position = new Vector3(0, 0, 0);
 
         yield return new WaitForSeconds(0.2f);
 

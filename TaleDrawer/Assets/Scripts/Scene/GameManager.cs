@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
 
             if (interactionHit != null && interactionHit.gameObject.TryGetComponent(out IInteractable interactable))
             {
+                Character.instance.currentMovePosObj = null;
                 interactable.InteractWithPlayer();
             }
             else

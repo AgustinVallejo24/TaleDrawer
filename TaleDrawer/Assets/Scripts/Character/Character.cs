@@ -442,7 +442,11 @@ public class Character : MonoBehaviour
                 {
                     float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
 
-                    nextPosition.y = currentMovePosObj.bounds.max.y + 1.3f;
+                    if (currentMovePosObj) 
+                    {
+                        nextPosition.y = currentMovePosObj.bounds.max.y + 1.3f;
+                    }
+                   
 
                     if (sqrDistanceToTarget > .1f)
                     {

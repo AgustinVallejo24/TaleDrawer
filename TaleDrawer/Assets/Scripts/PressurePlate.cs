@@ -46,4 +46,19 @@ public class PressurePlate : MonoBehaviour
         }
 
     }
+
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (_currentObjects.Contains(collision.gameObject))
+    //    {
+    //        _currentObjects.Remove(collision.gameObject);
+    //        if (_currentObjects.Count == 0)
+    //        {
+
+    //            _animator.SetTrigger("Release");
+    //        }
+
+    //    }
+
+    //}
 }
