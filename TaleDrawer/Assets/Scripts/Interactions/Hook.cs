@@ -157,7 +157,7 @@ public class Hook : MonoBehaviour, IInteractable
 
     public void ExitingHorizontalRope(Transform characterRender)
     {
-        Debug.LogError("Doble?");
+        
         if (_fromRight)
         {
             _character.transform.position = _beforeRopeLeftPos.position;
