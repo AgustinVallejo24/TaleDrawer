@@ -455,7 +455,7 @@ public class Character : MonoBehaviour
                     }
                    
 
-                    if (sqrDistanceToTarget > .1f)
+                    if (sqrDistanceToTarget > .005f)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
                         characterModel.Move(nextPosition, _smoothSpeed);
@@ -886,6 +886,10 @@ public class Character : MonoBehaviour
             && _currentPath.SkipLast(1).Last().neighbours.Where(x => x.node == _currentPath.Last()).Last().nodeEvent.GetPersistentEventCount() == 0)
         {
             _currentPath = _currentPath.SkipLast(1).ToList();
+            if (Physics2D.Raycast(goal.transform.position, (nextPos - CustomTools.ToVector2(goal.transform.position)).normalized, Vector2.Distance(CustomTools.ToVector2(goal.transform.position), nextPos), _obstacleLayerMask))
+            {
+                return false;
+            }
         }
         if (_currentPath.Any())
         {
@@ -893,6 +897,7 @@ public class Character : MonoBehaviour
         }
         else
         {
+            Debug.LogError("NOHAYPATH");
             return false;
         }
     }

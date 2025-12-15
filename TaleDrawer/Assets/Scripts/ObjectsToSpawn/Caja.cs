@@ -10,6 +10,7 @@ public class Caja : SpawningObject,IInteractable
     [SerializeField] LayerMask _eventMask;
     [SerializeField] LayerMask _excludeLayers;
     [SerializeField] Vector2 _jumpPosition;
+    [SerializeField] LayerMask _clickable;
     private void OnDestroy()
     {
         interactableDelegate?.Invoke(-weight,gameObject);
@@ -42,13 +43,31 @@ public class Caja : SpawningObject,IInteractable
            _excludeLayers = _myColl.excludeLayers ;
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
             newPos.y = _myCharacter.transform.position.y;
+            float dist = Vector3.Distance(transform.position, _myCharacter.transform.position);
+            Debug.Log("La distancia con la caja es: " + dist);
             if(_myCharacter.transform.position.x < transform.position.x)
             {
-                newPos -= Vector2.right *.8f;
+                if(dist < 1f)
+                {
+                    newPos -= Vector2.right * 1.35f;
+                }
+                else
+                {
+                    newPos -= Vector2.right * .6f;
+                }
+                
             }
             else
             {
-                newPos += Vector2.right * .8f;
+                if (dist < 1f)
+                {
+                    newPos += Vector2.right * 1.35f;
+                }
+                else
+                {
+                    newPos += Vector2.right * .6f;
+                }
+           
             }
             Debug.Log(newPos);
           //  newPos.y = transform.position.y;
@@ -76,6 +95,8 @@ public class Caja : SpawningObject,IInteractable
     public void JumpOffBox()
     {
         Vector2 touchPos = GameManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
+        var hit2 = Physics2D.OverlapCircle(touchPos, .2f, _clickable);
+        if (hit2 == null) return;
         _myCharacter.currentInteractable = null;
         _myColl.excludeLayers = _excludeLayers;
         var eventObj = Physics2D.OverlapBox(transform.position,new Vector2(2,2),0,_eventMask);

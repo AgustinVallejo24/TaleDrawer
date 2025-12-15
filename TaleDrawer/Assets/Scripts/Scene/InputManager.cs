@@ -80,6 +80,7 @@ public class InputManager : MonoBehaviour
         startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
         startWorldPos = Input.GetTouch(0).position;
 
+
         PointerEventData data = new PointerEventData(eventSystem);
         data.position = startWorldPos;
 

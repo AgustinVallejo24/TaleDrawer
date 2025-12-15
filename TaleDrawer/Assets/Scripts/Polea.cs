@@ -71,6 +71,14 @@ public class Polea : MonoBehaviour, IInteractable
                     foreach (var node in item.nodes)
                     {
                         platformNode.SetCanDoEvent(node, false);
+
+                    }
+                }
+                else
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        node.SetCanDoEvent(platformNode, true);
                     }
                 }
             }
@@ -81,7 +89,7 @@ public class Polea : MonoBehaviour, IInteractable
                     foreach (var node in item.nodes)
                     {
                         platformNode.SetCanDoEvent(node, true);
-
+                        node.SetCanDoEvent(platformNode, true);
                     }
                 }
                 else if(item.section == "High")
@@ -106,9 +114,18 @@ public class Polea : MonoBehaviour, IInteractable
                     foreach (var node in item.nodes)
                     {
                         platformNode.SetCanDoEvent(node, true);
+                        node.SetCanDoEvent(platformNode, true);
                     }
                 }
-                else if (item.section == "Middle" || item.section == "Low")
+                else if (item.section == "Middle")
+                {
+                    foreach (var node in item.nodes)
+                    {
+                        platformNode.SetCanDoEvent(node, true);
+                        node.SetCanDoEvent(platformNode, false);
+                    }
+                }
+                else if (item.section == "Low")
                 {
                     foreach (var node in item.nodes)
                     {

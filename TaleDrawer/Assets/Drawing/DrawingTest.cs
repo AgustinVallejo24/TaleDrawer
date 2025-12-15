@@ -39,6 +39,13 @@ public class DrawingTest : MonoBehaviour
 
     public GameObject spawnParticleSystem;
     public GameObject cloudParticleSystem;
+
+    public AudioClip beginDrawClip;
+    public AudioClip loopDrawClip;
+    public AudioClip endDrawClip;
+
+    public AudioSource audioSource;
+
     private void Start()
     {
         //cam = Camera.main;
@@ -77,7 +84,7 @@ public class DrawingTest : MonoBehaviour
             if (currentPoints.Count == 0 || Vector2.Distance(currentPoints[^1], pos) > 0.001f)
             {
                 AddSmoothedPoint(pos);
-         
+
 
             }
 
@@ -90,10 +97,25 @@ public class DrawingTest : MonoBehaviour
                 return;
             }
 
+            float margen = 200f;
+
+            bool cercaIzquierda = position.x < margen;
+            bool cercaDerecha = position.x > Screen.width - margen;
+            bool cercaAbajo = position.y < margen;
+            bool cercaArriba = position.y > Screen.height - margen;
+
+            if (cercaIzquierda || cercaDerecha || cercaArriba || cercaAbajo)
+            {
+                return;
+            }
+
             startTimer = false;
             timer = 0;
             fillImage.fillAmount = 0;
 
+            //audioSource.loop = true;
+            audioSource.clip = loopDrawClip;
+            audioSource.Play();
 
             startDrawing = true;
             if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
@@ -111,6 +133,11 @@ public class DrawingTest : MonoBehaviour
             isDrawing = false;
             startDrawing = false;
             startTimer = true;
+
+            //   audioSource.loop = false;
+            //audioSource.clip = endDrawClip;
+            //audioSource.Play();
+            audioSource.Stop();
 
             if (_linerendererIndex >= _lineRenderers.Count) return;
 
@@ -153,7 +180,16 @@ public class DrawingTest : MonoBehaviour
     }
 
 
-
+    public IEnumerator PlaySound()
+    {
+        audioSource.loop = false;
+        audioSource.clip = beginDrawClip;
+        audioSource.Play();
+        yield return new WaitForSecondsRealtime(.2f);
+        audioSource.loop = true;
+        audioSource.clip = loopDrawClip;
+        audioSource.Play();
+    }
     void AddSmoothedPoint(Vector3 newPoint)
     {
         currentStrokePoints.Add(newPoint);

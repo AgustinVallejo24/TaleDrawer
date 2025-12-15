@@ -19,9 +19,10 @@ public static class ReferenceSymbolStorage
     private static readonly string FILENAME = "symbols.json";
     private const string FILENAME_NO_EXTENSION = "symbols";
 
+#if UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void SyncFilesystem();
-
+#endif
     private static string GetFilePath()
     {
         string directoryPath = Application.dataPath + "/Resources";

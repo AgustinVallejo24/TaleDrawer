@@ -65,17 +65,17 @@ public class CharacterModel
     {
         Vector2 currentPosition = _myRigidbody.position; // Usar Rigidbody.position para f�sica
         Vector2 direction = new Vector2(objective.x,_myCharacter.transform.position.y) - currentPosition;
-        float distance = direction.magnitude;
-        float stopThreshold = 0.1f; // Distancia m�nima para considerar que ya llegamos
+       // float distance = direction.magnitude;
+      //  float stopThreshold = 0.1f; // Distancia m�nima para considerar que ya llegamos
 
-        if (distance <= stopThreshold)
-        {
+        //if (distance <= stopThreshold)
+        //{
 
-            Debug.LogError("LACONCHA");
-            // Si estamos cerca, detenemos el personaje inmediatamente y salimos.
-            _myRigidbody.linearVelocity = Vector2.zero;
-            return;
-        }
+        //    Debug.LogError("LACONCHA");
+        //    // Si estamos cerca, detenemos el personaje inmediatamente y salimos.
+        //    _myRigidbody.linearVelocity = Vector2.zero;
+        //    return;
+        //}
 
         // Calcular la velocidad objetivo (sin Time.deltaTime)
         // Usar la distancia para escalar la velocidad si estamos en la zona de frenado
