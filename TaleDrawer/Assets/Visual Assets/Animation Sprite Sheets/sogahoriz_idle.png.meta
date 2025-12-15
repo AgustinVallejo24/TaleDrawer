@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 13eb0cbb50b80be43bbe3c14fdac6951
+guid: edcb81890a9f56746b5ec4facef7dd34
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,14 +110,14 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sogaswing_horiz_0
+      name: sogahoriz_idle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 1126
         height: 896
-      alignment: 9
+      alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -125,21 +125,21 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31de62d3c4313084cbb52772a8534247
-      internalID: 1022700781
+      spriteID: 26836183f37be5340803cf7f08e76740
+      internalID: -742672371
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sogaswing_horiz_1
+      name: sogahoriz_idle_1
       rect:
         serializedVersion: 2
         x: 1126
         y: 0
         width: 1126
         height: 896
-      alignment: 9
+      alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -147,118 +147,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f75c3215d1449194f8d3f28692f3cb92
-      internalID: -911971476
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sogaswing_horiz_2
-      rect:
-        serializedVersion: 2
-        x: 2252
-        y: 0
-        width: 1126
-        height: 896
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ee71aedcbb002441b82b0c8e92f2c16
-      internalID: 531391650
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sogaswing_horiz_3
-      rect:
-        serializedVersion: 2
-        x: 3378
-        y: 0
-        width: 1126
-        height: 896
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 748bf0e757e3a7449a4a3545ee81ca32
-      internalID: 1766397789
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sogaswing_horiz_4
-      rect:
-        serializedVersion: 2
-        x: 4504
-        y: 0
-        width: 1126
-        height: 896
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da50897751f75cd49aa64f79ed41fd7b
-      internalID: -1283767009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sogaswing_horiz_5
-      rect:
-        serializedVersion: 2
-        x: 5630
-        y: 0
-        width: 1126
-        height: 896
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97656099697cd9446bde47d372c338d0
-      internalID: 979578250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sogaswing_horiz_6
-      rect:
-        serializedVersion: 2
-        x: 6756
-        y: 0
-        width: 1126
-        height: 896
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bbd38a90fb90a4b4d82e0f5c7cb64b62
-      internalID: -1857544658
+      spriteID: 177379be62472df4d978e938bcab2c87
+      internalID: -1631198063
       vertices: []
       indices: 
       edges: []
@@ -267,7 +157,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0f449c3151277de4fbbefe0f4aaf45c5
+    spriteID: 1eaaee5245c4f0049877b8bd430850ce
     internalID: 0
     vertices: []
     indices: 
@@ -277,15 +167,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":7.0,"y":1.0},"gridSpriteSize":{"x":1126.0,"y":896.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":1126.0,"y":896.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      sogaswing_horiz_0: 1022700781
-      sogaswing_horiz_1: -911971476
-      sogaswing_horiz_2: 531391650
-      sogaswing_horiz_3: 1766397789
-      sogaswing_horiz_4: -1283767009
-      sogaswing_horiz_5: 979578250
-      sogaswing_horiz_6: -1857544658
+      sogahoriz_idle_0: -742672371
+      sogahoriz_idle_1: -1631198063
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
