@@ -242,10 +242,11 @@ MonoBehaviour:
   _objectMask:
     serializedVersion: 2
     m_Bits: 0
+  myAnim: {fileID: 0}
+  clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   hook: {fileID: 0}
   upperPoint: {fileID: 263019337228935780}
   lowerPoint: {fileID: 8339835181904506021}
-  _myAnim: {fileID: 4931147994252441437}
 --- !u!61 &9021975702070772588
 BoxCollider2D:
   m_ObjectHideFlags: 0

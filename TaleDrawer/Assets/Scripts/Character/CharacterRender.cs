@@ -62,12 +62,20 @@ public class CharacterRender : MonoBehaviour
 
     private IEnumerator IExitRope()
     {
-        _character.transform.position = _character.currentHook.rope.upperPoint.position;
-        transform.position = new Vector3(0, 0, 0);
+        if(_character.currentHook.myType == RopeType.Vertical)
+        {
+            _character.transform.position = _character.currentHook.rope.firstPoint.position;
+            transform.position = new Vector3(0, 0, 0);
 
-        yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.2f);
 
-        _character.SendInputToFSM(CharacterStates.Moving);
-        _character.currentHook = null;
+            _character.SendInputToFSM(CharacterStates.Moving);
+            _character.currentHook = null;
+        }        
+    }
+
+    public void ExitingHorizontalRope()
+    {
+        _character.currentHook.ExitingHorizontalRope(transform);
     }
 }

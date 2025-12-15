@@ -3,8 +3,9 @@ using UnityEngine;
 public class Soga : SpawningObject, IInteractable
 {
     [SerializeField] Hook hook;
-    public Transform upperPoint;
-    public Transform lowerPoint;    
+    public Transform firstPoint;
+    public Transform secondPoint;
+    public RopeType myRopeType;
 
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {

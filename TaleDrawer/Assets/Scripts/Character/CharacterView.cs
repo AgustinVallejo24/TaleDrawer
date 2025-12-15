@@ -12,7 +12,10 @@ public class CharacterView
     private string _jumpTrigger = "Jump";
     private string _landTrigger = "Land";    
     private string _idleClimbTrigger = "IdleClimb";
-    private string _ropeEventTrigger = "RopeEventMovement";
+    private string _verticalRopeEventTrigger = "VerticalRopeEventMovement";
+    private string _horizontalRopeEventTrigger = "HorizontalRopeEventMovement";
+    private string _JumpingToRopeTrigger = "JumpingToRope";
+    private string _ExitingHorizontalRopeTrigger = "ExitingHorizontalRope";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -72,10 +75,25 @@ public class CharacterView
         
     }    
 
-    public void OnRopeEventMovement()
+    public void OnVerticalRopeEventMovement()
     {
-        _anim.SetTrigger(_ropeEventTrigger);
-    }    
+        _anim.SetTrigger(_verticalRopeEventTrigger);
+    } 
+    
+    public void OnHorizontalRopeMovement()
+    {
+        _anim.SetTrigger(_horizontalRopeEventTrigger);
+    }
+
+    public void OnJumpingToRope()
+    {
+        _anim.SetTrigger(_JumpingToRopeTrigger);
+    }
+
+    public void OnExitingHorizontalRope()
+    {
+        _anim.SetTrigger(_ExitingHorizontalRopeTrigger);
+    }
 
     public void OnEquippingHelmet()
     {

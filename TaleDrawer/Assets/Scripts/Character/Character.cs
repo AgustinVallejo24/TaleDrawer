@@ -99,6 +99,7 @@ public class Character : MonoBehaviour
         var Climb = new StateE<CharacterStates>("Climb");
         var EquippingHelmet = new StateE<CharacterStates>("EquippingHelmet");
         var DoingEvent = new StateE<CharacterStates>("DoingEvent");
+        var Swaying = new StateE<CharacterStates>("Swaying");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
@@ -144,6 +145,7 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Stop, Stop)
+            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
             .SetTransition(CharacterStates.Idle, Idle).Done();                   
         StateConfigurer.Create(Climb)
             .SetTransition(CharacterStates.Wait, Wait)
@@ -157,6 +159,11 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Idle, Idle).Done();
+        StateConfigurer.Create(JumpingToRope)
+            .SetTransition(CharacterStates.Swaying, Swaying)
+            .SetTransition(CharacterStates.Landing, Landing).Done();
+        StateConfigurer.Create(Swaying)
+            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
 
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
@@ -583,12 +590,8 @@ public class Character : MonoBehaviour
         #region JUMPINGTOROPE STATE
 
         JumpingToRope.OnEnter += x =>
-        {
-            characterRigidbody.gravityScale = 0;
-            
-            _currentState = CharacterStates.JumpingToRope;
-
-            characterView.OnRopeEventMovement();
+        {            
+            _currentState = CharacterStates.JumpingToRope;            
         };
 
         JumpingToRope.OnUpdate += () =>
@@ -603,7 +606,33 @@ public class Character : MonoBehaviour
 
         JumpingToRope.OnExit += x => 
         {
-            characterRigidbody.gravityScale = 1;
+            
+        };
+
+        #endregion
+
+        #region SWAYING STATE
+
+        Swaying.OnEnter += x =>
+        {
+            
+
+            _currentState = CharacterStates.Swaying;
+        };
+
+        Swaying.OnUpdate += () =>
+        {
+
+
+        };
+        Swaying.OnFixedUpdate += () =>
+        {
+
+        };
+
+        Swaying.OnExit += x =>
+        {
+            
         };
 
         #endregion
@@ -933,5 +962,6 @@ public enum CharacterStates
     Climb = 1 << 8,
     EquippingHelmet = 1 << 9,
     DoingEvent = 1 << 10,
+    Swaying = 1 << 11,
     All = ~0
 }
