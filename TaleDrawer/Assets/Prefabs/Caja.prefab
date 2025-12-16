@@ -128,9 +128,9 @@ MonoBehaviour:
     m_Bits: 128
   myAnim: {fileID: 0}
   clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
-  _clickableMask:
+  _spMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 128
   _playerPos: {fileID: 7008313088280711969}
   _eventMask:
     serializedVersion: 2
@@ -142,6 +142,7 @@ MonoBehaviour:
   _clickable:
     serializedVersion: 2
     m_Bits: 4096
+  canInteract: 1
 --- !u!61 &3094319763697518091
 BoxCollider2D:
   m_ObjectHideFlags: 0

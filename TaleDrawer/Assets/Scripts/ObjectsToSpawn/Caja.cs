@@ -5,12 +5,21 @@ using System.Collections;
 public class Caja : SpawningObject,IInteractable
 {
     
-    [SerializeField] LayerMask _clickableMask;
+    [SerializeField] LayerMask _spMask;
     [SerializeField] Transform _playerPos;
     [SerializeField] LayerMask _eventMask;
     [SerializeField] LayerMask _excludeLayers;
     [SerializeField] Vector2 _jumpPosition;
     [SerializeField] LayerMask _clickable;
+
+    [SerializeField] bool canInteract = true;
+
+    public override void Start()
+    {
+        base.Start();
+        StartCoroutine(CheckSoil());
+        
+    }
     private void OnDestroy()
     {
         interactableDelegate?.Invoke(-weight,gameObject);
@@ -38,11 +47,11 @@ public class Caja : SpawningObject,IInteractable
     public void InteractWithPlayer()
     {
      
-       if(Physics2D.OverlapCircle(transform.position,transform.localScale.x, _clickableMask))
+       if(Physics2D.OverlapCircle(transform.position,transform.localScale.x, _clickable) && canInteract)
         {
            _excludeLayers = _myColl.excludeLayers ;
              Vector2 newPos = _myColl.bounds.ClosestPoint(_myCharacter.transform.position);
-            newPos.y = _myCharacter.transform.position.y;
+            newPos.y = transform.position.y;
             float dist = Vector3.Distance(transform.position, _myCharacter.transform.position);
             Debug.Log("La distancia con la caja es: " + dist);
             if(_myCharacter.transform.position.x < transform.position.x)
@@ -110,16 +119,26 @@ public class Caja : SpawningObject,IInteractable
         if (_jumpPosition != Vector2.zero)
         {
 
-            if(Mathf.Abs(transform.position.x - _jumpPosition.x) > Mathf.Abs(_jumpPosition.x - touchPos.x))
+            if(Mathf.Sign(transform.position.x - _jumpPosition.x) * Mathf.Sign(transform.position.x - touchPos.x)==1)
             {
                 if (boxE.shouldClimb)
                 {
-                    _myCharacter.characterModel.Jump(_jumpPosition, () =>
+                    _myCharacter.characterRigidbody.gravityScale = 0;
+                    _myCharacter.climbAction = () =>
                     {
-
-                        _myCharacter.SendInputToFSM(CharacterStates.Climb);
-
-                    });
+                        _myCharacter.SendInputToFSM(CharacterStates.Moving);
+                        _myCharacter.characterRigidbody.gravityScale = 1;
+                        _myCharacter.climbAction = null;
+                    };
+                    _myCharacter.characterModel.Jump(
+                        _jumpPosition,
+                        () =>
+                        {
+                            _myCharacter.SendInputToFSM(CharacterStates.Climb);
+                        },
+                        true,   // tercer parámetro: toJumpingState
+                        0.5f    // cuarto parámetro: time
+                    );
                 }
                 else
                 {
@@ -157,6 +176,7 @@ public class Caja : SpawningObject,IInteractable
         }
         else
         {
+          
             if (touchPos.x > transform.position.x)
             {
                 _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2, () =>
@@ -192,6 +212,52 @@ public class Caja : SpawningObject,IInteractable
         _myCharacter.characterView.OnIdle();
        _myCharacter.SendInputToFSM(CharacterStates.Wait);
 
+    }
+
+    IEnumerator CheckSoil()
+    {
+        Collider2D col = GetComponent<Collider2D>();
+
+        while (true)
+        {
+            yield return new WaitForSeconds(.2f);
+
+            Vector2 origin = col.bounds.center;
+
+            Vector2 downOrigin = origin;
+            downOrigin.y = col.bounds.min.y - 0.01f;
+
+            Vector2 upOrigin = origin;
+            upOrigin.y = col.bounds.max.y + 0.01f;
+
+            RaycastHit2D hitDown = Physics2D.Raycast(downOrigin, Vector2.down, 1f, _spMask);
+            RaycastHit2D hitUp = Physics2D.Raycast(upOrigin, Vector2.up, 1f, _spMask);
+
+            Debug.DrawRay(downOrigin, Vector2.down, Color.red);
+            Debug.DrawRay(upOrigin, Vector2.up, Color.blue);
+
+            bool canDown = IsValidHit(hitDown);
+            bool canUp = IsValidHit(hitUp);
+
+            canInteract = canDown && canUp;
+        }
+    }
+
+    bool IsValidHit(RaycastHit2D hit)
+    {
+        if (hit.collider == null)
+            return true;
+
+        // Ignorar triggers
+        if (hit.collider.isTrigger)
+            return true;
+
+        // Ignorar el propio objeto
+        if (hit.collider.gameObject == gameObject)
+            return true;
+
+        // Ignorar objetos del mismo tipo
+        return !hit.collider.TryGetComponent(out SpawningObject _);
     }
     public override void Delete()
     {

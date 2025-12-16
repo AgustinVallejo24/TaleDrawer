@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class Transitive_InterestPoint : InterestPoint
+public class CameraTransition : MonoBehaviour
 {
     [SerializeField] Transform _target;
     [SerializeField] CinemachineTargetGroup _cameraTarget;
@@ -11,21 +11,22 @@ public class Transitive_InterestPoint : InterestPoint
     [SerializeField] GameObject _currentZone;
     [SerializeField] GameObject _nextZone;
     [SerializeField] SpawnableManager _spawnableManager;
-    [SerializeField] GameObject _pencil; 
-    
+    [SerializeField] GameObject _pencil;
 
-    protected override void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        base.Start();
-        pointEvent.AddListener(Transition);
+        if(collision.TryGetComponent(out Character character))
+        Transition();
     }
+
 
     void Transition()
     {
         _pencil.SetActive(false);
         _nextZone.SetActive(true);
+
         _cameraTarget.Targets[0].Object = _target;
-        _spawnableManager.spawningPos = _target;
+       // _spawnableManager.spawningPos = _target;
         StartCoroutine(PostTransition());
         
     }

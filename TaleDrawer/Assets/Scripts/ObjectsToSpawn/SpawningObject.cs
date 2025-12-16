@@ -35,7 +35,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     public ExplosionParticle clouds;
 
-    void Start()
+    public virtual void Start()
     {
         _myCharacter = Character.instance;
         sceneCamera = GameManager.instance._sceneCamera;

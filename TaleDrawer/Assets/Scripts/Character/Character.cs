@@ -79,6 +79,9 @@ public class Character : MonoBehaviour
 
     public LayerMask floorLayerMask;
     public int flipSign;
+
+    public float xOffset;
+    public float yOffset;
     protected virtual void Awake()
     {
 
@@ -332,10 +335,10 @@ public class Character : MonoBehaviour
             if (_currentPath.Any())
             {
                 float sqrDistanceToTarget = (CustomTools.ToVector2(_currentPath.First().transform.position) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
+                float xDist = Mathf.Abs(_currentPath.First().transform.position.x - transform.position.x);
+                float yDist = Mathf.Abs(_currentPath.First().transform.position.y - transform.position.y);
 
-         
-
-                if (sqrDistanceToTarget > _distToNodeThreshold)
+                if (xDist > xOffset || yDist > yOffset)
                 {
 
                     characterModel.Move(_currentPath.First().transform.position, _smoothSpeed);
@@ -448,14 +451,17 @@ public class Character : MonoBehaviour
                 if (_goToNextPosition)
                 {
                     float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
+                    float xDist = Mathf.Abs(nextPosition.x - transform.position.x);
+                    float yDist = Mathf.Abs(nextPosition.y - transform.position.y);
 
                     if (currentMovePosObj) 
                     {
                         nextPosition.y = currentMovePosObj.bounds.max.y + 1.3f;
                     }
                    
+                    Debug.LogError(yDist);
 
-                    if (sqrDistanceToTarget > .005f)
+                    if (xDist > xOffset || yDist > yOffset)
                     {
                         //characterModel.Move2(nextPosition, _smoothSpeed);
                         characterModel.Move(nextPosition, _smoothSpeed);
