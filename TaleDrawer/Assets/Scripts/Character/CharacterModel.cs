@@ -20,16 +20,11 @@ public class CharacterModel
         Vector2 direction = (jumpPosition - CustomTools.ToVector2(_myCharacter.transform.position)).normalized * horizontalJumpForce + Vector2.up * verticalJumpForce;
         _myRigidbody.AddForce(direction, ForceMode2D.Impulse);
     }
-    public void Jump(Vector2 jumpPosition, Action onComplete = null, bool toJumpingState = true, float time = 1)
+    public void Jump(Vector2 jumpPosition, Action onComplete = null, bool toJumpingState = true, float time = 1, bool jumpOnAnimation = true)
     {
-        float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
+  //      float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
         _myCharacter.characterAudioSource.clip = _myCharacter.jumpSound;
         _myCharacter.characterAudioSource.Play();
-        if (toJumpingState)
-        {
-            _myCharacter.SendInputToFSM(CharacterStates.Jumping);
-        }        
-
         if (Mathf.Sign(jumpPosition.x - _myCharacter.transform.position.x) > 0)
         {
             _myCharacter.characterView.FlipCharacter(1);
@@ -38,17 +33,46 @@ public class CharacterModel
         {
             _myCharacter.characterView.FlipCharacter(-1);
         }
-        _myCharacter.transform
-            .DOJump(jumpPosition, 0.5f * distance, 1, time)
-            .SetEase(Ease.Linear)
-            .OnComplete(() =>
-            {
-            // Llamar a OnLand
-            
+        if (toJumpingState)
+        {
+            _myCharacter.SendInputToFSM(CharacterStates.Jumping);
 
-            // Ejecutar action si vino por parámetro
-            onComplete?.Invoke();
-            });
+        }
+
+        if (jumpOnAnimation)
+        {
+            _myCharacter.currentJumpingAction = onComplete;
+            _myCharacter.currentJumpingPosition = jumpPosition;
+            _myCharacter.currentJumpingTime = time;
+        }
+        else
+        {
+            float distance = Vector2.Distance(_myCharacter.transform.position, jumpPosition);
+            _myCharacter.transform
+                .DOJump(jumpPosition, 0.5f * distance, 1, time)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                {
+                    // Llamar a OnLand
+
+
+                    // Ejecutar action si vino por parámetro
+                    onComplete?.Invoke();
+                });
+        }
+
+
+        //_myCharacter.transform
+        //    .DOJump(jumpPosition, 0.5f * distance, 1, time)
+        //    .SetEase(Ease.Linear)
+        //    .OnComplete(() =>
+        //    {
+        //    // Llamar a OnLand
+
+
+        //    // Ejecutar action si vino por parámetro
+        //    onComplete?.Invoke();
+        //    });
     }
     public void Flip(Vector3 position)
     {

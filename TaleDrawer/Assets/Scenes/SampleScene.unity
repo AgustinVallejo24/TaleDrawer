@@ -1941,11 +1941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584a1c6c39cbbe844becd463dae80346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  changeDirection: 0
-  hasEvent: 1
   _target: {fileID: 592169159}
   _cameraTarget: {fileID: 1550255632}
   _playerCamera: {fileID: 1438328251}
@@ -2691,7 +2686,7 @@ Transform:
   m_GameObject: {fileID: 1047259258}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.48, y: -5.15, z: 0}
+  m_LocalPosition: {x: -3.48, y: -5.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3614,7 +3609,7 @@ MonoBehaviour:
   pointList:
   - {fileID: 1564659401}
   - {fileID: 1543809878}
-  - {fileID: 644823504}
+  - {fileID: 0}
   - {fileID: 852831087}
   sceneCamera: {fileID: 330585545}
   _lookAtNode: {fileID: 0}
@@ -3631,6 +3626,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   flipSign: 0
+  xOffset: 0.1
+  yOffset: 2
+  currentJumpingTime: 0
+  currentJumpingPosition: {x: 0, y: 0}
   subibaja: {fileID: 0}
 --- !u!50 &1394210867
 Rigidbody2D:

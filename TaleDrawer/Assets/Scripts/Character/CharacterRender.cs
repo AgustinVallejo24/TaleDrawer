@@ -9,7 +9,7 @@ public class CharacterRender : MonoBehaviour
     Vector3 movimientoRoot;
     void Start()
     {
-     
+
 
         // Si usas un Animator, es buena práctica desactivar
         // la actualización automática de la posición para evitar conflictos.
@@ -18,7 +18,7 @@ public class CharacterRender : MonoBehaviour
 
     public void TPPlayer()
     {
-        
+
     }
     public void TPChild()
     {
@@ -31,7 +31,7 @@ public class CharacterRender : MonoBehaviour
         {
             _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 2 * Vector3.up;
         }
-        
+
         transform.localPosition = new Vector3(0, 0, 0);
         _character.climbAction?.Invoke();
     }
@@ -59,10 +59,19 @@ public class CharacterRender : MonoBehaviour
     {
         _character.currentHook.RopeAnimationManager(value);
     }
-
+    public void Jump()
+    {
+        float distance = Vector2.Distance(_character.transform.position, _character.currentJumpingPosition);
+        _character.transform.DOJump(_character.currentJumpingPosition, 0.5f * distance, 1, _character.currentJumpingTime)
+        .SetEase(Ease.Linear)
+        .OnComplete(() =>
+        {
+           _character.currentJumpingAction?.Invoke();
+        });
+    }
     private IEnumerator IExitRope()
     {
-        if(_character.currentHook.myType == RopeType.Vertical)
+        if (_character.currentHook.myType == RopeType.Vertical)
         {
             _character.transform.position = _character.currentHook.rope.firstPoint.position;
             transform.position = new Vector3(0, 0, 0);
@@ -71,7 +80,7 @@ public class CharacterRender : MonoBehaviour
 
             _character.SendInputToFSM(CharacterStates.Moving);
             _character.currentHook = null;
-        }        
+        }
     }
 
     public void ExitingHorizontalRope()

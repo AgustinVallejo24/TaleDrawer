@@ -82,6 +82,11 @@ public class Character : MonoBehaviour
 
     public float xOffset;
     public float yOffset;
+
+
+    public Action currentJumpingAction;
+    public float currentJumpingTime;
+    public Vector2 currentJumpingPosition;
     protected virtual void Awake()
     {
 

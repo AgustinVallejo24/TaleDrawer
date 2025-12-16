@@ -165,7 +165,7 @@ public class Hook : MonoBehaviour, IInteractable
             _character.SendInputToFSM(CharacterStates.JumpingToRope);            
             _character.characterModel.Jump(_leftLandingPos.position, () => { _character.characterRigidbody.gravityScale = 1; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null;
                 StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f));
-            }, false, 0.7f);
+            }, false, 0.7f, false);
         }
         else
         {
@@ -173,7 +173,7 @@ public class Hook : MonoBehaviour, IInteractable
             characterRender.position = new Vector3(0, 0, 0);
             _character.SendInputToFSM(CharacterStates.JumpingToRope);            
             _character.characterModel.Jump(_rightLandingPos.position, () => { _character.characterRigidbody.gravityScale = 1; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null; 
-                StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f)); }, false, 0.7f);
+                StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f)); }, false, 0.7f, false);
         }
         
 
@@ -184,7 +184,7 @@ public class Hook : MonoBehaviour, IInteractable
     {
         _character.SendInputToFSM(CharacterStates.Wait);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return null;
 
         GetOnRope();
         
