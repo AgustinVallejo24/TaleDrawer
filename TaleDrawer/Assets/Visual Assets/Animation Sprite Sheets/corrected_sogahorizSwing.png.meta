@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 502dbef4f3c573649a02bdb0e1612c29
+guid: 837d712c054c2ea4f938f036eabae153
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -110,177 +110,155 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: robinsequence3_0
+      name: corrected_sogahorizSwing_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 080b9d1d7d52d6843baeead8289e801f
-      internalID: -241476870
+      spriteID: 7d50b05f246d6e64ab170d1eed9e2c12
+      internalID: -934330563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence3_1
+      name: corrected_sogahorizSwing_1
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 1126
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d4e9c168a2cf2349aac727c3be5af17
-      internalID: 200254038
+      spriteID: 1029765c00797a74abe6cfdbead97898
+      internalID: -84879143
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence3_2
+      name: corrected_sogahorizSwing_2
       rect:
         serializedVersion: 2
-        x: 2400
+        x: 2252
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c63f4f601f2aa942abe4d52bb3846bb
-      internalID: 27508873
+      spriteID: 6ee62bb9ca83df742906a500ad5a8926
+      internalID: -2084352462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence3_3
+      name: corrected_sogahorizSwing_3
       rect:
         serializedVersion: 2
-        x: 3600
+        x: 3378
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9a06f9326a029b4fa3ec059a01c010f
-      internalID: 162893301
+      spriteID: 4188dd5276567b64ba25bc7c7a53e7e2
+      internalID: -1188453221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence3_4
+      name: corrected_sogahorizSwing_4
       rect:
         serializedVersion: 2
-        x: 4800
+        x: 4504
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3d020dd072ab624a9c8e428be89585b
-      internalID: 1562008942
+      spriteID: 95f405f295966b84eae1944f5fb72533
+      internalID: -1683032849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence3_5
+      name: corrected_sogahorizSwing_5
       rect:
         serializedVersion: 2
-        x: 6000
+        x: 5630
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ad91b5c94b5f644d937d4fe2e9a8d4c
-      internalID: -1436691466
+      spriteID: 3af5e2d3a59f2674abd7baebb44d9401
+      internalID: 1370938924
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence3_6
+      name: corrected_sogahorizSwing_6
       rect:
         serializedVersion: 2
-        x: 7212
+        x: 6756
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35458d20e5a349d4c8063e917bb6adbe
-      internalID: 1384011826
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: robinsequence3_7
-      rect:
-        serializedVersion: 2
-        x: 8400
-        y: 0
-        width: 1200
-        height: 1800
-      alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: defcf238b1cbb4d4f923278a94ec15a2
-      internalID: 1000870840
+      spriteID: cde7ec49d6d4e984587512ee887611b2
+      internalID: 1297631008
       vertices: []
       indices: 
       edges: []
@@ -289,7 +267,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2215a97b020c0e94092cdab0c198da6f
+    spriteID: 7a8a87cc309989f4db680334e7f6fa00
     internalID: 0
     vertices: []
     indices: 
@@ -299,16 +277,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":1.0},"gridSpriteSize":{"x":1200.0,"y":1800.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":7.0,"y":1.0},"gridSpriteSize":{"x":1126.0,"y":896.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      robinsequence3_0: -241476870
-      robinsequence3_1: 200254038
-      robinsequence3_2: 27508873
-      robinsequence3_3: 162893301
-      robinsequence3_4: 1562008942
-      robinsequence3_5: -1436691466
-      robinsequence3_6: 1384011826
-      robinsequence3_7: 1000870840
+      corrected_sogahorizSwing_0: -934330563
+      corrected_sogahorizSwing_1: -84879143
+      corrected_sogahorizSwing_2: -2084352462
+      corrected_sogahorizSwing_3: -1188453221
+      corrected_sogahorizSwing_4: -1683032849
+      corrected_sogahorizSwing_5: 1370938924
+      corrected_sogahorizSwing_6: 1297631008
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

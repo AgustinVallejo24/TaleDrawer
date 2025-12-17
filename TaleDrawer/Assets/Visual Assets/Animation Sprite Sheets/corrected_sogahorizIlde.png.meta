@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7609a81510d13924da8ac5d2f0e65eb0
+guid: b854d6ed1846d9642a6e5e773c665eab
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -110,133 +110,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: robinsequence2_0
+      name: corrected_sogahorizIlde_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe1f6f02f72977e4785ab318665d6097
-      internalID: -595849911
+      spriteID: 8de88f2a57949ad4b915cafa9895c09c
+      internalID: 1006431747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: robinsequence2_1
+      name: corrected_sogahorizIlde_1
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 1126
         y: 0
-        width: 1200
-        height: 1800
+        width: 1126
+        height: 896
       alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
+      pivot: {x: 0.42874193, y: 0.4875953}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b541ca0e62b992e43b6d705563694deb
-      internalID: -1458736664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: robinsequence2_2
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 0
-        width: 1200
-        height: 1800
-      alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 856582af8d2e9a24a84e65d83ec433c3
-      internalID: 198402881
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: robinsequence2_3
-      rect:
-        serializedVersion: 2
-        x: 3600
-        y: 0
-        width: 1200
-        height: 1800
-      alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c675db359f1a7947bdc17d9ba3fcf4e
-      internalID: 1523067065
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: robinsequence2_4
-      rect:
-        serializedVersion: 2
-        x: 4800
-        y: 0
-        width: 1200
-        height: 1800
-      alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 145dde35a224b53439d69c4fcf61c01e
-      internalID: -2066389388
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: robinsequence2_5
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 0
-        width: 1200
-        height: 1800
-      alignment: 9
-      pivot: {x: 0.2107567, y: 0.1989172}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ced494033a6a84e45a9bfec341605aac
-      internalID: 796928362
+      spriteID: 350e6aa798776f6448e5a1e64ad60cd0
+      internalID: 560341406
       vertices: []
       indices: 
       edges: []
@@ -245,7 +157,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d9685f6cc4350094e9c66723a9b3d869
+    spriteID: 5d13422cc8c5fcc45a770163089e4a38
     internalID: 0
     vertices: []
     indices: 
@@ -255,14 +167,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":1.0},"gridSpriteSize":{"x":1200.0,"y":1800.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":1126.0,"y":896.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      robinsequence2_0: -595849911
-      robinsequence2_1: -1458736664
-      robinsequence2_2: 198402881
-      robinsequence2_3: 1523067065
-      robinsequence2_4: -2066389388
-      robinsequence2_5: 796928362
+      corrected_sogahorizIlde_0: 1006431747
+      corrected_sogahorizIlde_1: 560341406
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
