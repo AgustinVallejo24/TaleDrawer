@@ -400,7 +400,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -742672371, guid: edcb81890a9f56746b5ec4facef7dd34, type: 3}
+  m_Sprite: {fileID: 1006431747, guid: b854d6ed1846d9642a6e5e773c665eab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -805,6 +805,7 @@ MonoBehaviour:
   firstPoint: {fileID: 3095818359086204567}
   secondPoint: {fileID: 4633442648110295268}
   myRopeType: 1
+  mySpRenderer: {fileID: 1575666862698040817}
 --- !u!61 &9208385616372124816
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -142,12 +142,14 @@ public class Hook : MonoBehaviour, IInteractable
         _character.characterView.OnJumpingToRope();
         if (_fromRight)
         {
+            rope.mySpRenderer.flipX = true;
             _character.characterModel.Jump(rope.firstPoint.position, () => {                
                 _character.characterView.OnHorizontalRopeMovement(); _character.SendInputToFSM(CharacterStates.Swaying);
             }, false, 0.7f);
         }
         else
         {
+            rope.mySpRenderer.flipX = false;
             _character.characterModel.Jump(rope.secondPoint.position, () => {                
                 _character.characterView.OnHorizontalRopeMovement(); _character.SendInputToFSM(CharacterStates.Swaying);
             }, false, 0.7f);

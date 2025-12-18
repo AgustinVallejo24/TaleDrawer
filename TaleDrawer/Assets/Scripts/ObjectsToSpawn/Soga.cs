@@ -6,6 +6,7 @@ public class Soga : SpawningObject, IInteractable
     public Transform firstPoint;
     public Transform secondPoint;
     public RopeType myRopeType;
+    public SpriteRenderer mySpRenderer;
 
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
