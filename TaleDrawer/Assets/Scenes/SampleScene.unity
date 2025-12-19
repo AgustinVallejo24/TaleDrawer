@@ -938,7 +938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2036036931726567688, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2857898318420338066, guid: 9dfab06c7d09d0c4b916eb9b4207186b, type: 3}
       propertyPath: m_SortingOrder
@@ -5627,6 +5627,10 @@ PrefabInstance:
     - target: {fileID: 6130373045084652538, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: m_Name
       value: Monkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 6130373045084652538, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7028045812922658278, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: _character
