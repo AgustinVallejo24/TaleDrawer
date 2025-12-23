@@ -108,6 +108,8 @@ public class Character : MonoBehaviour
         var EquippingHelmet = new StateE<CharacterStates>("EquippingHelmet");
         var DoingEvent = new StateE<CharacterStates>("DoingEvent");
         var Swaying = new StateE<CharacterStates>("Swaying");
+        var OnLadder = new StateE<CharacterStates>("OnLadder");
+
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
@@ -115,7 +117,6 @@ public class Character : MonoBehaviour
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.Stop, Stop)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
-
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
@@ -132,7 +133,8 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.OnRope, OnRope)
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
-            .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
+            .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet)
+            .SetTransition(CharacterStates.OnLadder, OnLadder).Done();
         StateConfigurer.Create(Jumping)
             .SetTransition(CharacterStates.Idle, Idle)
              .SetTransition(CharacterStates.Wait, Wait)
@@ -172,6 +174,10 @@ public class Character : MonoBehaviour
             .SetTransition(CharacterStates.Landing, Landing).Done();
         StateConfigurer.Create(Swaying)
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
+        StateConfigurer.Create(OnLadder)
+            .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Idle, Idle).Done();
 
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
@@ -648,6 +654,32 @@ public class Character : MonoBehaviour
 
         #endregion
 
+        #region ONLADDER STATE
+
+        OnLadder.OnEnter += x =>
+        {
+
+            _currentState = CharacterStates.OnLadder;
+
+        };
+
+        OnLadder.OnUpdate += () =>
+        {
+
+
+        };
+        OnLadder.OnFixedUpdate += () =>
+        {
+
+        };
+
+        OnLadder.OnExit += x =>
+        {
+
+        };
+
+        #endregion
+
         #region STOP STATE
 
         Stop.OnEnter += x =>
@@ -927,6 +959,23 @@ public class Character : MonoBehaviour
             return false;
         }
     }
+
+    public List<CustomNode> GetPathList(CustomNode goal)
+    {
+        CustomNode start = CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes);
+
+        var list = _pathFinding.AStar(start, goal);
+
+        if (_currentPath.Any())
+        {            
+            return list;
+        }
+        else
+        {
+            return new List<CustomNode>();
+        }
+    }
+
     public void Land()
     {
         _eventFSM.SendInput(CharacterStates.Landing);
@@ -979,5 +1028,6 @@ public enum CharacterStates
     EquippingHelmet = 1 << 9,
     DoingEvent = 1 << 10,
     Swaying = 1 << 11,
+    OnLadder = 1 << 12,
     All = ~0
 }

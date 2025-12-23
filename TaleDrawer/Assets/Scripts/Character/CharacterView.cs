@@ -14,8 +14,10 @@ public class CharacterView
     private string _idleClimbTrigger = "IdleClimb";
     private string _verticalRopeEventTrigger = "VerticalRopeEventMovement";
     private string _horizontalRopeEventTrigger = "HorizontalRopeEventMovement";
-    private string _JumpingToRopeTrigger = "JumpingToRope";
-    private string _ExitingHorizontalRopeTrigger = "ExitingHorizontalRope";
+    private string _jumpingToRopeTrigger = "JumpingToRope";
+    private string _exitingHorizontalRopeTrigger = "ExitingHorizontalRope";
+    private string _enteringLadderFromBelow = "EnteringLadderFB";
+    private string _enteringLadderFromAbove = "EnteringLadderFA";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -87,17 +89,28 @@ public class CharacterView
 
     public void OnJumpingToRope()
     {
-        _anim.SetTrigger(_JumpingToRopeTrigger);
+        _anim.SetTrigger(_jumpingToRopeTrigger);
     }
 
     public void OnExitingHorizontalRope()
     {
-        _anim.SetTrigger(_ExitingHorizontalRopeTrigger);
+        _anim.SetTrigger(_exitingHorizontalRopeTrigger);
     }
 
     public void OnEquippingHelmet()
     {
 
+    }
+    public void OnEnteringLadder(int value)
+    {
+        if(value > 0)
+        {
+            _anim.SetTrigger(_enteringLadderFromBelow);
+        }
+        else
+        {
+            _anim.SetTrigger(_enteringLadderFromAbove);
+        }
     }
 
     public IEnumerator CustomResetTrigger(string triggerName)
