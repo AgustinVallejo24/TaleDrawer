@@ -39,6 +39,13 @@ public class CustomNode : MonoBehaviour
         neighbour.canDoEvent = value;
         neighbours[index] = neighbour;
     }
+
+
+    public void EmptyEvent()
+    {
+
+    }
+
 }
 
 [System.Serializable]

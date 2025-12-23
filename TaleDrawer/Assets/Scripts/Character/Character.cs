@@ -368,6 +368,12 @@ public class Character : MonoBehaviour
                             _currentPath.Remove(_currentPath.First());
                             neighbour.nodeEvent.Invoke();
                         }
+                        else if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && !neighbour.canDoEvent)
+                        {
+                            ClearPath();
+                            characterRigidbody.linearVelocity = Vector2.zero;
+                            SendInputToFSM(CharacterStates.Idle);
+                        }
                         else
                         {
                             if (_currentPath.Count == 2)

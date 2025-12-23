@@ -3325,11 +3325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584a1c6c39cbbe844becd463dae80346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  changeDirection: 0
-  hasEvent: 1
   _target: {fileID: 592169159}
   _cameraTarget: {fileID: 1550255632}
   _playerCamera: {fileID: 1438328251}
@@ -8772,11 +8767,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.6
+      value: -11.48
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.02
+      value: -3.97
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8811,6 +8806,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7095413697238719751, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
+      propertyPath: xOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095413697238719751, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
+      propertyPath: yOffset
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095413697238719751, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: sceneCamera
       value: 
       objectReference: {fileID: 330585545}
@@ -8825,7 +8828,7 @@ PrefabInstance:
     - target: {fileID: 7095413697238719751, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: 'pointList.Array.data[2]'
       value: 
-      objectReference: {fileID: 644823504}
+      objectReference: {fileID: 0}
     - target: {fileID: 7095413697238719751, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: 'pointList.Array.data[3]'
       value: 
