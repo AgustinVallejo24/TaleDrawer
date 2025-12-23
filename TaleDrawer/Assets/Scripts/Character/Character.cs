@@ -464,7 +464,6 @@ public class Character : MonoBehaviour
             }
             else
             {
-                Debug.LogError("cuarto");
                 if (_goToNextPosition)
                 {
                     float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
@@ -476,7 +475,6 @@ public class Character : MonoBehaviour
                         nextPosition.y = currentMovePosObj.bounds.max.y + 1.3f;
                     }
                    
-                    Debug.LogError(yDist);
 
                     if (xDist > xOffset || yDist > yOffset)
                     {
@@ -487,7 +485,6 @@ public class Character : MonoBehaviour
                     else
                     {
                         characterRigidbody.linearVelocity = Vector2.zero;
-                        Debug.LogError("segundo");
                         _eventFSM.SendInput(CharacterStates.Idle);
                         onMovingEnd?.Invoke();
                     }
@@ -495,7 +492,6 @@ public class Character : MonoBehaviour
                 else
                 {
                     characterRigidbody.linearVelocity = Vector2.zero;
-                    Debug.LogError("tercero");
                     _eventFSM.SendInput(CharacterStates.Idle);
                     onMovingEnd?.Invoke();
                 }

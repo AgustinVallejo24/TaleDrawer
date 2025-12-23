@@ -40,11 +40,22 @@ public class FloorInteractable : MonoBehaviour, IInteractable
     
     public void PlayerJump()
     {
-        _myCharacter.characterModel.Jump(_jumpPos.position, () =>
+        _myCharacter.onMovingEnd = null;
+        if (trap.open)
         {
+            _myCharacter.characterModel.Jump(_jumpPos.position, () =>
+            {
 
-            _myCharacter.Land();
+                _myCharacter.Land();
 
-        });
+            });
+        }
+        else
+        {
+            _myCharacter.ClearPath();
+            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.SendInputToFSM(CharacterStates.Idle);
+        }
+
     }
 }

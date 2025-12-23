@@ -7,9 +7,11 @@ public class FloorTrap : Trap
     [SerializeField] CustomNode[] innerNodes;
     [SerializeField] CustomNode[] outerNodes;
     [SerializeField] Transform[] jumpPositions;
+    [SerializeField] Collider2D _interactionCollider;
     public override void Activation()
     {
         _floor.SetTrigger("Open");
+        _interactionCollider.enabled = true;
         open = true;
  
     }
@@ -28,6 +30,7 @@ public class FloorTrap : Trap
     {
         _floor.SetTrigger("Close");
         open = false;
+        _interactionCollider.enabled = false;
     }
 
 
