@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1187143316154200432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5065237015833213901}
+  m_Layer: 0
+  m_Name: BalloonPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5065237015833213901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187143316154200432}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.886, z: 0}
+  m_LocalScale: {x: 1, y: 0.44357702, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2540322536927766382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4105664511588558113
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +156,7 @@ Transform:
   m_Children:
   - {fileID: 3360379977858554374}
   - {fileID: 7368954282621347466}
+  - {fileID: 5065237015833213901}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1336456597415503049
@@ -197,11 +229,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a278d475d6e38469e92dc0c5014be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monkey
+  balloonPosition: {fileID: 5065237015833213901}
   _health: 2
   _myType: 0
   _playerMask:
     serializedVersion: 2
     m_Bits: 1024
+  _rigidbody: {fileID: 3594283866435252197}
   currentState: 0
   _hasHelmet: 0
   _helmet: {fileID: 4105664511588558113}

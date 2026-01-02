@@ -5,7 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : Entity
 {
     #region Variables
 
@@ -24,7 +24,7 @@ public class Character : MonoBehaviour
     [SerializeField] float _distToNodeThreshold;
     [SerializeField] Transform feetPosition;
     [SerializeField] protected Transform helmetPosition;
-    [SerializeField] public Transform balloonPosition;
+
     [SerializeField] public List<CustomNode> _currentPath;
     public Action onMovingStart;
     public Action onMovingEnd;
@@ -993,9 +993,23 @@ public class Character : MonoBehaviour
             StartCoroutine(SendInputToFSM(CharacterStates.Idle, 0.2f));
         }
 
-
-
     }
+    public override void LiftEntity()
+    {
+       SendInputToFSM(CharacterStates.Stop);
+       characterRigidbody.gravityScale = 0;
+    }
+    public override void PutOnHelmet()
+    {
+        base.PutOnHelmet();
+    }
+    public override void ReleaseFromBalloon()
+    {
+        characterRigidbody.gravityScale = 1;
+        SendInputToFSM(CharacterStates.Idle);
+    }
+
+
     public List<CustomNode> GetCurrentPath()
     {
         return _currentPath;

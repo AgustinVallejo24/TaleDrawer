@@ -1,17 +1,28 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Entity
 {
     [Header("Variables")]
     [SerializeField] protected int _health;
     [SerializeField] protected EnemyType _myType;
     [SerializeField] protected LayerMask _playerMask;
+    [SerializeField] protected Rigidbody2D _rigidbody;
     public FSMStates currentState;
 
     [Header("Side scripts references")]
     public FSM _fsm;
+    public override void LiftEntity()
+    {
+        _rigidbody.gravityScale = 0;
+        _fsm.ChangeState(FSMStates.StunnedState);
+    }
 
+    public override void ReleaseFromBalloon()
+    {
+        _rigidbody.gravityScale = 1;
+        _fsm.ChangeState(FSMStates.IdleState);
+    }
     protected virtual void Awake()
     {
 

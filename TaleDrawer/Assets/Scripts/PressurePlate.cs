@@ -7,7 +7,7 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] Trap _trap;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Character character) && !_currentObjects.Contains(collision.gameObject) && character.characterRigidbody.linearVelocityY == 0)
+        if (collision.gameObject.TryGetComponent(out Character character) && !_currentObjects.Contains(collision.gameObject) && character.characterRigidbody.linearVelocityY >= 0)
         {
             character.transform.position += Vector3.up * .29f + Vector3.right * .3f * character.flipSign;
         }

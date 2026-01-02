@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] public Transform balloonPosition;
+    public virtual void PutOnHelmet()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    }
+    public virtual void LiftEntity()
     {
-        
+
+    }
+    public virtual void ReleaseFromBalloon()
+    {
+
     }
 }

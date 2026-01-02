@@ -19,6 +19,7 @@ public class Monkey : Enemy
         _fsm.AddState(FSMStates.IdleState, new MonkeyIdleState(this, _character));
         _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
         _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
+        _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState());
         _fsm.ChangeState(FSMStates.IdleState);
     }
     protected override void Start()
@@ -60,7 +61,7 @@ public class Monkey : Enemy
     {
         while (true)
         {
-            if (Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask))
+            if (Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask) && currentState == FSMStates.IdleState)
             {
                 EnemyEvent();
             }

@@ -56,16 +56,21 @@ MonoBehaviour:
   _mySpriteRenderer: {fileID: 968902738113856531}
   _interactuables:
     serializedVersion: 2
-    m_Bits: 3072
+    m_Bits: 35840
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
   _intrectableName: 
-  _canIntercactWithPlayer: 1
-  _interactingWithPlayer: 0
+  _canIntercactWithEntity: 1
+  _interactingWithEntity: 0
+  _canSpawn: 0
   weight: 0
   _spawned: 0
   _objectMask:
     serializedVersion: 2
     m_Bits: 0
   myAnim: {fileID: 0}
+  _currentEntity: {fileID: 0}
   clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   riseHeight: 0.4
   riseDuration: 0.6
