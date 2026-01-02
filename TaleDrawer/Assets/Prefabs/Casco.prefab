@@ -207,14 +207,20 @@ MonoBehaviour:
   _interactuables:
     serializedVersion: 2
     m_Bits: 3072
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 262144
   _intrectableName: 
   _canIntercactWithPlayer: 1
   _interactingWithPlayer: 0
+  _canSpawn: 0
   weight: 0
   _spawned: 0
   _objectMask:
     serializedVersion: 2
     m_Bits: 128
+  myAnim: {fileID: 0}
+  clouds: {fileID: 0}
   _health: 2
   neededRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!61 &3094319763697518091

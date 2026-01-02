@@ -6,7 +6,7 @@ public class Casco : SpawningObject
     [SerializeField] public Quaternion neededRot;
 
 
-    public override void InteractionWithPlayer()
+    public override void InteractionWithEntity()
     {
         if(Character.instance.helmet == null)
         {

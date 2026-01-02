@@ -13,14 +13,16 @@ public class SpawningObject : MonoBehaviour, IDeletable
     public bool objectUseGravity;
     [SerializeField] SpriteRenderer _mySpriteRenderer;
     [SerializeField] LayerMask _interactuables;
+    [SerializeField] LayerMask _obstacleMask;
     public IInteractable _currentInteractuable;
     public string _intrectableName;
     Color _originalColor;
     bool _first = true;
     bool _second = true;
     bool _third = true;
-    [SerializeField] bool _canIntercactWithPlayer;
-    [SerializeField] bool _interactingWithPlayer;
+    [SerializeField] bool _canIntercactWithEntity;
+    [SerializeField] bool _interactingWithEntity;
+    [SerializeField] bool _canSpawn;
     public float weight;
     public Action<float, GameObject> interactableDelegate;
     GridPoint _currentGridP;
@@ -32,6 +34,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     [SerializeField] public Animator myAnim;
 
+    [SerializeField] protected Entity _currentEntity;
 
     public ExplosionParticle clouds;
 
@@ -87,19 +90,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
             if (_myColl != null)
             {                
                 _myColl.enabled = false;
-            }
-
-            var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
-            _currentGridP = tuple.Item3;
-            if (_currentGridP == null)
-            {
-                _currentGridP = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity).Item3;
-            }
-            else
-            {
-                //_currentGridP.SelectAndDeselectPoint(tuple.Item1);
-                _pointPos = _currentGridP.transform.position;
-            }
+            }            
 
             Debug.Log("Arrastre iniciado y Collider deshabilitado.");
         }
@@ -125,27 +116,24 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _currentInteractuable = interctuable;
                     _intrectableName = _currentInteractuable.GetType().Name;
                     _mySpriteRenderer.color = Color.green;
-                    _interactingWithPlayer = false;
-                    if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
-                    if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
-                    
+                    _interactingWithEntity = false;
+                    _currentEntity = null;
                 }
                 
             }
-            else if(_canIntercactWithPlayer && hit && hit.TryGetComponent<Character>(out Character character))
+            else if(_canIntercactWithEntity && hit && hit.TryGetComponent<Entity>(out Entity ent))
             {
                 if (_third)
                 {
                     _third = false;
                     _first = true;
                     _second = true;
-                    _interactingWithPlayer = true;
+                    _interactingWithEntity = true;
                     _currentInteractuable = null;
                     _intrectableName = "None";
+                    _currentEntity = ent;
                     _mySpriteRenderer.color = Color.green;
-
-                    if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
-                    if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
+                    
                 }
             }
             else
@@ -156,44 +144,21 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _first = true;
                     _third = true;
                     _currentInteractuable = null;
+                    _currentEntity = null;
                     _intrectableName = "None";
-                    _interactingWithPlayer = false;
-                    _mySpriteRenderer.color = _originalColor;
+                    _interactingWithEntity = false;                    
                 }
 
-
-                if (Vector2.Distance(_currentGridP.transform.position, transform.position) > 0.7)
+                if(hit && ((1 << hit.gameObject.layer) & _obstacleMask) != 0)
                 {
-                    var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
-
-                    if (tuple.Item1)
-                    {
-                        if (_currentGridP != null)
-                            _previousGridP = _currentGridP;
-
-                        _currentGridP = tuple.Item3;
-
-
-                        if (_currentGridP != _previousGridP)
-                        {
-                            if (!_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
-
-                            if (_currentGridP != null)
-                            {
-                                _currentGridP.SelectAndDeselectPoint(tuple.Item1);
-                                _pointPos = _currentGridP.transform.position;
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        if (_previousGridP != null && !_previousGridP.blocked) _previousGridP.SelectAndDeselectPoint(false);
-                        if (!_currentGridP.blocked) _currentGridP.SelectAndDeselectPoint(false);
-                    }
-
-
+                    _canSpawn = false;
+                    _mySpriteRenderer.color = Color.gray;
                 }
+                else
+                {
+                    _canSpawn = true;
+                    _mySpriteRenderer.color = _originalColor; 
+                }               
 
             }
         }
@@ -220,12 +185,11 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     Debug.LogWarning("[SYNC] Forced Physics2D SyncTransforms after placement.");
                 }
             }
-            var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position);
-            _currentGridP = tuple.Item3;
+            
 
             
 
-            if (_currentInteractuable != null || (_currentGridP != null && tuple.Item1) || _interactingWithPlayer)
+            if (_currentInteractuable != null || _interactingWithEntity || _canSpawn)
             {
                 
                 _spawned = true;
@@ -244,30 +208,26 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _myrb.gravityScale = 1;
                 }
 
-                if (_interactingWithPlayer)
+                
+
+                if (_interactingWithEntity)
                 {
-                    InteractionWithPlayer();
-                    _currentGridP = null;
+                    InteractionWithEntity();
                     _currentInteractuable = null;
+                    
+                    
                 }
                 else if (_currentInteractuable != null)
                 {
                     _currentInteractuable.Interact(this);
-                    _currentGridP = null;
+                    
                 }
-                else if (_currentGridP != null && tuple.Item1)
-                {
-                    _currentGridP.SelectAndDeselectPoint(false);
-                    transform.position = new Vector3(_currentGridP.transform.position.x, _currentGridP.transform.position.y, 0);
-                    /*_currentGridP = null;
-                    _previousGridP = null;*/
-                }
+                
 
 
             }
             else
             {
-
                 if (_myColl != null)
                 {
                     Debug.LogError("Me quedo vegetativo");
@@ -291,7 +251,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
         transform.position = new Vector3(tuple.Item3.transform.position.x, tuple.Item3.transform.position.y, 0);
     }
 
-    public virtual void InteractionWithPlayer()
+    public virtual void InteractionWithEntity()
     {
 
     }

@@ -234,9 +234,13 @@ MonoBehaviour:
   _interactuables:
     serializedVersion: 2
     m_Bits: 2048
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 262144
   _intrectableName: 
   _canIntercactWithPlayer: 0
   _interactingWithPlayer: 0
+  _canSpawn: 0
   weight: 0
   _spawned: 0
   _objectMask:
@@ -245,8 +249,10 @@ MonoBehaviour:
   myAnim: {fileID: 0}
   clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   hook: {fileID: 0}
-  upperPoint: {fileID: 263019337228935780}
-  lowerPoint: {fileID: 8339835181904506021}
+  firstPoint: {fileID: 0}
+  secondPoint: {fileID: 0}
+  myRopeType: 0
+  mySpRenderer: {fileID: 0}
 --- !u!61 &9021975702070772588
 BoxCollider2D:
   m_ObjectHideFlags: 0

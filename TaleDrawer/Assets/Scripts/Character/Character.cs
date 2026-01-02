@@ -868,7 +868,7 @@ public class Character : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent(out SpawningObject spawningObject))
         {
-            spawningObject.InteractionWithPlayer();
+            spawningObject.InteractionWithEntity();
         }
     }
     public void ClearPath()

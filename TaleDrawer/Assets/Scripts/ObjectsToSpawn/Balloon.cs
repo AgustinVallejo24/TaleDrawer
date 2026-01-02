@@ -59,7 +59,7 @@ public class Balloon : SpawningObject
     }
 
 
-    public override void InteractionWithPlayer()
+    public override void InteractionWithEntity()
     {
         _myCharacter = Character.instance;
         _myCharacter.SendInputToFSM(CharacterStates.Stop);

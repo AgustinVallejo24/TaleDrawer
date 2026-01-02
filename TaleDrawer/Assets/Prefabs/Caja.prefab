@@ -118,9 +118,13 @@ MonoBehaviour:
   _interactuables:
     serializedVersion: 2
     m_Bits: 2048
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 262144
   _intrectableName: 
   _canIntercactWithPlayer: 0
   _interactingWithPlayer: 0
+  _canSpawn: 0
   weight: 5
   _spawned: 0
   _objectMask:
