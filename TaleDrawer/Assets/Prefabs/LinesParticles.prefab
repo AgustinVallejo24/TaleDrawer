@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8295583190909216802}
   - component: {fileID: 6691989727610459815}
   - component: {fileID: 1692510647838175938}
+  - component: {fileID: 454577779953697366}
   m_Layer: 17
   m_Name: LinesParticles
   m_TagString: Untagged
@@ -4836,3 +4837,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &454577779953697366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067365246810025147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8fa0edd3e68a24c905ad3895f3e6a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LinesParticle

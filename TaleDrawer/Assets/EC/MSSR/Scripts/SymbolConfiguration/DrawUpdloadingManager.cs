@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using SymbolRecognizer;
 public class DrawUpdloadingManager : MonoBehaviour
 {
 
@@ -15,7 +16,7 @@ public class DrawUpdloadingManager : MonoBehaviour
     [SerializeField] Button _confirmSymbolButton;
     [SerializeField] Button _configSymbolButton;
     [SerializeField] GameObject _symbolConfigurerPrefab;
-    [SerializeField] DrawingTest _drawingTest;
+    [SerializeField] Drawer _drawingTest;
     [SerializeField] ZernikeManager _zernikeManager;
     [SerializeField] RenderTexture renderTexture;
     [SerializeField] RectTransform _canvas;
@@ -117,6 +118,7 @@ public class DrawUpdloadingManager : MonoBehaviour
         newGroup.orientationThreshold = symbolConfig.GetRotationThresholdFieldValue();
         newGroup.isSymmetric = symbolConfig.GetIsSymmetric();
         newGroup.useRotation = symbolConfig.GetUseRotation();
+        newGroup.objectType = symbolConfig.GetSymbolType();
         newGroup.strokes = _currentSymbol.strokes;
         newGroup.symbols = new List<ReferenceSymbol>();
         newGroup.symbols.Add(_currentSymbol);

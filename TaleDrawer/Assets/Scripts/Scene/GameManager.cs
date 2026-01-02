@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
                 ExitingDrawingState();
             }
             playerInput.SwitchCurrentActionMap("Movement");
-            PlacementGridManager.Instance.SetGridVisibility(false);
+       //    PlacementGridManager.Instance.SetGridVisibility(false);
                         
             
                       
@@ -188,8 +188,8 @@ public class GameManager : MonoBehaviour
         else if (currentState == SceneStates.Dragging)
         {
             playerInput.SwitchCurrentActionMap("Dragging");
-            PlacementGridManager.Instance.RefreshGridAvailability();
-            PlacementGridManager.Instance.SetGridVisibility(true);
+            //PlacementGridManager.Instance.RefreshGridAvailability();
+          //  PlacementGridManager.Instance.SetGridVisibility(true);
             ExitingDrawingState();
         } 
     }

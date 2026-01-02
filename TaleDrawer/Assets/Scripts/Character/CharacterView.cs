@@ -56,6 +56,11 @@ public class CharacterView
         _anim.SetTrigger("Climb");
         _character.StartCoroutine(CustomResetTrigger("Climb"));
     }
+
+    public void BallonAnimation()
+    {
+        _anim.SetTrigger("Balloon");
+    }
     public void FlipCharacter(int movementSign)
     {
         _character.flipSign = movementSign;

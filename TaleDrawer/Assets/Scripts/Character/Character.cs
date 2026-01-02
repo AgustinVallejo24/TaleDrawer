@@ -24,6 +24,7 @@ public class Character : MonoBehaviour
     [SerializeField] float _distToNodeThreshold;
     [SerializeField] Transform feetPosition;
     [SerializeField] protected Transform helmetPosition;
+    [SerializeField] public Transform balloonPosition;
     [SerializeField] public List<CustomNode> _currentPath;
     public Action onMovingStart;
     public Action onMovingEnd;
@@ -116,6 +117,7 @@ public class Character : MonoBehaviour
              .SetTransition(CharacterStates.Climb, Climb)
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.Stop, Stop)
+              .SetTransition(CharacterStates.Wait, Wait)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)

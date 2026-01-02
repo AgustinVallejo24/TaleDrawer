@@ -330,6 +330,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
         }
     }
 
+
     public void SyncColiiders()
     {
 

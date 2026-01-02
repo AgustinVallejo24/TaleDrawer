@@ -1028,7 +1028,7 @@ MonoBehaviour:
   _confirmSymbolButton: {fileID: 962910286}
   _configSymbolButton: {fileID: 1253682545}
   _symbolConfigurerPrefab: {fileID: 4528572952815347165, guid: 808c67329cc3e2d40bc0ee59a6915918, type: 3}
-  _drawingTest: {fileID: 2075857143}
+  _drawingTest: {fileID: 2075857145}
   _zernikeManager: {fileID: 1722327457}
   renderTexture: {fileID: 8400000, guid: 69cf44f0231e534499837caca503578e, type: 2}
   _canvas: {fileID: 2124434234}
@@ -1708,7 +1708,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1b64d652cdf0b46a53fc798c5e092d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardSelectionHandler
-  _verticalMovement: 3.5
   _moveTime: 0.1
   _scaleAmount: 1.1
 --- !u!1 &1062691859
@@ -2104,7 +2103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1b64d652cdf0b46a53fc798c5e092d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardSelectionHandler
-  _verticalMovement: 3.5
   _moveTime: 0.1
   _scaleAmount: 1.1
 --- !u!1 &1348039520
@@ -2302,7 +2300,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2331,7 +2329,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 262071
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2892,7 +2890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1883958350
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3200,7 +3198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2075857144}
-  - component: {fileID: 2075857143}
+  - component: {fileID: 2075857145}
   m_Layer: 0
   m_Name: Drawer
   m_TagString: Untagged
@@ -3208,23 +3206,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2075857143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075857142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5fa83ecf3344614eadfa15ce017d1a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lRPrefab: {fileID: 5936190321714190901, guid: 95c08dfbb608cce419b6fb0fef126e33, type: 3}
-  lRPrefabRT: {fileID: 5936190321714190901, guid: ec2fe9d7936e5b44f9e0fd343bf33b6a, type: 3}
-  renderTexture: {fileID: 8400000, guid: 69cf44f0231e534499837caca503578e, type: 2}
-  resultText: {fileID: 1924170148}
-  zRecognizer: {fileID: 1722327457}
 --- !u!4 &2075857144
 Transform:
   m_ObjectHideFlags: 0
@@ -3241,6 +3222,23 @@ Transform:
   - {fileID: 1544655716}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2075857145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075857142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27920ed19adcb24797e5fc0ec419f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SymbolRecognizer.Drawer
+  lRPrefab: {fileID: 5936190321714190901, guid: 95c08dfbb608cce419b6fb0fef126e33, type: 3}
+  lRPrefabRT: {fileID: 5936190321714190901, guid: ec2fe9d7936e5b44f9e0fd343bf33b6a, type: 3}
+  renderTexture: {fileID: 8400000, guid: 69cf44f0231e534499837caca503578e, type: 2}
+  resultText: {fileID: 0}
+  zRecognizer: {fileID: 1722327457}
 --- !u!1 &2124434233
 GameObject:
   m_ObjectHideFlags: 0

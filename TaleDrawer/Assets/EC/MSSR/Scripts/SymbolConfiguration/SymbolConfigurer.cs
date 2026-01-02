@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using Delegates;
 public class SymbolConfigurer : MonoBehaviour
 {
@@ -17,12 +18,24 @@ public class SymbolConfigurer : MonoBehaviour
     [SerializeField] Toggle _UseRotation;
     [SerializeField] TemplatesListConfigurer _listConfigurer;
     [SerializeField] List<ReferenceSymbol> _symbols;
+    [SerializeField] TMP_Dropdown _dropdown;
     public RectTransform canvas;
 
     public DeleteDelegate<ReferenceSymbol> deleteSymbol;
     public DeleteDelegate<ReferenceSymbolGroup> deleteGroup;
+
+    SpawnableObjectType[] enumValues;
     private void Start()
     {
+        enumValues = (SpawnableObjectType[])Enum.GetValues(typeof(SpawnableObjectType));
+
+        _dropdown.ClearOptions();
+        _dropdown.AddOptions(
+            enumValues
+                .Where(e => e != SpawnableObjectType.All) // opcional
+                .Select(e => e.ToString())
+                .ToList()
+        );
         _thresholdInputField.onValueChanged.AddListener(SetThresholdSliderValue);
         _thresholdSlider.onValueChanged.AddListener(SetThresholdFieldValue);
         _rotationThresholdInputField.onValueChanged.AddListener(SetRotationThresholdSliderValue);
@@ -58,6 +71,10 @@ public class SymbolConfigurer : MonoBehaviour
       //  SetSymbolList(symbols);
     }
 
+    public SpawnableObjectType GetSymbolType()
+    {
+        return enumValues[_dropdown.value];
+    }
     public void SetGroup(ReferenceSymbolGroup group)
     {
         myGroup = group;

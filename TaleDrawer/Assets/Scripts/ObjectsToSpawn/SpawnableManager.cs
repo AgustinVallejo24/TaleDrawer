@@ -31,5 +31,6 @@ public enum SpawnableObjectType
     Character = 1 << 2,
     Piedra = 1 << 3,
     Casco = 1 << 4,
+    Globo = 1 << 5,
     All = ~0
 }
