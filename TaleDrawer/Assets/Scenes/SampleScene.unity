@@ -5089,6 +5089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8c0b36de16cd2499a1b839f0d4297a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  balloonPosition: {fileID: 0}
   _maxSpeed: 5
   currentSpeed: 10
   _smoothSpeed: 0.35
@@ -5499,8 +5500,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _intrectableName: 
-  _canIntercactWithPlayer: 1
-  _interactingWithPlayer: 0
+  _canIntercactWithEntity: 0
+  _interactingWithEntity: 0
   _canSpawn: 0
   weight: 0
   _spawned: 0
@@ -5508,6 +5509,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   myAnim: {fileID: 0}
+  _currentEntity: {fileID: 0}
   clouds: {fileID: 0}
   _health: 2
   neededRot: {x: 0, y: 0, z: 0, w: 0}
@@ -5639,7 +5641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6130373045084652538, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7028045812922658278, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: _character
@@ -6020,6 +6022,10 @@ PrefabInstance:
       propertyPath: neighbours.Array.data[1].node
       value: 
       objectReference: {fileID: 1126369324}
+    - target: {fileID: 7320161957211185479, guid: caf73fcd7a24c294a87b87ba6fb5b5a3, type: 3}
+      propertyPath: neighbours.Array.data[0].canDoEvent
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7916411232122232991, guid: caf73fcd7a24c294a87b87ba6fb5b5a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.27

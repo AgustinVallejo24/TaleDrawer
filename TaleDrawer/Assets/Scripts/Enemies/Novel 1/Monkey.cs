@@ -16,7 +16,7 @@ public class Monkey : Enemy
     {
         _fsm = new FSM();
 
-        _fsm.AddState(FSMStates.IdleState, new MonkeyIdleState(this, _character));
+        _fsm.AddState(FSMStates.IdleState, new MonkeyIdleState(this, _character, StartBehaviour()));
         _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
         _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
         _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState());

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static Monkey;
 
@@ -5,11 +6,14 @@ public class MonkeyIdleState : BaseState
 {
     Character _character;
     Monkey _myMonkey;
+    IEnumerator _cou;
 
-    public MonkeyIdleState(Monkey monk, Character chara)
+
+    public MonkeyIdleState(Monkey monk, Character chara, IEnumerator cou)
     {
         _character = chara;
         _myMonkey = monk;
+        _cou = cou;
     }
     public override void FixedUpdate()
     {
@@ -19,12 +23,12 @@ public class MonkeyIdleState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.IdleState;
-        _myMonkey.CoroutineManager(_myMonkey.StartBehaviour());
+        _myMonkey.CoroutineManager(_cou);
     }
 
     public override void OnExit()
     {
-        _myMonkey.CoroutineManager(_myMonkey.StartBehaviour(), true);
+        _myMonkey.CoroutineManager(_cou, true);
     }
 
     public override void Transitions()
