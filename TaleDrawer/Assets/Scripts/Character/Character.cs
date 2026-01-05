@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class Character : Entity
 {
@@ -88,6 +89,8 @@ public class Character : Entity
     public Action currentJumpingAction;
     public float currentJumpingTime;
     public Vector2 currentJumpingPosition;
+
+    public CinemachineFollow cameraFollow;
     protected virtual void Awake()
     {
 

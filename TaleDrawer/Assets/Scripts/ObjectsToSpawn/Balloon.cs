@@ -66,4 +66,14 @@ public class Balloon : SpawningObject
         ActivateFloat();
     }
 
+
+    protected void OnTriggerStay2D(Collider2D collision)
+    {
+       // base.OnTriggerEnter2D(collision);
+        if (floating && collision.gameObject.tag == "Spikes")
+        {
+            _currentEntity.ReleaseFromBalloon();
+            Destroy(gameObject);
+        }
+    }
 }

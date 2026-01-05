@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 public class CharacterView
 {
     Character _character;
@@ -63,13 +64,30 @@ public class CharacterView
     }
     public void FlipCharacter(int movementSign)
     {
+
         _character.flipSign = movementSign;
         if(movementSign > 0)
         {
+            Vector3 previousOffset = _character.cameraFollow.FollowOffset;
+            previousOffset.x = 3;
+            DOTween.To(
+            () => _character.cameraFollow.FollowOffset,
+            x => _character.cameraFollow.FollowOffset = x,
+            previousOffset,
+            1.5f
+        ).SetEase(Ease.OutCubic);
             _characterSprite.flipX = false;
         }
         else
-        {            
+        {
+            Vector3 previousOffset = _character.cameraFollow.FollowOffset;
+            previousOffset.x = -3;
+            DOTween.To(
+            () => _character.cameraFollow.FollowOffset,
+            x => _character.cameraFollow.FollowOffset = x,
+            previousOffset,
+            1.5f
+        ).SetEase(Ease.OutCubic);
             _characterSprite.flipX = true;            
         }
          
