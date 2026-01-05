@@ -46,15 +46,20 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
+       
         if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
         {
+            Debug.LogError("A");
             _fromAbove = false;
             _character.GetPath(_upperNode);
+            _character.SendInputToFSM(CharacterStates.Moving);
         }
         else
         {
+            Debug.LogError("B");
             _fromAbove = true;
             _character.GetPath(_lowerNode);
+            _character.SendInputToFSM(CharacterStates.Moving);
         }
     }
 

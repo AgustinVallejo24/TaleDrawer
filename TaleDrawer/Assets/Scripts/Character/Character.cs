@@ -960,6 +960,7 @@ public class Character : Entity
         }
         else
         {
+            Debug.LogError("NOHAYPATH");
             return false;
         }
     }
@@ -970,8 +971,9 @@ public class Character : Entity
 
         var list = _pathFinding.AStar(start, goal);
 
-        if (_currentPath.Any())
-        {            
+        if (list.Any())
+        {
+            Debug.LogError(goal.gameObject.name + " "+ list.Count);
             return list;
         }
         else

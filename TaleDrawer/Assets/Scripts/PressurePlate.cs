@@ -9,7 +9,7 @@ public class PressurePlate : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Character character) && !_currentObjects.Contains(collision.gameObject) && character.characterRigidbody.linearVelocityY >= 0)
         {
-            character.transform.position += Vector3.up * .29f + Vector3.right * .3f * character.flipSign;
+            character.transform.position += Vector3.up * .26f + Vector3.right * .3f * character.flipSign;
         }
         if (_currentObjects.Count == 0 && !collision.isTrigger)
         {

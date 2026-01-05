@@ -20,5 +20,9 @@ public class Projectile : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        if (!collision.isTrigger)
+        {
+            Destroy(gameObject);
+        }
     }
 }
