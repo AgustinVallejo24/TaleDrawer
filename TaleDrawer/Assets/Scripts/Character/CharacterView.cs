@@ -32,7 +32,11 @@ public class CharacterView
         _anim.SetTrigger(_runTrigger);
         _character.StartCoroutine(CustomResetTrigger(_runTrigger));
     }
-
+    public void OnDeath()
+    {
+        _anim.SetTrigger("Death");
+        _character.StartCoroutine(CustomResetTrigger("Death"));
+    }
     public void OnIdle()
     {
         _anim.SetInteger("MovementState", 0);

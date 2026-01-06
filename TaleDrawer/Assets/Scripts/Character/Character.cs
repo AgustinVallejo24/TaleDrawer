@@ -804,7 +804,13 @@ public class Character : Entity
 
         _eventFSM.SendInput(newState);
     }
-
+    public override void Death()
+    {
+        base.Death();
+        SendInputToFSM(CharacterStates.Stop);
+        characterRigidbody.linearVelocity = Vector2.zero;
+        characterView.OnDeath();
+    }
     public CustomNode GetLastPathNode()
     {
         if (_currentPath.Any())
@@ -847,23 +853,11 @@ public class Character : Entity
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
 
+        if(collision.gameObject.tag == "Spikes")
+        {
+            Death();
+        }
 
-        //if (_currentState == CharacterStates.Jumping && ((1 << collision.gameObject.layer) & _walkableLayerMask) != 0)
-        //{
-        //    _eventFSM.SendInput(CharacterStates.Landing);
-
-        //    if (!_currentPath.First().shouldWait)
-        //    {
-
-        //        StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
-        //    }
-        //    else
-        //    {
-        //        StartCoroutine(SendInputToFSM(CharacterStates.Wait, 0.2f));
-        //    }
-
-
-        //}
 
     }    
 

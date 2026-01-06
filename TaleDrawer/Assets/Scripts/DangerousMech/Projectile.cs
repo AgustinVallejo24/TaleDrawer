@@ -17,9 +17,9 @@ public class Projectile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out Character character))
+        if(collision.TryGetComponent(out Entity character))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            character.Death();
         }
         if (!collision.isTrigger)
         {
