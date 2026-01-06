@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
 
     public int sign;
     public float speed;
+    [SerializeField] Collider2D collider;
     void Start()
     {
         Destroy(gameObject, 5f);
@@ -22,7 +23,8 @@ public class Projectile : MonoBehaviour
         }
         if (!collision.isTrigger)
         {
-            Destroy(gameObject);
+            speed = 0;
+            transform.parent = collision.transform;
         }
     }
 }

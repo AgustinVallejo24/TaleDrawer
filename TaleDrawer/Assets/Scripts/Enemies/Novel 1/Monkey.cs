@@ -55,7 +55,15 @@ public class Monkey : Enemy
         
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Spikes")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
 
     public IEnumerator StartBehaviour()
     {
