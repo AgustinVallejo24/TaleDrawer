@@ -5,7 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Unity.Cinemachine;
-
+using UnityEngine.SceneManagement;
 public class Character : Entity
 {
     #region Variables
@@ -113,7 +113,7 @@ public class Character : Entity
         var DoingEvent = new StateE<CharacterStates>("DoingEvent");
         var Swaying = new StateE<CharacterStates>("Swaying");
         var OnLadder = new StateE<CharacterStates>("OnLadder");
-
+        var Death = new StateE<CharacterStates>("Death");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
@@ -121,6 +121,7 @@ public class Character : Entity
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.Stop, Stop)
               .SetTransition(CharacterStates.Wait, Wait)
+              .SetTransition(CharacterStates.Death, Death)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -130,6 +131,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.Climb, Climb)
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.Stop, Stop)
+                 .SetTransition(CharacterStates.Death, Death)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -138,6 +140,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.OnRope, OnRope)
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
+                .SetTransition(CharacterStates.Death, Death)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet)
             .SetTransition(CharacterStates.OnLadder, OnLadder).Done();
         StateConfigurer.Create(Jumping)
@@ -150,6 +153,7 @@ public class Character : Entity
         StateConfigurer.Create(Stop)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
+             .SetTransition(CharacterStates.Death, Death)
             .SetTransition(CharacterStates.Wait, Wait).Done();
         StateConfigurer.Create(Landing)
             .SetTransition(CharacterStates.Moving, Moving)
@@ -183,6 +187,10 @@ public class Character : Entity
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Idle, Idle).Done();
+        StateConfigurer.Create(Death)
+           .SetTransition(CharacterStates.Idle, Idle);
+
+
 
         #endregion
         // _eventFSM.SendInput(CharacterStates.Idle);
@@ -219,15 +227,7 @@ public class Character : Entity
             _currentState = CharacterStates.Moving;
             characterView.OnMove();
 
-            /*if (currentObjectivesQueue.Any())
-            {
-                characterView.OnMove();
-            }
-            else
-            {
-                _eventFSM.SendInput(CharacterStates.Wait);
-            }*/            
-            
+             
             if (!_currentPath.Any() && !_goToNextPosition)
             {
 
@@ -265,23 +265,6 @@ public class Character : Entity
 
         
 
-                //if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
-                //_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
-                //{
-                //    if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
-                //        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
-                //        Vector2.Distance(CustomTools.ToVector2(transform.position),
-                //        new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)))
-                //    {
-                //        _currentPath.Remove(_currentPath.First());
-                //        lookAtNode = _currentPath.First();
-                //    }
-                //    else if (!_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().canDoEvent &&
-                //    _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() > 0)
-                //    {
-                //        lookAtNode = _currentPath.Skip(1).First();
-                //    }
-                //}
             }
             else
             {
@@ -709,6 +692,30 @@ public class Character : Entity
 
         #endregion
 
+
+        #region DEATH STATE
+
+        Death.OnEnter += x =>
+        {
+
+            _currentState = CharacterStates.Death;
+            characterView.OnDeath();
+            StartCoroutine(DeathCoroutine());
+        };
+
+        Death.OnUpdate += () =>
+        {
+            
+           
+        };
+        Death.OnFixedUpdate += () =>
+        {
+
+        };
+        Death.OnExit += x => { };
+
+        #endregion
+
         #region CLIMB STATE
 
         Climb.OnEnter += x =>
@@ -784,7 +791,11 @@ public class Character : Entity
         yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
 
     }
-
+    IEnumerator DeathCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     public void ClimbCliff()
     {
         SendInputToFSM(CharacterStates.Climb);
@@ -807,9 +818,9 @@ public class Character : Entity
     public override void Death()
     {
         base.Death();
-        SendInputToFSM(CharacterStates.Stop);
+        SendInputToFSM(CharacterStates.Death);
         characterRigidbody.linearVelocity = Vector2.zero;
-        characterView.OnDeath();
+
     }
     public CustomNode GetLastPathNode()
     {
@@ -1046,5 +1057,6 @@ public enum CharacterStates
     DoingEvent = 1 << 10,
     Swaying = 1 << 11,
     OnLadder = 1 << 12,
+    Death = 1 << 13,
     All = ~0
 }

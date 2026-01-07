@@ -46,10 +46,11 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-       
+        
         if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
         {
             Debug.LogError("A");
+            Vector3 pos = (new Vector3(_character.transform.position.x, _upperNode.transform.position.y, 0) - _upperNode.transform.transform.position).normalized;
             _fromAbove = false;
             _character.GetPath(_upperNode);
             _character.SendInputToFSM(CharacterStates.Moving);
@@ -57,6 +58,7 @@ public class Ladders : MonoBehaviour, IInteractable
         else
         {
             Debug.LogError("B");
+            Vector3 pos = (new Vector3(_character.transform.position.x, _lowerNode.transform.position.y, 0) - _lowerNode.transform.transform.position).normalized;
             _fromAbove = true;
             _character.GetPath(_lowerNode);
             _character.SendInputToFSM(CharacterStates.Moving);
@@ -73,7 +75,7 @@ public class Ladders : MonoBehaviour, IInteractable
     public IEnumerator IGetOnLadder()
     {
         _character.SendInputToFSM(CharacterStates.Wait);
-
+        _character.SetAnimatorTrigger("Ladder");
         yield return null;
 
         LadderMovement();
@@ -89,14 +91,15 @@ public class Ladders : MonoBehaviour, IInteractable
             _character.characterView.OnEnteringLadder(1);
             _character.transform.DOMoveY(_lowerPoint.position.y, _movementDuration)
                 .OnComplete(() => { _character.transform.position = _lowerNode.transform.position; _character.characterRigidbody.gravityScale = 1; 
-                    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); });
+                    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle"); });
         }
         else
         {
             _character.characterView.OnEnteringLadder(0);
             _character.transform.DOMoveY(_upperPoint.position.y, _movementDuration)
                 .OnComplete(() => { _character.transform.position = _upperNode.transform.position; _character.characterRigidbody.gravityScale = 1; 
-                    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); });
+                    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle");
+                });
         }
     }
 }
