@@ -16,7 +16,7 @@ public class CustomNode : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
-        
+        GameManager.instance.nodes.Add(this);
     }
 
     // Update is called once per frame

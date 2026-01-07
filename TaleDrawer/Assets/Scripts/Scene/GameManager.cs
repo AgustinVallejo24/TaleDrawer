@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _playerCFollowC = _playerCamera.GetComponent<CinemachineFollow>();
-        _clickRayLength = levelCharacter.transform.localScale.y * 2;
+     //   _clickRayLength = levelCharacter.transform.localScale.y * 2;
         _zernikeManager.recognitionAction = _dTest.StartDissolve;
 
     }
@@ -99,12 +99,12 @@ public class GameManager : MonoBehaviour
                 RaycastHit2D[] results = new RaycastHit2D[1];
 
                 int hits = Physics2D.Raycast(_clickPosition, Vector2.down, filter, results, _clickRayLength);
-
+                
 
     
                 if (hits>0)
                 {
-                    
+                    Debug.LogError("LPM");
                     RaycastHit2D hit = results[0];
                     CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes.Where(x => x.isClickable == true).ToList());
                     if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1.3f)))

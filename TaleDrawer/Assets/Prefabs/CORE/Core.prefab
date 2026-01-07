@@ -495,18 +495,7 @@ MonoBehaviour:
   _interactables:
     serializedVersion: 2
     m_Bits: 2176
-  nodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  nodes: []
   sticker: {fileID: 8614830422883373297}
   touchPosition: {x: 0, y: 0}
   drawingThreshold: 0
