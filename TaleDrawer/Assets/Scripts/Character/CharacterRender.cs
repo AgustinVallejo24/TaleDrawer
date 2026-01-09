@@ -61,13 +61,14 @@ public class CharacterRender : MonoBehaviour
     }
     public void Jump()
     {
-        float distance = Vector2.Distance(_character.transform.position, _character.currentJumpingPosition);
-        _character.transform.DOJump(_character.currentJumpingPosition, 0.5f * distance, 1, _character.currentJumpingTime)
-        .SetEase(Ease.Linear)
-        .OnComplete(() =>
-        {
-           _character.currentJumpingAction?.Invoke();
-        });
+        //float distance = Vector2.Distance(_character.transform.position, _character.currentJumpingPosition);
+        //_character.transform.DOJump(_character.currentJumpingPosition, 0.5f * distance, 1, _character.currentJumpingTime)
+        //.SetEase(Ease.Linear)
+        //.OnComplete(() =>
+        //{
+        //   _character.currentJumpingAction?.Invoke();
+        //});
+        _character.characterModel.Jump();
     }
     private IEnumerator IExitRope()
     {
@@ -82,7 +83,14 @@ public class CharacterRender : MonoBehaviour
             _character.currentHook = null;
         }
     }
-
+    public void StopRigidbody()
+    {
+        _character.characterRigidbody.linearVelocity = Vector2.zero;
+    }
+    public void RestoreSpeed()
+    {
+        _character.currentSpeed = _character.maxSpeed;
+    }
     public void ExitingHorizontalRope()
     {
         _character.currentHook.ExitingHorizontalRope(transform);

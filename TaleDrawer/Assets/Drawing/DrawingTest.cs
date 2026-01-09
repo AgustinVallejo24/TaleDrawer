@@ -91,6 +91,7 @@ public class DrawingTest : MonoBehaviour
         }
         else
         {
+            if (GameManager.instance.currentState == SceneStates.Spawning) return;
             if (CustomTools.IsTouchOverUI(position))
             {
                 //Debug.Log("TOCOBOTON");

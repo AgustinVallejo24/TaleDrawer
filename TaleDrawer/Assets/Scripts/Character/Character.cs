@@ -10,13 +10,14 @@ public class Character : Entity
 {
     #region Variables
 
-    [SerializeField] float _maxSpeed;
+    public float maxSpeed;
     public float currentSpeed;
+    public float inAirSpeed;
     [SerializeField] [Range(0, 0.5f)] float _smoothSpeed;
-    [SerializeField] float _maxLife;
+    public float _maxLife;
     protected float _currentLife;
-    [SerializeField] float _jumpForce;
-    public Vector2 currentJumpForce;
+    public float jumpForce;
+
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
     [SerializeField] public Vector2 nextPosition;
@@ -32,7 +33,7 @@ public class Character : Entity
     public IInteractable currentInteractable;
     public AudioSource characterAudioSource;
     public AudioClip jumpSound;
-    
+
     #endregion
 
     #region References
@@ -91,6 +92,16 @@ public class Character : Entity
     public Vector2 currentJumpingPosition;
 
     public CinemachineFollow cameraFollow;
+
+    public float input;
+    public float horizontalJumpDir;
+
+    public LayerMask playerExcludeLayer;
+
+    public float landingVelocityThreshold;
+    public bool grounded;
+
+    public float distance;
     protected virtual void Awake()
     {
 
@@ -114,6 +125,7 @@ public class Character : Entity
         var Swaying = new StateE<CharacterStates>("Swaying");
         var OnLadder = new StateE<CharacterStates>("OnLadder");
         var Death = new StateE<CharacterStates>("Death");
+        var Falling = new StateE<CharacterStates>("Falling");
         StateConfigurer.Create(Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
@@ -122,16 +134,19 @@ public class Character : Entity
              .SetTransition(CharacterStates.Stop, Stop)
               .SetTransition(CharacterStates.Wait, Wait)
               .SetTransition(CharacterStates.Death, Death)
+                .SetTransition(CharacterStates.Landing, Landing)
+              .SetTransition(CharacterStates.Falling, Falling)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
-            //.SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.Climb, Climb)
-             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
-             .SetTransition(CharacterStates.Stop, Stop)
-                 .SetTransition(CharacterStates.Death, Death)
+            .SetTransition(CharacterStates.DoingEvent, DoingEvent)
+            .SetTransition(CharacterStates.Stop, Stop)
+            .SetTransition(CharacterStates.Death, Death)
+            .SetTransition(CharacterStates.Falling, Falling)
+              .SetTransition(CharacterStates.Landing, Landing)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -165,7 +180,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
-            .SetTransition(CharacterStates.Idle, Idle).Done();                   
+            .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(Climb)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
@@ -188,7 +203,12 @@ public class Character : Entity
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(Death)
-           .SetTransition(CharacterStates.Idle, Idle);
+           .SetTransition(CharacterStates.Idle, Idle)
+        .Done();
+        StateConfigurer.Create(Falling)
+           .SetTransition(CharacterStates.Idle, Idle)
+            .SetTransition(CharacterStates.Landing, Landing)
+        .Done();
 
 
 
@@ -201,19 +221,18 @@ public class Character : Entity
         {
             _currentState = CharacterStates.Idle;
             characterView.OnIdle();
-            /*if (currentObjectivesQueue.Any())
-            {
-                _eventFSM.SendInput(CharacterStates.Moving);
-            }
-            else
-            {
-               
-            }*/
         };
 
         Idle.OnUpdate += () =>
         {
-
+            if (input != 0)
+            {
+                SendInputToFSM(CharacterStates.Moving);
+            }
+            else
+            {
+                characterRigidbody.linearVelocityX = 0;
+            }
         };
 
         Idle.OnExit += x => { };
@@ -227,101 +246,6 @@ public class Character : Entity
             _currentState = CharacterStates.Moving;
             characterView.OnMove();
 
-             
-            if (!_currentPath.Any() && !_goToNextPosition)
-            {
-
-                _eventFSM.SendInput(CharacterStates.Idle);
-            }
-
-            else if (_currentPath.Count > 1)
-            {
-
-
-                //Quita el primer nodo si no tiene evento necesario, y si el personaje esta mas cerca del segundo nodo, que el primero del segundo.
-
-
-                if (Vector2.Distance(new Vector2(_currentPath.First().transform.position.x, _currentPath.First().transform.position.y + yPositionOffset),
-                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset)) >
-                    Vector2.Distance(CustomTools.ToVector2(transform.position),
-                    new Vector2(_currentPath.Skip(1).First().transform.position.x, _currentPath.Skip(1).First().transform.position.y + yPositionOffset))
-                    && Math.Abs(_currentPath.First().transform.position.y - _currentPath.Skip(1).First().transform.position.y) < _yDiffThreshold)
-                {
-                    if (_currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First().nodeEvent.GetPersistentEventCount() == 0)
-                    {
-                        _currentPath.Remove(_currentPath.First());
-                        _lookAtNode = _currentPath.First();
-                    }
-                    else
-                    {
-                        _lookAtNode = _currentPath.Skip(1).First();
-                    }
-
-                }
-                else
-                {
-                    _lookAtNode = _currentPath.First();
-                }
-
-        
-
-            }
-            else
-            {
-                //Quita el nodo de la lista si solo hay uno, y ese nodo puede ver al punto en donde se hizo click.                
-                if (!Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
-                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10) && nextPosition != CustomTools.ToVector2(_currentPath.Last().transform.position))
-                {
-                    _goToNextPosition = true;
-                    _currentPath.Remove(_currentPath.First());
-                }
-            }
-
-            //Cambia la dirreccion del sprite.
-            if (_currentPath.Any())
-            {
-                if (_lookAtNode != null)
-                {
-                    
-                    if (Mathf.Sign(_lookAtNode.transform.position.x - transform.position.x) > 0)
-                    {
-                        characterView.FlipCharacter(1);
-                    }
-                    else
-                    {                        
-                        characterView.FlipCharacter(-1);
-                    }
-
-                }
-                else
-                {
-                    
-                    if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
-                    {
-                        characterView.FlipCharacter(1);
-                    }
-                    else
-                    {
-                        characterView.FlipCharacter(-1);
-                    }
-                }
-
-            }
-            else
-            {
-               
-                if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
-                {
-                    characterView.FlipCharacter(1);
-                }
-                else
-                {
-                    characterView.FlipCharacter(-1);
-                }
-            }
-
-
-
         };
 
         Moving.OnUpdate += () =>
@@ -331,160 +255,18 @@ public class Character : Entity
         };
         Moving.OnFixedUpdate += () =>
         {
-            if (_currentPath.Any())
+
+            if (input != 0)
             {
-                float sqrDistanceToTarget = (CustomTools.ToVector2(_currentPath.First().transform.position) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
-                float xDist = Mathf.Abs(_currentPath.First().transform.position.x - transform.position.x);
-                float yDist = Mathf.Abs(_currentPath.First().transform.position.y - transform.position.y);
-
-                if (xDist > xOffset || yDist > yOffset)
-                {
-
-                    characterModel.Move(_currentPath.First().transform.position, _smoothSpeed);
-
-                }
-                else
-                {
-                    Debug.LogError(sqrDistanceToTarget);
-                    if (_currentPath.Count > 1)
-                    {
-
-                        var neighbour = _currentPath.First().neighbours.Where(x => x.node == _currentPath.Skip(1).First()).First();
-                        if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && neighbour.canDoEvent)
-                        {
-
-                            _currentPath.Remove(_currentPath.First());
-                            neighbour.nodeEvent.Invoke();
-                        }
-                        else if (neighbour.nodeEvent.GetPersistentEventCount() > 0 && !neighbour.canDoEvent)
-                        {
-                            ClearPath();
-                            characterRigidbody.linearVelocity = Vector2.zero;
-                            SendInputToFSM(CharacterStates.Idle);
-                        }
-                        else
-                        {
-                            if (_currentPath.Count == 2)
-                            {
-                                if (Vector2.Distance(CustomTools.ToVector2(transform.position), new Vector2(nextPosition.x, transform.position.y))
-                                < Vector2.Distance(new Vector2(_currentPath.Last().transform.position.x, transform.position.y), new Vector2(nextPosition.x, transform.position.y))
-                                && nextPosition != CustomTools.ToVector2(_currentPath.Last().transform.position))
-                                {
-                                    _currentPath.Remove(_currentPath.Last());
-                                    _goToNextPosition = true;
-                                }
-                                else
-                                {
-                                    _currentPath.Remove(_currentPath.First());
-                                }
-                            }
-                            else
-                            {
-                                _currentPath.Remove(_currentPath.First());
-                            }
-
-
-
-
-
-                        }
-
-                        
-                        if (Mathf.Sign(_currentPath.First().transform.position.x - transform.position.x) > 0)
-                        {
-                            characterView.FlipCharacter(1);
-                        }
-                        else
-                        {                            
-                            characterView.FlipCharacter(-1);
-                        }
-
-                    }
-                    else if (_currentPath.Count == 1)
-                    {
-                        RaycastHit2D hit = Physics2D.Raycast(_currentPath.First().transform.position, nextPosition - CustomTools.ToVector2(_currentPath.First().transform.position),
-                            Vector2.Distance(CustomTools.ToVector2(_currentPath.First().transform.position), nextPosition), 10);
-                        if (nextPosition != CustomTools.ToVector2(_currentPath.First().transform.position))
-                        {
-                            if (_currentPath.First().goalDelegate != null)
-                            {
-                                Debug.LogError(_currentPath.First().goalDelegate);
-                                _currentPath.First().goalDelegate.Invoke();
-                            }
-                            else
-                            {
-                                Debug.LogError("NoTEngoFuncion");
-                            }
-                            if (!hit)
-                            {
-                                _goToNextPosition = true;
-
-                                _currentPath.Remove(_currentPath.First());
-                                
-                                if (Mathf.Sign(nextPosition.x - transform.position.x) > 0)
-                                {
-                                    characterView.FlipCharacter(1);
-                                }
-                                else
-                                {                                    
-                                    characterView.FlipCharacter(-1);
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log(hit.transform.gameObject);
-                                _currentPath.Remove(_currentPath.First());
-                            }
-
-                        }
-                        else
-                        {
-                            _currentPath.Remove(_currentPath.First());
-                        }
-
-
-
-                    }
-
-
-
-                }
+                characterModel.Move2(input);
             }
             else
             {
-                if (_goToNextPosition)
-                {
-                    float sqrDistanceToTarget = (CustomTools.ToVector2(nextPosition) - (new Vector2(transform.position.x, transform.position.y))).sqrMagnitude;
-                    float xDist = Mathf.Abs(nextPosition.x - transform.position.x);
-                    float yDist = Mathf.Abs(nextPosition.y - transform.position.y);
+                characterRigidbody.linearVelocityX = 0;
 
-                    if (currentMovePosObj) 
-                    {
-                        nextPosition.y = currentMovePosObj.bounds.max.y + 1.3f;
-                    }
-                   
-
-                    if (xDist > xOffset || yDist > yOffset)
-                    {
-                        //characterModel.Move2(nextPosition, _smoothSpeed);
-                        characterModel.Move(nextPosition, _smoothSpeed);
-
-                    }
-                    else
-                    {
-                        characterRigidbody.linearVelocity = Vector2.zero;
-                        _eventFSM.SendInput(CharacterStates.Idle);
-                        onMovingEnd?.Invoke();
-                    }
-                }
-                else
-                {
-                    characterRigidbody.linearVelocity = Vector2.zero;
-                    _eventFSM.SendInput(CharacterStates.Idle);
-                    onMovingEnd?.Invoke();
-                }
-
+                SendInputToFSM(CharacterStates.Idle);
             }
+
 
         };
         Moving.OnExit += x =>
@@ -495,6 +277,38 @@ public class Character : Entity
         };
 
         #endregion
+
+
+        #region FALLING STATE
+
+        Falling.OnEnter += x =>
+        {
+            _currentState = CharacterStates.Falling;
+            
+            //  characterView.OnMove();
+
+        };
+
+        Falling.OnUpdate += () =>
+        {
+
+
+        };
+        Falling.OnFixedUpdate += () =>
+        {
+
+
+
+        };
+        Falling.OnExit += x =>
+        {
+
+
+
+        };
+
+        #endregion
+
 
         #region WAIT STATE
 
@@ -552,9 +366,11 @@ public class Character : Entity
         Jumping.OnEnter += x =>
         {
             //     _characterRigidbody.linearVelocity = Vector2.zero;
-
+            horizontalJumpDir = characterRigidbody.linearVelocity.x;
+            characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
+            characterModel.Jump();
 
         };
 
@@ -565,7 +381,7 @@ public class Character : Entity
         };
         Jumping.OnFixedUpdate += () =>
         {
-
+            characterModel.Move2(input, .7f);
         };
         Jumping.OnExit += x => { };
 
@@ -577,7 +393,7 @@ public class Character : Entity
         {
 
             _currentState = CharacterStates.OnRope;
-            
+
 
         };
 
@@ -597,8 +413,8 @@ public class Character : Entity
         #region JUMPINGTOROPE STATE
 
         JumpingToRope.OnEnter += x =>
-        {            
-            _currentState = CharacterStates.JumpingToRope;            
+        {
+            _currentState = CharacterStates.JumpingToRope;
         };
 
         JumpingToRope.OnUpdate += () =>
@@ -611,9 +427,9 @@ public class Character : Entity
 
         };
 
-        JumpingToRope.OnExit += x => 
+        JumpingToRope.OnExit += x =>
         {
-            
+
         };
 
         #endregion
@@ -622,7 +438,7 @@ public class Character : Entity
 
         Swaying.OnEnter += x =>
         {
-            
+
 
             _currentState = CharacterStates.Swaying;
         };
@@ -639,7 +455,7 @@ public class Character : Entity
 
         Swaying.OnExit += x =>
         {
-            
+
         };
 
         #endregion
@@ -705,8 +521,8 @@ public class Character : Entity
 
         Death.OnUpdate += () =>
         {
-            
-           
+
+
         };
         Death.OnFixedUpdate += () =>
         {
@@ -790,6 +606,8 @@ public class Character : Entity
         characterRigidbody = GetComponent<Rigidbody2D>();
         yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
 
+    //    StartCoroutine(SoilCheck());
+
     }
     IEnumerator DeathCoroutine()
     {
@@ -803,7 +621,30 @@ public class Character : Entity
     public virtual void Update()
     {
         _eventFSM.Update();
+        if(Mathf.Abs(characterRigidbody.linearVelocityX) > 0)
+        {
+            _animator.SetInteger("XVelocity", 1);
+        }
+        else
+        {
+            _animator.SetInteger("XVelocity", 0);
+        }
+        if (characterRigidbody.linearVelocityY > landingVelocityThreshold)
+        {
+            _animator.SetInteger("YVelocity", 1);
+        }
+        else if (characterRigidbody.linearVelocityY < -landingVelocityThreshold)
+        {
+            _animator.SetInteger("YVelocity", -1);
+        }
+        else
+        {
+            _animator.SetInteger("YVelocity", 0);
+        }
 
+        grounded = IsGrounded();
+
+        _animator.SetBool("Grounded", grounded);
         //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(transform.position.x,transform.position.y, Camera.main.transform.position.z), .1f);
     }
     private void FixedUpdate()
@@ -851,7 +692,7 @@ public class Character : Entity
         {
             SendInputToFSM(CharacterStates.Moving);
         }
-        else if(Vector2.Distance(CustomTools.ToVector2(transform.position), nextPosition) > 1f)
+        else if (Vector2.Distance(CustomTools.ToVector2(transform.position), nextPosition) > 1f)
         {
             _goToNextPosition = true;
             SendInputToFSM(CharacterStates.Moving);
@@ -864,17 +705,21 @@ public class Character : Entity
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if(collision.gameObject.tag == "Spikes")
+        if (collision.gameObject.tag == "Spikes")
         {
             Death();
         }
+        //if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Robin_SFalling" && grounded)
+        //{
+        //    currentSpeed = _maxSpeed;
+        //    characterView.OnLand();
+        //}
 
-
-    }    
+    }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out SpawningObject spawningObject))
+        if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject))
         {
             spawningObject.InteractionWithEntity();
         }
@@ -981,7 +826,7 @@ public class Character : Entity
 
         if (list.Any())
         {
-            Debug.LogError(goal.gameObject.name + " "+ list.Count);
+            Debug.LogError(goal.gameObject.name + " " + list.Count);
             return list;
         }
         else
@@ -1006,8 +851,8 @@ public class Character : Entity
     }
     public override void LiftEntity()
     {
-       SendInputToFSM(CharacterStates.Stop);
-       characterRigidbody.gravityScale = 0;
+        SendInputToFSM(CharacterStates.Stop);
+        characterRigidbody.gravityScale = 0;
     }
     public override void PutOnHelmet()
     {
@@ -1015,7 +860,7 @@ public class Character : Entity
     }
     public override void ReleaseFromBalloon()
     {
-        characterRigidbody.gravityScale = 1;
+        characterRigidbody.gravityScale = 3;
         SendInputToFSM(CharacterStates.Idle);
     }
 
@@ -1033,6 +878,64 @@ public class Character : Entity
         characterModel.Jump(CustomTools.ToVector2(jumpPos.position), Land);
     }
 
+    public bool IsGrounded()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one, 0, -transform.up, 0, playerExcludeLayer);
+        //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
+
+        if (hit)
+            Debug.LogError(hit.transform.gameObject.name);
+        if (hit.collider == null || hit.collider.isTrigger)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public IEnumerator SoilCheck()
+    {
+       
+        while (true)
+        {
+            yield return new WaitForSeconds(.1f);
+            RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position,Vector2.one*1f,0, -transform.up, distance, playerExcludeLayer);
+         //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
+       
+            if(hit)
+             Debug.LogError(hit.transform.gameObject.name);
+            if (hit.collider == null || hit.collider.isTrigger )
+            {
+                Debug.LogError("FALLLL");
+                SendInputToFSM(CharacterStates.Falling);
+            }
+
+
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!feetPosition) return;
+
+        Vector2 size = Vector2.one * 1f;
+        Vector3 direction = -transform.up; // La dirección del cast
+        Vector3 startPosition = feetPosition.position;
+        Vector3 endPosition = startPosition + (direction * distance);
+
+        // Color para el Gizmo
+        Gizmos.color = Color.green;
+
+        // 1. Dibujar la caja inicial
+        Gizmos.DrawWireCube(startPosition, size);
+
+        // 2. Dibujar la caja final
+        Gizmos.DrawWireCube(endPosition, size);
+
+        // 3. Dibujar líneas que conecten las esquinas (opcional pero muy útil)
+        Gizmos.DrawLine(startPosition, endPosition);
+    }
     public void SetAnimatorTrigger(string name)
     {
         _animator.SetTrigger(name);
@@ -1058,5 +961,6 @@ public enum CharacterStates
     Swaying = 1 << 11,
     OnLadder = 1 << 12,
     Death = 1 << 13,
+    Falling = 1 << 14,
     All = ~0
 }

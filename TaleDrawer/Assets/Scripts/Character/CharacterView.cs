@@ -73,7 +73,7 @@ public class CharacterView
         if(movementSign > 0)
         {
             Vector3 previousOffset = _character.cameraFollow.FollowOffset;
-            previousOffset.x = 3;
+            previousOffset.x = 2;
             DOTween.To(
             () => _character.cameraFollow.FollowOffset,
             x => _character.cameraFollow.FollowOffset = x,
@@ -85,7 +85,7 @@ public class CharacterView
         else
         {
             Vector3 previousOffset = _character.cameraFollow.FollowOffset;
-            previousOffset.x = -3;
+            previousOffset.x = -2;
             DOTween.To(
             () => _character.cameraFollow.FollowOffset,
             x => _character.cameraFollow.FollowOffset = x,

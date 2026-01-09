@@ -22,11 +22,11 @@ public class Rubber : MonoBehaviour
     }
 
     // Llamado desde tu Input Action (Drag / Pointer Position)
-    public void OnDrag(InputAction.CallbackContext ctx)
+    public void OnDrag(Vector2 pos)
     {
-        if (!ctx.performed || isMoving) return;
+        if (pos == Vector2.zero || isMoving) return;
 
-        Vector2 screenPos = ctx.ReadValue<Vector2>();
+        Vector2 screenPos = pos;
         Vector2 localPos;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(

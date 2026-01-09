@@ -7,13 +7,24 @@ public class CharacterModel
     Character _myCharacter;
     Vector2 speed = Vector2.zero;
     private Vector2 _smoothDampVelocity;
+    Vector2 _movementVector;
     public CharacterModel(Character character, Rigidbody2D rigidbody)
     {
         _myRigidbody = rigidbody;
         _myCharacter = character;
     }
 
+    public void Jump()
+    {
+        if (_myCharacter.grounded)
+        {
+            _myCharacter.characterView.OnJump();
+            _myCharacter.currentSpeed = _myCharacter.inAirSpeed;
+            _myCharacter.characterRigidbody.AddForce(_myCharacter.jumpForce * Vector2.up, ForceMode2D.Impulse);
+        }
 
+      //  _myCharacter.characterRigidbody.linearVelocity = new Vector2(_myCharacter.horizontalJumpDir *3, 10f);
+    }
     public void Jump(Vector2 jumpPosition,float horizontalJumpForce, float verticalJumpForce)
     {
         _myCharacter.SendInputToFSM(CharacterStates.Jumping);
@@ -145,4 +156,28 @@ public class CharacterModel
         );
     }
 
+    public void Move2(float x)
+    {
+        if(x != 0)
+        Flip(CustomTools.ToVector2(_myCharacter.transform.position) + new Vector2(x, 0));
+            _movementVector = new Vector3(x, 0) * _myCharacter.currentSpeed;
+           Debug.Log(_movementVector);
+        // _rb.MovePosition(_movementVector + _pl.transform.position);
+      //    _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
+        _myRigidbody.linearVelocityX = _movementVector.x;
+
+
+    }
+
+    public void Move2(float x, float speedMultiplier)
+    {
+        if (x != 0)
+            Flip(CustomTools.ToVector2(_myCharacter.transform.position) + new Vector2(x, 0));
+        _movementVector = new Vector3(x, 0) * _myCharacter.currentSpeed * speedMultiplier;
+        Debug.Log(_movementVector);
+        // _rb.MovePosition(_movementVector + _pl.transform.position);
+       // _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
+        _myRigidbody.linearVelocityX = _movementVector.x;
+
+    }
 }

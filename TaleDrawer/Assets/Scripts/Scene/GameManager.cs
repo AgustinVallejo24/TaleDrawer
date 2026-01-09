@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Desactiva VSync para permitir el control manual
+        QualitySettings.vSyncCount = 0;
+        // Establece el límite a 60 FPS
+        Application.targetFrameRate = 60;
         _playerCFollowC = _playerCamera.GetComponent<CinemachineFollow>();
      //   _clickRayLength = levelCharacter.transform.localScale.y * 2;
         _zernikeManager.recognitionAction = _dTest.StartDissolve;
@@ -70,7 +74,6 @@ public class GameManager : MonoBehaviour
 
     public void OnClick(Vector2 position)
     {
-
         if (currentState == SceneStates.Game && _clicableStates.HasFlag(Character.instance._currentState) && !_dTest.isDrawing)
         {
             if(levelCharacter.currentInteractable != null)
@@ -134,13 +137,14 @@ public class GameManager : MonoBehaviour
 
     public void SpawnObject(SpawnableObjectType objectType)
     {
-          GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
+        StateChanger(SceneStates.Spawning);
+        GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
 
 
 
           newObj.GetComponent<SpawningObject>().Paint();
 
-        // StateChanger(SceneStates.Dragging);
+         
       
     }
     public void ChangeToDrawingState()
@@ -222,5 +226,6 @@ public enum SceneStates
     Drawing,
     Dragging,
     Event,
-    GameOver
+    GameOver,
+    Spawning,
 }

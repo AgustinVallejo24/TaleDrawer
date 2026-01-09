@@ -16,7 +16,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Drage",
+                    "name": "Drag",
                     "type": "Value",
                     "id": "ba984e11-254b-4b63-9af2-91ba6657bef4",
                     "expectedControlType": "Vector2",
@@ -32,6 +32,15 @@
                     "processors": "",
                     "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Input",
+                    "type": "Value",
+                    "id": "ddee4f04-d564-479e-acbd-5137c5549000",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -64,7 +73,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drage",
+                    "action": "Drag",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -76,6 +85,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "EndDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f43a3de4-1fdf-4d34-8862-37ff50c4e55f",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Input",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -93,12 +113,12 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "3f69e664-47dd-449e-af67-7a9fbbc2a6b9",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Press(behavior=1)",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "EndDraw",
@@ -106,7 +126,7 @@
                     "id": "58ecf1b1-d4c0-43f4-8ca5-b791b1e5c077",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(pressPoint=0.3,behavior=1)",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
                 },
                 {
@@ -126,20 +146,27 @@
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Input",
+                    "type": "Value",
+                    "id": "a25ac4cd-f9c3-43dd-9ab3-729c0b25eec4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "99274f0b-d73f-4ba2-a6d9-bf8a2c56e179",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "dacf7841-a1c9-4857-8579-53c8f430dcd5",
-                    "path": "<Pointer>/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "0f9bc6d5-d87f-4145-9ab3-a4a6ca924512",
@@ -170,6 +197,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "BeginDraw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fcca14b8-7f59-463c-907e-fbe8155ad601",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Input",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "306c6f16-3cfa-4b99-8b4e-4b785d21b025",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "ed066176-809b-48b9-be93-b43a82252cc2",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "b1645e7e-aa5b-4de9-b60b-8da28fc0038a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9c857e2c-3267-4dec-99d0-66c157120da8",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

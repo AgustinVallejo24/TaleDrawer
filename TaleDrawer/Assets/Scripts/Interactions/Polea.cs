@@ -59,6 +59,40 @@ public class Polea : MonoBehaviour, IInteractable
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.TryGetComponent(out Character character))
+        {
+            ConfigurePlayer(character,true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Character character))
+        {
+            ConfigurePlayer(character,false);
+        }
+    }
+    public void ConfigurePlayer(Character _myCharacter, bool state)
+    {
+        if (state)
+        {
+            _myCharacter.transform.parent = transform;
+            hasPlayer = true;
+            platformWeight = 2;
+
+        }
+        else
+        {
+            _myCharacter.transform.parent = null;
+            hasPlayer = false;
+            platformWeight = 0;
+        }
+
+
+
+    }
 
     public void NodeActivation(string section)
     {

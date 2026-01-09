@@ -14,11 +14,12 @@ public class Caja : SpawningObject,IInteractable
 
     [SerializeField] bool canInteract = true;
 
+    [SerializeField] Collider2D _upperCollider;
     public override void Start()
     {
         base.Start();
         StartCoroutine(CheckSoil());
-        
+        _upperCollider.forceReceiveLayers = _excludeLayers;
     }
     private void OnDestroy()
     {

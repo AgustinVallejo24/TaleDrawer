@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     Vector2 _clickPosition;
     [SerializeField] InputActionReference MoveMouse;
     [SerializeField] InputActionReference Draw;
-
+    [SerializeField] InputActionReference Move;
     [Header("Settings")]
     public float dragThreshold = 20f;
 
@@ -22,22 +22,36 @@ public class InputManager : MonoBehaviour
     private bool pointerDown = false;
     public EventSystem eventSystem;
     public GraphicRaycaster raycaster;
-
+    public Character character;
     public Canvas canvas;
+
+    public PlayerInput playerInput;
+    public Vector2 input;
+    public Vector2 mouseInput;
     void Start()
     {
-        MoveMouse.action.performed += OnDrag;
-        Draw.action.performed += Drawing;
+        //MoveMouse.action.performed += OnDrag;
+        //Draw.action.performed += Drawing;
+        //Move.action.performed += OnMove;
     }
 
     // Update is called once per frame
 
+    public void OnInput()
+    {
 
+    }
     private void Update()
     {
+
+        character.input = playerInput.actions["Move"].ReadValue<Vector2>().x;
+        Debug.LogError(input);
+        mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
+
+        
         if (!pointerDown) return;
 
-        Vector2 currentPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
+        Vector2 currentPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
         float distance = Vector2.Distance(currentPos, startPos);
 
         if (!isDragging && distance > dragThreshold)
@@ -45,31 +59,42 @@ public class InputManager : MonoBehaviour
             Debug.LogError(distance);
             isDragging = true;
         }
-
     }
-
+    private void FixedUpdate()
+    {
+        
+       // sceneManager.levelCharacter.characterModel.Move2(input.x);
+    }
+    public void OnJump()
+    {
+        Debug.LogError("LAPUTAMADRE");
+        
+        character.characterModel.Jump();
+       // character.SendInputToFSM(CharacterStates.Jumping);
+    }
     public void OnBeginDrag()
     {
-        Debug.Log("Entro");
-        _clickPosition = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
+        
+        _clickPosition = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
         var interactionHit = Physics2D.OverlapCircle(_clickPosition, 1f, _draggableItems);
         if (interactionHit == null) return;
         if(interactionHit.gameObject.TryGetComponent(out SpawningObject sP))
         {
+           // Debug.LogError("LAPUTAMADRE");
             currentDraggable = sP;
             currentDraggable.OnBeginDrag();
         }
       
     }
-    private void OnDrag(InputAction.CallbackContext contex)
+    public void OnDrag()
     {
-       
 
+   
         if (currentDraggable != null)
         {
             
-            _clickPosition = sceneManager._sceneCamera.ScreenToWorldPoint(contex.ReadValue<Vector2>());
-            currentDraggable.OnDrag(contex.ReadValue<Vector2>());
+            _clickPosition = sceneManager._sceneCamera.ScreenToWorldPoint(mouseInput);
+            currentDraggable.OnDrag(mouseInput);
             // currentDraggable.transform.position = Vector2.Lerp(currentDraggable.transform.position,_clickPosition,20*Time.unscaledDeltaTime);
         }
     }
@@ -77,8 +102,8 @@ public class InputManager : MonoBehaviour
     public void OnBeginDraw()
     {
         pointerDown = true;
-        startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
-        startWorldPos = Input.GetTouch(0).position;
+        startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
+        startWorldPos = Input.mousePosition;
 
 
         PointerEventData data = new PointerEventData(eventSystem);
@@ -97,33 +122,30 @@ public class InputManager : MonoBehaviour
 
         //  sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
     }
-    public void Drawing(InputAction.CallbackContext contex)
+    public void OnDraw()
     {
-
+      
         if (isDragging)
         {
             if (rubber != null)
             {
  
-                rubber.OnDrag(contex);
+                rubber.OnDrag(mouseInput);
 
             }
             else
             {
-                sceneManager._dTest.OnDraw(contex.ReadValue<Vector2>());
+                sceneManager._dTest.OnDraw(mouseInput);
             }
  
-
-
-
-        
-
-            
+    
+           
         }
         
     }
     public void OnEndDraw()
     {
+        Debug.Log("Entro");
         pointerDown = false;
         isDragging = false;
         if(rubber != null)
@@ -133,6 +155,10 @@ public class InputManager : MonoBehaviour
         }
         
         sceneManager._dTest.OnEndDrag();
+    }
+    public void OnTest()
+    {
+        Debug.LogError("LAPUTAMADRE");
     }
     public void OnEndDrag()
     {
@@ -146,8 +172,6 @@ public class InputManager : MonoBehaviour
     }
     public void OnMove()
     {
-        Debug.LogError(sceneManager.playerInput.currentActionMap);
-        if(rubber==null)
-        sceneManager.OnClick(Input.GetTouch(0).position);
+
     }
 }
