@@ -20,16 +20,9 @@ public class Character : Entity
 
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
-    [SerializeField] public Vector2 nextPosition;
-    [SerializeField] bool _goToNextPosition;
-    [SerializeField] public float yPositionOffset;
-    [SerializeField] float _distToNodeThreshold;
     [SerializeField] Transform feetPosition;
     [SerializeField] protected Transform helmetPosition;
 
-    [SerializeField] public List<CustomNode> _currentPath;
-    public Action onMovingStart;
-    public Action onMovingEnd;
     public IInteractable currentInteractable;
     public AudioSource characterAudioSource;
     public AudioClip jumpSound;
@@ -48,7 +41,6 @@ public class Character : Entity
 
     #region Side Scripts References
 
-    CustomPathfinding _pathFinding;
     protected EventFSM<CharacterStates> _eventFSM;
     public CharacterModel characterModel;
     public CharacterView characterView;
@@ -56,16 +48,10 @@ public class Character : Entity
 
 
     public Transform visual;
-    private Vector3 lastPos;
+
     #region Level References
-    public List<InterestPoint> pointList;
-    public Queue<InterestPoint> currentObjectivesQueue = new Queue<InterestPoint>();
-    public Queue<InterestPoint> mainObjectivesQueue;
 
     public Camera sceneCamera;
-    [SerializeField] CustomNode _lookAtNode = null;
-    [SerializeField] float _yDiffThreshold;
-
     public static Character instance;
 
     public Casco helmet;
@@ -78,18 +64,9 @@ public class Character : Entity
     public Lever currentLever;
 
     public Hook currentHook;
-    public Collider2D currentMovePosObj;
 
     public LayerMask floorLayerMask;
     public int flipSign;
-
-    public float xOffset;
-    public float yOffset;
-
-
-    public Action currentJumpingAction;
-    public float currentJumpingTime;
-    public Vector2 currentJumpingPosition;
 
     public CinemachineFollow cameraFollow;
 
@@ -105,10 +82,6 @@ public class Character : Entity
     protected virtual void Awake()
     {
 
-        foreach (var item in pointList)
-        {
-            currentObjectivesQueue.Enqueue(item);
-        }
 
         #region States Declarations
         var Idle = new StateE<CharacterStates>("Idle");
@@ -271,7 +244,7 @@ public class Character : Entity
         };
         Moving.OnExit += x =>
         {
-            _goToNextPosition = false;
+         
 
 
         };
@@ -365,13 +338,11 @@ public class Character : Entity
 
         Jumping.OnEnter += x =>
         {
-            //     _characterRigidbody.linearVelocity = Vector2.zero;
             horizontalJumpDir = characterRigidbody.linearVelocity.x;
             characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
             characterModel.Jump();
-
         };
 
         Jumping.OnUpdate += () =>
@@ -602,11 +573,7 @@ public class Character : Entity
     protected virtual void Start()
     {
         instance = this;
-        _pathFinding = new CustomPathfinding(_obstacleLayerMask);
         characterRigidbody = GetComponent<Rigidbody2D>();
-        yPositionOffset = Math.Abs(transform.position.y - feetPosition.position.y);
-
-    //    StartCoroutine(SoilCheck());
 
     }
     IEnumerator DeathCoroutine()
@@ -663,17 +630,7 @@ public class Character : Entity
         characterRigidbody.linearVelocity = Vector2.zero;
 
     }
-    public CustomNode GetLastPathNode()
-    {
-        if (_currentPath.Any())
-        {
-            return _currentPath.Last();
-        }
-        else
-        {
-            return null;
-        }
-    }
+
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
     {
         yield return new WaitForSeconds(time);
@@ -687,20 +644,8 @@ public class Character : Entity
         helmet.transform.position = helmetPosition.position;
         helmet.transform.parent = transform;
         Destroy(rb);
+        SendInputToFSM(CharacterStates.Idle);
 
-        if (_currentPath.Any())
-        {
-            SendInputToFSM(CharacterStates.Moving);
-        }
-        else if (Vector2.Distance(CustomTools.ToVector2(transform.position), nextPosition) > 1f)
-        {
-            _goToNextPosition = true;
-            SendInputToFSM(CharacterStates.Moving);
-        }
-        else
-        {
-            SendInputToFSM(CharacterStates.Idle);
-        }
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -724,131 +669,10 @@ public class Character : Entity
             spawningObject.InteractionWithEntity();
         }
     }
-    public void ClearPath()
-    {
-
-        _currentPath.Clear();
-    }
 
 
-    /// <summary>
-    /// Para comparar con el primer nodo del path el value debe ser 0, para comparar con el último nodo del path el value debe ser 1, y para saber si el path contiene al node el value debe ser 2, 
-    /// cualquier value diferente a los mencionados devuelve falso.
-    /// </summary>
-    /// <param name="node"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public bool ComparePathNodes(CustomNode node, int value, bool first = false)
-    {
-        if (value == 0)
-        {
-            /*if (!first)
-            {
-                first = true;
-                Debug.LogError("Comparo con el primero, y devuelvo " + ComparePathNodes(node, value, first));
-            } */
-            return _currentPath.First().Equals(node);
-        }
-        else if (value == 1)
-        {
-            /*if (!first)
-            {
-                first = true;
-                Debug.LogError("Comparo con el último, y devuelvo " + ComparePathNodes(node, value, first));
-            }*/
-            return _currentPath.Last().Equals(node);
-        }
-        else if (value == 2)
-        {
-            /*if (!first)
-            {
-                first = true;
-                Debug.LogError("Comparo si esta dentro del path, y devuelvo " + ComparePathNodes(node, value, first));
-            }*/
-            return _currentPath.Contains(node);
-        }
-        else
-        {
-            Debug.LogError("No se compara el nodo de ninguna manera, por lo tanto se devuelve falso");
-            return false;
-        }
-    }
 
 
-    public bool GetPath(CustomNode goal, Vector2 nextPos)
-    {
-        nextPosition = nextPos;
-        CustomNode start = CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes);
-        _currentPath = _pathFinding.AStar(start, goal);
-
-        if (_currentPath.Count > 1 && _currentPath.SkipLast(1).Last().isClickable && Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), CustomTools.ToVector2(_currentPath.Last().transform.position))
-            > Vector2.Distance(CustomTools.ToVector2(_currentPath.SkipLast(1).Last().transform.position), nextPosition)
-            && _currentPath.SkipLast(1).Last().neighbours.Where(x => x.node == _currentPath.Last()).Last().nodeEvent.GetPersistentEventCount() == 0)
-        {
-            _currentPath = _currentPath.SkipLast(1).ToList();
-            if (Physics2D.Raycast(goal.transform.position, (nextPos - CustomTools.ToVector2(goal.transform.position)).normalized, Vector2.Distance(CustomTools.ToVector2(goal.transform.position), nextPos), _obstacleLayerMask))
-            {
-                return false;
-            }
-        }
-        if (_currentPath.Any())
-        {
-            return true;
-        }
-        else
-        {
-            Debug.LogError("NOHAYPATH");
-            return false;
-        }
-    }
-    public bool GetPath(CustomNode goal)
-    {
-        CustomNode start = CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes);
-        _currentPath = _pathFinding.AStar(start, goal);
-
-        if (_currentPath.Any())
-        {
-            nextPosition = goal.transform.position;
-            return true;
-        }
-        else
-        {
-            Debug.LogError("NOHAYPATH");
-            return false;
-        }
-    }
-
-    public List<CustomNode> GetPathList(CustomNode goal)
-    {
-        CustomNode start = CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes);
-
-        var list = _pathFinding.AStar(start, goal);
-
-        if (list.Any())
-        {
-            Debug.LogError(goal.gameObject.name + " " + list.Count);
-            return list;
-        }
-        else
-        {
-            return new List<CustomNode>();
-        }
-    }
-
-    public void Land()
-    {
-        _eventFSM.SendInput(CharacterStates.Landing);
-
-        if (_currentPath.Any())
-        {
-            StartCoroutine(SendInputToFSM(CharacterStates.Moving, 0.2f));
-        }
-        else
-        {
-            StartCoroutine(SendInputToFSM(CharacterStates.Idle, 0.2f));
-        }
-
-    }
     public override void LiftEntity()
     {
         SendInputToFSM(CharacterStates.Stop);
@@ -865,18 +689,6 @@ public class Character : Entity
     }
 
 
-    public List<CustomNode> GetCurrentPath()
-    {
-        return _currentPath;
-    }
-    public void Jump(Transform jumpPos)
-    {
-        Debug.Log("Llego al salto");
-        Character.instance.SendInputToFSM(CharacterStates.Jumping);
-        characterRigidbody.linearVelocity = Vector2.zero;
-
-        characterModel.Jump(CustomTools.ToVector2(jumpPos.position), Land);
-    }
 
     public bool IsGrounded()
     {

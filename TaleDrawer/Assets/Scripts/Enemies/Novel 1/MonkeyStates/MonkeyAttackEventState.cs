@@ -22,7 +22,6 @@ public class MonkeyAttackEventState : BaseState
 
         GameManager.instance.StateChanger(SceneStates.GameOver);
         _character.SendInputToFSM(CharacterStates.Stop);
-        _character._currentPath = null;
         _character.characterRigidbody.linearVelocity = Vector3.zero;
         if (_character.transform.position.x >= _myMonkey.transform.position.x)
         {

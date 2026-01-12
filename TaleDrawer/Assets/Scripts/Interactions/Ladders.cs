@@ -47,22 +47,22 @@ public class Ladders : MonoBehaviour, IInteractable
     public void InteractWithPlayer()
     {
         
-        if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
-        {
-            Debug.LogError("A");
-            Vector3 pos = (new Vector3(_character.transform.position.x, _upperNode.transform.position.y, 0) - _upperNode.transform.transform.position).normalized;
-            _fromAbove = false;
-            _character.GetPath(_upperNode);
-            _character.SendInputToFSM(CharacterStates.Moving);
-        }
-        else
-        {
-            Debug.LogError("B");
-            Vector3 pos = (new Vector3(_character.transform.position.x, _lowerNode.transform.position.y, 0) - _lowerNode.transform.transform.position).normalized;
-            _fromAbove = true;
-            _character.GetPath(_lowerNode);
-            _character.SendInputToFSM(CharacterStates.Moving);
-        }
+        //if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
+        //{
+        //    Debug.LogError("A");
+        //    Vector3 pos = (new Vector3(_character.transform.position.x, _upperNode.transform.position.y, 0) - _upperNode.transform.transform.position).normalized;
+        //    _fromAbove = false;
+        //    _character.GetPath(_upperNode);
+        //    _character.SendInputToFSM(CharacterStates.Moving);
+        //}
+        //else
+        //{
+        //    Debug.LogError("B");
+        //    Vector3 pos = (new Vector3(_character.transform.position.x, _lowerNode.transform.position.y, 0) - _lowerNode.transform.transform.position).normalized;
+        //    _fromAbove = true;
+        //    _character.GetPath(_lowerNode);
+        //    _character.SendInputToFSM(CharacterStates.Moving);
+        //}
     }
 
     public void StartLadderMovement()

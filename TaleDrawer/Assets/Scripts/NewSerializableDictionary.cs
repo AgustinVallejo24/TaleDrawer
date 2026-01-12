@@ -1,36 +1,30 @@
+using System.Collections; // <--- Necesario para IEnumerable
 using System.Collections.Generic;
 using UnityEngine;
 
-// 1. Agrega la interfaz ISerializationCallbackReceiver
 [System.Serializable]
-public class NewSerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver
+public class NewSerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TKey, TValue>>
 {
-    // Esta es la lista que Unity puede serializar y mostrar en el inspector.
-    // Es la "fuente de verdad" para la serialización.
     [SerializeField]
-    private List<KeyValuePair> keyValuePairs = new List<KeyValuePair>();
+    private List<SerializableKeyValuePair> keyValuePairs = new List<SerializableKeyValuePair>();
 
-    // Este es el diccionario real, que no se serializa pero usamos para acceso rápido.
-    // Es un "caché" de la lista.
     private Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
 
-    // Estructura interna para guardar los pares clave-valor
+    // Renombré la struct interna para evitar confusión con System.Collections.Generic.KeyValuePair
     [System.Serializable]
-    private struct KeyValuePair
+    private struct SerializableKeyValuePair
     {
         public TKey Key;
         public TValue Value;
     }
 
-    // --> MÉTODO PARA CARGAR
-    // Se ejecuta después de que Unity ha deserializado los datos (ha llenado la lista)
-    // Esto está CORRECTO.
+    // --- Lógica de Serialización (Tus métodos OnAfter/OnBefore) ---
+
     public void OnAfterDeserialize()
     {
         dictionary.Clear();
         foreach (var pair in keyValuePairs)
         {
-            // Ten cuidado con claves duplicadas en el inspector
             if (pair.Key != null && !dictionary.ContainsKey(pair.Key))
             {
                 dictionary.Add(pair.Key, pair.Value);
@@ -38,75 +32,52 @@ public class NewSerializableDictionary<TKey, TValue> : ISerializationCallbackRec
         }
     }
 
-    // --> MÉTODO PARA GUARDAR
-    // ¡AQUÍ ESTABA EL PROBLEMA!
-    // Lo vaciamos para permitir que el Inspector guarde sus cambios en 'keyValuePairs'
-    public void OnBeforeSerialize()
-    {
-        // NO HACER NADA AQUÍ.
-        // Si modificamos 'keyValuePairs' aquí, borraremos los cambios
-        // hechos en el Inspector antes de que se puedan guardar.
+    public void OnBeforeSerialize() { /* Mantener vacío según tu lógica */ }
 
-        // La ÚNICA vez que necesitarías código aquí es si quieres
-        // detectar duplicados en el Inspector y limpiarlos *antes* de guardar.
-        // Por ahora, lo dejamos vacío por simplicidad.
+    // --- Implementación de IEnumerable ---
+
+    // Este es el que usa el foreach (devuelve el par clave-valor estándar de C#)
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+    {
+        return dictionary.GetEnumerator();
     }
 
-    // --- Métodos públicos para que la clase se comporte como un diccionario ---
-    // AHORA DEBEN MODIFICAR AMBAS COLECCIONES (lista y diccionario)
+    // Requisito de la interfaz IEnumerable antigua
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 
-    // Indexador para acceder a los elementos como miDiccionario[clave]
+    // --- Otros métodos de Diccionario ---
+
     public TValue this[TKey key]
     {
         get => dictionary[key];
         set
         {
             dictionary[key] = value;
-            // Sincronizar la lista (lento, pero necesario para guardar)
-            bool found = false;
-            for (int i = 0; i < keyValuePairs.Count; i++)
-            {
-                // Usamos EqualityComparer para tipos genéricos
-                if (EqualityComparer<TKey>.Default.Equals(keyValuePairs[i].Key, key))
-                {
-                    keyValuePairs[i] = new KeyValuePair { Key = key, Value = value };
-                    found = true;
-                    break;
-                }
-            }
-            // Si no existía, lo añadimos (comportamiento del indexador de Dictionary)
-            if (!found)
-            {
-                keyValuePairs.Add(new KeyValuePair { Key = key, Value = value });
-            }
+            SyncList(key, value);
         }
     }
 
     public void Add(TKey key, TValue value)
     {
-        dictionary.Add(key, value); // Esto lanza excepción si la clave ya existe (correcto)
-        keyValuePairs.Add(new KeyValuePair { Key = key, Value = value }); // Sincronizar lista
+        dictionary.Add(key, value);
+        keyValuePairs.Add(new SerializableKeyValuePair { Key = key, Value = value });
     }
 
-    public bool Remove(TKey key)
+    private void SyncList(TKey key, TValue value)
     {
-        if (dictionary.Remove(key))
+        for (int i = 0; i < keyValuePairs.Count; i++)
         {
-            // Sincronizar lista (lento)
-            for (int i = 0; i < keyValuePairs.Count; i++)
+            if (EqualityComparer<TKey>.Default.Equals(keyValuePairs[i].Key, key))
             {
-                if (EqualityComparer<TKey>.Default.Equals(keyValuePairs[i].Key, key))
-                {
-                    keyValuePairs.RemoveAt(i);
-                    return true;
-                }
+                keyValuePairs[i] = new SerializableKeyValuePair { Key = key, Value = value };
+                return;
             }
         }
-        return false;
+        keyValuePairs.Add(new SerializableKeyValuePair { Key = key, Value = value });
     }
 
-    public bool ContainsKey(TKey key)
-    {
-        return dictionary.ContainsKey(key);
-    }
+    // ... (Mantén tus métodos Remove y ContainsKey igual)
 }

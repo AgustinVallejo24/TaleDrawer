@@ -52,9 +52,7 @@ public class CharacterModel
 
         if (jumpOnAnimation)
         {
-            _myCharacter.currentJumpingAction = onComplete;
-            _myCharacter.currentJumpingPosition = jumpPosition;
-            _myCharacter.currentJumpingTime = time;
+
         }
         else
         {

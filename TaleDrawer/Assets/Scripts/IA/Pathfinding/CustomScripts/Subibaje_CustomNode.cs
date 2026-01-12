@@ -25,7 +25,6 @@ public class Subibaje_CustomNode : CustomNode
         }
         else if (left && !subibaja.left)
         {
-            _myCharacter.ClearPath();
             _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
             _myCharacter.SendInputToFSM(CharacterStates.Idle);
         }
@@ -35,7 +34,6 @@ public class Subibaje_CustomNode : CustomNode
         }
         else
         {
-            _myCharacter.ClearPath();
             _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
             _myCharacter.SendInputToFSM(CharacterStates.Idle);
         }
@@ -55,16 +53,7 @@ public class Subibaje_CustomNode : CustomNode
        // subibaja.CreateJoint(_myCharacter.GetComponent<Rigidbody2D>());
 
         subibaja.hasPlayer = true;
-        if (_myCharacter.GetLastPathNode() == this)
-        {
-            goalDelegate?.Invoke();
-            _myCharacter.ClearPath();
-            StartCoroutine(_myCharacter.SendInputToFSM(CharacterStates.Wait, 0.2f));
-        }
-        else
-        {
-            StartCoroutine(_myCharacter.SendInputToFSM(CharacterStates.Moving, 0.2f));
-        }
+
         
 
     }
@@ -88,13 +77,11 @@ public class Subibaje_CustomNode : CustomNode
         _myCharacter.SendInputToFSM(CharacterStates.Wait);
         yield return new WaitForSeconds(.3f);
         int index = 100;
-        index = neighbours.FindIndex(x => x.node == _myCharacter.GetCurrentPath().First());
         if (index != 100)
         {
             Debug.LogError("Calculeelindex");
             if (!neighbours[index].canDoEvent)
             {
-                _myCharacter.ClearPath();
                 _myCharacter.SendInputToFSM(CharacterStates.Wait);
                 yield break;
             }
@@ -127,13 +114,12 @@ public class Subibaje_CustomNode : CustomNode
         _myCharacter.SendInputToFSM(CharacterStates.Wait);
         yield return new WaitForSeconds(.3f);
         int index = 100;
-        index = neighbours.FindIndex(x => x.node == _myCharacter.GetCurrentPath().First());
         if (index != 100)
         {
             Debug.LogError("Calculeelindex");
             if (!neighbours[index].canDoEvent)
             {
-                _myCharacter.ClearPath();
+
                 _myCharacter.SendInputToFSM(CharacterStates.Wait);
                 yield break;
             }
@@ -144,6 +130,5 @@ public class Subibaje_CustomNode : CustomNode
         _myCharacter.transform.parent = null;
         Destroy(subibaja.myJoint);
         subibaja.hasPlayer = false;
-        _myCharacter.Jump(jumpPos);
-    }
+     }
 }

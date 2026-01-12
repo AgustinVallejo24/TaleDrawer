@@ -208,30 +208,30 @@ public class Subibaja : MonoBehaviour, IInteractable
         Character character = Character.instance;
         if (hasPlayer)
         {
-            if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
-            {
-                character.GetPath(_leftNode);
-                //character.characterModel.Flip(_leftNode.transform.position);
-              //  Destroy(myJoint);
-            }
-            else
-            {
-                character.GetPath(_rightNode);
-                //character.characterModel.Flip(_rightNode.transform.position);
-               // Destroy(myJoint);
-            }
+            //if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
+            //{
+            //    character.GetPath(_leftNode);
+            //    //character.characterModel.Flip(_leftNode.transform.position);
+            //  //  Destroy(myJoint);
+            //}
+            //else
+            //{
+            //    character.GetPath(_rightNode);
+            //    //character.characterModel.Flip(_rightNode.transform.position);
+            //   // Destroy(myJoint);
+            //}
         }
         else
         {
-            if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
-            {
-                character.GetPath(_rightNode);
-            }
-            else
-            {
-                character.GetPath(_leftNode);
+            //if (Vector3.Distance(character.transform.position, _leftNode.transform.position) > (Vector3.Distance(character.transform.position, _rightNode.transform.position)))
+            //{
+            //    character.GetPath(_rightNode);
+            //}
+            //else
+            //{
+            //    character.GetPath(_leftNode);
 
-            }
+            //}
         }
 
 

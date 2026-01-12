@@ -73,15 +73,7 @@ public class Hook : MonoBehaviour, IInteractable
                 _character.GetPath(_lowerNode);
             }*/
 
-            if(_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
-            {
-                _character.GetPath(_upperNode);
-            }
-            else
-            {
-                _character.GetPath(_lowerNode);
-            }
-            
+
         }
         else
         {
@@ -96,16 +88,7 @@ public class Hook : MonoBehaviour, IInteractable
                 _character.GetPath(_leftNode);
             }*/
 
-            if (_character.GetPathList(_rightNode).Count >= _character.GetPathList(_leftNode).Count)
-            {
-                _fromRight = false;
-                _character.GetPath(_rightNode);
-            }
-            else
-            {
-                _fromRight = true;
-                _character.GetPath(_leftNode);
-            }
+
         }
 
         _character.SendInputToFSM(CharacterStates.Moving);
@@ -143,7 +126,6 @@ public class Hook : MonoBehaviour, IInteractable
         }
         else
         {
-            _character._currentPath = null;
             _character.SendInputToFSM(CharacterStates.Idle);
         }
     }

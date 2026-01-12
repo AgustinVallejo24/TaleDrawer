@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
             if (interactionHit != null && interactionHit.gameObject.TryGetComponent(out IInteractable interactable))
             {
-                Character.instance.currentMovePosObj = null;
+        
                 interactable.InteractWithPlayer();
             }
             else
@@ -110,19 +110,7 @@ public class GameManager : MonoBehaviour
                     Debug.LogError("LPM");
                     RaycastHit2D hit = results[0];
                     CustomNode goal = CustomTools.GetClosestNode(hit.point, nodes.Where(x => x.isClickable == true).ToList());
-                    if (Character.instance.GetPath(goal, new Vector2(hit.point.x, hit.transform.GetComponent<Collider2D>().bounds.max.y + 1.3f)))
-                    {
-                        Character.instance.currentMovePosObj = hit.collider;
-                        Character.instance.SendInputToFSM(CharacterStates.Moving);
 
-                        sticker.transform.position = _clickPosition;
-                        sticker.SetActive(true);
-                    }
-                    else
-                    {
-                        sticker.SetActive(false);
-
-                    }
 
                 }
                 else

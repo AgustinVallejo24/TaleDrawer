@@ -15,11 +15,41 @@ public class Caja : SpawningObject,IInteractable
     [SerializeField] bool canInteract = true;
 
     [SerializeField] Collider2D _upperCollider;
+    [SerializeField] PlatformEffector2D effector2D;
+    [SerializeField] NewSerializableDictionary<float, Collider2D> _colliders;
+
+    public bool isMoving;
     public override void Start()
     {
         base.Start();
         StartCoroutine(CheckSoil());
         _upperCollider.forceReceiveLayers = _excludeLayers;
+
+
+    }
+    private void Update()
+    {
+        if(_spawned && _myrb.linearVelocity != Vector2.zero && !isMoving)
+        {
+            isMoving = true;
+        }
+        else if(_spawned && _myrb.linearVelocity == Vector2.zero && isMoving)
+        {
+            isMoving = false;
+            foreach (var item in _colliders)
+            {
+                if(Mathf.Abs(item.Key - transform.eulerAngles.z) < 1f)
+                {
+                    item.Value.enabled = true;
+                    effector2D.rotationalOffset = -transform.eulerAngles.z;
+                }
+                else
+                {
+                    item.Value.enabled = false;
+                }
+            }
+
+        }
     }
     private void OnDestroy()
     {
@@ -81,9 +111,9 @@ public class Caja : SpawningObject,IInteractable
             }
             Debug.Log(newPos);
           //  newPos.y = transform.position.y;
-            _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes.Where(x => x.isClickable == true).ToList()), newPos);
+
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
-            _myCharacter.onMovingEnd = JumpOverBox; 
+
         }
     }
 
@@ -95,7 +125,7 @@ public class Caja : SpawningObject,IInteractable
             _myCharacter.characterView.FlipCharacter(Mathf.RoundToInt(-sign));
 
         }
-        _myCharacter.onMovingEnd = null;
+
         _myCharacter.currentInteractable = this;
    //     _myColl.excludeLayers = default;
         _myCharacter.SendInputToFSM(CharacterStates.Climb);
@@ -146,7 +176,7 @@ public class Caja : SpawningObject,IInteractable
                     _myCharacter.characterModel.Jump(_jumpPosition, () =>
                     {
 
-                        _myCharacter.Land();
+                       
 
                     });
                 }
@@ -159,7 +189,7 @@ public class Caja : SpawningObject,IInteractable
                     _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2, () =>
                     {
 
-                        _myCharacter.Land();
+                        
 
                     });
                 }
@@ -168,7 +198,7 @@ public class Caja : SpawningObject,IInteractable
                     _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
                     {
                         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                        _myCharacter.Land();
+                   
 
                     });
 
@@ -183,7 +213,7 @@ public class Caja : SpawningObject,IInteractable
                 _myCharacter.characterModel.Jump(transform.position + Vector3.right * 2, () =>
                 {
                  
-                    _myCharacter.Land();
+                    
 
                 });
             }
@@ -192,7 +222,7 @@ public class Caja : SpawningObject,IInteractable
                 _myCharacter.characterModel.Jump(transform.position - Vector3.right * 2, () =>
                 {
 
-                    _myCharacter.Land();
+                  
 
                 });
 

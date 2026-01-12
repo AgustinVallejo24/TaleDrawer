@@ -35,7 +35,6 @@ public class Robin : Character
                 Debug.LogError("entro");
                 characterRigidbody.linearVelocity = Vector2.zero;
                 DOTween.Kill(transform);
-                _currentPath.Clear();
                 transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
                 SendInputToFSM(CharacterStates.Idle);
                 

@@ -36,12 +36,7 @@ public class Lever : MonoBehaviour, IInteractable
         if (Physics2D.OverlapCircle(transform.position, transform.localScale.x, _clickableMask) && !_leverState)
         {
             Vector3 pos = (new Vector3(_myCharacter.transform.position.x, _playerPos.position.y, 0) - _playerPos.transform.position).normalized;
-            if (_myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes.Where(x => x.isClickable == true).ToList()), _playerPos.position + pos * .5f))
-            {
 
-                _myCharacter.SendInputToFSM(CharacterStates.Moving);
-                _myCharacter.onMovingEnd = ActivatePlayerAnimation;
-            }
 
         }
     }
@@ -49,7 +44,6 @@ public class Lever : MonoBehaviour, IInteractable
     public void ActivatePlayerAnimation()
     {
         _myCharacter.currentLever = this;
-        _myCharacter.onMovingEnd = null;
         _myCharacter.SendInputToFSM(CharacterStates.DoingEvent);
         _myCharacter.SetAnimatorTrigger("PullLever");
     }

@@ -40,16 +40,13 @@ public class Activator : MonoBehaviour, IInteractable
         if (Physics2D.OverlapCircle(transform.position, transform.localScale.x, _clickableMask) && !isActive)
         {
             Vector3 pos = (new Vector3(_myCharacter.transform.position.x, _playerPos.position.y, 0) - _playerPos.transform.position).normalized;
-            _myCharacter.GetPath(CustomTools.GetClosestNode(transform.position, GameManager.instance.nodes.Where(x => x.isClickable == true).ToList()), _playerPos.position + pos * .5f);
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
-            _myCharacter.onMovingEnd = ActivatePlayerAnimation;
         }
     }
 
     public void ActivatePlayerAnimation()
     {
         Character _myCharacter = Character.instance;
-        _myCharacter.onMovingEnd = null;
         _myCharacter.SendInputToFSM(CharacterStates.DoingEvent);
         StartCoroutine(ActivationCoroutine());
        // _myCharacter.SetAnimatorTrigger("PullLever");

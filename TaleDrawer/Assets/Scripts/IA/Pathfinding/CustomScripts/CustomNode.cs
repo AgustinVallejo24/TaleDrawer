@@ -27,7 +27,7 @@ public class CustomNode : MonoBehaviour
 
     public void Jump( Transform jumpDestination)
     {
-        Character.instance.Jump(jumpDestination);
+        
     }
 
     public void SetCanDoEvent(CustomNode customNode, bool value)

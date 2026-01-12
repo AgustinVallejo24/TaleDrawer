@@ -34,7 +34,6 @@ public class Polea : MonoBehaviour, IInteractable
         Character character = Character.instance;
         if (!hasPlayer)
         {
-            character.GetPath(platformNode);
             character.SendInputToFSM(CharacterStates.Moving);
         }
     }
