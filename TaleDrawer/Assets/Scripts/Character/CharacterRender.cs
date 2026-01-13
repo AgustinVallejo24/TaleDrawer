@@ -25,13 +25,14 @@ public class CharacterRender : MonoBehaviour
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (renderer.flipX)
         {
-            _character.transform.position = _character.transform.position + 1.5f * Vector3.left + 2 * Vector3.up;
+            _character.transform.position = _character.transform.position + 1.5f * Vector3.left + 1.5f * Vector3.up;
         }
         else
         {
-            _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 2 * Vector3.up;
+            _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 1.5f * Vector3.up;
         }
-
+        _character.characterRigidbody.gravityScale = 3;
+        _character.SendInputToFSM(CharacterStates.Idle);
         transform.localPosition = new Vector3(0, 0, 0);
         _character.climbAction?.Invoke();
     }

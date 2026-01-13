@@ -71,6 +71,7 @@ public class Character : Entity
     public Hook currentHook;
 
     public LayerMask floorLayerMask;
+    public LayerMask cliffMask;
     public int flipSign;
 
     public CinemachineFollow cameraFollow;
@@ -85,6 +86,8 @@ public class Character : Entity
     public bool grounded;
 
     public float distance;
+
+    public float cliffDetectionDistance;
     protected virtual void Awake()
     {
 
@@ -533,6 +536,8 @@ public class Character : Entity
         Climb.OnEnter += x =>
         {
             Debug.LogError("CLIMBEO");
+            characterRigidbody.gravityScale = 0;
+            characterRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Climb;
             characterView.OnClimb();
 
@@ -595,6 +600,9 @@ public class Character : Entity
 
     }
 
+
+
+    
     protected virtual void Start()
     {
         instance = this;
@@ -637,6 +645,11 @@ public class Character : Entity
         grounded = IsGrounded();
 
         _animator.SetBool("Grounded", grounded);
+
+        if (CheckCliff())
+        {
+            SendInputToFSM(CharacterStates.Climb);
+        }
         //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(transform.position.x,transform.position.y, Camera.main.transform.position.z), .1f);
     }
     private void FixedUpdate()
@@ -713,11 +726,32 @@ public class Character : Entity
         SendInputToFSM(CharacterStates.Idle);
     }
 
+    public bool CheckCliff()
+    {
 
+        if (Physics2D.Raycast(transform.position + Vector3.up *.5f, transform.right * flipSign, cliffDetectionDistance, cliffMask) && !Physics2D.Raycast(transform.position + 0.75f* Vector3.up, transform.right * flipSign, cliffDetectionDistance, cliffMask))
+        {
+            if (Mathf.Abs(xInput) >= 1)
+            {
+                Debug.LogError("Detectooo");
+                return true;
+            }
+            else
+            {
+                Debug.LogError("No detecto por el velocity " + Mathf.Abs(characterRigidbody.linearVelocityX));
+                return false;
+            }
+        }
+        else
+        {
+            Debug.LogError("No detecto por el raycast");
+            return false;
+        }
+    }
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one, 0, -transform.up, 0, playerExcludeLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one*.8f, 0, -transform.up, 0, playerExcludeLayer);
         //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
 
         if (hit)
@@ -754,9 +788,19 @@ public class Character : Entity
 
     void OnDrawGizmos()
     {
+
+        // Definimos la dirección y distancia para no repetir código
+        Vector2 direction1 = transform.right * flipSign;
+        float distance1 = cliffDetectionDistance;
+
+        // 1. Rayo Inferior (desde la posición del objeto)
+        Debug.DrawRay(transform.position + Vector3.up*.5f, direction1 * distance1, Color.white);
+
+        // 2. Rayo Superior (desde la posición + 1 unidad hacia arriba)
+        Debug.DrawRay(transform.position + Vector3.up, direction1 * distance1, Color.white);
         if (!feetPosition) return;
 
-        Vector2 size = Vector2.one * 1f;
+        Vector2 size = Vector2.one * .8f;
         Vector3 direction = -transform.up; // La dirección del cast
         Vector3 startPosition = feetPosition.position;
         Vector3 endPosition = startPosition + (direction * distance);
