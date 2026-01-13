@@ -776,7 +776,7 @@ public class Character : Entity
         while (true)
         {
             yield return new WaitForSeconds(.1f);
-            RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position,Vector2.one*1f,0, -transform.up, distance, playerExcludeLayer);
+            RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position,Vector2.one*1f,transform.eulerAngles.z, -transform.up, distance, playerExcludeLayer);
          //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
        
             if(hit)

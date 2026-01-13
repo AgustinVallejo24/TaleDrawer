@@ -13,7 +13,7 @@ public class Subibaje_CustomNode : CustomNode
     protected override void Start()
     {
         base.Start();
-        goalDelegate = subibaja.CreateJoint;
+     //   goalDelegate = subibaja.CreateJoint;
      
     }
     public void GetOnSubibaja()

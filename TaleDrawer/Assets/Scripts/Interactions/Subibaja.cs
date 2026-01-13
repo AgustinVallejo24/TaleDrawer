@@ -261,18 +261,16 @@ public class Subibaja : MonoBehaviour, IInteractable
         CheckWeight();
     }
 
-    public void CreateJoint()
+    public void CreateJoint(Character character)
     {
-        Debug.LogError("EntroACACACACA");
         myJoint = gameObject.AddComponent<RelativeJoint2D>();
-        myJoint.connectedBody = myCharacter.characterRigidbody;
+        myJoint.connectedBody = character.characterRigidbody;
         myJoint.autoConfigureOffset = true;
 
         // Ajustes recomendados
         myJoint.maxForce = 1000f;   // cuán fuerte lo “pega”
         myJoint.maxTorque = 10;
         myJoint.enableCollision = true;
-        hasPlayer = true;
     }
     public void DestroyJoint()
     {
@@ -310,6 +308,19 @@ public class Subibaja : MonoBehaviour, IInteractable
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Character character) && !hasPlayer)
+        {
+            character.characterRigidbody.linearVelocity = Vector2.zero;
+            hasPlayer = true;
+            character.transform.rotation = new Quaternion(character.transform.rotation.x, character.transform.rotation.y, transform.rotation.z, character.transform.rotation.w);
+            character.transform.parent = transform;
+           // CreateJoint(character);
+
+        }
+
+    }
     public void InsideInteraction()
     {
         throw new System.NotImplementedException();
