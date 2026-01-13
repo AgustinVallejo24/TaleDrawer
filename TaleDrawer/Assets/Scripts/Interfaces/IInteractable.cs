@@ -8,4 +8,14 @@ public interface IInteractable
 
     public void InteractWithPlayer();
     public void InsideInteraction();
+
+    public InteractableType MyInteractableType();
+}
+
+[System.Serializable]
+public enum InteractableType
+{
+    Event,
+    ClimbingObj,
+    DObjInteractable,
 }

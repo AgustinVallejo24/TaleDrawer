@@ -103,8 +103,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3265364237620506647}
   - component: {fileID: 4798489685609265546}
-  - component: {fileID: 4313604016444015195}
   - component: {fileID: 7095413697238719751}
+  - component: {fileID: 4313604016444015195}
   - component: {fileID: 7472058952954398058}
   - component: {fileID: 2501744969287615608}
   m_Layer: 10
@@ -191,6 +191,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7095413697238719751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385830380348539002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8c0b36de16cd2499a1b839f0d4297a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balloonPosition: {fileID: 7151106360322334994}
+  maxSpeed: 0
+  currentSpeed: 7
+  inAirSpeed: 0
+  climbingSpeed: 0
+  _smoothSpeed: 0.15
+  _maxLife: 0
+  jumpForce: 0
+  _obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _floorLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  feetPosition: {fileID: 1786089718182559142}
+  helmetPosition: {fileID: 5795107729046904544}
+  characterAudioSource: {fileID: 7472058952954398058}
+  jumpSound: {fileID: 8300000, guid: 7986cbc2eaceee14682abd68248b8e5a, type: 3}
+  characterRigidbody: {fileID: 4313604016444015195}
+  _animator: {fileID: 8119255180281605833}
+  _currentState: 0
+  _climbingTransitions: 3
+  _characterSprite: {fileID: 1112040645926880630}
+  _walkableLayerMask:
+    serializedVersion: 2
+    m_Bits: 2112
+  _mainCollider: {fileID: 2501744969287615608}
+  visual: {fileID: 6435546691485308052}
+  sceneCamera: {fileID: 0}
+  helmet: {fileID: 0}
+  test: 1
+  _CliffMask:
+    serializedVersion: 2
+    m_Bits: 0
+  currentLever: {fileID: 0}
+  currentHook: {fileID: 0}
+  floorLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  flipSign: 0
+  cameraFollow: {fileID: 0}
+  xInput: 0
+  climbingInputs: {x: 0, y: 0}
+  horizontalJumpDir: 0
+  playerExcludeLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  landingVelocityThreshold: 0
+  grounded: 0
+  distance: 0
+  subibaja: {fileID: 0}
+  canClimb: 0
 --- !u!50 &4313604016444015195
 Rigidbody2D:
   serializedVersion: 5
@@ -218,83 +282,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7095413697238719751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8385830380348539002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b8c0b36de16cd2499a1b839f0d4297a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  balloonPosition: {fileID: 7151106360322334994}
-  _maxSpeed: 7
-  currentSpeed: 7
-  inAirSpeed: 0
-  _smoothSpeed: 0.15
-  _maxLife: 0
-  _jumpForce: 0
-  currentJumpForce: {x: 4, y: 6}
-  _obstacleLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _floorLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  nextPosition: {x: 0, y: 0}
-  _goToNextPosition: 1
-  yPositionOffset: 0
-  _distToNodeThreshold: 0.03
-  feetPosition: {fileID: 1786089718182559142}
-  helmetPosition: {fileID: 5795107729046904544}
-  _currentPath: []
-  characterAudioSource: {fileID: 7472058952954398058}
-  jumpSound: {fileID: 8300000, guid: 7986cbc2eaceee14682abd68248b8e5a, type: 3}
-  characterRigidbody: {fileID: 4313604016444015195}
-  _animator: {fileID: 8119255180281605833}
-  _currentState: 0
-  _characterSprite: {fileID: 1112040645926880630}
-  _walkableLayerMask:
-    serializedVersion: 2
-    m_Bits: 2112
-  visual: {fileID: 6435546691485308052}
-  pointList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sceneCamera: {fileID: 0}
-  _lookAtNode: {fileID: 0}
-  _yDiffThreshold: 0.5
-  helmet: {fileID: 0}
-  test: 1
-  _CliffMask:
-    serializedVersion: 2
-    m_Bits: 0
-  currentLever: {fileID: 0}
-  currentHook: {fileID: 0}
-  currentMovePosObj: {fileID: 0}
-  floorLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  flipSign: 0
-  xOffset: 0.1
-  yOffset: 2
-  currentJumpingTime: 0
-  currentJumpingPosition: {x: 0, y: 0}
-  cameraFollow: {fileID: 0}
-  input: 0
-  horizontalJumpDir: 0
-  playerExcludeLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  landingVelocityThreshold: 0
-  grounded: 0
-  distance: 0
-  subibaja: {fileID: 0}
 --- !u!82 &7472058952954398058
 AudioSource:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ public class Robin : Character
 {
     public Sequence currentTween;
     public Subibaja subibaja;
-    
+    public bool canClimb;
     protected override void Awake()
     {
         characterModel = new CharacterModel(this, characterRigidbody);
@@ -42,8 +42,23 @@ public class Robin : Character
 
         }      
         
+        if(collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
+        {
+            canClimb = true;
+            currentInteractable = inter;
+            
+        }
 
     }
 
-    
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
+        {
+            canClimb = false;
+            currentInteractable = null;
+        }
+    }
+
+
 }

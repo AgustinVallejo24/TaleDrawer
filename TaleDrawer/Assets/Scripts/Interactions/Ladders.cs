@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using System.Linq;
 
 public class Ladders : MonoBehaviour, IInteractable
 {
@@ -11,6 +12,8 @@ public class Ladders : MonoBehaviour, IInteractable
     [SerializeField] CustomNode _lowerNode;
     [SerializeField] Character _character;
     [SerializeField] bool _fromAbove;
+    [SerializeField] InteractableType _interactableType;
+    [SerializeField] Transform[] _accesPoints;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +49,12 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        
+        Transform nearestPoint = _accesPoints.OrderBy(x => Vector2.Distance(CustomTools.ToVector2(Character.instance.transform.position), CustomTools.ToVector2(x.position))).First();
+
+        Character.instance.characterModel.Flip(nearestPoint.position);
+        Character.instance.characterView.OnMove();
+        Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.7f).OnComplete(() => Character.instance.SendInputToFSM(CharacterStates.OnLadder));
+
         //if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
         //{
         //    Debug.LogError("A");
@@ -101,5 +109,10 @@ public class Ladders : MonoBehaviour, IInteractable
                     StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle");
                 });
         }
+    }
+
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
     }
 }

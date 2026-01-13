@@ -17,6 +17,7 @@ public class Caja : SpawningObject,IInteractable
     [SerializeField] Collider2D _upperCollider;
     [SerializeField] PlatformEffector2D effector2D;
     [SerializeField] NewSerializableDictionary<float, Collider2D> _colliders;
+    [SerializeField] InteractableType _interactableType;
 
     public bool isMoving;
     public override void Start()
@@ -56,6 +57,10 @@ public class Caja : SpawningObject,IInteractable
         interactableDelegate?.Invoke(-weight,gameObject);
     }
 
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
        

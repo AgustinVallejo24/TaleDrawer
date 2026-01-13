@@ -21,6 +21,7 @@ public class Hook : MonoBehaviour, IInteractable
     [SerializeField] Transform _leftLandingPos;
     [SerializeField] Transform _beforeRopeRightPos;
     [SerializeField] Transform _beforeRopeLeftPos;
+    [SerializeField] InteractableType _interactableType;
 
     private void Start()
     {
@@ -209,6 +210,11 @@ public class Hook : MonoBehaviour, IInteractable
     public void InsideInteraction()
     {
       
+    }
+
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
     }
 }
 

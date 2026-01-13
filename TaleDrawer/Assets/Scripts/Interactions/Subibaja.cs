@@ -31,6 +31,7 @@ public class Subibaja : MonoBehaviour, IInteractable
     public RelativeJoint2D myJoint;
     float currentZRot;
     [SerializeField] SpawnableObjectType _posibleObjects;
+    [SerializeField] InteractableType _interactableType;
     private void Start()
     {
         //if (left)
@@ -62,6 +63,10 @@ public class Subibaja : MonoBehaviour, IInteractable
             ChangeLeftNeightbours(1);
             ChangeRightNeightbours(0);
         }
+    }
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
     }
     public void Interact(SpawningObject spawningObject)
     {

@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
-using Unity.Cinemachine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
 public class Character : Entity
 {
     #region Variables
@@ -13,11 +15,12 @@ public class Character : Entity
     public float maxSpeed;
     public float currentSpeed;
     public float inAirSpeed;
+    public float climbingSpeed;
     [SerializeField] [Range(0, 0.5f)] float _smoothSpeed;
     public float _maxLife;
     protected float _currentLife;
     public float jumpForce;
-
+    float _originalGravityScale;
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
     [SerializeField] Transform feetPosition;
@@ -34,8 +37,10 @@ public class Character : Entity
     [SerializeField] public Rigidbody2D characterRigidbody;
     [SerializeField] protected Animator _animator;
     public CharacterStates _currentState;
+    public CharacterStates _climbingTransitions;
     [SerializeField] protected SpriteRenderer _characterSprite;
     [SerializeField] LayerMask _walkableLayerMask;
+    [SerializeField] Collider2D _mainCollider;
     #endregion
 
 
@@ -70,7 +75,8 @@ public class Character : Entity
 
     public CinemachineFollow cameraFollow;
 
-    public float input;
+    public float xInput;
+    public Vector2 climbingInputs;
     public float horizontalJumpDir;
 
     public LayerMask playerExcludeLayer;
@@ -105,6 +111,7 @@ public class Character : Entity
              .SetTransition(CharacterStates.Climb, Climb)
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.Stop, Stop)
+             .SetTransition(CharacterStates.OnLadder, OnLadder)
               .SetTransition(CharacterStates.Wait, Wait)
               .SetTransition(CharacterStates.Death, Death)
                 .SetTransition(CharacterStates.Landing, Landing)
@@ -114,6 +121,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Jumping, Jumping)
+            .SetTransition(CharacterStates.OnLadder, OnLadder)
             .SetTransition(CharacterStates.Climb, Climb)
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
@@ -173,6 +181,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
         StateConfigurer.Create(OnLadder)
             .SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(Death)
@@ -198,7 +207,7 @@ public class Character : Entity
 
         Idle.OnUpdate += () =>
         {
-            if (input != 0)
+            if (xInput != 0)
             {
                 SendInputToFSM(CharacterStates.Moving);
             }
@@ -229,9 +238,9 @@ public class Character : Entity
         Moving.OnFixedUpdate += () =>
         {
 
-            if (input != 0)
+            if (xInput != 0)
             {
-                characterModel.Move2(input);
+                characterModel.Move2(xInput);
             }
             else
             {
@@ -352,7 +361,7 @@ public class Character : Entity
         };
         Jumping.OnFixedUpdate += () =>
         {
-            characterModel.Move2(input, .7f);
+            characterModel.Move2(xInput, .7f);
         };
         Jumping.OnExit += x => { };
 
@@ -437,22 +446,38 @@ public class Character : Entity
         {
 
             _currentState = CharacterStates.OnLadder;
-
+            characterRigidbody.gravityScale = 0;
+            _mainCollider.isTrigger = true;
         };
 
         OnLadder.OnUpdate += () =>
         {
-
-
+                        
+            
         };
         OnLadder.OnFixedUpdate += () =>
         {
-
+            if(climbingInputs.y != 0)
+            {
+                characterModel.Climb(climbingInputs.y);
+            }
+            else
+            {
+                characterRigidbody.linearVelocityY = 0f;
+            }
+            
         };
 
         OnLadder.OnExit += x =>
         {
+            characterRigidbody.gravityScale = _originalGravityScale;
+            _mainCollider.isTrigger = false;
 
+            if (!grounded)
+            {
+                characterRigidbody.linearVelocityX = climbingInputs.x;
+            }            
+            climbingInputs = Vector2.zero;
         };
 
         #endregion
@@ -574,7 +599,7 @@ public class Character : Entity
     {
         instance = this;
         characterRigidbody = GetComponent<Rigidbody2D>();
-
+        _originalGravityScale = characterRigidbody.gravityScale;
     }
     IEnumerator DeathCoroutine()
     {
@@ -596,15 +621,15 @@ public class Character : Entity
         {
             _animator.SetInteger("XVelocity", 0);
         }
-        if (characterRigidbody.linearVelocityY > landingVelocityThreshold)
+        if (characterRigidbody.linearVelocityY > landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
         {
             _animator.SetInteger("YVelocity", 1);
         }
-        else if (characterRigidbody.linearVelocityY < -landingVelocityThreshold)
+        else if (characterRigidbody.linearVelocityY < -landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
         {
             _animator.SetInteger("YVelocity", -1);
         }
-        else
+        else if(_currentState != CharacterStates.OnLadder)
         {
             _animator.SetInteger("YVelocity", 0);
         }

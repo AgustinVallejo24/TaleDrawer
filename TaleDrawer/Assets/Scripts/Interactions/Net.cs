@@ -4,11 +4,16 @@ public class Net : MonoBehaviour, IInteractable
 {
     [SerializeField] Polea _polea;
     [SerializeField] List<ObjectsAndTypes> objectsAndTypes;
+    [SerializeField] InteractableType _interactableType;
     public void InsideInteraction()
     {
         
     }
 
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
         SpawningObject sP = interactor.GetComponent<SpawningObject>();

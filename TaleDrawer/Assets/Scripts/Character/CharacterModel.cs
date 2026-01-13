@@ -16,8 +16,14 @@ public class CharacterModel
 
     public void Jump()
     {
-        if (_myCharacter.grounded)
-        {
+        if (_myCharacter.grounded || _myCharacter._currentState == CharacterStates.OnLadder)
+        {            
+            if(_myCharacter._currentState == CharacterStates.OnLadder)
+            {
+                Debug.LogError("Entro Bro");
+                _myCharacter.SendInputToFSM(CharacterStates.Moving);
+            }
+
             _myCharacter.characterView.OnJump();
             _myCharacter.currentSpeed = _myCharacter.inAirSpeed;
             _myCharacter.characterRigidbody.AddForce(_myCharacter.jumpForce * Vector2.up, ForceMode2D.Impulse);
@@ -177,5 +183,12 @@ public class CharacterModel
        // _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
         _myRigidbody.linearVelocityX = _movementVector.x;
 
+    }
+
+    public void Climb(float y)
+    {
+        _movementVector = new Vector3(0, y) * _myCharacter.climbingSpeed;
+
+        _myRigidbody.linearVelocityY = _movementVector.y;
     }
 }

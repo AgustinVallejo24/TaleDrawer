@@ -11,11 +11,16 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] Transform _playerPos;
     [SerializeField] CustomNode _beforeDoor;
     [SerializeField] CustomNode _afterDoor;
+    [SerializeField] InteractableType _interactableType;
     public void InsideInteraction()
     {
         
     }
 
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
         

@@ -9,11 +9,16 @@ public class Polea : MonoBehaviour, IInteractable
     public float platformWeight;
     public float netWeight;
     public List<NodesAndSections> nodeList;
+    InteractableType _interactableType;
     public void InsideInteraction()
     {
         
     }
 
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
         

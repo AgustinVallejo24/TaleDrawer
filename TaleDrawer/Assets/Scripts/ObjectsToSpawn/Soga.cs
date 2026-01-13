@@ -7,7 +7,12 @@ public class Soga : SpawningObject, IInteractable
     public Transform secondPoint;
     public RopeType myRopeType;
     public SpriteRenderer mySpRenderer;
+    [SerializeField] InteractableType _interactableType;
 
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
         

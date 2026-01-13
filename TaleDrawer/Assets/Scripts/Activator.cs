@@ -8,6 +8,7 @@ public class Activator : MonoBehaviour, IInteractable
     public bool isActive;
     [SerializeField] LayerMask _clickableMask;
     [SerializeField] Transform _playerPos;
+    [SerializeField] InteractableType _interactableType;
     public void Activation()
     {
         isActive = true;
@@ -19,6 +20,10 @@ public class Activator : MonoBehaviour, IInteractable
        
     }
 
+    public InteractableType MyInteractableType()
+    {
+        return _interactableType;
+    }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
         

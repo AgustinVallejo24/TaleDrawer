@@ -28,6 +28,14 @@ public class InputManager : MonoBehaviour
     public PlayerInput playerInput;
     public Vector2 input;
     public Vector2 mouseInput;
+
+    public static InputManager instance;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         //MoveMouse.action.performed += OnDrag;
@@ -44,7 +52,8 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
 
-        character.input = playerInput.actions["Move"].ReadValue<Vector2>().x;
+        character.xInput = playerInput.actions["Move"].ReadValue<Vector2>().x;
+        character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
         Debug.LogError(input);
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
 
@@ -173,5 +182,20 @@ public class InputManager : MonoBehaviour
     public void OnMove()
     {
 
+    }
+
+    public void OnClimb() 
+    {
+            
+    }
+
+    public void OnBeginClimb()
+    {
+        
+
+        if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._climbingTransitions.HasFlag(Character.instance._currentState))
+        {            
+            Character.instance.currentInteractable.InteractWithPlayer();
+        }
     }
 }
