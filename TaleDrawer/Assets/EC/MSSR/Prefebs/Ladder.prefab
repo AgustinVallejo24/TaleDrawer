@@ -57,7 +57,9 @@ MonoBehaviour:
   _character: {fileID: 0}
   _fromAbove: 0
   _interactableType: 1
-  _accesPoints: []
+  _accesPoints:
+  - {fileID: 6157841799043315694}
+  - {fileID: 3684159471710661128}
 --- !u!61 &1780969167549837676
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -92,7 +94,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.13371849, y: 6.293277}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -102,7 +104,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.7799187, y: 2.8248177}
   m_EdgeRadius: 0
 --- !u!61 &3542594917515511083
 BoxCollider2D:
@@ -138,7 +140,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1}
+  m_Offset: {x: -0.14873314, y: -6.2237177}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -148,7 +150,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.7842522, y: 1.56954}
   m_EdgeRadius: 0
 --- !u!1 &4518284656592496853
 GameObject:

@@ -49,11 +49,13 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
+        Character.instance.maxClimbingPos = _upperPoint.position;
+        Character.instance.minClimbingPos = _lowerPoint.position;
         Transform nearestPoint = _accesPoints.OrderBy(x => Vector2.Distance(CustomTools.ToVector2(Character.instance.transform.position), CustomTools.ToVector2(x.position))).First();
-
+        Character.instance.SendInputToFSM(CharacterStates.Wait);
         Character.instance.characterModel.Flip(nearestPoint.position);
         Character.instance.characterView.OnMove();
-        Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.7f).OnComplete(() => Character.instance.SendInputToFSM(CharacterStates.OnLadder));
+        Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => Character.instance.SendInputToFSM(CharacterStates.OnLadder));
 
         //if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
         //{

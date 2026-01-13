@@ -30,6 +30,9 @@ public class Character : Entity
     public AudioSource characterAudioSource;
     public AudioClip jumpSound;
 
+    public Vector3 maxClimbingPos;
+    public Vector3 minClimbingPos;
+
     #endregion
 
     #region References
@@ -462,7 +465,7 @@ public class Character : Entity
         {
             if(climbingInputs.y != 0)
             {
-                characterModel.Climb(climbingInputs.y);
+                characterModel.Climb(climbingInputs.y, maxClimbingPos.y, minClimbingPos.y);
             }
             else
             {
@@ -475,6 +478,8 @@ public class Character : Entity
         {
             characterRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
+            maxClimbingPos = Vector3.positiveInfinity;
+            maxClimbingPos = Vector3.negativeInfinity;
 
             if (!grounded)
             {

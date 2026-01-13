@@ -191,11 +191,17 @@ public class InputManager : MonoBehaviour
 
     public void OnBeginClimb()
     {
-        
-
-        if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._climbingTransitions.HasFlag(Character.instance._currentState))
+        if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._climbingTransitions.HasFlag(Character.instance._currentState) && Character.instance.grounded)
         {            
             Character.instance.currentInteractable.InteractWithPlayer();
+        }
+    }
+
+    public void OnEndClimb()
+    {
+        if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._currentState == CharacterStates.OnLadder && Character.instance.grounded)
+        {
+            Character.instance.SendInputToFSM(CharacterStates.Moving);
         }
     }
 }

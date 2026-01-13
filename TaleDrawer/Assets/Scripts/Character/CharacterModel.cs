@@ -185,10 +185,19 @@ public class CharacterModel
 
     }
 
-    public void Climb(float y)
+    public void Climb(float y, float maxPos, float minPos)
     {
-        _movementVector = new Vector3(0, y) * _myCharacter.climbingSpeed;
+        if((_myCharacter.transform.position.y < maxPos && y >= 0 ) || (_myCharacter.transform.position.y > minPos && y <= 0))
+        {
+            _movementVector = new Vector3(0, y) * _myCharacter.climbingSpeed;
 
-        _myRigidbody.linearVelocityY = _movementVector.y;
+            _myRigidbody.linearVelocityY = _movementVector.y;
+        }
+        else
+        {
+            //_myCharacter.SendInputToFSM(CharacterStates.Idle);
+            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+        }
+        
     }
 }

@@ -3,111 +3,6 @@
     "name": "MainInputActions",
     "maps": [
         {
-            "name": "Dragging",
-            "id": "68fe8a1b-9e3d-47cb-bc52-6cb7b8856a47",
-            "actions": [
-                {
-                    "name": "BeginDrag",
-                    "type": "Button",
-                    "id": "9d8abacc-6dfd-43e4-a099-0d58417e2652",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Drag",
-                    "type": "Value",
-                    "id": "ba984e11-254b-4b63-9af2-91ba6657bef4",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "EndDrag",
-                    "type": "Button",
-                    "id": "84bb3262-8241-473c-b090-4cd9fe716938",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press(behavior=1)",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Input",
-                    "type": "Value",
-                    "id": "ddee4f04-d564-479e-acbd-5137c5549000",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "4165ef28-07a8-4787-9baf-104903509b6e",
-                    "path": "<Pointer>/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BeginDrag",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8ae19c3c-b192-4d87-8b21-4f2ae529590d",
-                    "path": "<Touchscreen>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BeginDrag",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "302cf2d6-a836-4d37-8b81-9a4f5e5aafe7",
-                    "path": "<Pointer>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Drag",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c05ac26-9045-4756-8740-ade74ab3345b",
-                    "path": "<Pointer>/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "EndDrag",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f43a3de4-1fdf-4d34-8862-37ff50c4e55f",
-                    "path": "<Pointer>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Input",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Drawing",
-            "id": "9527cb7c-854b-4bc2-ba2f-bfa5dc01abeb",
-            "actions": [],
-            "bindings": []
-        },
-        {
             "name": "Movement",
             "id": "e6867d41-52d6-4945-9d61-80ed0e667910",
             "actions": [
@@ -181,6 +76,15 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EndClimb",
+                    "type": "Button",
+                    "id": "7cab493e-ed0c-47e6-9b93-dc7de2956b1a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -349,8 +253,135 @@
                     "action": "BeginClimb",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50bd0854-004a-4cfe-ae43-d7e75d747e12",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndClimb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "178a1f27-0b23-4a5d-b785-c3409535f260",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndClimb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Dragging",
+            "id": "68fe8a1b-9e3d-47cb-bc52-6cb7b8856a47",
+            "actions": [
+                {
+                    "name": "BeginDrag",
+                    "type": "Button",
+                    "id": "9d8abacc-6dfd-43e4-a099-0d58417e2652",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Drag",
+                    "type": "Value",
+                    "id": "ba984e11-254b-4b63-9af2-91ba6657bef4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "EndDrag",
+                    "type": "Button",
+                    "id": "84bb3262-8241-473c-b090-4cd9fe716938",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Input",
+                    "type": "Value",
+                    "id": "ddee4f04-d564-479e-acbd-5137c5549000",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4165ef28-07a8-4787-9baf-104903509b6e",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeginDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ae19c3c-b192-4d87-8b21-4f2ae529590d",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeginDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "302cf2d6-a836-4d37-8b81-9a4f5e5aafe7",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1c05ac26-9045-4756-8740-ade74ab3345b",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f43a3de4-1fdf-4d34-8862-37ff50c4e55f",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Input",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Drawing",
+            "id": "9527cb7c-854b-4bc2-ba2f-bfa5dc01abeb",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
