@@ -44,6 +44,7 @@ public class Character : Entity
     [SerializeField] protected SpriteRenderer _characterSprite;
     [SerializeField] LayerMask _walkableLayerMask;
     [SerializeField] Collider2D _mainCollider;
+    [SerializeField] Collider2D _feetCollider;
     #endregion
 
 
@@ -221,6 +222,8 @@ public class Character : Entity
             {
                 characterRigidbody.linearVelocityX = 0;
             }
+
+            characterModel.AlignToGround();
         };
 
         Idle.OnExit += x => { };
@@ -239,7 +242,7 @@ public class Character : Entity
         Moving.OnUpdate += () =>
         {
 
-
+            characterModel.AlignToGround();
         };
         Moving.OnFixedUpdate += () =>
         {
@@ -454,6 +457,7 @@ public class Character : Entity
             _currentState = CharacterStates.OnLadder;
             characterRigidbody.gravityScale = 0;
             _mainCollider.isTrigger = true;
+            _feetCollider.isTrigger = true;
         };
 
         OnLadder.OnUpdate += () =>
@@ -478,6 +482,7 @@ public class Character : Entity
         {
             characterRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
+            _feetCollider.isTrigger = false;
             maxClimbingPos = Vector3.positiveInfinity;
             maxClimbingPos = Vector3.negativeInfinity;
 

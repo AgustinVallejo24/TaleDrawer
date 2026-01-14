@@ -7,7 +7,7 @@ public class Robin : Character
     public bool canClimb;
     protected override void Awake()
     {
-        characterModel = new CharacterModel(this, characterRigidbody);
+        characterModel = new CharacterModel(this, characterRigidbody,floorLayerMask);
         characterView = new CharacterView(this, _animator, _characterSprite);
         base.Awake();
     }

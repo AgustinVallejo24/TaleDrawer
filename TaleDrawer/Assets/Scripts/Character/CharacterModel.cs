@@ -8,10 +8,18 @@ public class CharacterModel
     Vector2 speed = Vector2.zero;
     private Vector2 _smoothDampVelocity;
     Vector2 _movementVector;
-    public CharacterModel(Character character, Rigidbody2D rigidbody)
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float rayDistance = 1.5f;
+    [SerializeField] private float rotationSpeed = 10f;
+    private Quaternion flatRotation;
+
+
+    public CharacterModel(Character character, Rigidbody2D rigidbody,LayerMask floorLayer)
     {
         _myRigidbody = rigidbody;
         _myCharacter = character;
+        groundLayer = floorLayer;
+        flatRotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void Jump()
@@ -28,8 +36,8 @@ public class CharacterModel
             _myCharacter.currentSpeed = _myCharacter.inAirSpeed;
             _myCharacter.characterRigidbody.AddForce(_myCharacter.jumpForce * Vector2.up, ForceMode2D.Impulse);
         }
-
-      //  _myCharacter.characterRigidbody.linearVelocity = new Vector2(_myCharacter.horizontalJumpDir *3, 10f);
+     
+        //  _myCharacter.characterRigidbody.linearVelocity = new Vector2(_myCharacter.horizontalJumpDir *3, 10f);
     }
     public void Jump(Vector2 jumpPosition,float horizontalJumpForce, float verticalJumpForce)
     {
@@ -159,7 +167,41 @@ public class CharacterModel
             smoothSpeed
         );
     }
+    public void AlignToGround()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(
+            _myCharacter.transform.position,
+            Vector2.down,
+            rayDistance,
+            groundLayer
+        );
 
+        Quaternion targetRotation;
+
+        if (hit)
+        {
+            Vector2 normal = hit.normal;
+
+            float angle = Mathf.Atan2(normal.y, normal.x) * Mathf.Rad2Deg - 90f;
+
+            // Si es casi plano, forzamos 0
+            if (Mathf.Abs(angle) < 1f)
+                angle = 0f;
+
+            targetRotation = Quaternion.Euler(0, 0, angle);
+        }
+        else
+        {
+            // No hay suelo → volvemos a plano
+            targetRotation = flatRotation;
+        }
+
+        _myCharacter.transform.rotation = Quaternion.Lerp(
+             _myCharacter.transform.rotation,
+            targetRotation,
+            Time.deltaTime * rotationSpeed
+        );
+    }
     public void Move2(float x)
     {
         if(x != 0)
@@ -170,7 +212,7 @@ public class CharacterModel
       //    _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
         _myRigidbody.linearVelocityX = _movementVector.x;
 
-
+   
     }
 
     public void Move2(float x, float speedMultiplier)

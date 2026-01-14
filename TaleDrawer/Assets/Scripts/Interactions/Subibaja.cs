@@ -310,15 +310,11 @@ public class Subibaja : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Character character) && !hasPlayer)
-        {
-            character.characterRigidbody.linearVelocity = Vector2.zero;
-            hasPlayer = true;
-            character.transform.rotation = new Quaternion(character.transform.rotation.x, character.transform.rotation.y, transform.rotation.z, character.transform.rotation.w);
-            character.transform.parent = transform;
-           // CreateJoint(character);
 
-        }
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
 
     }
     public void InsideInteraction()
