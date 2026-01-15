@@ -167,7 +167,7 @@ public class Hook : MonoBehaviour, IInteractable
             _character.transform.position = _beforeRopeLeftPos.position;
             characterRender.position = new Vector3(0, 0, 0);
             _character.SendInputToFSM(CharacterStates.JumpingToRope);            
-            _character.characterModel.Jump(_leftLandingPos.position, () => { _character.characterRigidbody.gravityScale = 1; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null;
+            _character.characterModel.Jump(_leftLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null;
                 StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f));
             }, false, 0.7f, false);
         }
@@ -176,7 +176,7 @@ public class Hook : MonoBehaviour, IInteractable
             _character.transform.position = _beforeRopeRightPos.position;
             characterRender.position = new Vector3(0, 0, 0);
             _character.SendInputToFSM(CharacterStates.JumpingToRope);            
-            _character.characterModel.Jump(_rightLandingPos.position, () => { _character.characterRigidbody.gravityScale = 1; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null; 
+            _character.characterModel.Jump(_rightLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null; 
                 StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f)); }, false, 0.7f, false);
         }
         
@@ -205,8 +205,37 @@ public class Hook : MonoBehaviour, IInteractable
         }
     }
 
-    
+    public void NewRopeEntering()
+    {
+        _character.currentHook = this;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.TryGetComponent(out Character character))
+        {
+            _character.characterRigidbody.gravityScale = 0;
+            _character.characterRigidbody.linearVelocity = Vector2.zero;
+            Debug.LogError("Detecto al pj");
+            _character.currentHook = this;
+            if (_character.transform.position.x > transform.position.x)
+            {
+                rope.mySpRenderer.flipX = true;
+                Debug.LogError("Detecto al pj derecha");
+                _character.characterView.OnHorizontalRopeMovement(); _character.SendInputToFSM(CharacterStates.Swaying);
+                _fromRight = true;
+            }
+            else
+            {
+                Debug.LogError("Detecto al pj izquierda");
+                _fromRight = false;
+                rope.mySpRenderer.flipX = false;
+                _character.characterView.OnHorizontalRopeMovement(); _character.SendInputToFSM(CharacterStates.Swaying);
 
+
+            }
+
+        }
+    }
     public void InsideInteraction()
     {
       

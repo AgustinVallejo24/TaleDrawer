@@ -30,11 +30,11 @@ public class Caja : SpawningObject,IInteractable
     }
     private void Update()
     {
-        if(_spawned && _myrb.linearVelocity != Vector2.zero && !isMoving)
+        if(_spawned && _myrb.angularVelocity != 0 && !isMoving)
         {
             isMoving = true;
         }
-        else if(_spawned && _myrb.linearVelocity == Vector2.zero && isMoving)
+        else if(_spawned && _myrb.angularVelocity == 0 && isMoving)
         {
             isMoving = false;
             foreach (var item in _colliders)

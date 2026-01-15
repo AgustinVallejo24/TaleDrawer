@@ -100,14 +100,14 @@ public class Ladders : MonoBehaviour, IInteractable
         {
             _character.characterView.OnEnteringLadder(1);
             _character.transform.DOMoveY(_lowerPoint.position.y, _movementDuration)
-                .OnComplete(() => { _character.transform.position = _lowerNode.transform.position; _character.characterRigidbody.gravityScale = 1; 
+                .OnComplete(() => { _character.transform.position = _lowerNode.transform.position; _character.characterRigidbody.gravityScale = 3; 
                     StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle"); });
         }
         else
         {
             _character.characterView.OnEnteringLadder(0);
             _character.transform.DOMoveY(_upperPoint.position.y, _movementDuration)
-                .OnComplete(() => { _character.transform.position = _upperNode.transform.position; _character.characterRigidbody.gravityScale = 1; 
+                .OnComplete(() => { _character.transform.position = _upperNode.transform.position; _character.characterRigidbody.gravityScale = 3; 
                     StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle");
                 });
         }

@@ -134,6 +134,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.Death, Death)
             .SetTransition(CharacterStates.Falling, Falling)
               .SetTransition(CharacterStates.Landing, Landing)
+                      .SetTransition(CharacterStates.Swaying, Swaying)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -452,7 +453,7 @@ public class Character : Entity
 
         OnLadder.OnEnter += x =>
         {
-
+            _animator.SetTrigger("Ladder");
             _currentState = CharacterStates.OnLadder;
             characterRigidbody.gravityScale = 0;
             _mainCollider.isTrigger = true;
@@ -478,6 +479,7 @@ public class Character : Entity
 
         OnLadder.OnExit += x =>
         {
+            _animator.SetTrigger("Idle");
             characterRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
             maxClimbingPos = Vector3.positiveInfinity;

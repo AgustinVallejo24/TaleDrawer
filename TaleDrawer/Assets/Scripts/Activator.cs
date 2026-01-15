@@ -12,6 +12,7 @@ public class Activator : MonoBehaviour, IInteractable
     public void Activation()
     {
         isActive = true;
+        GetComponent<SpriteRenderer>().color = Color.red;
         managerCheck.Invoke();
     }
 
@@ -41,12 +42,11 @@ public class Activator : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        Character _myCharacter = Character.instance;
-        if (Physics2D.OverlapCircle(transform.position, transform.localScale.x, _clickableMask) && !isActive)
+        if (!isActive)
         {
-            Vector3 pos = (new Vector3(_myCharacter.transform.position.x, _playerPos.position.y, 0) - _playerPos.transform.position).normalized;
-            _myCharacter.SendInputToFSM(CharacterStates.Moving);
+            ActivatePlayerAnimation();
         }
+
     }
 
     public void ActivatePlayerAnimation()

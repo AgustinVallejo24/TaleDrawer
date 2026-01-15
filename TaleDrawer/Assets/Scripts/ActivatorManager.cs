@@ -5,6 +5,7 @@ public class ActivatorManager : MonoBehaviour
 {
     [SerializeField] Activator[] activators;
     [SerializeField] UnityEvent activationEvent;
+    [SerializeField] ParticleSystem confetty;
     int currentActivatorsOn;
     private void Start()
     {
@@ -25,6 +26,11 @@ public class ActivatorManager : MonoBehaviour
        
     }
 
+    public void Confetti()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        confetty.Play();
+    }
     public virtual void OnActivation()
     {
 
