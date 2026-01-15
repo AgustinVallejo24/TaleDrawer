@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Soga : SpawningObject, IInteractable
 {
@@ -44,5 +45,13 @@ public class Soga : SpawningObject, IInteractable
     public void OnErased()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(myRopeType == RopeType.Vertical)
+        {
+            hook.RopeAnimatorSpeedController();
+        }
     }
 }

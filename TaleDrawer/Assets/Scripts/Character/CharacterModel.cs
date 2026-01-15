@@ -1,6 +1,7 @@
-using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 public class CharacterModel
 {
     Rigidbody2D _myRigidbody;
@@ -227,11 +228,17 @@ public class CharacterModel
 
     }
 
-    public void Climb(float y, float maxPos, float minPos)
+    public void Climb(float y, float maxPos, float minPos, float speedMultiplier)
     {
-        if((_myCharacter.transform.position.y < maxPos && y >= 0 ) || (_myCharacter.transform.position.y > minPos && y <= 0))
+        if (_myCharacter.transform.position.y >= maxPos - 0.2f && _myCharacter.currentHook != null)
+        {            
+            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.transform.position = _myCharacter.currentHook.tpPoint.position;
+            _myCharacter.SendInputToFSM(CharacterStates.Climb);
+        }
+        else if((_myCharacter.transform.position.y < maxPos && y >= 0 ) || (_myCharacter.transform.position.y > minPos && y <= 0))
         {
-            _movementVector = new Vector3(0, y) * _myCharacter.climbingSpeed;
+            _movementVector = new Vector3(0, y) * _myCharacter.climbingSpeed * speedMultiplier;
 
             _myRigidbody.linearVelocityY = _movementVector.y;
         }

@@ -22,6 +22,8 @@ public class Hook : MonoBehaviour, IInteractable
     [SerializeField] Transform _beforeRopeRightPos;
     [SerializeField] Transform _beforeRopeLeftPos;
     [SerializeField] InteractableType _interactableType;
+    [SerializeField] public Transform tpPoint; 
+    [SerializeField] float speedMultiplier;
 
     private void Start()
     {
@@ -29,7 +31,7 @@ public class Hook : MonoBehaviour, IInteractable
 
         if(_attachedObject.TryGetComponent<Soga>(out Soga soga))
         {
-            rope = soga;
+            rope = soga;            
         }       
     }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
@@ -74,6 +76,7 @@ public class Hook : MonoBehaviour, IInteractable
                 _character.GetPath(_lowerNode);
             }*/
 
+            StartCoroutine(IGetOnRope());
 
         }
         else
@@ -89,10 +92,10 @@ public class Hook : MonoBehaviour, IInteractable
                 _character.GetPath(_leftNode);
             }*/
 
-
+            _character.SendInputToFSM(CharacterStates.Moving);
         }
 
-        _character.SendInputToFSM(CharacterStates.Moving);
+        
     }
 
     
@@ -113,7 +116,7 @@ public class Hook : MonoBehaviour, IInteractable
         if (rope != null)
         {
             _character.currentHook = this;
-            _character.SendInputToFSM(CharacterStates.OnRope);
+            //_character.SendInputToFSM(CharacterStates.OnRope);
             
             
             if(myType == RopeType.Vertical)
@@ -133,8 +136,14 @@ public class Hook : MonoBehaviour, IInteractable
 
     private void VerticalMovement()
     {
-        _character.characterView.OnMove();
-        _character.transform.DOMove(rope.secondPoint.position, 0.2f).OnComplete(() => _character.characterView.OnVerticalRopeEventMovement());
+        //NewRopeEntering();
+        _character.maxClimbingPos = rope.firstPoint.position;
+        _character.minClimbingPos = rope.secondPoint.position;
+        _character.climbingSpeedMultiplier = speedMultiplier;
+        _character.characterView.OnEventMovement();
+        _character.characterModel.Flip(rope.secondPoint.position);
+        _character.transform.DOMoveX(rope.secondPoint.position.x, 0.2f).OnComplete(() => { _character.characterView.OnVerticalRopeEventMovement(); _character.characterView.FlipCharacter(1);
+           StartCoroutine(_character.SendInputToFSM(CharacterStates.OnLadder, 0.2f));});
     }
 
     private void HorizontalMovement()
@@ -205,13 +214,18 @@ public class Hook : MonoBehaviour, IInteractable
         }
     }
 
+    public void RopeAnimatorSpeedController()
+    {
+        rope.myAnim.speed = _character.GetAnimatorSpeed();
+    }
+
     public void NewRopeEntering()
     {
         _character.currentHook = this;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out Character character))
+        if(collision.TryGetComponent(out Character character) && myType == RopeType.Horizontal)
         {
             _character.characterRigidbody.gravityScale = 0;
             _character.characterRigidbody.linearVelocity = Vector2.zero;

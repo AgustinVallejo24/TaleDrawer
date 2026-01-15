@@ -16,9 +16,9 @@ public class CharacterView
     private string _verticalRopeEventTrigger = "VerticalRopeEventMovement";
     private string _horizontalRopeEventTrigger = "HorizontalRopeEventMovement";
     private string _jumpingToRopeTrigger = "JumpingToRope";
-    private string _exitingHorizontalRopeTrigger = "ExitingHorizontalRope";
-    private string _enteringLadderFromBelow = "EnteringLadderFB";
-    private string _enteringLadderFromAbove = "EnteringLadderFA";
+    private string _exitingHorizontalRopeTrigger = "ExitingHorizontalRope";    
+    private string _enteringLadder = "Ladder";
+    private string _eventMovement = "EventMovement";
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -128,16 +128,15 @@ public class CharacterView
     {
 
     }
-    public void OnEnteringLadder(int value)
+    public void OnEnteringLadder()
     {
-        if(value > 0)
-        {
-            _anim.SetTrigger(_enteringLadderFromBelow);
-        }
-        else
-        {
-            _anim.SetTrigger(_enteringLadderFromAbove);
-        }
+        _anim.SetTrigger(_enteringLadder);        
+    }
+
+    public void OnEventMovement()
+    {
+        _anim.SetTrigger(_eventMovement);
+        _character.StartCoroutine(CustomResetTrigger(_eventMovement));
     }
 
     public IEnumerator CustomResetTrigger(string triggerName)

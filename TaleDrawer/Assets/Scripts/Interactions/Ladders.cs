@@ -49,13 +49,14 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
+        Character.instance.climbingSpeedMultiplier = 1;
         Character.instance.maxClimbingPos = _upperPoint.position;
         Character.instance.minClimbingPos = _lowerPoint.position;
         Transform nearestPoint = _accesPoints.OrderBy(x => Vector2.Distance(CustomTools.ToVector2(Character.instance.transform.position), CustomTools.ToVector2(x.position))).First();
         Character.instance.SendInputToFSM(CharacterStates.Wait);
         Character.instance.characterModel.Flip(nearestPoint.position);
         Character.instance.characterView.OnMove();
-        Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => Character.instance.SendInputToFSM(CharacterStates.OnLadder));
+        Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => { Character.instance.SendInputToFSM(CharacterStates.OnLadder); Character.instance.characterView.OnEnteringLadder(); });
 
         //if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
         //{
@@ -96,7 +97,7 @@ public class Ladders : MonoBehaviour, IInteractable
         _character.SendInputToFSM(CharacterStates.OnLadder);
         _character.characterRigidbody.gravityScale = 0;
 
-        if (_fromAbove)
+        /*if (_fromAbove)
         {
             _character.characterView.OnEnteringLadder(1);
             _character.transform.DOMoveY(_lowerPoint.position.y, _movementDuration)
@@ -110,7 +111,7 @@ public class Ladders : MonoBehaviour, IInteractable
                 .OnComplete(() => { _character.transform.position = _upperNode.transform.position; _character.characterRigidbody.gravityScale = 3; 
                     StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle");
                 });
-        }
+        }*/
     }
 
     public InteractableType MyInteractableType()

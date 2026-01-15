@@ -43,8 +43,7 @@ public class Robin : Character
         base.OnTriggerExit2D(collision);
         if (collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
         {
-            canClimb = false;
-            currentInteractable = null;
+            canClimb = false;            
         }
     }
 

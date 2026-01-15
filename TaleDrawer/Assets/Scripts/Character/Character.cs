@@ -16,6 +16,7 @@ public class Character : Entity
     public float currentSpeed;
     public float inAirSpeed;
     public float climbingSpeed;
+    public float climbingSpeedMultiplier;
     [SerializeField] [Range(0, 0.5f)] float _smoothSpeed;
     public float _maxLife;
     protected float _currentLife;
@@ -190,6 +191,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Climb, Climb)
             .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(Death)
            .SetTransition(CharacterStates.Idle, Idle)
@@ -452,11 +454,14 @@ public class Character : Entity
         #region ONLADDER STATE
 
         OnLadder.OnEnter += x =>
-        {
-            _animator.SetTrigger("Ladder");
+        {            
             _currentState = CharacterStates.OnLadder;
             characterRigidbody.gravityScale = 0;
             _mainCollider.isTrigger = true;
+            if (currentHook != null)
+            {
+                currentHook.RopeAnimationManager(1);
+            }            
         };
 
         OnLadder.OnUpdate += () =>
@@ -469,7 +474,7 @@ public class Character : Entity
         {
             if(climbingInputs.y != 0)
             {
-                characterModel.Climb(climbingInputs.y, maxClimbingPos.y, minClimbingPos.y);
+                characterModel.Climb(climbingInputs.y, maxClimbingPos.y, minClimbingPos.y, climbingSpeedMultiplier);
             }
             else
             {
@@ -481,7 +486,12 @@ public class Character : Entity
         OnLadder.OnExit += x =>
         {
             _animator.speed = 1;
-           _animator.SetTrigger("Idle");
+            if(currentHook!= null)
+            {
+                currentHook.RopeAnimationManager(0);                
+            }           
+            currentInteractable = null;
+            currentHook = null;
             characterRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
             maxClimbingPos = Vector3.positiveInfinity;
@@ -680,6 +690,10 @@ public class Character : Entity
 
     }
 
+    public float GetAnimatorSpeed()
+    {
+        return _animator.speed;
+    }
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
     {
         yield return new WaitForSeconds(time);

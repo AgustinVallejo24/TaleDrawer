@@ -217,6 +217,7 @@ public class InputManager : MonoBehaviour
     {
         if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._currentState == CharacterStates.OnLadder && Character.instance.grounded)
         {
+            rob.characterView.OnIdle();
             Character.instance.SendInputToFSM(CharacterStates.Moving);
         }
     }
