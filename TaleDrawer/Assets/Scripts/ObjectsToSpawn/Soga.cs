@@ -49,7 +49,7 @@ public class Soga : SpawningObject, IInteractable
 
     private void Update()
     {
-        if(myRopeType == RopeType.Vertical)
+        if(myRopeType == RopeType.Vertical && hook != null)
         {
             hook.RopeAnimatorSpeedController();
         }

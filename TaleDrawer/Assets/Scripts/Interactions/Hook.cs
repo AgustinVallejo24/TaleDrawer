@@ -24,7 +24,7 @@ public class Hook : MonoBehaviour, IInteractable
     [SerializeField] InteractableType _interactableType;
     [SerializeField] public Transform tpPoint; 
     [SerializeField] float speedMultiplier;
-
+    [SerializeField] Collider2D playerDetectionCollider;
     private void Start()
     {
         _attachedObject._currentInteractuable = this;
@@ -43,6 +43,9 @@ public class Hook : MonoBehaviour, IInteractable
     {        
         if (_posibleObjects.HasFlag(spawningObject.myType))
         {
+            if (myType == RopeType.Horizontal)
+                playerDetectionCollider.enabled = true;
+
             Destroy(spawningObject.gameObject);
 
             _attachedObject.gameObject.SetActive(true);

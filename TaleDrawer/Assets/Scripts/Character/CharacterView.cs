@@ -112,6 +112,7 @@ public class CharacterView
     public void OnHorizontalRopeMovement()
     {
         _anim.SetTrigger(_horizontalRopeEventTrigger);
+  
     }
 
     public void OnJumpingToRope()
