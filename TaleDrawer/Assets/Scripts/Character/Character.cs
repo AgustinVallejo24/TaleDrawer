@@ -44,7 +44,6 @@ public class Character : Entity
     [SerializeField] protected SpriteRenderer _characterSprite;
     [SerializeField] LayerMask _walkableLayerMask;
     [SerializeField] Collider2D _mainCollider;
-    [SerializeField] Collider2D _feetCollider;
     #endregion
 
 
@@ -457,7 +456,6 @@ public class Character : Entity
             _currentState = CharacterStates.OnLadder;
             characterRigidbody.gravityScale = 0;
             _mainCollider.isTrigger = true;
-            _feetCollider.isTrigger = true;
         };
 
         OnLadder.OnUpdate += () =>
@@ -482,7 +480,6 @@ public class Character : Entity
         {
             characterRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
-            _feetCollider.isTrigger = false;
             maxClimbingPos = Vector3.positiveInfinity;
             maxClimbingPos = Vector3.negativeInfinity;
 
@@ -697,10 +694,15 @@ public class Character : Entity
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+    
 
         if (collision.gameObject.tag == "Spikes")
         {
             Death();
+        }
+        if(collision.TryGetComponent(out IInteractable interactable))
+        {
+            currentInteractable = interactable;
         }
         //if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Robin_SFalling" && grounded)
         //{
@@ -710,6 +712,17 @@ public class Character : Entity
 
     }
 
+
+    public virtual void OnTriggerExit2D(Collider2D collision)
+    {
+
+        Debug.LogError("AAAAAAAAAAA");
+        if (collision.TryGetComponent(out IInteractable interactable) && interactable == currentInteractable)
+        {
+          
+            currentInteractable = null;
+        }
+    }
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out SpawningObject spawningObject))
@@ -795,6 +808,7 @@ public class Character : Entity
 
         }
     }
+
 
     void OnDrawGizmos()
     {

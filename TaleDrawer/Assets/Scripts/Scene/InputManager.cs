@@ -74,6 +74,22 @@ public class InputManager : MonoBehaviour
         
        // sceneManager.levelCharacter.characterModel.Move2(input.x);
     }
+
+    public void OnInteract()
+    {
+      
+        if (character.currentInteractable != null)
+        {
+            character.currentInteractable.InteractWithPlayer();
+            Debug.LogError("INTERACT");
+        }
+        else
+        {
+            Debug.LogError("No tengo II");
+
+        }
+            
+    }
     public void OnJump()
     {
         Debug.LogError("LAPUTAMADRE");

@@ -27,20 +27,7 @@ public class Robin : Character
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-        if (collision.TryGetComponent(out Subibaja newSubibaja))
-        {
-            
-            if (newSubibaja.isMoving && _currentState != CharacterStates.Wait)
-            {
-                Debug.LogError("entro");
-                characterRigidbody.linearVelocity = Vector2.zero;
-                DOTween.Kill(transform);
-                transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
-                SendInputToFSM(CharacterStates.Idle);
-                
-            }
-
-        }      
+   
         
         if(collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
         {
@@ -51,8 +38,9 @@ public class Robin : Character
 
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public override void OnTriggerExit2D(Collider2D collision)
     {
+        base.OnTriggerExit2D(collision);
         if (collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
         {
             canClimb = false;

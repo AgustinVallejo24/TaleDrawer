@@ -38,12 +38,7 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        if (Physics2D.OverlapCircle(transform.position, transform.localScale.x, _clickableMask) && !_leverState)
-        {
-            Vector3 pos = (new Vector3(_myCharacter.transform.position.x, _playerPos.position.y, 0) - _playerPos.transform.position).normalized;
-
-
-        }
+        ActivatePlayerAnimation();
     }
 
     public void ActivatePlayerAnimation()

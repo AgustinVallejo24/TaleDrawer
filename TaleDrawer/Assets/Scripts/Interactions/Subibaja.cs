@@ -32,20 +32,7 @@ public class Subibaja : MonoBehaviour, IInteractable
     float currentZRot;
     [SerializeField] SpawnableObjectType _posibleObjects;
     [SerializeField] InteractableType _interactableType;
-    private void Start()
-    {
-        //if (left)
-        //{
-        //    rightCollider.enabled = true;
-        //    leftCollider.enabled = false;
-        //}
-        //else
-        //{
-        //    rightCollider.enabled = false;
-        //    leftCollider.enabled = true;
-        //}
-        
-    }
+
     private void Update()
     {
         currentZRot = transform.localEulerAngles.z;
