@@ -461,8 +461,9 @@ public class Character : Entity
 
         OnLadder.OnUpdate += () =>
         {
-                        
-            
+            _animator.speed = Mathf.Abs(climbingInputs.y);
+
+
         };
         OnLadder.OnFixedUpdate += () =>
         {
@@ -479,7 +480,8 @@ public class Character : Entity
 
         OnLadder.OnExit += x =>
         {
-            _animator.SetTrigger("Idle");
+            _animator.speed = 1;
+           _animator.SetTrigger("Idle");
             characterRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
             maxClimbingPos = Vector3.positiveInfinity;

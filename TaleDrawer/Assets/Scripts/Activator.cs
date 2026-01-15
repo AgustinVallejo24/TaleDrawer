@@ -9,10 +9,13 @@ public class Activator : MonoBehaviour, IInteractable
     [SerializeField] LayerMask _clickableMask;
     [SerializeField] Transform _playerPos;
     [SerializeField] InteractableType _interactableType;
+    [SerializeField] GameObject _onStatue;
+    [SerializeField] GameObject _offStatue;
     public void Activation()
     {
         isActive = true;
-        GetComponent<SpriteRenderer>().color = Color.red;
+        _onStatue.SetActive(true);
+        _offStatue.SetActive(false);
         managerCheck.Invoke();
     }
 

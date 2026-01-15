@@ -7123,6 +7123,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230923664297480239, guid: 1401c1a835a423640bf6a6100a85efcd, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 1780435555330210127, guid: 1401c1a835a423640bf6a6100a85efcd, type: 3}
       propertyPath: m_Name
       value: Vertical Hook (3)
