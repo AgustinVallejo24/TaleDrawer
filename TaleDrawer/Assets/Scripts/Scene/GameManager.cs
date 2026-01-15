@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
     public void SpawnObject(SpawnableObjectType objectType)
     {
         StateChanger(SceneStates.Spawning);
+        playerInput.SwitchCurrentActionMap("Drawing");
         GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
 
 
