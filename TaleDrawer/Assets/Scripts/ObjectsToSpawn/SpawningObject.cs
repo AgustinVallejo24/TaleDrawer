@@ -71,10 +71,26 @@ public class SpawningObject : MonoBehaviour, IDeletable
         
     }
 
+    public void SetTransparency(Color alpha, int value = 0)
+    {
+        if(value == 0)
+        {
+            Color newColor = new Color(_originalColor.r, _originalColor.g, _originalColor.b, alpha.a);
+            _mySpriteRenderer.color = newColor;
+        }
+        else
+        {
+            _mySpriteRenderer.color = _originalColor;
+        }
+        
+    }
+
     public virtual void Delete()
     {
+        GameManager.instance.RemoveSpawningObjectFromList(this);
       
         Instantiate(clouds, transform.position, Quaternion.identity);
+
     }
 
     public virtual void Paint()
@@ -208,7 +224,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _myrb.gravityScale = 1;
                 }
 
-                
+                GameManager.instance.AddSpawningObject(this);
 
                 if (_interactingWithEntity)
                 {
@@ -223,7 +239,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     
                 }
                 
-
+                
 
             }
             else

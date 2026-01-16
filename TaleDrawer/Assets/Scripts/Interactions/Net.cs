@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+//using static UnityEngine.Rendering.DynamicArray<T>;
 public class Net : MonoBehaviour, IInteractable
 {
     [SerializeField] Polea _polea;
@@ -16,7 +17,7 @@ public class Net : MonoBehaviour, IInteractable
     }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)
     {
-        SpawningObject sP = interactor.GetComponent<SpawningObject>();
+        /*SpawningObject sP = interactor.GetComponent<SpawningObject>();
         if(sP.weight>0)
         {
             _polea.netWeight = sP.weight;
@@ -33,13 +34,31 @@ public class Net : MonoBehaviour, IInteractable
             {
                 item.poleyObject.Activation(false);
             }
-        }
+        }*/
     }
 
 
     public void Interact(SpawningObject spawningObject)
     {
+        if (spawningObject.weight > 0)
+        {
+            _polea.netWeight = spawningObject.weight;
+            _polea.CheckWeight();
+        }
         
+        foreach (var item in objectsAndTypes)
+        {
+            if (spawningObject.myType == item.type)
+            {
+                item.poleyObject.Activation(true);
+            }
+            else
+            {
+                item.poleyObject.Activation(false);
+            }
+        }
+
+        spawningObject.Delete();
     }
 
     public void Interact(GameObject interactor)

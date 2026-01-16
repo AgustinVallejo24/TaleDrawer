@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] SpawnableManager _spawnableManager;
     [SerializeField] ZernikeManager _zernikeManager;
+
+    [SerializeField] List<SpawningObject> _spawnedObjects;
+    [SerializeField] int _maxSpawnedObjects;
+    [SerializeField] Color _transparencyColor;
     private void Awake()
     {
         instance = this;
@@ -68,6 +72,31 @@ public class GameManager : MonoBehaviour
         _zernikeManager.recognitionAction = _dTest.StartDissolve;
 
     }
+
+    public void AddSpawningObject(SpawningObject obj)
+    {
+        if(_spawnedObjects.Count >= _maxSpawnedObjects)
+        {
+            _spawnedObjects.Remove(_spawnedObjects.First());
+            _spawnedObjects.First().SetTransparency(_transparencyColor);
+        }
+        else if(_spawnedObjects.Count == _maxSpawnedObjects - 1)
+        {
+            _spawnedObjects.First().SetTransparency(_transparencyColor);
+        }
+
+        _spawnedObjects.Add(obj);
+    }
+
+    public void RemoveSpawningObjectFromList(SpawningObject obj)
+    {
+        if (_spawnedObjects.Contains(obj))
+        {
+            _spawnedObjects.Remove(obj);
+        }
+        
+    }
+
 
     // Update is called once per frame
    

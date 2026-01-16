@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class PoleyObject : MonoBehaviour, IDeletable
+public class PoleyObject : SpawningObject
 {
     [SerializeField] Polea polea;
     
-    public void Delete()
+    public override void Delete()
     {
+        base.Delete();
         polea.netWeight = 0;
         polea.CheckWeight();
         Activation(false);

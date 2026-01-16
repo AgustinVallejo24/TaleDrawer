@@ -564,6 +564,9 @@ MonoBehaviour:
   drawingThreshold: 0
   _spawnableManager: {fileID: 4572182062081173834}
   _zernikeManager: {fileID: 3441223574253749270}
+  _spawnedObjects: []
+  _maxSpawnedObjects: 5
+  _transparencyColor: {r: 0, g: 0, b: 0, a: 0.5372549}
 --- !u!1 &1542576903221864396
 GameObject:
   m_ObjectHideFlags: 0

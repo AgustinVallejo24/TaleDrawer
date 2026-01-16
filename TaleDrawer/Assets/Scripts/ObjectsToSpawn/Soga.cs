@@ -54,4 +54,11 @@ public class Soga : SpawningObject, IInteractable
             hook.RopeAnimatorSpeedController();
         }
     }
+
+    public override void Delete()
+    {
+        base.Delete();
+
+        hook.Delete();
+    }
 }

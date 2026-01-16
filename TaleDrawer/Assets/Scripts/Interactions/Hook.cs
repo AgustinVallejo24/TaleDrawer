@@ -40,16 +40,21 @@ public class Hook : MonoBehaviour, IInteractable
     }
 
     public void Interact(SpawningObject spawningObject)
-    {        
+    {
         if (_posibleObjects.HasFlag(spawningObject.myType))
         {
+
             if (myType == RopeType.Horizontal)
                 playerDetectionCollider.enabled = true;
 
+
+            GameManager.instance.RemoveSpawningObjectFromList(spawningObject);
+
             Destroy(spawningObject.gameObject);
 
+            GameManager.instance.AddSpawningObject(_attachedObject);
             _attachedObject.gameObject.SetActive(true);
-            
+
             _lowerNode?.SetCanDoEvent(_upperNode, true);
             _leftNode?.SetCanDoEvent(_rightNode, true);
             _rightNode?.SetCanDoEvent(_leftNode, true);
@@ -58,9 +63,19 @@ public class Hook : MonoBehaviour, IInteractable
         {
             spawningObject.CantInteract();
         }
-        
+
     }
 
+    public void Delete()
+    {
+        _attachedObject.gameObject.SetActive(false);
+        if (_character.currentHook == this)
+        {
+            //_character.characterRigidbody.linearVelocity = Vector2.zero;
+            _character.SendInputToFSM(CharacterStates.Idle);
+
+        }
+    }
     public void Interact(GameObject interactor)
     {
         

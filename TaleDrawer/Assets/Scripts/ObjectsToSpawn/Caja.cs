@@ -298,10 +298,13 @@ public class Caja : SpawningObject,IInteractable
     public override void Delete()
     {
         base.Delete();
+
         if(Character.instance.currentInteractable == (IInteractable)this)
         {
             Character.instance.currentInteractable = null;
         }
+        Debug.LogError("Me borro");
+
         Destroy(gameObject);
     }
     public void InsideInteraction()
