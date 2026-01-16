@@ -23,7 +23,7 @@ public class MonkeyIdleState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.IdleState;
-        _myMonkey.CoroutineManager(_cou);
+       
     }
 
     public override void OnExit()

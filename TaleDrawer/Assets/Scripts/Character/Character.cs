@@ -372,7 +372,6 @@ public class Character : Entity
         };
         Jumping.OnFixedUpdate += () =>
         {
-            characterModel.Move2(xInput, .7f);
         };
         Jumping.OnExit += x => { };
 

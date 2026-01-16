@@ -109,65 +109,65 @@ public class CharacterModel
             _myCharacter.characterView.FlipCharacter(-1);
         }
     }
-    public virtual void Move(Vector2 objective, float smoothSpeed)
-    {
-        Vector2 currentPosition = _myRigidbody.position; // Usar Rigidbody.position para f�sica
-        Vector2 direction = new Vector2(objective.x,_myCharacter.transform.position.y) - currentPosition;
-       // float distance = direction.magnitude;
-      //  float stopThreshold = 0.1f; // Distancia m�nima para considerar que ya llegamos
+    //public virtual void Move(Vector2 objective, float smoothSpeed)
+    //{
+    //    Vector2 currentPosition = _myRigidbody.position; // Usar Rigidbody.position para f�sica
+    //    Vector2 direction = new Vector2(objective.x,_myCharacter.transform.position.y) - currentPosition;
+    //   // float distance = direction.magnitude;
+    //  //  float stopThreshold = 0.1f; // Distancia m�nima para considerar que ya llegamos
 
-        //if (distance <= stopThreshold)
-        //{
+    //    //if (distance <= stopThreshold)
+    //    //{
 
-        //    Debug.LogError("LACONCHA");
-        //    // Si estamos cerca, detenemos el personaje inmediatamente y salimos.
-        //    _myRigidbody.linearVelocity = Vector2.zero;
-        //    return;
-        //}
+    //    //    Debug.LogError("LACONCHA");
+    //    //    // Si estamos cerca, detenemos el personaje inmediatamente y salimos.
+    //    //    _myRigidbody.linearVelocity = Vector2.zero;
+    //    //    return;
+    //    //}
 
-        // Calcular la velocidad objetivo (sin Time.deltaTime)
-        // Usar la distancia para escalar la velocidad si estamos en la zona de frenado
-        float maxSpeed = _myCharacter.currentSpeed;
+    //    // Calcular la velocidad objetivo (sin Time.deltaTime)
+    //    // Usar la distancia para escalar la velocidad si estamos en la zona de frenado
+    //    float maxSpeed = _myCharacter.currentSpeed;
 
-        // Opcional: Reducir la velocidad linealmente cuando est� cerca del destino
-        // para un frenado m�s controlado, aunque SmoothDamp ya lo hace.
-        // float targetSpeed = Mathf.Min(maxSpeed, maxSpeed * (distance / 2f)); // Ejemplo de rampa de frenado
-        float targetSpeed = maxSpeed;
+    //    // Opcional: Reducir la velocidad linealmente cuando est� cerca del destino
+    //    // para un frenado m�s controlado, aunque SmoothDamp ya lo hace.
+    //    // float targetSpeed = Mathf.Min(maxSpeed, maxSpeed * (distance / 2f)); // Ejemplo de rampa de frenado
+    //    float targetSpeed = maxSpeed;
 
-        Vector2 targetVelocity = direction.normalized * targetSpeed;
+    //    Vector2 targetVelocity = direction.normalized * targetSpeed;
 
-        // Aplicar SmoothDamp a la velocidad del Rigidbody
-        // **Importante:** Usamos _myRigidbody.velocity, no linearVelocity, 
-        // y la variable 'speed' debe ser un Vector2 pasado por ref, no un float.
-        Vector2 currentVelocity = _myRigidbody.linearVelocity;
+    //    // Aplicar SmoothDamp a la velocidad del Rigidbody
+    //    // **Importante:** Usamos _myRigidbody.velocity, no linearVelocity, 
+    //    // y la variable 'speed' debe ser un Vector2 pasado por ref, no un float.
+    //    Vector2 currentVelocity = _myRigidbody.linearVelocity;
 
-        RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position + targetVelocity.normalized * .2f, Vector2.down, 2f, _myCharacter.floorLayerMask);
+    //    RaycastHit2D hit = Physics2D.Raycast(_myRigidbody.position + targetVelocity.normalized * .2f, Vector2.down, 2f, _myCharacter.floorLayerMask);
 
-        if (hit)
-        {
-      //      Debug.LogError(hit.transform.gameObject.name);
-            Vector2 tangent = Vector2.Perpendicular(hit.normal).normalized;
+    //    if (hit)
+    //    {
+    //  //      Debug.LogError(hit.transform.gameObject.name);
+    //        Vector2 tangent = Vector2.Perpendicular(hit.normal).normalized;
 
-            if (Vector2.Dot(tangent, direction) < 0)
-               tangent = -tangent;
+    //        if (Vector2.Dot(tangent, direction) < 0)
+    //           tangent = -tangent;
 
-            targetVelocity = tangent * targetSpeed;
-        }
-        //Vector2 smoothVelocity; // Variable para la velocidad actual (ref) del SmoothDamp.
-        Debug.DrawLine(_myCharacter.transform.position, CustomTools.ToVector2(_myCharacter.transform.position) + Vector2.down);
-        Debug.DrawLine(_myCharacter.transform.position, CustomTools.ToVector2(_myCharacter.transform.position) + targetVelocity);
-        // Necesitas una variable de tipo Vector2 para el ref. 
-        // Decl�rala a nivel de clase/componente: private Vector2 _smoothDampVelocity;
+    //        targetVelocity = tangent * targetSpeed;
+    //    }
+    //    //Vector2 smoothVelocity; // Variable para la velocidad actual (ref) del SmoothDamp.
+    //    Debug.DrawLine(_myCharacter.transform.position, CustomTools.ToVector2(_myCharacter.transform.position) + Vector2.down);
+    //    Debug.DrawLine(_myCharacter.transform.position, CustomTools.ToVector2(_myCharacter.transform.position) + targetVelocity);
+    //    // Necesitas una variable de tipo Vector2 para el ref. 
+    //    // Decl�rala a nivel de clase/componente: private Vector2 _smoothDampVelocity;
 
-        //  _myRigidbody.MovePosition(_myRigidbody.position + direction.normalized * Time.deltaTime * targetSpeed);
+    //    //  _myRigidbody.MovePosition(_myRigidbody.position + direction.normalized * Time.deltaTime * targetSpeed);
 
-        _myRigidbody.linearVelocity = Vector2.SmoothDamp(
-            currentVelocity,
-            targetVelocity,
-            ref _smoothDampVelocity, // Usa la variable de clase (ref)
-            smoothSpeed
-        );
-    }
+    //    _myRigidbody.linearVelocity = Vector2.SmoothDamp(
+    //        currentVelocity,
+    //        targetVelocity,
+    //        ref _smoothDampVelocity, // Usa la variable de clase (ref)
+    //        smoothSpeed
+    //    );
+    //}
     public void AlignToGround()
     {
         RaycastHit2D hit = Physics2D.Raycast(
@@ -216,17 +216,6 @@ public class CharacterModel
    
     }
 
-    public void Move2(float x, float speedMultiplier)
-    {
-        if (x != 0)
-            Flip(CustomTools.ToVector2(_myCharacter.transform.position) + new Vector2(x, 0));
-        _movementVector = new Vector3(x, 0) * _myCharacter.currentSpeed * speedMultiplier;
-        Debug.Log(_movementVector);
-        // _rb.MovePosition(_movementVector + _pl.transform.position);
-       // _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
-        _myRigidbody.linearVelocityX = _movementVector.x;
-
-    }
 
     public void Climb(float y, float maxPos, float minPos, float speedMultiplier)
     {

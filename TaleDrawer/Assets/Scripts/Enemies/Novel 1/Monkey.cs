@@ -11,28 +11,43 @@ public class Monkey : Enemy
     [SerializeField] Character _character;
     [SerializeField] SpawnableObjectType _dangerousObjects;
 
-
+    public CustomNode[] patrollingNodes;
+    public int currentNodeIndex;
     protected override void Awake()
     {
         _fsm = new FSM();
 
         _fsm.AddState(FSMStates.IdleState, new MonkeyIdleState(this, _character, StartBehaviour()));
+        _fsm.AddState(FSMStates.PatrollState, new MonkeyPatrollingState(this, _character));
         _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
         _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
         _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState());
-        _fsm.ChangeState(FSMStates.IdleState);
+        _fsm.ChangeState(FSMStates.PatrollState);
     }
     protected override void Start()
     {        
         if( _hasHelmet)
         {
             _helmet.SetActive(true);
-        }        
+        }
+        StartCoroutine(StartBehaviour());
     }
+  
+
 
     protected override void EnemyEvent()
     {
         _fsm.ChangeState(FSMStates.AttackState);
+    }
+
+    protected override void Update()
+    {
+        _fsm.Update();
+    }
+
+    private void FixedUpdate()
+    {
+        _fsm.FixedUpdate();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -66,10 +81,16 @@ public class Monkey : Enemy
     {
         while (true)
         {
-            if (Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask) && currentState == FSMStates.IdleState)
+            if(currentState == FSMStates.IdleState || currentState == FSMStates.PatrollState)
             {
-                EnemyEvent();
+
+                if (Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask))
+                {
+                    Debug.Log("No me hace nada");
+                    EnemyEvent();
+                }
             }
+
 
             yield return new WaitForSeconds(0.3f);
         }

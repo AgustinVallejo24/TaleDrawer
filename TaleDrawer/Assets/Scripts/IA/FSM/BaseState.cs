@@ -32,5 +32,6 @@ public enum FSMStates
     Transition,    
     InitialState,    
     DeathState,    
-    SleepingState    
+    SleepingState,
+    PatrollState
 }

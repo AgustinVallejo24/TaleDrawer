@@ -20,9 +20,6 @@ public class MonkeyAttackEventState : BaseState
     {
         _myMonkey.currentState = FSMStates.AttackState;
 
-        GameManager.instance.StateChanger(SceneStates.GameOver);
-        _character.SendInputToFSM(CharacterStates.Stop);
-        _character.characterRigidbody.linearVelocity = Vector3.zero;
         if (_character.transform.position.x >= _myMonkey.transform.position.x)
         {
             _myMonkey.transform.DOMoveX(_character.transform.position.x - 1, 1).OnComplete(() => { Debug.LogError("GameOver"); });

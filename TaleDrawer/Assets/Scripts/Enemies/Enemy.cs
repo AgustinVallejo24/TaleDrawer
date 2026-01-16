@@ -6,22 +6,46 @@ public abstract class Enemy : Entity
     [Header("Variables")]
     [SerializeField] protected int _health;
     [SerializeField] protected EnemyType _myType;
+    [SerializeField] protected float _speed;
+    [SerializeField] protected Vector2 _movementVector;
     [SerializeField] protected LayerMask _playerMask;
-    [SerializeField] protected Rigidbody2D _rigidbody;
+    public Rigidbody2D myRigidbody;
+    public SpriteRenderer spriteRenderer;
     public FSMStates currentState;
+
 
     [Header("Side scripts references")]
     public FSM _fsm;
     public override void LiftEntity()
     {
-        _rigidbody.gravityScale = 0;
+        myRigidbody.gravityScale = 0;
         _fsm.ChangeState(FSMStates.StunnedState);
     }
 
     public override void ReleaseFromBalloon()
     {
-        _rigidbody.gravityScale = 1;
+        myRigidbody.gravityScale = 1;
         _fsm.ChangeState(FSMStates.IdleState);
+    }
+
+    public void Move(float x)
+    {
+        if (x != 0)
+            Flip(CustomTools.ToVector2(transform.position) + new Vector2(x, 0));
+        _movementVector = new Vector3(x, 0) * _speed;
+        myRigidbody.linearVelocityX = _movementVector.x;
+
+    }
+    public void Flip(Vector3 position)
+    {
+        if (Mathf.Sign(position.x - transform.position.x) > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+        }
     }
     protected virtual void Awake()
     {
