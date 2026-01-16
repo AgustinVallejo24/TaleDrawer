@@ -54,6 +54,7 @@ public class Hook : MonoBehaviour, IInteractable
 
             GameManager.instance.AddSpawningObject(_attachedObject);
             _attachedObject.gameObject.SetActive(true);
+            _attachedObject.SetTransparency(Color.red, 1);
 
             _lowerNode?.SetCanDoEvent(_upperNode, true);
             _leftNode?.SetCanDoEvent(_rightNode, true);

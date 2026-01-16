@@ -15,6 +15,7 @@ public class PoleyObject : SpawningObject
     public void Activation(bool value)
     {
         GetComponent<SpriteRenderer>().enabled = value;
+        if (value) SetTransparency(Color.red, 1);
         GetComponent<Collider2D>().enabled = value;
     }
 }
