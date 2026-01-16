@@ -44,7 +44,7 @@ public class Character : Entity
     public CharacterStates _climbingTransitions;
     [SerializeField] protected SpriteRenderer _characterSprite;
     [SerializeField] LayerMask _walkableLayerMask;
-    [SerializeField] Collider2D _mainCollider;
+    public Collider2D _mainCollider;
     #endregion
 
 

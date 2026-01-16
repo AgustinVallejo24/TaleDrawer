@@ -32,9 +32,8 @@ public class MonkeyPatrollingState : BaseState
     public override void Update()
     {
       
-       if(Mathf.Abs(_myMonkey.transform.position.x - _myMonkey.patrollingNodes[_myMonkey.currentNodeIndex].transform.position.x)>.6f)
-        {
-          
+       if(Mathf.Abs(_myMonkey.transform.position.x - _myMonkey.patrollingNodes[_myMonkey.currentNodeIndex].transform.position.x)>.1f)
+        {        
             _myMonkey.Move(-Mathf.Sign(_myMonkey.transform.position.x - _myMonkey.patrollingNodes[_myMonkey.currentNodeIndex].transform.position.x));
         }
         else
@@ -48,6 +47,7 @@ public class MonkeyPatrollingState : BaseState
             {
                 _myMonkey.currentNodeIndex++;
             }
+            _myMonkey._fsm.ChangeState(FSMStates.IdleState);
         }
     }
 }

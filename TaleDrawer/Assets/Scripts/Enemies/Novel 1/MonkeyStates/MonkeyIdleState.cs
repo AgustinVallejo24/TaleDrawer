@@ -8,7 +8,7 @@ public class MonkeyIdleState : BaseState
     Monkey _myMonkey;
     IEnumerator _cou;
 
-
+    float timer = 0;
     public MonkeyIdleState(Monkey monk, Character chara, IEnumerator cou)
     {
         _character = chara;
@@ -23,7 +23,7 @@ public class MonkeyIdleState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.IdleState;
-       
+        timer = 0;
     }
 
     public override void OnExit()
@@ -38,6 +38,14 @@ public class MonkeyIdleState : BaseState
 
     public override void Update()
     {
-        
+        if(timer < 2)
+        {
+            timer += Time.deltaTime;
+
+        }
+        else
+        {
+            _myMonkey._fsm.ChangeState(FSMStates.PatrollState);
+        }
     }    
 }

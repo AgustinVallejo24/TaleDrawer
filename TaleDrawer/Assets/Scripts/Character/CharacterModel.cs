@@ -187,7 +187,10 @@ public class CharacterModel
 
             // Si es casi plano, forzamos 0
             if (Mathf.Abs(angle) < 1f)
+            {
                 angle = 0f;
+            }
+               
 
             targetRotation = Quaternion.Euler(0, 0, angle);
         }
