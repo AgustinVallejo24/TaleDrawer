@@ -873,7 +873,7 @@ MonoBehaviour:
   isMoving: 0
   spawningOwbjects:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2176
 --- !u!1 &2529591945869729110
 GameObject:
   m_ObjectHideFlags: 0

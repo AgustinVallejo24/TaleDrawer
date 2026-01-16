@@ -88,8 +88,11 @@ public class SpawningObject : MonoBehaviour, IDeletable
     public virtual void Delete()
     {
         GameManager.instance.RemoveSpawningObjectFromList(this);
-      
-        Instantiate(clouds, transform.position, Quaternion.identity);
+        if(clouds != null)
+        {
+            Instantiate(clouds, transform.position, Quaternion.identity);
+        }
+        
 
     }
 

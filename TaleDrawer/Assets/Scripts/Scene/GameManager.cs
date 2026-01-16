@@ -77,7 +77,9 @@ public class GameManager : MonoBehaviour
     {
         if(_spawnedObjects.Count >= _maxSpawnedObjects)
         {
+            SpawningObject sp = _spawnedObjects.First();
             _spawnedObjects.Remove(_spawnedObjects.First());
+            sp.Delete();
             _spawnedObjects.First().SetTransparency(_transparencyColor);
         }
         else if(_spawnedObjects.Count == _maxSpawnedObjects - 1)

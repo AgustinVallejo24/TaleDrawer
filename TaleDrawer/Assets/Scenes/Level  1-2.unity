@@ -5655,10 +5655,6 @@ PrefabInstance:
       propertyPath: _lowerNode
       value: 
       objectReference: {fileID: 1670812746}
-    - target: {fileID: 3113460488018808942, guid: 1401c1a835a423640bf6a6100a85efcd, type: 3}
-      propertyPath: _upperNode
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6109300871398230352, guid: 1401c1a835a423640bf6a6100a85efcd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.8

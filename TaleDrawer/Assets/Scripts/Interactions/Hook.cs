@@ -68,6 +68,7 @@ public class Hook : MonoBehaviour, IInteractable
 
     public void Delete()
     {
+        Debug.LogError("Hello");
         _attachedObject.gameObject.SetActive(false);
         if (_character.currentHook == this)
         {
