@@ -58,7 +58,7 @@ MonoBehaviour:
     m_Bits: 35840
   _obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16448
   _intrectableName: 
   _canIntercactWithEntity: 1
   _interactingWithEntity: 0
