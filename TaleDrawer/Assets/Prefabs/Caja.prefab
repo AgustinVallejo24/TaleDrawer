@@ -124,7 +124,7 @@ MonoBehaviour:
     m_Bits: 2048
   _obstacleMask:
     serializedVersion: 2
-    m_Bits: 262144
+    m_Bits: 17472
   _intrectableName: 
   _canIntercactWithEntity: 0
   _interactingWithEntity: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
       Value: {fileID: 2633492254945977109}
     - Key: 270
       Value: {fileID: 6700987938286845262}
+  _interactableType: 0
   isMoving: 0
 --- !u!61 &3094319763697518091
 BoxCollider2D:

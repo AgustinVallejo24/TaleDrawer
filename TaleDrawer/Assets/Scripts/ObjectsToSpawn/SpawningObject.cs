@@ -38,13 +38,18 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     public ExplosionParticle clouds;
 
+    public virtual void Awake()
+    {
+        _originalColor = _mySpriteRenderer.color;
+    }
+
     public virtual void Start()
     {
         _myCharacter = Character.instance;
         sceneCamera = GameManager.instance._sceneCamera;
         _myColl = GetComponent<Collider2D>();        
         _myColl.isTrigger = true;
-        _originalColor = _mySpriteRenderer.color;
+        
 
         if(TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
@@ -124,14 +129,24 @@ public class SpawningObject : MonoBehaviour, IDeletable
            transform.position = Vector2.Lerp(transform.position, sceneCamera.ScreenToWorldPoint(position), .5f);
 
             var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.y/2, _interactuables);
-            
-            if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
+            //var hit2 = Physics2D.OverlapCircle(transform.position, transform.localScale.y/2, _objectMask);
+
+            if (Physics2D.OverlapCircle(transform.position, transform.localScale.y / 2, _obstacleMask))
+            {
+                _first = true;
+                _second = true;
+                _third = true;
+                _canSpawn = false;
+                _mySpriteRenderer.color = Color.gray;
+            }
+            else if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
             {
                 if (_first)
                 {
                     _first = false;
                     _second = true;
                     _third = true;
+                    _canSpawn = true;
                     _currentInteractuable = interctuable;
                     _intrectableName = _currentInteractuable.GetType().Name;
                     _mySpriteRenderer.color = Color.green;
@@ -147,6 +162,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _third = false;
                     _first = true;
                     _second = true;
+                    _canSpawn = true;
                     _interactingWithEntity = true;
                     _currentInteractuable = null;
                     _intrectableName = "None";
@@ -162,13 +178,16 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _second = false;
                     _first = true;
                     _third = true;
+                    _canSpawn = true;                    
                     _currentInteractuable = null;
                     _currentEntity = null;
                     _intrectableName = "None";
                     _interactingWithEntity = false;                    
                 }
 
-                if(hit && ((1 << hit.gameObject.layer) & _obstacleMask) != 0)
+                _mySpriteRenderer.color = _originalColor;
+
+                /*if(hit && ((1 << hit.gameObject.layer) & _obstacleMask) != 0)
                 {
                     _canSpawn = false;
                     _mySpriteRenderer.color = Color.gray;
@@ -177,7 +196,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                 {
                     _canSpawn = true;
                     _mySpriteRenderer.color = _originalColor; 
-                }               
+                }*/
 
             }
         }
