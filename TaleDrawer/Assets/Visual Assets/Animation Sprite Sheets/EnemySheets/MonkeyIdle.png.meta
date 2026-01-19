@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fa5735412e8509e41b4864c1e5f82674
+guid: 4bb802d2efe598d4882d9538d589b2fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rope_fall_sheet_0
+      name: MonkeyIdle_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1466
-        width: 608
-        height: 1466
+        y: 827
+        width: 945
+        height: 827
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,118 +125,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3734a83b67da5d94ba0134afc493ce9b
-      internalID: -1055304830
+      spriteID: 2ab3ebc938b6f4c44a75743b413aaac5
+      internalID: -1895758887
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_1
+      name: MonkeyIdle_1
       rect:
         serializedVersion: 2
-        x: 608
-        y: 1466
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.44181752, y: 0.35521862}
+        x: 945
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e40b7abe8e3b8e4d84ffb436659675f
-      internalID: -954227572
+      spriteID: 4784761aafd18554db48a75292fc5861
+      internalID: -994444202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_2
+      name: MonkeyIdle_2
       rect:
         serializedVersion: 2
-        x: 1216
-        y: 1466
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5000002, y: 0.22711681}
+        x: 1890
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 027aebb66e3f35d4d88a9faa39504051
-      internalID: 668936756
+      spriteID: dda6549340842924798b79fc39ff4e52
+      internalID: 289577637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_3
+      name: MonkeyIdle_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5048744, y: 0.1603781}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 786a2893951837d45b2839f95be40ad6
-      internalID: -1200230186
+      spriteID: 7c5193466a816234089675a2213138fa
+      internalID: 534814679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_4
+      name: MonkeyIdle_4
       rect:
         serializedVersion: 2
-        x: 608
+        x: 945
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5204139, y: 0.10377348}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37653475ab8cb2449acdc808c75bb700
-      internalID: 943162844
+      spriteID: df64f9fc87f494a499bc7863c8fa1108
+      internalID: -130334296
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_5
+      name: MonkeyIdle_5
       rect:
         serializedVersion: 2
-        x: 1216
+        x: 1890
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5204139, y: 0.10377348}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 772f2bfbb4e85b14f8b47a319d3c55fb
-      internalID: -18484390
+      spriteID: 8b90d366dafa3e14ea5992d0617b2b27
+      internalID: 924620613
       vertices: []
       indices: 
       edges: []
@@ -245,7 +245,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dffd9a1c4e561374da4e9580c9cb7c81
+    spriteID: 0ba01faace28dde4a89bc4d15519904c
     internalID: 0
     vertices: []
     indices: 
@@ -255,14 +255,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":608.0,"y":1466.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":945.0,"y":827.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      rope_fall_sheet_0: -1055304830
-      rope_fall_sheet_1: -954227572
-      rope_fall_sheet_2: 668936756
-      rope_fall_sheet_3: -1200230186
-      rope_fall_sheet_4: 943162844
-      rope_fall_sheet_5: -18484390
+      MonkeyIdle_0: -1895758887
+      MonkeyIdle_1: -994444202
+      MonkeyIdle_2: 289577637
+      MonkeyIdle_3: 534814679
+      MonkeyIdle_4: -130334296
+      MonkeyIdle_5: 924620613
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

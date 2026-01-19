@@ -3167,7 +3167,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.735849, g: 0.44775718, b: 0.44775718, a: 1}
   m_FlipX: 0
@@ -3777,6 +3777,7 @@ MonoBehaviour:
   currentSpeed: 10
   inAirSpeed: 0
   climbingSpeed: 0
+  climbingSpeedMultiplier: 0
   _smoothSpeed: 0.35
   _maxLife: 0
   jumpForce: 0
@@ -3818,6 +3819,7 @@ MonoBehaviour:
     m_Bits: 0
   flipSign: 0
   cameraFollow: {fileID: 0}
+  groupFraming: {fileID: 0}
   xInput: 0
   climbingInputs: {x: 0, y: 0}
   horizontalJumpDir: 0
@@ -4051,6 +4053,10 @@ PrefabInstance:
     - target: {fileID: 5653516557565117608, guid: 3380234b2e464b1468f39ee6f50ee307, type: 3}
       propertyPath: m_Name
       value: Soga
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196097400170888171, guid: 3380234b2e464b1468f39ee6f50ee307, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.96
       objectReference: {fileID: 0}
     - target: {fileID: 9205195601121388379, guid: 3380234b2e464b1468f39ee6f50ee307, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4647,6 +4653,7 @@ MonoBehaviour:
   currentSpeed: 10
   inAirSpeed: 0
   climbingSpeed: 0
+  climbingSpeedMultiplier: 0
   _smoothSpeed: 0.35
   _maxLife: 0
   jumpForce: 0
@@ -4688,6 +4695,7 @@ MonoBehaviour:
     m_Bits: 0
   flipSign: 0
   cameraFollow: {fileID: 0}
+  groupFraming: {fileID: 0}
   xInput: 0
   climbingInputs: {x: 0, y: 0}
   horizontalJumpDir: 0
@@ -5863,6 +5871,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d71c36da8c747542af02dfff314f443, type: 3}
+--- !u!1001 &6947971573825093739
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.536
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.983
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3486816446145556330, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606289163073119993, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
+      propertyPath: m_Name
+      value: Monkey
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eae55bfbd475b7f449dd0701a875287e, type: 3}
 --- !u!1001 &7890092733812870204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6197,3 +6262,4 @@ SceneRoots:
   - {fileID: 1504379197}
   - {fileID: 8673681141145985333}
   - {fileID: 7890092733812870204}
+  - {fileID: 6947971573825093739}

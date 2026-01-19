@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fa5735412e8509e41b4864c1e5f82674
+guid: d2885ce03fc6b0b4d81d6f92952d87f5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rope_fall_sheet_0
+      name: Monkey_WakeUp_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1466
-        width: 608
-        height: 1466
+        y: 1654
+        width: 945
+        height: 827
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,118 +125,228 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3734a83b67da5d94ba0134afc493ce9b
-      internalID: -1055304830
+      spriteID: fe4ab71f733463141a96bd57a6b92082
+      internalID: 1156851467
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_1
+      name: Monkey_WakeUp_1
       rect:
         serializedVersion: 2
-        x: 608
-        y: 1466
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.44181752, y: 0.35521862}
+        x: 945
+        y: 1654
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e40b7abe8e3b8e4d84ffb436659675f
-      internalID: -954227572
+      spriteID: 91953d3750aa8b043809cb99553cf2f0
+      internalID: -1434184014
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_2
+      name: Monkey_WakeUp_2
       rect:
         serializedVersion: 2
-        x: 1216
-        y: 1466
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5000002, y: 0.22711681}
+        x: 1890
+        y: 1654
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 027aebb66e3f35d4d88a9faa39504051
-      internalID: 668936756
+      spriteID: d6b73c23fbbe4144a81c155911ff0e2e
+      internalID: 2000840757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_3
+      name: Monkey_WakeUp_3
+      rect:
+        serializedVersion: 2
+        x: 2835
+        y: 1654
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55763419e1af68b4fabbb80244c6cd2d
+      internalID: -640537352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Monkey_WakeUp_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f663e2f85c02a7f4d8e93b9a45fbea61
+      internalID: -1287245549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Monkey_WakeUp_5
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f37713f747d5a7747bd02aa1e71d7ed7
+      internalID: 631243074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Monkey_WakeUp_6
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd7baa67d0d5a34abfe063ca8beec3b
+      internalID: -902039877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Monkey_WakeUp_7
+      rect:
+        serializedVersion: 2
+        x: 2835
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80333a577c125084694e3022994b9c89
+      internalID: -929116056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Monkey_WakeUp_8
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5048744, y: 0.1603781}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 786a2893951837d45b2839f95be40ad6
-      internalID: -1200230186
+      spriteID: 4e4335b14b1524749b7e334b4ca9e23a
+      internalID: -579728895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_4
+      name: Monkey_WakeUp_9
       rect:
         serializedVersion: 2
-        x: 608
+        x: 945
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5204139, y: 0.10377348}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37653475ab8cb2449acdc808c75bb700
-      internalID: 943162844
+      spriteID: 15e97dbcf3f425a40a74341270e8b775
+      internalID: 1404448981
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_5
+      name: Monkey_WakeUp_10
       rect:
         serializedVersion: 2
-        x: 1216
+        x: 1890
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5204139, y: 0.10377348}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 772f2bfbb4e85b14f8b47a319d3c55fb
-      internalID: -18484390
+      spriteID: 7c8062c6a469db44fa6e19a1564f34bd
+      internalID: 137773167
       vertices: []
       indices: 
       edges: []
@@ -245,7 +355,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dffd9a1c4e561374da4e9580c9cb7c81
+    spriteID: 0d8b124e3a7f0d046ae5d697f0a97585
     internalID: 0
     vertices: []
     indices: 
@@ -255,14 +365,19 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":608.0,"y":1466.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":3.0},"gridSpriteSize":{"x":945.0,"y":827.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      rope_fall_sheet_0: -1055304830
-      rope_fall_sheet_1: -954227572
-      rope_fall_sheet_2: 668936756
-      rope_fall_sheet_3: -1200230186
-      rope_fall_sheet_4: 943162844
-      rope_fall_sheet_5: -18484390
+      Monkey_WakeUp_0: 1156851467
+      Monkey_WakeUp_1: -1434184014
+      Monkey_WakeUp_10: 137773167
+      Monkey_WakeUp_2: 2000840757
+      Monkey_WakeUp_3: -640537352
+      Monkey_WakeUp_4: -1287245549
+      Monkey_WakeUp_5: 631243074
+      Monkey_WakeUp_6: -902039877
+      Monkey_WakeUp_7: -929116056
+      Monkey_WakeUp_8: -579728895
+      Monkey_WakeUp_9: 1404448981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

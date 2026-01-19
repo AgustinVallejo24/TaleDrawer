@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fa5735412e8509e41b4864c1e5f82674
+guid: 288eb90b69da56740b0a2ed56d01c8bc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rope_fall_sheet_0
+      name: Monkey_Run_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1466
-        width: 608
-        height: 1466
+        y: 827
+        width: 945
+        height: 827
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,118 +125,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3734a83b67da5d94ba0134afc493ce9b
-      internalID: -1055304830
+      spriteID: d472c0baa27825f44a9411613cc1f4f4
+      internalID: -1694476252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_1
+      name: Monkey_Run_1
       rect:
         serializedVersion: 2
-        x: 608
-        y: 1466
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.44181752, y: 0.35521862}
+        x: 945
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e40b7abe8e3b8e4d84ffb436659675f
-      internalID: -954227572
+      spriteID: a18c87cae9844654f9dc139f36c5ffcc
+      internalID: -1975890172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_2
+      name: Monkey_Run_2
       rect:
         serializedVersion: 2
-        x: 1216
-        y: 1466
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5000002, y: 0.22711681}
+        x: 1890
+        y: 827
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 027aebb66e3f35d4d88a9faa39504051
-      internalID: 668936756
+      spriteID: 4b379f27a7ab6c446b8249f337c353de
+      internalID: -120276285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_3
+      name: Monkey_Run_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5048744, y: 0.1603781}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 786a2893951837d45b2839f95be40ad6
-      internalID: -1200230186
+      spriteID: 7eac0d1f83c1a11498840bfd5ae0d5cc
+      internalID: -350410253
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rope_fall_sheet_4
+      name: Monkey_Run_4
       rect:
         serializedVersion: 2
-        x: 608
+        x: 945
         y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5204139, y: 0.10377348}
+        width: 945
+        height: 827
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37653475ab8cb2449acdc808c75bb700
-      internalID: 943162844
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rope_fall_sheet_5
-      rect:
-        serializedVersion: 2
-        x: 1216
-        y: 0
-        width: 608
-        height: 1466
-      alignment: 9
-      pivot: {x: 0.5204139, y: 0.10377348}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 772f2bfbb4e85b14f8b47a319d3c55fb
-      internalID: -18484390
+      spriteID: 7943caa7b7d716c4fa4b06b8c0efe8ab
+      internalID: -990470849
       vertices: []
       indices: 
       edges: []
@@ -245,7 +223,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dffd9a1c4e561374da4e9580c9cb7c81
+    spriteID: d5dd21b10c5b92441b96d165fab8d0a3
     internalID: 0
     vertices: []
     indices: 
@@ -255,14 +233,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":608.0,"y":1466.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":945.0,"y":827.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      rope_fall_sheet_0: -1055304830
-      rope_fall_sheet_1: -954227572
-      rope_fall_sheet_2: 668936756
-      rope_fall_sheet_3: -1200230186
-      rope_fall_sheet_4: 943162844
-      rope_fall_sheet_5: -18484390
+      Monkey_Run_0: -1694476252
+      Monkey_Run_1: -1975890172
+      Monkey_Run_2: -120276285
+      Monkey_Run_3: -350410253
+      Monkey_Run_4: -990470849
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
