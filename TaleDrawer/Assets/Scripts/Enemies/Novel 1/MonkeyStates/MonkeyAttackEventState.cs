@@ -19,15 +19,8 @@ public class MonkeyAttackEventState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.AttackState;
+        _myMonkey.StartCoroutine(_myMonkey.Attack());
 
-        if (_character.transform.position.x >= _myMonkey.transform.position.x)
-        {
-            _myMonkey.transform.DOMoveX(_character.transform.position.x - 1, 1).OnComplete(() => { Debug.LogError("GameOver"); });
-        }
-        else
-        {
-            _myMonkey.transform.DOMoveX(_character.transform.position.x + 1, 1).OnComplete(() => { Debug.LogError("GameOver"); });
-        }
     }
 
     public override void OnExit()
@@ -42,8 +35,10 @@ public class MonkeyAttackEventState : BaseState
 
     public override void Update()
     {
-        
+      
+
     }
 
+    
     
 }

@@ -19,6 +19,7 @@ public class Monkey : Enemy
 
         _fsm.AddState(FSMStates.IdleState, new MonkeyIdleState(this, _character, StartBehaviour()));
         _fsm.AddState(FSMStates.PatrollState, new MonkeyPatrollingState(this, _character));
+        _fsm.AddState(FSMStates.PursuitState, new MonkeyPursueState(this, _character));
         _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
         _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
         _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState());
@@ -37,7 +38,7 @@ public class Monkey : Enemy
 
     protected override void EnemyEvent()
     {
-        _fsm.ChangeState(FSMStates.AttackState);
+        _fsm.ChangeState(FSMStates.PursuitState);
     }
 
     protected override void Update()
@@ -71,12 +72,18 @@ public class Monkey : Enemy
         {
             Destroy(gameObject);
         }
+
+
     }
 
 
 
 
-
+    public IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(1f);
+        _character.Death();
+    }
     public IEnumerator StartBehaviour()
     {
         while (true)

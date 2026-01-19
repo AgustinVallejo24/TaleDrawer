@@ -23,7 +23,7 @@ public class CharacterRender : MonoBehaviour
     public void TPChild()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (renderer.flipX)
+        if (_character.flipSign < 0)
         {
             _character.transform.position = _character.transform.position + 1.5f * Vector3.left + 1.5f * Vector3.up;
         }

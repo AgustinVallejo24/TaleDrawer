@@ -19,6 +19,8 @@ public class CharacterView
     private string _exitingHorizontalRopeTrigger = "ExitingHorizontalRope";    
     private string _enteringLadder = "Ladder";
     private string _eventMovement = "EventMovement";
+
+    private Tween _cameraTween;
     public CharacterView(Character character, Animator anim, SpriteRenderer characterSprite)
     {
         _character = character;
@@ -68,33 +70,36 @@ public class CharacterView
     }
     public void FlipCharacter(int movementSign)
     {
-
         _character.flipSign = movementSign;
+
+
+            float targetX = movementSign < 0 ? .5f : -.5f;
+
+            // Mata el tween anterior
+            _cameraTween?.Kill();
+            Vector3 currentOffset = _character.groupFraming.CenterOffset;
+            Vector3 targetOffset = _character.groupFraming.CenterOffset;
+            targetOffset.x = targetX;
+
+            _cameraTween = DOTween.To(
+                () => currentOffset,
+                x => _character.groupFraming.CenterOffset = x,
+                targetOffset,
+                1f //  importante, ahora hablamos de esto
+            ).SetEase(Ease.OutQuad);
+
+
         if(movementSign > 0)
         {
-            Vector3 previousOffset = _character.cameraFollow.FollowOffset;
-            previousOffset.x = 2;
-            DOTween.To(
-            () => _character.cameraFollow.FollowOffset,
-            x => _character.cameraFollow.FollowOffset = x,
-            previousOffset,
-            1.5f
-        ).SetEase(Ease.OutCubic);
-            _characterSprite.flipX = false;
+            _character.visual.eulerAngles = new Vector3(_character.visual.eulerAngles.x, 0, _character.visual.eulerAngles.z);
         }
         else
         {
-            Vector3 previousOffset = _character.cameraFollow.FollowOffset;
-            previousOffset.x = -2;
-            DOTween.To(
-            () => _character.cameraFollow.FollowOffset,
-            x => _character.cameraFollow.FollowOffset = x,
-            previousOffset,
-            1.5f
-        ).SetEase(Ease.OutCubic);
-            _characterSprite.flipX = true;            
+            _character.visual.eulerAngles = new Vector3(_character.visual.eulerAngles.x, 180, _character.visual.eulerAngles.z);
         }
-         
+       
+
+    //    _characterSprite.flipX = movementSign < 0;
     }
 
     public void OnJump()

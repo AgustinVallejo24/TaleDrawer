@@ -16,7 +16,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
     [SerializeField] LayerMask _obstacleMask;
     public IInteractable _currentInteractuable;
     public string _intrectableName;
-    Color _originalColor;
+    public Color _originalColor;
     bool _first = true;
     bool _second = true;
     bool _third = true;
@@ -43,13 +43,14 @@ public class SpawningObject : MonoBehaviour, IDeletable
         _originalColor = _mySpriteRenderer.color;
     }
 
+
     public virtual void Start()
     {
         _myCharacter = Character.instance;
         sceneCamera = GameManager.instance._sceneCamera;
         _myColl = GetComponent<Collider2D>();        
         _myColl.isTrigger = true;
-        
+
 
         if(TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {

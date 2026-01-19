@@ -193,8 +193,8 @@ public class Hook : MonoBehaviour, IInteractable
         
         if (_fromRight)
         {
-            _character.transform.position = _beforeRopeLeftPos.position;
-            characterRender.position = new Vector3(0, 0, 0);
+            _character.transform.position +=  new Vector3(-2f, 1f, 0);
+             characterRender.localPosition = new Vector3(0, 0, 0);
             _character.SendInputToFSM(CharacterStates.JumpingToRope);            
             _character.characterModel.Jump(_leftLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null;
                 StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f));
@@ -202,8 +202,8 @@ public class Hook : MonoBehaviour, IInteractable
         }
         else
         {
-            _character.transform.position = _beforeRopeRightPos.position;
-            characterRender.position = new Vector3(0, 0, 0);
+            _character.transform.position += new Vector3(2f, 1f, 0);
+            characterRender.localPosition = new Vector3(0, 0, 0);
             _character.SendInputToFSM(CharacterStates.JumpingToRope);            
             _character.characterModel.Jump(_rightLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null; 
                 StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f)); }, false, 0.7f, false);

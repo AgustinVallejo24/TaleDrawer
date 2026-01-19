@@ -79,7 +79,7 @@ public class Character : Entity
     public int flipSign;
 
     public CinemachineFollow cameraFollow;
-
+    public CinemachineGroupFraming groupFraming;
     public float xInput;
     public Vector2 climbingInputs;
     public float horizontalJumpDir;

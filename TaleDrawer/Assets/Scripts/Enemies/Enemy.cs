@@ -8,7 +8,7 @@ public abstract class Enemy : Entity
     [SerializeField] protected EnemyType _myType;
     [SerializeField] protected float _speed;
     [SerializeField] protected Vector2 _movementVector;
-    [SerializeField] protected LayerMask _playerMask;
+    [SerializeField] public LayerMask _playerMask;
     public Rigidbody2D myRigidbody;
     public SpriteRenderer spriteRenderer;
     public FSMStates currentState;
@@ -16,6 +16,11 @@ public abstract class Enemy : Entity
 
     [Header("Side scripts references")]
     public FSM _fsm;
+
+    public void SetSpeed(float newSpeed)
+    {
+        _speed = newSpeed;
+    }
     public override void LiftEntity()
     {
         myRigidbody.gravityScale = 0;
