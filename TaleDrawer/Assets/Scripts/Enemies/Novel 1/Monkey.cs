@@ -7,12 +7,23 @@ public class Monkey : Enemy
     [Header("References")]
     [SerializeField] bool _hasHelmet;
     [SerializeField] GameObject _helmet;
+    
     [SerializeField] Vector3 _areaSize;
     [SerializeField] Character _character;
     [SerializeField] SpawnableObjectType _dangerousObjects;
 
+    [Header("Animations")]
+    [SerializeField] Animator _myAnim;
+    public string _idleT { get; private set; } = "Idle"; 
+    public string _moveT { get; private set; } = "Move";
+    public string _sleepT { get; private set; } = "Sleep";
+    public string _wakeUpT { get; private set; } = "WakeUp";
+    public string _attackT { get; private set; } = "Attack";
+    public string _deathT { get; private set; } = "Death";
+
     public CustomNode[] patrollingNodes;
     public int currentNodeIndex;
+    public float attackDistance;
     protected override void Awake()
     {
         _fsm = new FSM();
@@ -74,16 +85,27 @@ public class Monkey : Enemy
         }
 
 
-    }
-
-
-
-
-    public IEnumerator Attack()
+    }    
+    public void ChangeAnimation(string anim)
     {
-        yield return new WaitForSeconds(1f);
+        StartCoroutine(ChangeAnim(anim));
+    }
+    public IEnumerator ChangeAnim(string anim)
+    {
+        _myAnim.SetTrigger(anim);
+        yield return new WaitForSeconds(.2f);
+        _myAnim.ResetTrigger(anim);
+    }
+    
+    public void Attack()
+    {
         _character.Death();
     }
+    /*public IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(1f);
+        
+    }*/
     public IEnumerator StartBehaviour()
     {
         while (true)

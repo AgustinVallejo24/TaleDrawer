@@ -7,13 +7,13 @@ public class MonkeyIdleState : BaseState
     Character _character;
     Monkey _myMonkey;
     IEnumerator _cou;
-
+    
     float timer = 0;
     public MonkeyIdleState(Monkey monk, Character chara, IEnumerator cou)
     {
         _character = chara;
         _myMonkey = monk;
-        _cou = cou;
+        _cou = cou;        
     }
     public override void FixedUpdate()
     {
@@ -24,6 +24,7 @@ public class MonkeyIdleState : BaseState
     {
         _myMonkey.currentState = FSMStates.IdleState;
         timer = 0;
+        _myMonkey.ChangeAnimation(_myMonkey._idleT);
     }
 
     public override void OnExit()

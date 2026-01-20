@@ -17,6 +17,7 @@ public class MonkeyPatrollingState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.PatrollState;
+        _myMonkey.ChangeAnimation(_myMonkey._moveT);
     }
 
     public override void OnExit()

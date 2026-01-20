@@ -19,8 +19,9 @@ public class MonkeyAttackEventState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.AttackState;
-        _myMonkey.StartCoroutine(_myMonkey.Attack());
-
+        //_myMonkey.StartCoroutine(_myMonkey.Attack());
+        _myMonkey.Flip(_character.transform.position);
+        _myMonkey.ChangeAnimation(_myMonkey._attackT);
     }
 
     public override void OnExit()

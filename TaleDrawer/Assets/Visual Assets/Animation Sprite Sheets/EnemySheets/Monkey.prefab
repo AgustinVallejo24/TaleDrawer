@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3486816446145556330}
   - component: {fileID: 3231317548826282749}
   - component: {fileID: 1387380406634373020}
+  - component: {fileID: 8206853515410718154}
   m_Layer: 0
   m_Name: Monkey
   m_TagString: Untagged
@@ -113,3 +114,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8206853515410718154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606289163073119993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7cfc78b48548ea46b63f983dcb2979b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonkeyRenderer
+  _myMonkey: {fileID: 0}
+  _animator: {fileID: 1387380406634373020}
