@@ -126,6 +126,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 17472
   _intrectableName: 
+  _originalColor: {r: 0, g: 0, b: 0, a: 0}
   _canIntercactWithEntity: 0
   _interactingWithEntity: 0
   _canSpawn: 0
@@ -300,7 +301,7 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 1
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1

@@ -25,11 +25,11 @@ public class CharacterRender : MonoBehaviour
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (_character.flipSign < 0)
         {
-            _character.transform.position = _character.transform.position + 1.5f * Vector3.left + 1.5f * Vector3.up;
+            _character.transform.position = _character.transform.position + 1.5f * Vector3.left + 2f * Vector3.up;
         }
         else
         {
-            _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 1.5f * Vector3.up;
+            _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 2f * Vector3.up;
         }
         _character.characterRigidbody.gravityScale = 3;
         _character.SendInputToFSM(CharacterStates.Idle);

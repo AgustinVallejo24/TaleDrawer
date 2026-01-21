@@ -100,80 +100,80 @@ public class Polea : MonoBehaviour, IInteractable
 
     public void NodeActivation(string section)
     {
-        foreach (var item in nodeList)
-        {
-            if(section == "Low")
-            {
-                if (item.section != "Low")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        platformNode.SetCanDoEvent(node, false);
+        //foreach (var item in nodeList)
+        //{
+        //    if(section == "Low")
+        //    {
+        //        if (item.section != "Low")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                platformNode.SetCanDoEvent(node, false);
 
-                    }
-                }
-                else
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        node.SetCanDoEvent(platformNode, true);
-                    }
-                }
-            }
-            else if(section == "Middle")
-            {
-                if (item.section == "Middle")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        platformNode.SetCanDoEvent(node, true);
-                        node.SetCanDoEvent(platformNode, true);
-                    }
-                }
-                else if(item.section == "High")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        platformNode.SetCanDoEvent(node, false);
-                    }
-                }
-                else if (item.section == "Low")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        node.SetCanDoEvent(platformNode, false);
-                    }
-                }
-            }
-            else if (section == "High")
-            {
-                if (item.section == "High")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        platformNode.SetCanDoEvent(node, true);
-                        node.SetCanDoEvent(platformNode, true);
-                    }
-                }
-                else if (item.section == "Middle")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        platformNode.SetCanDoEvent(node, true);
-                        node.SetCanDoEvent(platformNode, false);
-                    }
-                }
-                else if (item.section == "Low")
-                {
-                    foreach (var node in item.nodes)
-                    {
-                        node.SetCanDoEvent(platformNode, false);
-                    }
-                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                node.SetCanDoEvent(platformNode, true);
+        //            }
+        //        }
+        //    }
+        //    else if(section == "Middle")
+        //    {
+        //        if (item.section == "Middle")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                platformNode.SetCanDoEvent(node, true);
+        //                node.SetCanDoEvent(platformNode, true);
+        //            }
+        //        }
+        //        else if(item.section == "High")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                platformNode.SetCanDoEvent(node, false);
+        //            }
+        //        }
+        //        else if (item.section == "Low")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                node.SetCanDoEvent(platformNode, false);
+        //            }
+        //        }
+        //    }
+        //    else if (section == "High")
+        //    {
+        //        if (item.section == "High")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                platformNode.SetCanDoEvent(node, true);
+        //                node.SetCanDoEvent(platformNode, true);
+        //            }
+        //        }
+        //        else if (item.section == "Middle")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                platformNode.SetCanDoEvent(node, true);
+        //                node.SetCanDoEvent(platformNode, false);
+        //            }
+        //        }
+        //        else if (item.section == "Low")
+        //        {
+        //            foreach (var node in item.nodes)
+        //            {
+        //                node.SetCanDoEvent(platformNode, false);
+        //            }
+        //        }
 
-            }
+        //    }
 
-        }
+       // }
 
     }
     

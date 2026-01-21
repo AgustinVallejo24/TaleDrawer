@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class MonkeyStunnedState : BaseState
+public class MonkeySleepingState : BaseState
 {
     Monkey _monkey;
-    public override void FixedUpdate()
-    {
-      
-    }
-
-    public MonkeyStunnedState(Monkey monkey)
+    public MonkeySleepingState(Monkey monkey)
     {
         _monkey = monkey;
     }
+    public override void FixedUpdate()
+    {
+        
+    }
+
     public override void OnEnter()
     {
-        _monkey.currentState = FSMStates.StunnedState;
+        _monkey.currentState = FSMStates.SleepingState;
     }
 
     public override void OnExit()
@@ -24,13 +24,11 @@ public class MonkeyStunnedState : BaseState
 
     public override void Transitions()
     {
-        
+       
     }
 
     public override void Update()
     {
-        
+       
     }
-
-
 }

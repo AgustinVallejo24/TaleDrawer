@@ -460,12 +460,13 @@ public class Character : Entity
             if (currentHook != null)
             {
                 currentHook.RopeAnimationManager(1);
-            }            
+            }
+
         };
 
         OnLadder.OnUpdate += () =>
         {
-            _animator.speed = Mathf.Abs(climbingInputs.y);
+            _animator.speed = Mathf.Clamp(Mathf.Abs(climbingInputs.y),0f,1);
 
 
         };
@@ -484,6 +485,7 @@ public class Character : Entity
 
         OnLadder.OnExit += x =>
         {
+            characterView.OnExitLadder();
             _animator.speed = 1;
             if(currentHook!= null)
             {
@@ -501,6 +503,7 @@ public class Character : Entity
                 characterRigidbody.linearVelocityX = climbingInputs.x;
             }            
             climbingInputs = Vector2.zero;
+            
         };
 
         #endregion

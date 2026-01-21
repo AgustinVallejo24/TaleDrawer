@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   sign: -1
-  speed: 9
+  speed: 12
   collider: {fileID: 1685424469602709923}
 --- !u!60 &1685424469602709923
 PolygonCollider2D:

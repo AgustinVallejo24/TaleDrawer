@@ -46,7 +46,10 @@ public class Soga : SpawningObject, IInteractable
     {
         gameObject.SetActive(false);
     }
-
+    public override void Paint()
+    {
+        StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
+    }
     private void Update()
     {
         if(myRopeType == RopeType.Vertical && hook != null)

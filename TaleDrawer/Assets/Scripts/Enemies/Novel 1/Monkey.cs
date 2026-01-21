@@ -24,6 +24,7 @@ public class Monkey : Enemy
     public CustomNode[] patrollingNodes;
     public int currentNodeIndex;
     public float attackDistance;
+    public bool sleeping;
     protected override void Awake()
     {
         _fsm = new FSM();
@@ -33,8 +34,18 @@ public class Monkey : Enemy
         _fsm.AddState(FSMStates.PursuitState, new MonkeyPursueState(this, _character));
         _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
         _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
-        _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState());
-        _fsm.ChangeState(FSMStates.PatrollState);
+        _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState(this));
+        _fsm.AddState(FSMStates.SleepingState, new MonkeySleepingState(this));
+        if (sleeping)
+        {
+            _fsm.ChangeState(FSMStates.SleepingState);
+            ChangeAnimation("Sleep");
+        }
+        else
+        {
+            _fsm.ChangeState(FSMStates.PatrollState);
+        }
+       
     }
     protected override void Start()
     {        
@@ -43,6 +54,11 @@ public class Monkey : Enemy
             _helmet.SetActive(true);
         }
         StartCoroutine(StartBehaviour());
+
+        if (sleeping)
+        {
+            ChangeAnimation("Sleep");
+        }
     }
   
 
@@ -117,6 +133,15 @@ public class Monkey : Enemy
                 {
                     Debug.Log("No me hace nada");
                     EnemyEvent();
+                }
+            }
+            else if(currentState == FSMStates.SleepingState) 
+            {
+
+                if (Physics2D.OverlapArea(transform.position - _areaSize/2, transform.position + _areaSize / 2, _playerMask))
+                {
+                    ChangeAnimation("WakeUp");
+                    _fsm.ChangeState(FSMStates.IdleState);
                 }
             }
 

@@ -64,6 +64,11 @@ public class CharacterView
         _character.StartCoroutine(CustomResetTrigger("Climb"));
     }
 
+    public void OnExitLadder()
+    {
+        _anim.SetTrigger("ExitingLadder");
+        _character.StartCoroutine(CustomResetTrigger("ExitingLadder"));
+    }
     public void BallonAnimation()
     {
         _anim.SetTrigger("Balloon");

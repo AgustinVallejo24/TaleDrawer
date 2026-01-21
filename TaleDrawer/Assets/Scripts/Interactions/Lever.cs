@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections;
+using DG.Tweening;
 public class Lever : MonoBehaviour, IInteractable
 {
     [SerializeField] LayerMask _clickableMask;
@@ -43,9 +44,15 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void ActivatePlayerAnimation()
     {
-        _myCharacter.currentLever = this;
-        _myCharacter.SendInputToFSM(CharacterStates.DoingEvent);
-        _myCharacter.SetAnimatorTrigger("PullLever");
+        Character.instance.characterView.OnMove();
+        Character.instance.transform.DOMoveX(transform.position.x, 0.2f).OnComplete(() => 
+        {
+            _myCharacter.currentLever = this;
+            _myCharacter.SendInputToFSM(CharacterStates.DoingEvent);
+            _myCharacter.SetAnimatorTrigger("PullLever");
+
+        });
+
     }
 
     public void ActivateLever()
@@ -79,14 +86,14 @@ public class Lever : MonoBehaviour, IInteractable
             _leverState = true;
             yield return new WaitForSeconds(1f);
             _door.SetTrigger("Open");
-            var beforeN = new NeighbouringNodesAndActions();
-            beforeN.node = _afterDoor;
-            beforeN.nodeEvent = new UnityEngine.Events.UnityEvent();
-            var afterN = new NeighbouringNodesAndActions();
-            afterN.node = _beforeDoor;
-            afterN.nodeEvent = new UnityEngine.Events.UnityEvent();
-            _beforeDoor.neighbours.Add(beforeN);
-            _afterDoor.neighbours.Add(afterN);
+           // var beforeN = new NeighbouringNodesAndActions();
+            //beforeN.node = _afterDoor;
+            //beforeN.nodeEvent = new UnityEngine.Events.UnityEvent();
+       //     var afterN = new NeighbouringNodesAndActions();
+            //afterN.node = _beforeDoor;
+            //afterN.nodeEvent = new UnityEngine.Events.UnityEvent();
+            //_beforeDoor.neighbours.Add(beforeN);
+            //_afterDoor.neighbours.Add(afterN);
             GetComponent<Collider2D>().enabled = false;
         }
     }
