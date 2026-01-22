@@ -39,7 +39,7 @@ public class CharacterRender : MonoBehaviour
 
     public void PullLever()
     {
-        _character.currentLever.ActivateLever();
+        _character.currentActivator.Activation();
     }
     public void GoToIdle()
     {

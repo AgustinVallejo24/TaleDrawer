@@ -2,16 +2,14 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using DG.Tweening;
-public class Lever : MonoBehaviour, IInteractable
+public class Lever : Activator, IInteractable
 {
-    [SerializeField] LayerMask _clickableMask;
+
     [SerializeField] Character _myCharacter;
     [SerializeField] Animator _animator;
     [SerializeField] bool _leverState;
     [SerializeField] Animator _door;
     [SerializeField] Transform _playerPos;
-    [SerializeField] CustomNode _beforeDoor;
-    [SerializeField] CustomNode _afterDoor;
     [SerializeField] InteractableType _interactableType;
     public void InsideInteraction()
     {
@@ -47,14 +45,18 @@ public class Lever : MonoBehaviour, IInteractable
         Character.instance.characterView.OnMove();
         Character.instance.transform.DOMoveX(transform.position.x, 0.2f).OnComplete(() => 
         {
-            _myCharacter.currentLever = this;
+            _myCharacter.currentActivator = this;
             _myCharacter.SendInputToFSM(CharacterStates.DoingEvent);
             _myCharacter.SetAnimatorTrigger("PullLever");
 
         });
 
     }
-
+    public override void Activation()
+    {
+        base.Activation();
+        StartCoroutine(ActivateLeverCoroutine());
+    }
     public void ActivateLever()
     {
         StartCoroutine(ActivateLeverCoroutine());
@@ -73,7 +75,7 @@ public class Lever : MonoBehaviour, IInteractable
     
     public IEnumerator ActivateLeverCoroutine()
     {
-        _myCharacter.currentLever = null;
+        _myCharacter.currentActivator = null;
         
         if (_leverState)
         {

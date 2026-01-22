@@ -33,5 +33,6 @@ public enum FSMStates
     InitialState,    
     DeathState,    
     SleepingState,
-    PatrollState
+    PatrollState,
+    BalloonState
 }

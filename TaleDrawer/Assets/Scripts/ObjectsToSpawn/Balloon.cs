@@ -62,6 +62,7 @@ public class Balloon : SpawningObject
     {
         _currentEntity.LiftEntity();
         transform.position = _currentEntity.balloonPosition.position;
+        _mySpriteRenderer.sortingOrder = 0;
         transform.parent = _currentEntity.transform;
         ActivateFloat();
     }

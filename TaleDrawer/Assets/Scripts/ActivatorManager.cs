@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class ActivatorManager : MonoBehaviour
 {
-    [SerializeField] Activator[] activators;
+    [SerializeField] MonkeyActivator[] activators;
     [SerializeField] UnityEvent activationEvent;
     [SerializeField] ParticleSystem confetty;
     int currentActivatorsOn;

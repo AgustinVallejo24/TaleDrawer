@@ -11,9 +11,9 @@ public class SpawningObject : MonoBehaviour, IDeletable
     public bool objectIsTrigger;
     public Rigidbody2D _myrb;
     public bool objectUseGravity;
-    [SerializeField] SpriteRenderer _mySpriteRenderer;
-    [SerializeField] LayerMask _interactuables;
-    [SerializeField] LayerMask _obstacleMask;
+    [SerializeField] protected SpriteRenderer _mySpriteRenderer;
+    [SerializeField] protected LayerMask _interactuables;
+    [SerializeField] protected LayerMask _obstacleMask;
     public IInteractable _currentInteractuable;
     public string _intrectableName;
     public Color _originalColor;

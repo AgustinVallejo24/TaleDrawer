@@ -70,7 +70,7 @@ public class Character : Entity
     public bool test;
     [SerializeField] LayerMask _CliffMask;
     public Action climbAction;
-    public Lever currentLever;
+    public Activator currentActivator;
 
     public Hook currentHook;
 

@@ -15,6 +15,7 @@ public class MonkeyStunnedState : BaseState
     public override void OnEnter()
     {
         _monkey.currentState = FSMStates.StunnedState;
+        _monkey.ChangeAnimation("Balloon");
     }
 
     public override void OnExit()
