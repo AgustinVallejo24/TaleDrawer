@@ -96,11 +96,11 @@ public class CharacterView
 
         if(movementSign > 0)
         {
-            _character.visual.eulerAngles = new Vector3(_character.visual.eulerAngles.x, 0, _character.visual.eulerAngles.z);
+            _character.visual.localEulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
-            _character.visual.eulerAngles = new Vector3(_character.visual.eulerAngles.x, 180, _character.visual.eulerAngles.z);
+            _character.visual.localEulerAngles = new Vector3(0, 180, 0);
         }
        
 

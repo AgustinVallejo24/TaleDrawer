@@ -36,9 +36,12 @@ public class Subibaja : MonoBehaviour, IInteractable
     private void Update()
     {
         currentZRot = transform.localEulerAngles.z;
+        if (hasPlayer)
+        {
+            myCharacter.transform.rotation = transform.rotation;
+        }
 
-   
-        if(((currentZRot < 17 && currentZRot > 9) || currentZRot > 356) && !left)
+        if (((currentZRot < 17 && currentZRot > 9) || currentZRot > 356) && !left)
         {
             left = true;
             ChangeLeftNeightbours(0);
@@ -124,10 +127,7 @@ public class Subibaja : MonoBehaviour, IInteractable
     }
     private void FixedUpdate()
     {
-        if (hasPlayer)
-        {
-            myCharacter.transform.rotation = transform.rotation;
-        }
+
     }
     public void CheckWeight()
     {
