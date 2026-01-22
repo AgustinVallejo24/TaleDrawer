@@ -36,19 +36,19 @@ public class FloorTrap : Trap
 
     public void ActivateNodes()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            outerNodes[i].SetCanDoEvent(innerNodes[i], true);
-        }
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    outerNodes[i].SetCanDoEvent(innerNodes[i], true);
+        //}
     }
 
     public void DeactivateNodes()
     {
 
-        for (int i = 0; i < 2; i++)
-        {
-            outerNodes[i].SetCanDoEvent(innerNodes[i], false);
-        }
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    outerNodes[i].SetCanDoEvent(innerNodes[i], false);
+        //}
     }
 
 
