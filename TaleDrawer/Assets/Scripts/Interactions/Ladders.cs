@@ -81,7 +81,7 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        if (_rolledUp && first)
+        if (_rolledUp && first && _bodyPieces.Any())
         {
             first = false;
             Sequence sequence = DOTween.Sequence();
