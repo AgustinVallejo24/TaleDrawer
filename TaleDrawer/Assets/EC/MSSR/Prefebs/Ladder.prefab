@@ -60,6 +60,10 @@ MonoBehaviour:
   _accesPoints:
   - {fileID: 6157841799043315694}
   - {fileID: 3684159471710661128}
+  _bodyPieces: []
+  _bodyPos: []
+  _rolledUp: 0
+  _lowerCollider: {fileID: 3542594917515511083}
 --- !u!61 &1780969167549837676
 BoxCollider2D:
   m_ObjectHideFlags: 0

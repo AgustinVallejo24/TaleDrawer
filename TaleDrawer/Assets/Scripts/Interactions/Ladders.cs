@@ -2,6 +2,10 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using System.Linq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Ladders : MonoBehaviour, IInteractable
 {
@@ -14,11 +18,38 @@ public class Ladders : MonoBehaviour, IInteractable
     [SerializeField] bool _fromAbove;
     [SerializeField] InteractableType _interactableType;
     [SerializeField] Transform[] _accesPoints;
-
+    [SerializeField] Transform[] _bodyPieces;
+    [SerializeField] List<float> _bodyPos;
+    [SerializeField] bool _rolledUp;
+    [SerializeField] Collider2D _lowerCollider;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (_rolledUp)
+        {
+            _bodyPieces = _bodyPieces.OrderByDescending(x => x.position.y).ToArray();
+
+            _bodyPieces.Last().parent = _bodyPieces.SkipLast(1).Last();
+
+            Transform previous = null;
+
+            foreach (var item in _bodyPieces)
+            {
+                if (item == _bodyPieces.Last()) break;
+
+                if (previous != null)
+                {
+                    item.parent = previous;
+                }
+
+                _bodyPos.Add(item.position.y);
+                item.position = _bodyPieces[0].position;
+                
+                previous = item;
+            }
+
+            _lowerCollider.enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -49,16 +80,35 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        Character.instance.climbingSpeedMultiplier = 1;
-        Character.instance.maxClimbingPos = _upperPoint.position;
-        Character.instance.minClimbingPos = _lowerPoint.position;
-        Transform nearestPoint = _accesPoints.OrderBy(x => Vector2.Distance(CustomTools.ToVector2(Character.instance.transform.position), CustomTools.ToVector2(x.position))).First();
-        Character.instance.SendInputToFSM(CharacterStates.Wait);
-        Character.instance.characterModel.Flip(nearestPoint.position);
-        Character.instance.characterView.OnEventMovement();
+        if (!_rolledUp)
+        {
+            Character.instance.climbingSpeedMultiplier = 1;
+            Character.instance.maxClimbingPos = _upperPoint.position;
+            Character.instance.minClimbingPos = _lowerPoint.position;
+            Transform nearestPoint = _accesPoints.OrderBy(x => Vector2.Distance(CustomTools.ToVector2(Character.instance.transform.position), CustomTools.ToVector2(x.position))).First();
+            Character.instance.SendInputToFSM(CharacterStates.Wait);
+            Character.instance.characterModel.Flip(nearestPoint.position);
+            Character.instance.characterView.OnEventMovement();
 
 
-        Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => { Character.instance.SendInputToFSM(CharacterStates.OnLadder); Character.instance.characterView.OnEnteringLadder(); });
+            Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => { Character.instance.SendInputToFSM(CharacterStates.OnLadder); Character.instance.characterView.OnEnteringLadder(); });
+        }
+        else
+        {
+            Sequence sequence = DOTween.Sequence();           
+
+            foreach(var item in _bodyPieces)
+            {
+                if (item != _bodyPieces.First() && item != _bodyPieces.Last())
+                {
+                    sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.2f));
+                }
+                
+            }
+
+            sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
+        }
+        
 
         //if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
         //{
