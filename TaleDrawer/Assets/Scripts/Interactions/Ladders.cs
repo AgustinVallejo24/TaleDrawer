@@ -22,6 +22,7 @@ public class Ladders : MonoBehaviour, IInteractable
     [SerializeField] List<float> _bodyPos;
     [SerializeField] bool _rolledUp;
     [SerializeField] Collider2D _lowerCollider;
+    bool first = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -80,7 +81,23 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public void InteractWithPlayer()
     {
-        if (!_rolledUp)
+        if (_rolledUp && first)
+        {
+            first = false;
+            Sequence sequence = DOTween.Sequence();
+
+            foreach (var item in _bodyPieces)
+            {
+                if (item != _bodyPieces.First() && item != _bodyPieces.Last())
+                {
+                    sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.2f));
+                }
+
+            }
+
+            sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
+        }
+        else if(!_rolledUp)
         {
             Character.instance.climbingSpeedMultiplier = 1;
             Character.instance.maxClimbingPos = _upperPoint.position;
@@ -92,21 +109,7 @@ public class Ladders : MonoBehaviour, IInteractable
 
 
             Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => { Character.instance.SendInputToFSM(CharacterStates.OnLadder); Character.instance.characterView.OnEnteringLadder(); });
-        }
-        else
-        {
-            Sequence sequence = DOTween.Sequence();           
-
-            foreach(var item in _bodyPieces)
-            {
-                if (item != _bodyPieces.First() && item != _bodyPieces.Last())
-                {
-                    sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.2f));
-                }
-                
-            }
-
-            sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
+            
         }
         
 
