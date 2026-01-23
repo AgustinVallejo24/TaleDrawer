@@ -46,4 +46,6 @@ public class Paint : MonoBehaviour
         transform.gameObject.layer = 7;
 
     }
+
+
 }

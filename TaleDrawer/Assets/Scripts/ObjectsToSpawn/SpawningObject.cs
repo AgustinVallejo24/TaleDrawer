@@ -138,6 +138,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                 _second = true;
                 _third = true;
                 _canSpawn = false;
+                _mySpriteRenderer.material.SetFloat("_isGrayscale", 1);
                 _mySpriteRenderer.color = Color.gray;
             }
             else if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
@@ -150,6 +151,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _canSpawn = true;
                     _currentInteractuable = interctuable;
                     _intrectableName = _currentInteractuable.GetType().Name;
+                    _mySpriteRenderer.material.SetFloat("_isGrayscale", 0);
                     _mySpriteRenderer.color = Color.green;
                     _interactingWithEntity = false;
                     _currentEntity = null;
@@ -168,6 +170,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _currentInteractuable = null;
                     _intrectableName = "None";
                     _currentEntity = ent;
+                    _mySpriteRenderer.material.SetFloat("_isGrayscale", 0);
                     _mySpriteRenderer.color = Color.green;
                     
                 }
@@ -185,7 +188,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                     _intrectableName = "None";
                     _interactingWithEntity = false;                    
                 }
-
+                _mySpriteRenderer.material.SetFloat("_isGrayscale", 0);
                 _mySpriteRenderer.color = _originalColor;
 
                 /*if(hit && ((1 << hit.gameObject.layer) & _obstacleMask) != 0)
