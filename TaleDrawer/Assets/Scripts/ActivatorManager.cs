@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class ActivatorManager : MonoBehaviour
 {
-    [SerializeField] MonkeyActivator[] activators;
+    [SerializeField] protected MonkeyActivator[] activators;
     [SerializeField] UnityEvent activationEvent;
     [SerializeField] ParticleSystem confetty;
-    int currentActivatorsOn;
+    protected int currentActivatorsOn;
     private void Start()
     {
         foreach (var item in activators)
