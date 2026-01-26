@@ -12,8 +12,8 @@ public class MonkeyActivatorManager : ActivatorManager
         if (_rubies.Any())
         {
 
-            _rubies[currentActivatorsOn].shiningRuby.SetActive(true);
-            _rubies[currentActivatorsOn].grayRuby.SetActive(false);
+            _rubies[currentActivatorsOn - 1].shiningRuby.SetActive(true);
+            _rubies[currentActivatorsOn - 1].grayRuby.SetActive(false);
 
         }
 
