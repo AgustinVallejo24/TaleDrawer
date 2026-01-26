@@ -16,6 +16,11 @@ public class CharacterRender : MonoBehaviour
         // _animator.applyRootMotion = true; // (Generalmente solo para 3D Humanoid, pero a veces funciona en 2D si hay un root bone)
     }
 
+    public void StepSound()
+    {
+        _character.characterAudioSource.clip = _character.stepClips[Random.Range(0, _character.stepClips.Count - 1)];
+        _character.characterAudioSource.Play();
+    }
     public void TPPlayer()
     {
 

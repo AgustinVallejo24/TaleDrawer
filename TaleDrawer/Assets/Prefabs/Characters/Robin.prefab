@@ -271,7 +271,7 @@ MonoBehaviour:
   _CliffMask:
     serializedVersion: 2
     m_Bits: 524288
-  currentLever: {fileID: 0}
+  currentActivator: {fileID: 0}
   currentHook: {fileID: 0}
   floorLayerMask:
     serializedVersion: 2
@@ -292,6 +292,24 @@ MonoBehaviour:
   grounded: 0
   distance: 0
   cliffDetectionDistance: 0.6
+  stepClips:
+  - {fileID: 8300000, guid: 1d775ce232941f940871b465eff5950c, type: 3}
+  - {fileID: 8300000, guid: 013d72b00278aa14c81d0bd18c76cafe, type: 3}
+  - {fileID: 8300000, guid: cf4ccebca7f83f646abf8d5f930a3673, type: 3}
+  - {fileID: 8300000, guid: 3548635c0aa7cfe45a30db27db9fcc85, type: 3}
+  - {fileID: 8300000, guid: a36d97f8af156d9478a7e0df30c98a2c, type: 3}
+  - {fileID: 8300000, guid: fe864403c2c25674eb76c7d060549a07, type: 3}
+  - {fileID: 8300000, guid: 8946582357f64064caeba307cbfa5bc3, type: 3}
+  - {fileID: 8300000, guid: e1a1104f1b2ed4847ab93abc3e8cb3eb, type: 3}
+  - {fileID: 8300000, guid: ed4712a3d25ec934cb4c1c86ee6f1c2f, type: 3}
+  - {fileID: 8300000, guid: a92c4fb68420a014eb41a3ba0e39925c, type: 3}
+  - {fileID: 8300000, guid: d0bd6cf2b2b73274c8fb80c7b9ce311f, type: 3}
+  - {fileID: 8300000, guid: 9f59013fbbaea6f43b447e0e30fa31ab, type: 3}
+  - {fileID: 8300000, guid: 8abaab9b01948854381c247cf620e4f7, type: 3}
+  - {fileID: 8300000, guid: 2fdedd6bfc8a06246b5eab7a8d72edd5, type: 3}
+  - {fileID: 8300000, guid: 484b65f349bf94c4793692354413b3d2, type: 3}
+  - {fileID: 8300000, guid: 84294f876c9be9248a1ce2cb9f6a38d2, type: 3}
+  - {fileID: 8300000, guid: 25fd2e45f587b024592802a0085cd662, type: 3}
   subibaja: {fileID: 0}
   canClimb: 0
 --- !u!50 &4313604016444015195
@@ -334,7 +352,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.114
+  m_Volume: 0.331
   m_Pitch: 1
   Loop: 0
   Mute: 0

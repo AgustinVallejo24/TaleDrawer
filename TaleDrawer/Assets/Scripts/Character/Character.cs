@@ -92,6 +92,8 @@ public class Character : Entity
     public float distance;
 
     public float cliffDetectionDistance;
+
+    public List<AudioClip> stepClips;
     protected virtual void Awake()
     {
 

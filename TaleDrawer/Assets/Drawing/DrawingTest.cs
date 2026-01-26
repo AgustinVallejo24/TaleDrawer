@@ -46,8 +46,19 @@ public class DrawingTest : MonoBehaviour
 
     public AudioSource audioSource;
 
+    Coroutine loopSoundCoroutine;
+
+    public List<AudioClip> loopClips;
+    [SerializeField] float minPitch = 0.9f;
+    [SerializeField] float maxPitch = 1.4f;
+    [SerializeField] float speedForMaxPitch = 5f; // ajusta según tu escala
+
+    Vector3 lastPoint;
+    float lastPointTime;
+    bool hasLastPoint = false;
     private void Start()
     {
+        
         //cam = Camera.main;
         var lineR = Instantiate(lRPrefab, transform);
         _lineRenderers.Add(lineR);
@@ -115,8 +126,9 @@ public class DrawingTest : MonoBehaviour
             fillImage.fillAmount = 0;
 
             //audioSource.loop = true;
-            audioSource.clip = loopDrawClip;
-            audioSource.Play();
+            //audioSource.clip = loopDrawClip;
+            //audioSource.Play();
+            loopSoundCoroutine = StartCoroutine(PlayLoopedSound());
 
             startDrawing = true;
             if (GameManager.instance != null && GameManager.instance.currentState != SceneStates.Drawing)
@@ -134,7 +146,7 @@ public class DrawingTest : MonoBehaviour
             isDrawing = false;
             startDrawing = false;
             startTimer = true;
-
+            StopCoroutine(loopSoundCoroutine);
             //   audioSource.loop = false;
             //audioSource.clip = endDrawClip;
             //audioSource.Play();
@@ -191,8 +203,51 @@ public class DrawingTest : MonoBehaviour
         audioSource.clip = loopDrawClip;
         audioSource.Play();
     }
+
+    public IEnumerator PlayLoopedSound()
+    {
+        while (true)
+        {
+            var customClips = new List<AudioClip>(loopClips);
+            customClips.Remove(audioSource.clip);
+            audioSource.clip = customClips[UnityEngine.Random.Range(0, customClips.Count - 1)];
+            audioSource.Play();
+            yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(.3f, .9f));
+        }
+    }
     void AddSmoothedPoint(Vector3 newPoint)
     {
+        float now = Time.unscaledTime;
+
+        if (hasLastPoint)
+        {
+            float distance = Vector3.Distance(lastPoint, newPoint);
+            float deltaTime = now - lastPointTime;
+
+            if (deltaTime > 0f)
+            {
+                float speed = distance / deltaTime;
+
+                float targetPitch = Mathf.Lerp(
+                    minPitch,
+                    maxPitch,
+                    Mathf.Clamp01(speed / speedForMaxPitch)
+                );
+
+                audioSource.pitch = Mathf.Lerp(
+                    audioSource.pitch,
+                    targetPitch,
+                    Time.unscaledDeltaTime * 10f
+                );
+            }
+        }
+
+        lastPoint = newPoint;
+        lastPointTime = now;
+        hasLastPoint = true;
+
+
+
         currentStrokePoints.Add(newPoint);
         currentPoints.Add(newPoint);
         // listaDeListas[linerendererIndex].Add(newPoint);
