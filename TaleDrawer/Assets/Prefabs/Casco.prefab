@@ -201,7 +201,7 @@ MonoBehaviour:
   sceneCamera: {fileID: 0}
   myType: 16
   _myColl: {fileID: 3094319763697518091}
-  objectIsTrigger: 0
+  objectIsTrigger: 1
   _myrb: {fileID: 2840643262149740278}
   objectUseGravity: 1
   _mySpriteRenderer: {fileID: 6003551055875638059}

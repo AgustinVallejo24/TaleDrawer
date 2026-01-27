@@ -13,7 +13,7 @@ public class Casco : SpawningObject, IDeletable, IInteractable
     {
         if(!Character.instance._hasHelmet && !_isBeingUsed)
         {
-            _currentEntity.PutOnHelmet();
+            Character.instance.PutOnHelmet();
             Delete();
         }
 
