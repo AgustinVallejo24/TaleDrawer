@@ -63,7 +63,8 @@ public class MonkeyActivator : Activator, IInteractable
         Character myCharacter = Character.instance;
         myCharacter.characterView.OnEventMovement();
         myCharacter.characterModel.Flip(new Vector3(_playerPos.position.x, myCharacter.transform.position.y, 0));
-        myCharacter.transform.DOMoveX(_playerPos.position.x, 0.2f).OnComplete(() =>
+        float distance = Mathf.Abs(_playerPos.position.x - myCharacter.transform.position.x);
+        myCharacter.transform.DOMoveX(_playerPos.position.x, distance/4).OnComplete(() =>
         {
             myCharacter.currentActivator = this;
             myCharacter.characterView.OnIdle();

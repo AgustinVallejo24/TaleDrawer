@@ -200,7 +200,8 @@ public class Hook : MonoBehaviour, IInteractable
             //    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f));
             //}, false, 0.7f, false);
             _character.characterRigidbody.gravityScale = 3;
-            _character.characterRigidbody.AddForce(Vector2.left * 7 + Vector2.up * 6, ForceMode2D.Impulse);
+            _character.characterRigidbody.AddForce(Vector2.left * 6 + Vector2.up * 6, ForceMode2D.Impulse);
+            _character.currentHook = null;
         }
         else
         {
@@ -210,7 +211,8 @@ public class Hook : MonoBehaviour, IInteractable
             //_character.characterModel.Jump(_rightLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null; 
             //    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f)); }, false, 0.7f, false);
             _character.characterRigidbody.gravityScale = 3;
-            _character.characterRigidbody.AddForce(Vector2.right * 7 + Vector2.up * 6, ForceMode2D.Impulse);
+            _character.characterRigidbody.AddForce(Vector2.right * 6 + Vector2.up * 6, ForceMode2D.Impulse);
+            _character.currentHook = null;
         }
         
 
