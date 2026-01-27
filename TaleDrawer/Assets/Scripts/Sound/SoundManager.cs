@@ -1,13 +1,14 @@
 using UnityEngine;
-
+using System.Linq;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-
-
+    public AudioEvent[] audioEvents;
+    public static AudioEvent[] staticAudioEvents;
     private void Awake()
     {
+        staticAudioEvents = audioEvents;
         if (instance != null)
         {
             Destroy(gameObject);
@@ -18,11 +19,13 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public static void Play(AudioEvent audioEvent, Vector3 position)
+    public static void Play(SoundsType soundType, Vector3 position)
     {
-        if (audioEvent == null) return;
+        if (soundType == SoundsType.Null) return;
 
-        GameObject go = new GameObject("Audio_" + audioEvent.name);
+        AudioEvent audioEvent = staticAudioEvents.Where(x => x.type == soundType).First();
+
+        GameObject go = new GameObject("Audio_" + soundType);
         go.transform.position = position;
 
         AudioSource source = go.AddComponent<AudioSource>();
@@ -34,4 +37,13 @@ public class SoundManager : MonoBehaviour
         source.Play();
         Destroy(go, source.clip.length / source.pitch);
     }
+}
+public enum SoundsType
+{
+    Null,
+    StoneSteps,
+    PaperSteps,
+    Jump,
+    Death,
+
 }

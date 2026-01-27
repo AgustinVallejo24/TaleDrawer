@@ -207,6 +207,10 @@ public class SpawningObject : MonoBehaviour, IDeletable
         
     }
 
+    public virtual void OnSpawned()
+    {
+
+    }
     public void OnEndDrag()
     {
         if(GameManager.instance.currentState == SceneStates.Dragging && !_spawned)
@@ -263,6 +267,10 @@ public class SpawningObject : MonoBehaviour, IDeletable
                 {
                     _currentInteractuable.Interact(this);
                     
+                }
+                else
+                {
+                    OnSpawned();
                 }
                 
                 

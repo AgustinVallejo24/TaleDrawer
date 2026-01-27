@@ -186,9 +186,11 @@ public class Character : Entity
             .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(JumpingToRope)
             .SetTransition(CharacterStates.Swaying, Swaying)
+            .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Landing, Landing).Done();
         StateConfigurer.Create(Swaying)
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
+
         StateConfigurer.Create(OnLadder)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Jumping, Jumping)
@@ -412,7 +414,10 @@ public class Character : Entity
         JumpingToRope.OnUpdate += () =>
         {
 
-
+            if (grounded)
+            {
+                SendInputToFSM(CharacterStates.Moving);
+            }
         };
         JumpingToRope.OnFixedUpdate += () =>
         {

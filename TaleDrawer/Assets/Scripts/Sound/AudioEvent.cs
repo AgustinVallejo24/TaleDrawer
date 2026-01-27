@@ -6,6 +6,8 @@ public class AudioEvent : ScriptableObject
 {
     public AudioClip[] clips;
 
+    public SoundsType type;
+
     [Range(0f, 1f)]
     public float volume = 1f;
 

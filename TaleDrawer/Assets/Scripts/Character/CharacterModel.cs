@@ -32,7 +32,7 @@ public class CharacterModel
                 Debug.LogError("Entro Bro");
                 _myCharacter.SendInputToFSM(CharacterStates.Moving);
             }
-
+            SoundManager.Play(SoundsType.Jump, _myCharacter.transform.position);
             _myCharacter.characterView.OnJump();
             _myCharacter.currentSpeed = _myCharacter.inAirSpeed;
             _myCharacter.characterRigidbody.AddForce(_myCharacter.jumpForce * Vector2.up, ForceMode2D.Impulse);

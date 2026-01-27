@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2920772e02a6ce84c80a11ef784ff2b8, type: 3}
-  m_Name: MixedSteps
+  m_Name: Jump
   m_EditorClassIdentifier: Assembly-CSharp::AudioEvent
-  clips: []
-  volume: 1
+  clips:
+  - {fileID: 8300000, guid: add163b84ae1c1b499046d13a30ef381, type: 3}
+  - {fileID: 8300000, guid: ff496e67ed4f49340992c456236994e4, type: 3}
+  - {fileID: 8300000, guid: 65efb40f8a8290540a873e51913ea4e8, type: 3}
+  type: 3
+  volume: 0.5
   pitch: 1
-  randomPitch: 0
+  randomPitch: 1
   pitchRange: {x: 0.9, y: 1.1}
   mixerGroup: {fileID: 0}

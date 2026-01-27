@@ -9,7 +9,8 @@ public class Soga : SpawningObject, IInteractable
     public RopeType myRopeType;
     public SpriteRenderer mySpRenderer;
     [SerializeField] InteractableType _interactableType;
-
+    [SerializeField] Collider2D _detectionCollider;
+    [SerializeField] Collider2D _fallingCollider;
     public InteractableType MyInteractableType()
     {
         return _interactableType;
@@ -56,6 +57,7 @@ public class Soga : SpawningObject, IInteractable
         {
             hook.RopeAnimatorSpeedController();
         }
+
     }
 
     public override void Delete()
@@ -63,5 +65,12 @@ public class Soga : SpawningObject, IInteractable
         base.Delete();
 
         hook.Delete();
+    }
+
+    public override void OnSpawned()
+    {
+        base.OnSpawned();
+        _fallingCollider.enabled = true;
+        _detectionCollider.enabled = false;
     }
 }

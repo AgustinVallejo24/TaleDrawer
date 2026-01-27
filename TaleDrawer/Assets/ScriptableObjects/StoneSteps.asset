@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2920772e02a6ce84c80a11ef784ff2b8, type: 3}
+  m_Name: StoneSteps
+  m_EditorClassIdentifier: Assembly-CSharp::AudioEvent
+  clips:
+  - {fileID: 8300000, guid: 1d775ce232941f940871b465eff5950c, type: 3}
+  - {fileID: 8300000, guid: 013d72b00278aa14c81d0bd18c76cafe, type: 3}
+  - {fileID: 8300000, guid: cf4ccebca7f83f646abf8d5f930a3673, type: 3}
+  - {fileID: 8300000, guid: 3548635c0aa7cfe45a30db27db9fcc85, type: 3}
+  - {fileID: 8300000, guid: a36d97f8af156d9478a7e0df30c98a2c, type: 3}
+  - {fileID: 8300000, guid: fe864403c2c25674eb76c7d060549a07, type: 3}
+  - {fileID: 8300000, guid: 8946582357f64064caeba307cbfa5bc3, type: 3}
+  - {fileID: 8300000, guid: e1a1104f1b2ed4847ab93abc3e8cb3eb, type: 3}
+  - {fileID: 8300000, guid: ed4712a3d25ec934cb4c1c86ee6f1c2f, type: 3}
+  - {fileID: 8300000, guid: a92c4fb68420a014eb41a3ba0e39925c, type: 3}
+  type: 1
+  volume: 0.5
+  pitch: 1
+  randomPitch: 0
+  pitchRange: {x: 0.9, y: 1.1}
+  mixerGroup: {fileID: 0}

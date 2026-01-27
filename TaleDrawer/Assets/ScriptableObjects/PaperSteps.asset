@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2920772e02a6ce84c80a11ef784ff2b8, type: 3}
+  m_Name: PaperSteps
+  m_EditorClassIdentifier: Assembly-CSharp::AudioEvent
+  clips:
+  - {fileID: 8300000, guid: d0bd6cf2b2b73274c8fb80c7b9ce311f, type: 3}
+  - {fileID: 8300000, guid: 9f59013fbbaea6f43b447e0e30fa31ab, type: 3}
+  - {fileID: 8300000, guid: 8abaab9b01948854381c247cf620e4f7, type: 3}
+  - {fileID: 8300000, guid: 2fdedd6bfc8a06246b5eab7a8d72edd5, type: 3}
+  - {fileID: 8300000, guid: 484b65f349bf94c4793692354413b3d2, type: 3}
+  - {fileID: 8300000, guid: 84294f876c9be9248a1ce2cb9f6a38d2, type: 3}
+  - {fileID: 8300000, guid: 25fd2e45f587b024592802a0085cd662, type: 3}
+  type: 2
+  volume: 0.5
+  pitch: 1
+  randomPitch: 0
+  pitchRange: {x: 0.9, y: 1.1}
+  mixerGroup: {fileID: 0}

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3263109388630939261}
   - component: {fileID: 4931147994252441437}
   - component: {fileID: 1069306884018286962}
+  - component: {fileID: 1553574353614804644}
   m_Layer: 17
   m_Name: Soga
   m_TagString: Untagged
@@ -128,6 +129,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Paint
   cloudParticleSystem: {fileID: 0}
   firstStripeInitialValue: 0
+--- !u!61 &1553574353614804644
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58513944233683063}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.21088934}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.21, y: 4.41}
+    newSize: {x: 6.08, y: 14.660721}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 4.21, y: 0.85123944}
+  m_EdgeRadius: 0
 --- !u!1 &4387029134432683633
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +318,8 @@ MonoBehaviour:
   myRopeType: 0
   mySpRenderer: {fileID: 0}
   _interactableType: 0
+  _detectionCollider: {fileID: 9021975702070772588}
+  _fallingCollider: {fileID: 1553574353614804644}
 --- !u!61 &9021975702070772588
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -301,11 +350,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.13140094, y: 0.3738377}
+  m_Offset: {x: -0.027312517, y: -0.00894171}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -315,7 +364,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.5415733, y: 2.9497924}
+  m_Size: {x: 2.8590002, y: 3.1925306}
   m_EdgeRadius: 0
 --- !u!50 &7943354899499968467
 Rigidbody2D:

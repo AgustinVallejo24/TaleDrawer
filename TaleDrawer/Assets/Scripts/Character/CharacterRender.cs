@@ -18,8 +18,8 @@ public class CharacterRender : MonoBehaviour
 
     public void StepSound()
     {
-        _character.characterAudioSource.clip = _character.stepClips[Random.Range(0, _character.stepClips.Count - 1)];
-        _character.characterAudioSource.Play();
+        SoundManager.Play(SoundsType.StoneSteps,_character.transform.position);
+        SoundManager.Play(SoundsType.PaperSteps, _character.transform.position);
     }
     public void TPPlayer()
     {
