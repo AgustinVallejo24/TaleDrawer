@@ -115,7 +115,17 @@ public class Monkey : Enemy
     
     public void Attack()
     {
-        _character.Death();
+        if (_character._hasHelmet)
+        {
+            _character.DestroyHelmet();
+            _character.SendInputToFSM(CharacterStates.Idle);
+            _fsm.ChangeState(FSMStates.StunnedState);
+        }
+        else
+        {
+            _character.Death();
+        }
+            
     }
     /*public IEnumerator Attack()
     {

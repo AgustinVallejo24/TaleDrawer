@@ -33,7 +33,8 @@ public class Character : Entity
 
     public Vector3 maxClimbingPos;
     public Vector3 minClimbingPos;
-
+    public bool _hasHelmet;
+    
     #endregion
 
     #region References
@@ -45,6 +46,9 @@ public class Character : Entity
     [SerializeField] protected SpriteRenderer _characterSprite;
     [SerializeField] LayerMask _walkableLayerMask;
     public Collider2D _mainCollider;
+    public SpawningObject helmet;
+
+   
     #endregion
 
 
@@ -62,8 +66,7 @@ public class Character : Entity
 
     public Camera sceneCamera;
     public static Character instance;
-
-    public Casco helmet;
+    
 
     #endregion
 
@@ -708,17 +711,20 @@ public class Character : Entity
         yield return new WaitForSeconds(time);
         _eventFSM.SendInput(newState);
     }
-    public void PutOnHelmet(Casco helm, Rigidbody2D rb)
-    {
-        SendInputToFSM(CharacterStates.EquippingHelmet);
-        helmet = helm;
-        helmet.transform.rotation = helmet.neededRot;
-        helmet.transform.position = helmetPosition.position;
-        helmet.transform.parent = transform;
-        Destroy(rb);
-        SendInputToFSM(CharacterStates.Idle);
 
+    public override void PutOnHelmet()
+    {
+        _hasHelmet = true;
+        GameManager.instance.AddSpawningObject(helmet);
+        helmet.gameObject.SetActive(true);
     }
+
+    public void DestroyHelmet()
+    {
+        _hasHelmet = false;
+        helmet.Delete();
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
     
@@ -766,10 +772,7 @@ public class Character : Entity
         SendInputToFSM(CharacterStates.Stop);
         characterRigidbody.gravityScale = 0;
     }
-    public override void PutOnHelmet()
-    {
-        base.PutOnHelmet();
-    }
+    
     public override void ReleaseFromBalloon()
     {
         characterRigidbody.gravityScale = 3;

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] GameManager sceneManager;
@@ -28,6 +29,7 @@ public class InputManager : MonoBehaviour
     public PlayerInput playerInput;
     public Vector2 input;
     public Vector2 mouseInput;
+    public Action onGoingDown;
 
     public static InputManager instance;
 
@@ -97,6 +99,12 @@ public class InputManager : MonoBehaviour
         character.characterModel.Jump();
        // character.SendInputToFSM(CharacterStates.Jumping);
     }
+
+    public void OnGoingDown()
+    {
+        onGoingDown?.Invoke();
+    }
+
     public void OnBeginDrag()
     {
         

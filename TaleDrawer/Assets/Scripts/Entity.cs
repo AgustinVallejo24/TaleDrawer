@@ -3,6 +3,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     [SerializeField] public Transform balloonPosition;
+    
     public virtual void PutOnHelmet()
     {
 
