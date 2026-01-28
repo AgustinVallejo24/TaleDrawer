@@ -23,14 +23,35 @@ public class Cannon : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.TryGetComponent(out Character character))
         {
-            _character.SendInputToFSM(CharacterStates.DoingEvent);
-            _character.SetAnimatorTrigger("PullRope");
-            character.characterRigidbody.gravityScale = 0;
-            character.characterRigidbody.linearVelocity = Vector2.zero;
-            animator.SetTrigger("Pull");
-            _soga.myAnim.SetTrigger("Pull");
+            Collider2D myCollider = GetComponent<Collider2D>();
+
+            ColliderDistance2D distance = myCollider.Distance(collision);
+
+            Vector2 normal = distance.normal;
+            float angle = Mathf.Abs(Vector2.Angle(normal, Vector2.up));
+            Debug.LogError(angle);
+            if (angle < 100)
+            {
+               
+                _character.SendInputToFSM(CharacterStates.DoingEvent);
+                _character.SetAnimatorTrigger("PullRope");
+                character.characterRigidbody.gravityScale = 0;
+                character.characterRigidbody.linearVelocity = Vector2.zero;
+                animator.SetTrigger("Pull");
+                _soga.myAnim.SetTrigger("Pull");
+                if (_character.transform.position.x >= _soga.transform.position.x)
+                {
+                    _character.transform.position = new Vector3(_soga.transform.position.x + .8f, _character.transform.position.y, 0);
+                }
+                else
+                {
+                    _character.transform.position = new Vector3(_soga.transform.position.x - .8f, _character.transform.position.y, 0);
+                }
+            }
+
 
         }
     }

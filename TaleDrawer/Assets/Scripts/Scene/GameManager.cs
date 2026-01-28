@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<SpawningObject> _spawnedObjects;
     [SerializeField] int _maxSpawnedObjects;
     [SerializeField] Color _transparencyColor;
+
+    [SerializeField] InitialCameraAnimation cameraAnimation;
+    public bool playInitialAnimation;
     private void Awake()
     {
         instance = this;
@@ -71,6 +74,16 @@ public class GameManager : MonoBehaviour
      //   _clickRayLength = levelCharacter.transform.localScale.y * 2;
         _zernikeManager.recognitionAction = _dTest.StartDissolve;
 
+
+        if (playInitialAnimation)
+        {
+            levelCharacter.SendInputToFSM(CharacterStates.Stop);
+            cameraAnimation.CameraSequence();
+        }
+        else
+        {
+            _playerCamera.enabled = true;
+        }
     }
 
     public void AddSpawningObject(SpawningObject obj)

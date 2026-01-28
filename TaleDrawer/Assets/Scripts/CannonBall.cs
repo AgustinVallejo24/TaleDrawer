@@ -18,7 +18,7 @@ public class CannonBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "20")
+        if(collision.gameObject.layer == 20)
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
