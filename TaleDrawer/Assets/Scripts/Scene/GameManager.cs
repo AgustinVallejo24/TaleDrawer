@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public SceneStates currentState;
@@ -57,6 +58,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] InitialCameraAnimation cameraAnimation;
     public bool playInitialAnimation;
+
+    [SerializeField] Image _blackImage;
     private void Awake()
     {
         instance = this;
@@ -102,7 +105,20 @@ public class GameManager : MonoBehaviour
 
         _spawnedObjects.Add(obj);
     }
-
+    public void FadeOut()
+    {
+        StartCoroutine(FadeOutCoroutine());
+    }
+    public IEnumerator FadeOutCoroutine()
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            _blackImage.color = new Color(0, 0, 0, t / 1);
+            yield return null;
+        }
+    }
     public void RemoveSpawningObjectFromList(SpawningObject obj)
     {
         if (_spawnedObjects.Contains(obj))

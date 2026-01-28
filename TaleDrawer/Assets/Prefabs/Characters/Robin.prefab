@@ -490,6 +490,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Casco
       objectReference: {fileID: 0}
+    - target: {fileID: 2359451980149846497, guid: 1a736b14f70756a42897da070b461663, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6003551055875638059, guid: 1a736b14f70756a42897da070b461663, type: 3}
       propertyPath: m_SortingOrder
       value: 4
