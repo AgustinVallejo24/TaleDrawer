@@ -56,7 +56,6 @@ public class InputManager : MonoBehaviour
 
         character.xInput = playerInput.actions["Move"].ReadValue<Vector2>().x;
         character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
-        Debug.LogError(input);
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
 
         
@@ -162,7 +161,7 @@ public class InputManager : MonoBehaviour
         {
             if (rubber != null)
             {
- 
+
                 rubber.OnDrag(mouseInput);
 
             }
@@ -174,11 +173,11 @@ public class InputManager : MonoBehaviour
     
            
         }
+
         
     }
     public void OnEndDraw()
     {
-        Debug.Log("Entro");
         pointerDown = false;
         isDragging = false;
         if(rubber != null)

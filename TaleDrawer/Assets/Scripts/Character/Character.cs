@@ -786,18 +786,15 @@ public class Character : Entity
         {
             if (Mathf.Abs(xInput) >= 1)
             {
-                Debug.LogError("Detectooo");
                 return true;
             }
             else
             {
-                Debug.LogError("No detecto por el velocity " + Mathf.Abs(characterRigidbody.linearVelocityX));
                 return false;
             }
         }
         else
         {
-            Debug.LogError("No detecto por el raycast");
             return false;
         }
     }
@@ -807,8 +804,6 @@ public class Character : Entity
         RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one*.8f, 0, -transform.up, 0, playerExcludeLayer);
         //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
 
-        if (hit)
-            Debug.LogError(hit.transform.gameObject.name);
         if (hit.collider == null || hit.collider.isTrigger)
         {
             return false;
@@ -831,7 +826,6 @@ public class Character : Entity
              Debug.LogError(hit.transform.gameObject.name);
             if (hit.collider == null || hit.collider.isTrigger )
             {
-                Debug.LogError("FALLLL");
                 SendInputToFSM(CharacterStates.Falling);
             }
 

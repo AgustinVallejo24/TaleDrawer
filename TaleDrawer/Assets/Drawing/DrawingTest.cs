@@ -87,7 +87,7 @@ public class DrawingTest : MonoBehaviour
     }
     public void OnDraw(Vector2 position)
     {
-         Debug.Log("TOCOBOTON");
+     
 
         if (isDrawing)
         {
@@ -96,25 +96,29 @@ public class DrawingTest : MonoBehaviour
             {
                 AddSmoothedPoint(pos);
 
-
+              
             }
 
         }
         else
         {
+      
             if (GameManager.instance.currentState == SceneStates.Spawning) return;
             if (CustomTools.IsTouchOverUI(position))
             {
-                //Debug.Log("TOCOBOTON");
+                
                 return;
             }
 
-            float margen = 200f;
+            float margenPorcentaje = 0.1f; // 10%
 
-            bool cercaIzquierda = position.x < margen;
-            bool cercaDerecha = position.x > Screen.width - margen;
-            bool cercaAbajo = position.y < margen;
-            bool cercaArriba = position.y > Screen.height - margen;
+            float margenX = Screen.width * margenPorcentaje;
+            float margenY = Screen.height * margenPorcentaje;
+
+            bool cercaIzquierda = position.x < margenX;
+            bool cercaDerecha = position.x > Screen.width - margenX;
+            bool cercaAbajo = position.y < margenY;
+            bool cercaArriba = position.y > Screen.height - margenY;
 
             if (cercaIzquierda || cercaDerecha || cercaArriba || cercaAbajo)
             {

@@ -209,7 +209,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
 
     public virtual void OnSpawned()
     {
-
+        _mySpriteRenderer.sortingOrder = 1;
     }
     public void OnEndDrag()
     {

@@ -25,7 +25,9 @@ public class Paint : MonoBehaviour
 
     public IEnumerator PaintSprite()
     {
+
         _myRenderer = GetComponent<SpriteRenderer>();
+        _myRenderer.sortingOrder = 5;
         Sprite sprite = _myRenderer.sprite;
 
         Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
@@ -44,7 +46,7 @@ public class Paint : MonoBehaviour
         GameManager.instance.StateChanger(SceneStates.Dragging);
 
         transform.gameObject.layer = 7;
-
+      
     }
 
 

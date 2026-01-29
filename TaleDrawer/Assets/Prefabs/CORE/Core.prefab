@@ -2507,7 +2507,7 @@ Transform:
   m_GameObject: {fileID: 5723703911571501773}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 43.90596, y: 0.49999964, z: -10}
+  m_LocalPosition: {x: 18.196592, y: -1.7915764, z: -9.578263}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2651,8 +2651,8 @@ MonoBehaviour:
   IgnoreTimeScale: 1
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 0
-  BlendUpdateMethod: 0
+  UpdateMethod: 1
+  BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
     DefaultMode: 1
@@ -4265,7 +4265,7 @@ Transform:
   m_GameObject: {fileID: 9106084373594923334}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 55.8, y: 2.27, z: -10}
+  m_LocalPosition: {x: 17.903477, y: 2.8400002, z: -9.578263}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4327,12 +4327,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TrackerSettings:
-    BindingMode: 4
+    BindingMode: 5
     PositionDamping: {x: 1, y: 1, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 3, y: 1.77, z: -10}
+  FollowOffset: {x: 0, y: 1.77, z: -10}
 --- !u!114 &3165281318276290599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4345,7 +4345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineConfiner2D
-  BoundingShape2D: {fileID: 4868908774099708102}
+  BoundingShape2D: {fileID: 0}
   Damping: 0.5
   SlowingDistance: 5
   OversizeWindow:
@@ -4368,7 +4368,7 @@ MonoBehaviour:
   FramingMode: 0
   FramingSize: 0.038
   CenterOffset: {x: -0.5, y: 0}
-  Damping: 0
+  Damping: 0.63
   SizeAdjustment: 2
   LateralAdjustment: 0
   FovRange: {x: 1, y: 100}
