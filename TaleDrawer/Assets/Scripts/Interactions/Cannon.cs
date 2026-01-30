@@ -8,7 +8,7 @@ public class Cannon : MonoBehaviour, IInteractable
     [SerializeField] Animator animator;
     [SerializeField] Transform _shootingPos;
     [SerializeField] CannonBall _cannonBall;
-    Vector2 _playerVelocity;
+    [SerializeField] int _playerVelocity;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,16 +38,19 @@ public class Cannon : MonoBehaviour, IInteractable
                
                 _character.SendInputToFSM(CharacterStates.DoingEvent);
                 _character.SetAnimatorTrigger("PullRope");
+          
                 character.characterRigidbody.gravityScale = 0;
                 character.characterRigidbody.linearVelocity = Vector2.zero;
                 animator.SetTrigger("Pull");
                 _soga.myAnim.SetTrigger("Pull");
                 if (_character.transform.position.x >= _soga.transform.position.x)
                 {
+                    _playerVelocity = 1;
                     _character.transform.position = new Vector3(_soga.transform.position.x + .8f, _character.transform.position.y, 0);
                 }
                 else
                 {
+                    _playerVelocity = -1;
                     _character.transform.position = new Vector3(_soga.transform.position.x - .8f, _character.transform.position.y, 0);
                 }
             }
@@ -65,8 +68,8 @@ public class Cannon : MonoBehaviour, IInteractable
     public void ReleasePlayer()
     {
         _character.characterRigidbody.gravityScale = 3;
-        _character.characterRigidbody.AddForce(Mathf.Sign(_playerVelocity.x) * 3 * Vector2.right + 3 * Vector2.up,ForceMode2D.Impulse);
-        _character.SendInputToFSM(CharacterStates.Moving);
+        _character.characterRigidbody.AddForce(_playerVelocity *3 * Vector2.right + 4 * Vector2.up,ForceMode2D.Impulse);
+        StartCoroutine(_character.SendInputToFSM(CharacterStates.Idle,.5f));
 
     }
     public void Interact(SpawnableObjectType objectType, GameObject interactor)

@@ -90,7 +90,7 @@ public class Ladders : MonoBehaviour, IInteractable
             {
                 if (item != _bodyPieces.First() && item != _bodyPieces.Last())
                 {
-                    sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.2f));
+                    sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.07f));
                 }
 
             }
