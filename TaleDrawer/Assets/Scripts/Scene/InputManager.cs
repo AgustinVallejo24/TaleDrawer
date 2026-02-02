@@ -75,20 +75,30 @@ public class InputManager : MonoBehaviour
         
        // sceneManager.levelCharacter.characterModel.Move2(input.x);
     }
+    public void ContinueDialogue()
+    {
 
+    }
     public void OnInteract()
     {
-      
-        if (character.currentInteractable != null)
+        if (sceneManager.currentState == SceneStates.Dialogue)
         {
-            character.currentInteractable.InteractWithPlayer();
-            Debug.LogError("INTERACT");
+            DialogManager.instance.Continue();
         }
         else
         {
-            Debug.LogError("No tengo II");
+            if (character.currentInteractable != null)
+            {
+                character.currentInteractable.InteractWithPlayer();
+                Debug.LogError("INTERACT");
+            }
+            else
+            {
+                Debug.LogError("No tengo II");
 
+            }
         }
+
             
     }
     public void OnJump()

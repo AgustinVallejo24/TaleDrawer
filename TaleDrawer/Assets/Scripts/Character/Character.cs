@@ -99,7 +99,7 @@ public class Character : Entity
     public List<AudioClip> stepClips;
     protected virtual void Awake()
     {
-
+        instance = this;
 
         #region States Declarations
         var Idle = new StateE<CharacterStates>("Idle");
@@ -635,10 +635,9 @@ public class Character : Entity
 
 
 
-    
     protected virtual void Start()
     {
-        instance = this;
+      
         characterRigidbody = GetComponent<Rigidbody2D>();
         _originalGravityScale = characterRigidbody.gravityScale;
     }

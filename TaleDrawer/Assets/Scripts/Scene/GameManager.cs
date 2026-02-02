@@ -5,7 +5,6 @@ using System.Linq;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
-//using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
@@ -46,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     public float drawingThreshold;
 
- 
+    public Dialogue levelDialogue;
 
 
     [SerializeField] SpawnableManager _spawnableManager;
@@ -85,6 +84,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+
             _playerCamera.enabled = true;
         }
     }
@@ -277,4 +277,5 @@ public enum SceneStates
     Event,
     GameOver,
     Spawning,
+    Dialogue,
 }

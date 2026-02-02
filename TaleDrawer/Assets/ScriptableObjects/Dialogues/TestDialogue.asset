@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0fd9dd1763442469ae4f8e03cff49d, type: 3}
+  m_Name: TestDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
+  inkJSON: {fileID: 4900000, guid: 0944afb50473c4b4e9601b6de9ff5cc4, type: 3}
+  baseFont: {fileID: 11400000, guid: 7120c40afdc4e1b4a9f45fe0b74f530e, type: 2}
+  voices:
+  - speaker: 2
+    voiceClips:
+    - {fileID: 8300000, guid: 37babfd86c7081b4ba8b2f501524d0d9, type: 3}
