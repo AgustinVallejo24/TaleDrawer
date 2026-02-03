@@ -4,7 +4,7 @@ using DG.Tweening;
 public class Paint : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    SpriteRenderer _myRenderer;
+    public SpriteRenderer _myRenderer;
     public GameObject cloudParticleSystem;
 
     public float firstStripeInitialValue;
@@ -33,6 +33,7 @@ public class Paint : MonoBehaviour
         Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
         _myRenderer.material.SetTexture("_MainTex", tex);
 
+        Debug.LogError(transform.parent.gameObject.name);
         //_myRenderer.material.DOFloat(.6f, "_FirstStripe", 1.3f).SetUpdate(true);
         //yield return new WaitForSecondsRealtime(1f);
 

@@ -19,7 +19,10 @@ public class Casco : SpawningObject, IDeletable, IInteractable
 
 
     }
-
+    public override void Paint()
+    {
+        StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
+    }
     public override void Delete()
     {
         base.Delete();

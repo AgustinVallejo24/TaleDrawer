@@ -30,6 +30,7 @@ public class InputManager : MonoBehaviour
     public Vector2 input;
     public Vector2 mouseInput;
     public Action onGoingDown;
+    public TemplateBook templateBook;
 
     public static InputManager instance;
 
@@ -78,6 +79,12 @@ public class InputManager : MonoBehaviour
     public void ContinueDialogue()
     {
 
+    }
+
+    public void OnOpenBook()
+    {
+        templateBook.gameObject.SetActive(true);
+        templateBook.OnActivated();
     }
     public void OnInteract()
     {

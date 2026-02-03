@@ -21,6 +21,10 @@ public class Balloon : SpawningObject
         StartCoroutine(RiseAndFloat());
     }
 
+    public override void Paint()
+    {
+        StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
+    }
     public override void Delete()
     {
         base.Delete();

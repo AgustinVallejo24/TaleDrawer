@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3062819333472702595}
   - component: {fileID: 6003551055875638059}
-  m_Layer: 7
+  - component: {fileID: 9094580451961535107}
+  m_Layer: 17
   m_Name: Helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: -876546973899608171, guid: d514791f2c233f147a0fe958ae8b79c1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,6 +91,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9094580451961535107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271918160598512777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a2065581ab7b94a9f1e2b89f368064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Paint
+  _myRenderer: {fileID: 6003551055875638059}
+  cloudParticleSystem: {fileID: 0}
+  firstStripeInitialValue: 0
 --- !u!1 &2359451980149846497
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +120,6 @@ GameObject:
   - component: {fileID: 3094319763697518091}
   - component: {fileID: 2840643262149740278}
   - component: {fileID: 2571903442050755558}
-  - component: {fileID: 1282938835151941667}
   m_Layer: 7
   m_Name: Casco
   m_TagString: Untagged
@@ -348,17 +363,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1282938835151941667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2359451980149846497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78a2065581ab7b94a9f1e2b89f368064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Paint
-  cloudParticleSystem: {fileID: 4263261026291695561, guid: 136938ebab19326499fa03eb8794332a, type: 3}
-  firstStripeInitialValue: 0

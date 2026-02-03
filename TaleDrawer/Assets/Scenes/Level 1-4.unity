@@ -18232,6 +18232,10 @@ PrefabInstance:
       propertyPath: cameraAnimation
       value: 
       objectReference: {fileID: 2064744930}
+    - target: {fileID: 5778659055715900441, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: orthographic size
+      value: 7.399087
+      objectReference: {fileID: 0}
     - target: {fileID: 6249943437703402502, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: Targets.Array.data[0].Object
       value: 
