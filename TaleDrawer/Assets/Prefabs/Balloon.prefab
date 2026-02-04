@@ -130,6 +130,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4519721875887125223}
     m_Modifications:
+    - target: {fileID: 642117229605885135, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1353641174579304796, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.36783695
@@ -183,12 +187,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3936348055136213961, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 23cfc3abe3854fe47a9827079e0d4f8c, type: 3}
+    - target: {fileID: 3936348055136213961, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3936348055136213961, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: d514791f2c233f147a0fe958ae8b79c1, type: 3}
     - target: {fileID: 7220640596058097505, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
       propertyPath: m_Name
       value: Globo_PF
+      objectReference: {fileID: 0}
+    - target: {fileID: 7220640596058097505, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -215,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a2065581ab7b94a9f1e2b89f368064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Paint
+  _myRenderer: {fileID: 7457446464986449313}
   cloudParticleSystem: {fileID: 0}
   firstStripeInitialValue: 0
 --- !u!4 &4834476515470559028 stripped

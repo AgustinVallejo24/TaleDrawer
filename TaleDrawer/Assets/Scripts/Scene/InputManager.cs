@@ -83,8 +83,17 @@ public class InputManager : MonoBehaviour
 
     public void OnOpenBook()
     {
-        templateBook.gameObject.SetActive(true);
-        templateBook.OnActivated();
+        if (!templateBook.gameObject.activeSelf)
+        {
+            templateBook.gameObject.SetActive(true);
+            templateBook.OnActivated();
+        }
+        else
+        {
+            templateBook.OnDeactivated();
+            templateBook.gameObject.SetActive(false);
+        }
+
     }
     public void OnInteract()
     {

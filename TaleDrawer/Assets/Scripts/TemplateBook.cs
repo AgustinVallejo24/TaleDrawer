@@ -32,6 +32,19 @@ public class TemplateBook : MonoBehaviour
         }
         _coverPage.transform.SetAsLastSibling();
     }
+
+    public void OnDeactivated()
+    {
+        int count = _pages.Count;
+        for (int i = _pages.Count -1 ; i > 0; i--)
+        {
+            var page = _pages[i];
+            _pages.Remove(page);
+            Destroy(page.gameObject);
+        }
+        index = -1;
+        _coverPage.localEulerAngles = Vector3.zero;
+    }
     public void RotateForward()
     {
         if (index == -1) return;
