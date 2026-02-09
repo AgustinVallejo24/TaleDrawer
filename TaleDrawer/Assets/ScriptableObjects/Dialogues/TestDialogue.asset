@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0fd9dd1763442469ae4f8e03cff49d, type: 3}
   m_Name: TestDialogue
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  inkJSON: {fileID: 4900000, guid: 0944afb50473c4b4e9601b6de9ff5cc4, type: 3}
+  inkJSON: {fileID: 4900000, guid: 4f4a791c44e5f8c46b4df2cedbcf53a5, type: 3}
   baseFont: {fileID: 11400000, guid: 7120c40afdc4e1b4a9f45fe0b74f530e, type: 2}
   voices:
   - speaker: 2

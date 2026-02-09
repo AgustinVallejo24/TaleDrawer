@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
 
     public static InputManager instance;
 
-
+    float currentInput;
     private void Awake()
     {
         instance = this;
@@ -56,6 +56,9 @@ public class InputManager : MonoBehaviour
     {
 
         character.xInput = playerInput.actions["Move"].ReadValue<Vector2>().x;
+        
+
+        Debug.LogError(character.xInput);
         character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
 

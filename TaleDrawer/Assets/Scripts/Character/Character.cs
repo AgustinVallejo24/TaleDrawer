@@ -124,10 +124,8 @@ public class Character : Entity
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
              .SetTransition(CharacterStates.Stop, Stop)
              .SetTransition(CharacterStates.OnLadder, OnLadder)
-              .SetTransition(CharacterStates.Wait, Wait)
-              .SetTransition(CharacterStates.Death, Death)
-                .SetTransition(CharacterStates.Landing, Landing)
-              .SetTransition(CharacterStates.Falling, Falling)
+             .SetTransition(CharacterStates.Wait, Wait)
+             .SetTransition(CharacterStates.Death, Death)
              .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Moving)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -138,9 +136,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.Death, Death)
-            .SetTransition(CharacterStates.Falling, Falling)
-              .SetTransition(CharacterStates.Landing, Landing)
-                      .SetTransition(CharacterStates.Swaying, Swaying)
+            .SetTransition(CharacterStates.Swaying, Swaying)
             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
         StateConfigurer.Create(Wait)
             .SetTransition(CharacterStates.Idle, Idle)
@@ -156,7 +152,6 @@ public class Character : Entity
             .SetTransition(CharacterStates.Idle, Idle)
              .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Landing, Landing)
             .SetTransition(CharacterStates.Climb, Climb)
             .Done();
         StateConfigurer.Create(Stop)
@@ -189,8 +184,7 @@ public class Character : Entity
             .SetTransition(CharacterStates.Idle, Idle).Done();
         StateConfigurer.Create(JumpingToRope)
             .SetTransition(CharacterStates.Swaying, Swaying)
-            .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Landing, Landing).Done();
+            .SetTransition(CharacterStates.Moving, Moving).Done();
         StateConfigurer.Create(Swaying)
             .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
 
@@ -205,14 +199,16 @@ public class Character : Entity
         .Done();
         StateConfigurer.Create(Falling)
            .SetTransition(CharacterStates.Idle, Idle)
-            .SetTransition(CharacterStates.Landing, Landing)
-        .Done();
+           .Done();
 
 
 
         #endregion
-        // _eventFSM.SendInput(CharacterStates.Idle);
-        _eventFSM = new EventFSM<CharacterStates>(Idle);
+
+
+        _eventFSM = new EventFSM<CharacterStates>(Idle); 
+
+
         #region IDLE STATE
 
         Idle.OnEnter += x =>
@@ -278,38 +274,6 @@ public class Character : Entity
 
         #endregion
 
-
-        #region FALLING STATE
-
-        Falling.OnEnter += x =>
-        {
-            _currentState = CharacterStates.Falling;
-            
-            //  characterView.OnMove();
-
-        };
-
-        Falling.OnUpdate += () =>
-        {
-
-
-        };
-        Falling.OnFixedUpdate += () =>
-        {
-
-
-
-        };
-        Falling.OnExit += x =>
-        {
-
-
-
-        };
-
-        #endregion
-
-
         #region WAIT STATE
 
         Wait.OnEnter += x =>
@@ -332,32 +296,6 @@ public class Character : Entity
 
         };
         Wait.OnExit += x => { };
-
-        #endregion
-
-
-        #region LANDING STATE
-
-        Landing.OnEnter += x =>
-        {
-            characterView.OnLand();
-
-            characterRigidbody.linearVelocity = Vector2.zero;
-            _currentState = CharacterStates.Landing;
-
-
-        };
-
-        Landing.OnUpdate += () =>
-        {
-
-
-        };
-        Landing.OnFixedUpdate += () =>
-        {
-
-        };
-        Landing.OnExit += x => { };
 
         #endregion
 
@@ -682,7 +620,7 @@ public class Character : Entity
         {
             SendInputToFSM(CharacterStates.Climb);
         }
-        //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(transform.position.x,transform.position.y, Camera.main.transform.position.z), .1f);
+     
     }
     private void FixedUpdate()
     {
@@ -727,7 +665,6 @@ public class Character : Entity
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
     
-
         if (collision.gameObject.tag == "Spikes")
         {
             Death();
@@ -736,11 +673,6 @@ public class Character : Entity
         {
             currentInteractable = interactable;
         }
-        //if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Robin_SFalling" && grounded)
-        //{
-        //    currentSpeed = _maxSpeed;
-        //    characterView.OnLand();
-        //}
 
     }
 
@@ -748,7 +680,6 @@ public class Character : Entity
     public virtual void OnTriggerExit2D(Collider2D collision)
     {
 
-        Debug.LogError("AAAAAAAAAAA");
         if (collision.TryGetComponent(out IInteractable interactable) && interactable == currentInteractable)
         {
           
@@ -762,8 +693,6 @@ public class Character : Entity
             spawningObject.InteractionWithEntity();
         }
     }
-
-
 
 
     public override void LiftEntity()
@@ -801,7 +730,6 @@ public class Character : Entity
     public bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one*.8f, 0, -transform.up, 0, playerExcludeLayer);
-        //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
 
         if (hit.collider == null || hit.collider.isTrigger)
         {
@@ -810,25 +738,6 @@ public class Character : Entity
         else
         {
             return true;
-        }
-    }
-    public IEnumerator SoilCheck()
-    {
-       
-        while (true)
-        {
-            yield return new WaitForSeconds(.1f);
-            RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position,Vector2.one*1f,transform.eulerAngles.z, -transform.up, distance, playerExcludeLayer);
-         //   Debug.DrawBox(feetPosition.position, feetPosition.position + Vector3.down * .5f);
-       
-            if(hit)
-             Debug.LogError(hit.transform.gameObject.name);
-            if (hit.collider == null || hit.collider.isTrigger )
-            {
-                SendInputToFSM(CharacterStates.Falling);
-            }
-
-
         }
     }
 
@@ -880,15 +789,13 @@ public enum CharacterStates
     Wait = 1 << 2,
     Stop = 1 << 3,
     Jumping = 1 << 4,
-    Landing = 1 << 5,
-    OnRope = 1 << 6,
-    JumpingToRope = 1 << 7,
-    Climb = 1 << 8,
-    EquippingHelmet = 1 << 9,
-    DoingEvent = 1 << 10,
-    Swaying = 1 << 11,
-    OnLadder = 1 << 12,
-    Death = 1 << 13,
-    Falling = 1 << 14,
+    OnRope = 1 << 5,
+    JumpingToRope = 1 << 6,
+    Climb = 1 << 7,
+    EquippingHelmet = 1 << 8,
+    DoingEvent = 1 << 9,
+    Swaying = 1 << 10,
+    OnLadder = 1 << 11,
+    Death = 1 << 12,
     All = ~0
 }
