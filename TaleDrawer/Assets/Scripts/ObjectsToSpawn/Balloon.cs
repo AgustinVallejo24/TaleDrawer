@@ -11,10 +11,18 @@ public class Balloon : SpawningObject
     public float speed = 2f;
 
     private Vector3 basePosition;
-    private bool floating = false;
+    public bool floating = false;
 
 
+    public bool HasEntity()
+    {
+        return _currentEntity != null;
+    }
 
+    public Entity GetCurrentEntity()
+    {
+        return _currentEntity;
+    }
     // Llamá a esto cuando el jugador interactúe
     public void ActivateFloat()
     {
@@ -65,9 +73,11 @@ public class Balloon : SpawningObject
     public override void InteractionWithEntity()
     {
         _currentEntity.LiftEntity();
+        _currentEntity.currentBalloon = this;
         transform.position = _currentEntity.balloonPosition.position;
         _mySpriteRenderer.sortingOrder = 0;
         transform.parent = _currentEntity.transform;
+        if(!_currentEntity.inWind)
         ActivateFloat();
     }
 

@@ -97,6 +97,7 @@ public class Character : Entity
     public float cliffDetectionDistance;
 
     public List<AudioClip> stepClips;
+
     protected virtual void Awake()
     {
         instance = this;
@@ -697,12 +698,14 @@ public class Character : Entity
 
     public override void LiftEntity()
     {
+        
         SendInputToFSM(CharacterStates.Stop);
         characterRigidbody.gravityScale = 0;
     }
     
     public override void ReleaseFromBalloon()
     {
+        currentBalloon = null;
         characterRigidbody.gravityScale = 3;
         SendInputToFSM(CharacterStates.Idle);
     }
