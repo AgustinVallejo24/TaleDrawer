@@ -13,7 +13,7 @@ public class Balloon : SpawningObject
     private Vector3 basePosition;
     public bool floating = false;
 
-
+    public Coroutine floatCoroutine;
     public bool HasEntity()
     {
         return _currentEntity != null;
@@ -26,7 +26,7 @@ public class Balloon : SpawningObject
     // Llamá a esto cuando el jugador interactúe
     public void ActivateFloat()
     {
-        StartCoroutine(RiseAndFloat());
+        floatCoroutine = StartCoroutine(RiseAndFloat());
     }
 
     public override void Paint()

@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
      //   _clickRayLength = levelCharacter.transform.localScale.y * 2;
         _zernikeManager.recognitionAction = _dTest.StartDissolve;
 
+        StartCoroutine(InitialTutorials());
 
         if (playInitialAnimation)
         {
@@ -89,6 +90,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator InitialTutorials()
+    {
+        Tutorial.instance.PlayTutorial(Tutorials.Movement);
+        yield return new WaitForSeconds(5f);
+        Tutorial.instance.PlayTutorial(Tutorials.Drawing,5);
+    }
     public void AddSpawningObject(SpawningObject obj)
     {
         if(_spawnedObjects.Count >= _maxSpawnedObjects)
@@ -240,6 +247,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currentState == SceneStates.Dragging)
         {
+            Tutorial.instance.PlayTutorial(Tutorials.Dragging,5);
             playerInput.SwitchCurrentActionMap("Dragging");
             //PlacementGridManager.Instance.RefreshGridAvailability();
           //  PlacementGridManager.Instance.SetGridVisibility(true);

@@ -109,7 +109,7 @@ public class Monkey : Enemy
     public IEnumerator ChangeAnim(string anim)
     {
         _myAnim.SetTrigger(anim);
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         _myAnim.ResetTrigger(anim);
     }
     

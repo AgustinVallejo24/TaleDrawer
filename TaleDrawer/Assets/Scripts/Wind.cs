@@ -11,8 +11,13 @@ public class Wind : MonoBehaviour
     public LineRenderer lineRenderer;
     public Entity currentEntity;
     public bool movingEntity;
+
+    public int loopPoints = 20;       
+    public float loopRadius = 1f;
+    public float loopTurns = 1f;
     void Start()
     {
+        GeneratePath();
         _windpath = new Vector3[lineRenderer.positionCount];
 
         lineRenderer.GetPositions(_windpath);
@@ -22,6 +27,7 @@ public class Wind : MonoBehaviour
             _path[i] = turrentSpots[i].position;
         }
         StartCoroutine(SpawnWind());
+       
     }
 
     // Update is called once per frame
@@ -29,7 +35,46 @@ public class Wind : MonoBehaviour
     {
         
     }
+    void GeneratePath()
+    {
+        LineRenderer lr = GetComponent<LineRenderer>();
 
+        int baseCount = lr.positionCount;
+        if (baseCount < 2) return;
+
+        Vector2 last = lr.GetPosition(baseCount - 1);
+        Vector2 prev = lr.GetPosition(baseCount - 2);
+
+        // Dirección final
+        Vector2 dir = (last - prev).normalized;
+
+        // Ángulo de la dirección final
+        float baseAngle = Mathf.Atan2(dir.y, dir.x);
+
+        lr.positionCount = baseCount + loopPoints;
+
+        for (int i = 0; i < loopPoints; i++)
+        {
+            float t = (float)i / (loopPoints - 1);
+            float angle = t * Mathf.PI * 2f * loopTurns;
+
+            // Círculo LOCAL (no depende del recorrido)
+            Vector2 local =
+                new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * loopRadius;
+
+            // Rotar TODO el círculo una sola vez
+            float cos = Mathf.Cos(baseAngle);
+            float sin = Mathf.Sin(baseAngle);
+
+            Vector2 rotated = new Vector2(
+                local.x * cos - local.y * sin,
+                local.x * sin + local.y * cos
+            );
+
+            lr.SetPosition(baseCount + i, last + rotated);
+        }
+    
+}
     IEnumerator SpawnWind()
     {
         while (true)
@@ -49,6 +94,8 @@ public class Wind : MonoBehaviour
             Entity entity = balloon.GetCurrentEntity();
             movingEntity = true;
             entity.inWind = true;
+            if(balloon.floatCoroutine!=null)
+            StopCoroutine(balloon.floatCoroutine);
             entity.transform.DOPath(_path, 5f, PathType.CatmullRom).OnComplete(() =>
             {
                 Debug.LogError("Me subo al viento");

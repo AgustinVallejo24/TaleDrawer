@@ -5737,6 +5737,9 @@ MonoBehaviour:
   lineRenderer: {fileID: 1375623517}
   currentEntity: {fileID: 0}
   movingEntity: 0
+  loopPoints: 20
+  loopRadius: 0.5
+  loopTurns: 0.9
 --- !u!120 &1375623517
 LineRenderer:
   serializedVersion: 2
@@ -5798,13 +5801,6 @@ LineRenderer:
   - {x: 9.05, y: 8.24, z: 0}
   - {x: 9.33, y: 8.64, z: 0}
   - {x: 9.45, y: 8.74, z: 0}
-  - {x: 9.76, y: 8.7, z: 0}
-  - {x: 9.88, y: 8.47, z: 0}
-  - {x: 9.87, y: 8.33, z: 0}
-  - {x: 9.75, y: 8.23, z: 0}
-  - {x: 9.59, y: 8.17, z: 0}
-  - {x: 9.39, y: 8.29, z: 0}
-  - {x: 9.23, y: 8.87, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -7490,7 +7486,7 @@ PrefabInstance:
       objectReference: {fileID: 1286689599}
     - target: {fileID: 8960893245423316531, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_Antialiasing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
