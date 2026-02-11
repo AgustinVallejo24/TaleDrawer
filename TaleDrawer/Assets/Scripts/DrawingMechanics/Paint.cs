@@ -22,7 +22,16 @@ public class Paint : MonoBehaviour
     {
         
     }
+    public void InstantPaint()
+    {
+        _myRenderer = GetComponent<SpriteRenderer>();
+        _myRenderer.sortingOrder = 5;
+        Sprite sprite = _myRenderer.sprite;
 
+        Texture2D tex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        _myRenderer.material.SetTexture("_MainTex", tex);
+        _myRenderer.material.SetFloat("_MaskValue", 1.4f);
+    }
     public IEnumerator PaintSprite()
     {
 

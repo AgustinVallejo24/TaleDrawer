@@ -655,6 +655,7 @@ public class Character : Entity
         _hasHelmet = true;
         GameManager.instance.AddSpawningObject(helmet);
         helmet.gameObject.SetActive(true);
+        helmet.GetComponent<Casco>().InstantPaint();
     }
 
     public void DestroyHelmet()

@@ -23,6 +23,10 @@ public class Casco : SpawningObject, IDeletable, IInteractable
     {
         StartCoroutine(GetComponentInChildren<Paint>().PaintSprite());
     }
+    public void InstantPaint()
+    {
+        GetComponentInChildren<Paint>().InstantPaint();
+    }
     public override void Delete()
     {
         base.Delete();

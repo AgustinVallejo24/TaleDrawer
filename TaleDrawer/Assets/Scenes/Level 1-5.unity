@@ -5062,7 +5062,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2864791914595174789, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864791914595174789, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 2031607
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5108,6 +5112,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5518541169147960701, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5924854094641997425, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.285
@@ -5124,8 +5132,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robin
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3052050215817759096, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
