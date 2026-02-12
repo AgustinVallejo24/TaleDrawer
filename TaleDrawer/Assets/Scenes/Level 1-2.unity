@@ -1795,6 +1795,18 @@ PrefabInstance:
       propertyPath: levelCharacter
       value: 
       objectReference: {fileID: 1783092409}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: currentObjectTypes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: 'currentObjectTypes.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: 'currentObjectTypes.Array.data[1]'
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6601909421275950535, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: Target.TrackingTarget
       value: 

@@ -41,7 +41,8 @@ public class MonkeyActivatorManager : ActivatorManager
         yield return new WaitForSeconds(2f);
         _playerCamera.enabled = true;
         _eventCamera.enabled = false;
-        //yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
+        Character.instance.SendInputToFSM(CharacterStates.Idle);
     }
 }
 

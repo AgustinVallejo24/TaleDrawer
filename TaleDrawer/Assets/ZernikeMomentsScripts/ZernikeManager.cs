@@ -19,6 +19,8 @@ public class ZernikeManager : MonoBehaviour
 
     public List<ReferenceSymbolGroup> referenceSymbolsList;
 
+    public List<ReferenceSymbolGroup> allSymbolList;
+
     [Header("Editor References")]
     [SerializeField] TMP_Text text;
     public GameObject UICarga;
@@ -44,8 +46,8 @@ public class ZernikeManager : MonoBehaviour
 
     void Start()
     {
-       
-     
+
+        GameManager manager = GameManager.instance;
     
         processor = new ZernikeProcessor(imageSize);
         recognizer = new ZernikeRecognizer(rotationSensitivity,text,processor);
@@ -60,7 +62,8 @@ public class ZernikeManager : MonoBehaviour
         else
         {
             referenceSymbolsList.Clear();
-            referenceSymbolsList = ReferenceSymbolStorage.LoadSymbols().ToList();            
+           
+            allSymbolList = ReferenceSymbolStorage.LoadSymbols().ToList();
             UICarga.SetActive(false);
          //   UIDibujo.SetActive(true);
             if (drawer)
@@ -70,8 +73,14 @@ public class ZernikeManager : MonoBehaviour
             
         }
 
+        referenceSymbolsList = allSymbolList.Where(x => manager.currentObjectTypes.Contains(x.objectType)).ToList();
+
     }
 
+    public void AddSymbolType(SpawnableObjectType type)
+    {
+        referenceSymbolsList.Add(allSymbolList.Where(x => x.objectType == type).First());
+    }
 
     private void Update()
     {

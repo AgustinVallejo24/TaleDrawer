@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     public Dialogue levelDialogue;
 
+    public List<SpawnableObjectType> currentObjectTypes;
 
     [SerializeField] SpawnableManager _spawnableManager;
     [SerializeField] ZernikeManager _zernikeManager;

@@ -2967,6 +2967,26 @@ PrefabInstance:
       propertyPath: 'nodes.Array.data[22]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: currentObjectTypes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: 'currentObjectTypes.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: 'currentObjectTypes.Array.data[1]'
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: 'currentObjectTypes.Array.data[2]'
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402741608449842625, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: 'currentObjectTypes.Array.data[3]'
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 5723703911571501773, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_IsActive
       value: 1

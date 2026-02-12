@@ -23,7 +23,7 @@ public class MonkeyActivator : Activator, IInteractable
         managerCheck.Invoke();
         Character myCharacter = Character.instance;
         myCharacter.currentActivator = null;
-        myCharacter.SendInputToFSM(CharacterStates.Idle);
+       
     }
     public void InsideInteraction()
     {

@@ -637,6 +637,10 @@ public class Character : Entity
         base.Death();
         SendInputToFSM(CharacterStates.Death);
         characterRigidbody.linearVelocity = Vector2.zero;
+        if (currentBalloon != null)
+        {
+            currentBalloon.Delete();
+        }
 
     }
 

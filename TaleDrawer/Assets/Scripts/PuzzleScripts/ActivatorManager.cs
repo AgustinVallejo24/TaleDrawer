@@ -23,6 +23,10 @@ public class ActivatorManager : MonoBehaviour
             Debug.LogError("MeActivo");
             activationEvent?.Invoke();
         }
+        else
+        {
+            Character.instance.SendInputToFSM(CharacterStates.Idle);
+        }
        
     }
 

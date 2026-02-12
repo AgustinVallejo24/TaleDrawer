@@ -22,7 +22,7 @@ public class MonkeyPursueState : BaseState
     public override void OnEnter()
     {
         _myMonkey.currentState = FSMStates.PursuitState;
-        _myMonkey.SetSpeed(8f);
+        _myMonkey.SetSpeed(10f);
         _myMonkey.ChangeAnimation(_myMonkey._moveT);
 
     }
