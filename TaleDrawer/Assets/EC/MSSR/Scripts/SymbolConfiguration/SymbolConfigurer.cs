@@ -29,13 +29,17 @@ public class SymbolConfigurer : MonoBehaviour
     {
         enumValues = (SpawnableObjectType[])Enum.GetValues(typeof(SpawnableObjectType));
 
-        _dropdown.ClearOptions();
-        _dropdown.AddOptions(
-            enumValues
-                .Where(e => e != SpawnableObjectType.All) // opcional
-                .Select(e => e.ToString())
-                .ToList()
-        );
+        if(_dropdown != null)
+        {
+            _dropdown.ClearOptions();
+            _dropdown.AddOptions(
+                enumValues
+                    .Where(e => e != SpawnableObjectType.All) // opcional
+                    .Select(e => e.ToString())
+                    .ToList()
+            );
+        }
+
         _thresholdInputField.onValueChanged.AddListener(SetThresholdSliderValue);
         _thresholdSlider.onValueChanged.AddListener(SetThresholdFieldValue);
         _rotationThresholdInputField.onValueChanged.AddListener(SetRotationThresholdSliderValue);
