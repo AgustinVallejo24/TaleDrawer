@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Soga : SpawningObject, IInteractable
+public class Soga : SpawningObject, IInteractableP
 {
     [SerializeField] Hook hook;
     public Transform firstPoint;
@@ -11,37 +11,7 @@ public class Soga : SpawningObject, IInteractable
     [SerializeField] InteractableType _interactableType;
     [SerializeField] Collider2D _detectionCollider;
     [SerializeField] Collider2D _fallingCollider;
-    public InteractableType MyInteractableType()
-    {
-        return _interactableType;
-    }
-    public void Interact(SpawnableObjectType objectType, GameObject interactor)
-    {
-        
-    }
-
-    public void Interact(SpawningObject spawningObject)
-    {
-        
-    }
-
-    public void Interact(GameObject interactor)
-    {
-        
-    }
-
-    public void InteractWithPlayer()
-    {
-        if(_currentInteractuable != null)
-        {
-            _currentInteractuable.InteractWithPlayer();
-        }
-    }    
-
-    public void InsideInteraction()
-    {
-       
-    }
+    [SerializeField] GameObject _eKey;
 
     public void OnErased()
     {
@@ -72,5 +42,27 @@ public class Soga : SpawningObject, IInteractable
         base.OnSpawned();
         _fallingCollider.enabled = true;
         _detectionCollider.enabled = false;
+    }
+
+    public void Interact()
+    {
+        if (hook != null)
+        {
+            hook.InteractWithPlayer();
+        }
+    }
+
+
+    public InteractableType MyInteractableType()
+    {
+        return InteractableType.ClimbingObj;
+    }
+    public KeyCode InteractionKey()
+    {
+        return KeyCode.E;
+    }
+    public void OnLeavingInteraction()
+    {
+        throw new System.NotImplementedException();
     }
 }

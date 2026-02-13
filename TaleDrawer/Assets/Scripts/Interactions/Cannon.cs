@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Cannon : MonoBehaviour, IInteractable
+public class Cannon : MonoBehaviour, IInteractableSP
 {
     [SerializeField] Character _character;
     [SerializeField] Collider2D _playerDetectionCollider;

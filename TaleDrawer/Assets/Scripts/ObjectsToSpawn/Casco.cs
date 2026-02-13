@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Casco : SpawningObject, IDeletable, IInteractable
+public class Casco : SpawningObject, IDeletable, IInteractableSP
 {
     [SerializeField] public int _health;
     [SerializeField] public Quaternion neededRot;

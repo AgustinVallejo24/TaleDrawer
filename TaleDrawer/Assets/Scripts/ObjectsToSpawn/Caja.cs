@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 using DG.Tweening;
 using System.Collections;
-public class Caja : SpawningObject,IInteractable
+public class Caja : SpawningObject,IInteractableSP
 {
     
     [SerializeField] LayerMask _spMask;
@@ -122,21 +122,21 @@ public class Caja : SpawningObject,IInteractable
         }
     }
 
-    public void JumpOverBox()
-    {
-        float sign = Mathf.Sign(_myCharacter.transform.position.x - transform.position.x);
-        if (_myCharacter.flipSign == sign)
-        {
-            _myCharacter.characterView.FlipCharacter(Mathf.RoundToInt(-sign));
+   // public void JumpOverBox()
+   // {
+   //     float sign = Mathf.Sign(_myCharacter.transform.position.x - transform.position.x);
+   //     if (_myCharacter.flipSign == sign)
+   //     {
+   //         _myCharacter.characterView.FlipCharacter(Mathf.RoundToInt(-sign));
 
-        }
+   //     }
 
-        _myCharacter.currentInteractable = this;
-   //     _myColl.excludeLayers = default;
-        _myCharacter.SendInputToFSM(CharacterStates.Climb);
-        _myCharacter.StartCoroutine(RunToCenter());
+   //     _myCharacter.currentInteractable = this;
+   ////     _myColl.excludeLayers = default;
+   //     _myCharacter.SendInputToFSM(CharacterStates.Climb);
+   //     _myCharacter.StartCoroutine(RunToCenter());
 
-    }
+   // }
     public void JumpOffBox()
     {
         Vector2 touchPos = GameManager.instance._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -299,7 +299,7 @@ public class Caja : SpawningObject,IInteractable
     {
         base.Delete();
 
-        if(Character.instance.currentInteractable == (IInteractable)this)
+        if(Character.instance.currentInteractable == (IInteractableSP)this)
         {
             Character.instance.currentInteractable = null;
         }

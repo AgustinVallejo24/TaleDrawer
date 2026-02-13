@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-public class Subibaja : MonoBehaviour, IInteractable
+public class Subibaja : MonoBehaviour, IInteractableSP
 {
     public List<Transform> sides;
     public bool left = true;

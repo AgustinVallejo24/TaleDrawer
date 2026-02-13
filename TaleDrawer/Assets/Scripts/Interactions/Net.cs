@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //using static UnityEngine.Rendering.DynamicArray<T>;
-public class Net : MonoBehaviour, IInteractable
+public class Net : MonoBehaviour, IInteractableSP
 {
     [SerializeField] Polea _polea;
     [SerializeField] List<ObjectsAndTypes> objectsAndTypes;

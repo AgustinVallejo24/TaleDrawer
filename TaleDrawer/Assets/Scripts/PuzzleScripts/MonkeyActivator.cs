@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using DG.Tweening;
-public class MonkeyActivator : Activator, IInteractable
+public class MonkeyActivator : Activator, IInteractableP
 {
     public Action managerCheck;
     public bool isActive;
@@ -12,6 +12,7 @@ public class MonkeyActivator : Activator, IInteractable
     [SerializeField] InteractableType _interactableType;
     [SerializeField] GameObject _onStatue;
     [SerializeField] GameObject _offStatue;
+    [SerializeField] GameObject _eKey;
 
     public override void Activation()
     {
@@ -49,7 +50,7 @@ public class MonkeyActivator : Activator, IInteractable
         
     }
 
-    public void InteractWithPlayer()
+    public void Interact()
     {
         if (!isActive)
         {
@@ -57,6 +58,11 @@ public class MonkeyActivator : Activator, IInteractable
         }
 
     }
+    public KeyCode InteractionKey()
+    {
+        return KeyCode.E;
+    }
+
 
     public void ActivatePlayerAnimation()
     {
@@ -82,5 +88,10 @@ public class MonkeyActivator : Activator, IInteractable
         Activation();
         Character _myCharacter = Character.instance;
         _myCharacter.SendInputToFSM(CharacterStates.Idle);
+    }
+
+    public void OnLeavingInteraction()
+    {
+        throw new NotImplementedException();
     }
 }

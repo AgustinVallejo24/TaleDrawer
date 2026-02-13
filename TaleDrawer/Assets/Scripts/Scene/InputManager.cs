@@ -108,7 +108,7 @@ public class InputManager : MonoBehaviour
         {
             if (character.currentInteractable != null)
             {
-                character.currentInteractable.InteractWithPlayer();
+                character.currentInteractable.Interact();
                 Debug.LogError("INTERACT");
             }
             else
@@ -245,7 +245,7 @@ public class InputManager : MonoBehaviour
     {
         if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._climbingTransitions.HasFlag(Character.instance._currentState) && Character.instance.grounded)
         {            
-            Character.instance.currentInteractable.InteractWithPlayer();
+            Character.instance.currentInteractable.Interact();
         }
     }
 

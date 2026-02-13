@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-public class Polea : MonoBehaviour, IInteractable
+public class Polea : MonoBehaviour, IInteractableSP
 {
     public Transform jumpPos;
     public Animator anim;

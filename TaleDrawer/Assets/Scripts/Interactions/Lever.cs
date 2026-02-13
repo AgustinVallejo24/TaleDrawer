@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using DG.Tweening;
-public class Lever : Activator, IInteractable
+public class Lever : Activator, IInteractableP
 {
 
     [SerializeField] Character _myCharacter;
@@ -11,31 +11,10 @@ public class Lever : Activator, IInteractable
     [SerializeField] Animator _door;
     [SerializeField] Transform _playerPos;
     [SerializeField] InteractableType _interactableType;
-    public void InsideInteraction()
-    {
-        
-    }
+    [SerializeField] GameObject _eKey;
 
-    public InteractableType MyInteractableType()
-    {
-        return _interactableType;
-    }
-    public void Interact(SpawnableObjectType objectType, GameObject interactor)
-    {
-        
-    }
 
-    public void Interact(SpawningObject spawningObject)
-    {
-      
-    }
-
-    public void Interact(GameObject interactor)
-    {
-        
-    }
-
-    public void InteractWithPlayer()
+    public void Interact()
     {
         ActivatePlayerAnimation();
     }
@@ -43,6 +22,7 @@ public class Lever : Activator, IInteractable
     public void ActivatePlayerAnimation()
     {
         Character.instance.characterView.OnMove();
+        Character.instance.HideKeyUI();
         Character.instance.transform.DOMoveX(transform.position.x, 0.2f).OnComplete(() => 
         {
             _myCharacter.currentActivator = this;
@@ -98,5 +78,20 @@ public class Lever : Activator, IInteractable
             //_afterDoor.neighbours.Add(afterN);
             GetComponent<Collider2D>().enabled = false;
         }
+    }
+
+    public InteractableType MyInteractableType()
+    {
+        return InteractableType.Event;
+    }
+
+    public void OnLeavingInteraction()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public KeyCode InteractionKey()
+    {
+        return KeyCode.E;
     }
 }

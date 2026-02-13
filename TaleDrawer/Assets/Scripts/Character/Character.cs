@@ -27,7 +27,8 @@ public class Character : Entity
     [SerializeField] Transform feetPosition;
     [SerializeField] protected Transform helmetPosition;
 
-    public IInteractable currentInteractable;
+    public IInteractableP currentInteractable;
+    public IInteractableP currentInteraction;
     public AudioSource characterAudioSource;
     public AudioClip jumpSound;
 
@@ -44,6 +45,7 @@ public class Character : Entity
     public CharacterStates _currentState;
     public CharacterStates _climbingTransitions;
     [SerializeField] protected SpriteRenderer _characterSprite;
+    [SerializeField] public SpriteRenderer keySprite;
     [SerializeField] LayerMask _walkableLayerMask;
     public Collider2D _mainCollider;
     public SpawningObject helmet;
@@ -97,6 +99,8 @@ public class Character : Entity
     public float cliffDetectionDistance;
 
     public List<AudioClip> stepClips;
+
+
 
     protected virtual void Awake()
     {
@@ -436,6 +440,10 @@ public class Character : Entity
         {
             characterView.OnExitLadder();
             _animator.speed = 1;
+            if (currentInteraction != null)
+            {
+                currentInteraction.OnLeavingInteraction();
+            }
             if(currentHook!= null)
             {
                 currentHook.RopeAnimationManager(0);                
@@ -675,9 +683,10 @@ public class Character : Entity
         {
             Death();
         }
-        if(collision.TryGetComponent(out IInteractable interactable))
+        if(collision.TryGetComponent(out IInteractableP interactable))
         {
             currentInteractable = interactable;
+            ShowKeyUI(currentInteractable.InteractionKey());
         }
 
     }
@@ -686,9 +695,9 @@ public class Character : Entity
     public virtual void OnTriggerExit2D(Collider2D collision)
     {
 
-        if (collision.TryGetComponent(out IInteractable interactable) && interactable == currentInteractable)
+        if (collision.TryGetComponent(out IInteractableP interactable) && interactable == currentInteractable)
         {
-          
+            HideKeyUI();
             currentInteractable = null;
         }
     }
@@ -749,7 +758,15 @@ public class Character : Entity
         }
     }
 
+    public void ShowKeyUI(KeyCode key)
+    {
+        keySprite.sprite = Tutorial.instance.keysSprites[key];
+    }
 
+    public void HideKeyUI()
+    {
+        keySprite.sprite = null;
+    }
     void OnDrawGizmos()
     {
 

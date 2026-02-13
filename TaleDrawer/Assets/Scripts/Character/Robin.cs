@@ -29,10 +29,10 @@ public class Robin : Character
         base.OnTriggerEnter2D(collision);
    
         
-        if(collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
+        if(collision.TryGetComponent(out IInteractableP inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
         {
             canClimb = true;
-            currentInteractable = inter;
+         //   currentInteractable = inter;
             
         }
 
@@ -41,7 +41,7 @@ public class Robin : Character
     public override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        if (collision.TryGetComponent(out IInteractable inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
+        if (collision.TryGetComponent(out IInteractableSP inter) && inter.MyInteractableType() == InteractableType.ClimbingObj)
         {
             canClimb = false;            
         }

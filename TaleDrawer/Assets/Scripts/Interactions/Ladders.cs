@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-public class Ladders : MonoBehaviour, IInteractable
+public class Ladders : MonoBehaviour, IInteractableP
 {
     [SerializeField] Transform _upperPoint;
     [SerializeField] Transform _lowerPoint;
@@ -23,6 +23,10 @@ public class Ladders : MonoBehaviour, IInteractable
     [SerializeField] bool _rolledUp;
     [SerializeField] Collider2D _lowerCollider;
     bool first = true;
+    [SerializeField] GameObject _sKey;
+    [SerializeField] GameObject _eKey;
+    [SerializeField] GameObject _wKey;
+    public bool hasCharacter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,27 +63,8 @@ public class Ladders : MonoBehaviour, IInteractable
         
     }
 
-    public void InsideInteraction()
-    {
-        
-    }
 
-    public void Interact(SpawnableObjectType objectType, GameObject interactor)
-    {
-        
-    }
-
-    public void Interact(SpawningObject spawningObject)
-    {
-        
-    }
-
-    public void Interact(GameObject interactor)
-    {
-        
-    }
-
-    public void InteractWithPlayer()
+    public void Interact()
     {
         if (_rolledUp && first && _bodyPieces.Any())
         {
@@ -97,8 +82,11 @@ public class Ladders : MonoBehaviour, IInteractable
 
             sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
         }
-        else if(!_rolledUp)
+        else if (!_rolledUp)
         {
+            Character.instance.HideKeyUI();
+            hasCharacter = true;
+            Character.instance.currentInteraction = this;
             Character.instance.climbingSpeedMultiplier = 1;
             Character.instance.maxClimbingPos = _upperPoint.position;
             Character.instance.minClimbingPos = _lowerPoint.position;
@@ -109,28 +97,11 @@ public class Ladders : MonoBehaviour, IInteractable
 
 
             Character.instance.transform.DOMoveX(nearestPoint.position.x, 0.2f).OnComplete(() => { Character.instance.SendInputToFSM(CharacterStates.OnLadder); Character.instance.characterView.OnEnteringLadder(); });
-            
-        }
-        
 
-        //if (_character.GetPathList(_upperNode).Count >= _character.GetPathList(_lowerNode).Count)
-        //{
-        //    Debug.LogError("A");
-        //    Vector3 pos = (new Vector3(_character.transform.position.x, _upperNode.transform.position.y, 0) - _upperNode.transform.transform.position).normalized;
-        //    _fromAbove = false;
-        //    _character.GetPath(_upperNode);
-        //    _character.SendInputToFSM(CharacterStates.Moving);
-        //}
-        //else
-        //{
-        //    Debug.LogError("B");
-        //    Vector3 pos = (new Vector3(_character.transform.position.x, _lowerNode.transform.position.y, 0) - _lowerNode.transform.transform.position).normalized;
-        //    _fromAbove = true;
-        //    _character.GetPath(_lowerNode);
-        //    _character.SendInputToFSM(CharacterStates.Moving);
-        //}
+        }
     }
 
+   
     public void StartLadderMovement()
     {
 
@@ -140,6 +111,7 @@ public class Ladders : MonoBehaviour, IInteractable
 
     public IEnumerator IGetOnLadder()
     {
+
         _character.SendInputToFSM(CharacterStates.Wait);
         _character.SetAnimatorTrigger("Ladder");
         yield return null;
@@ -152,25 +124,32 @@ public class Ladders : MonoBehaviour, IInteractable
         _character.SendInputToFSM(CharacterStates.OnLadder);
         _character.characterRigidbody.gravityScale = 0;
 
-        /*if (_fromAbove)
-        {
-            _character.characterView.OnEnteringLadder(1);
-            _character.transform.DOMoveY(_lowerPoint.position.y, _movementDuration)
-                .OnComplete(() => { _character.transform.position = _lowerNode.transform.position; _character.characterRigidbody.gravityScale = 3; 
-                    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle"); });
-        }
-        else
-        {
-            _character.characterView.OnEnteringLadder(0);
-            _character.transform.DOMoveY(_upperPoint.position.y, _movementDuration)
-                .OnComplete(() => { _character.transform.position = _upperNode.transform.position; _character.characterRigidbody.gravityScale = 3; 
-                    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.2f)); _character.SetAnimatorTrigger("Idle");
-                });
-        }*/
     }
 
     public InteractableType MyInteractableType()
     {
         return _interactableType;
+    }
+
+    
+    public void OnLeavingInteraction()
+    {
+        Character.instance.currentInteraction = null;
+        hasCharacter = false;
+    }
+
+    public KeyCode InteractionKey()
+    {
+        if (hasCharacter) return KeyCode.None;
+
+        if (Vector2.Distance(Character.instance.transform.position, _lowerPoint.position) <= Vector2.Distance(Character.instance.transform.position, _upperPoint.position))
+        {
+            return KeyCode.W;
+        }
+        else
+        {
+            if (!_rolledUp) return KeyCode.S;
+            else return KeyCode.E;
+        }
     }
 }

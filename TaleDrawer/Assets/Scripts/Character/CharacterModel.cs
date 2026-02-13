@@ -11,7 +11,7 @@ public class CharacterModel
     Vector2 _movementVector;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float rayDistance = 1.5f;
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 20f;
     private Quaternion flatRotation;
 
 
@@ -103,10 +103,12 @@ public class CharacterModel
         if (Mathf.Sign(position.x - _myCharacter.transform.position.x) > 0)
         {
             _myCharacter.characterView.FlipCharacter(1);
+            _myCharacter.keySprite.flipX = false;
         }
         else
         {
             _myCharacter.characterView.FlipCharacter(-1);
+            _myCharacter.keySprite.flipX = true;
         }
     }
     //public virtual void Move(Vector2 objective, float smoothSpeed)

@@ -542,6 +542,7 @@ MonoBehaviour:
   touchPosition: {x: 0, y: 0}
   drawingThreshold: 0
   levelDialogue: {fileID: 11400000, guid: 25e0b960301cd1e408aff545e5356427, type: 2}
+  currentObjectTypes: 
   _spawnableManager: {fileID: 4572182062081173834}
   _zernikeManager: {fileID: 3441223574253749270}
   _spawnedObjects: []
@@ -576,6 +577,16 @@ MonoBehaviour:
       Value: Some objects require two or more strokes to create
     - Key: 5
       Value: You can delete spawning objets by dragging the sponge over them
+  keysSprites:
+    keyValuePairs:
+    - Key: 0
+      Value: {fileID: 0}
+    - Key: 101
+      Value: {fileID: 21300000, guid: 89eb31ae05408c04989cd6023ef9d3ed, type: 3}
+    - Key: 119
+      Value: {fileID: 21300000, guid: 0fe1e68c0f5edfa4bb71d011f507ba0b, type: 3}
+    - Key: 115
+      Value: {fileID: 21300000, guid: 1c913c241425d554994bcc9b779aee00, type: 3}
 --- !u!1 &1542576903221864396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,6 +1811,7 @@ MonoBehaviour:
     isSymmetric: 0
     strokes: 1
     objectType: 2
+  allSymbolList: []
   text: {fileID: 3204119141233278344}
   UICarga: {fileID: 5270380630970553016}
   barrita: {fileID: 9176708853209709649}

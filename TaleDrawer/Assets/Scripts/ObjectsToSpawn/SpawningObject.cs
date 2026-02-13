@@ -14,7 +14,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
     [SerializeField] protected SpriteRenderer _mySpriteRenderer;
     [SerializeField] protected LayerMask _interactuables;
     [SerializeField] protected LayerMask _obstacleMask;
-    public IInteractable _currentInteractuable;
+    public IInteractableSP _currentInteractuable;
     public string _intrectableName;
     public Color _originalColor;
     bool _first = true;
@@ -141,7 +141,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
                 _mySpriteRenderer.material.SetFloat("_isGrayscale", 1);
                 _mySpriteRenderer.color = Color.gray;
             }
-            else if (hit && hit.TryGetComponent<IInteractable>(out IInteractable interctuable))
+            else if (hit && hit.TryGetComponent<IInteractableSP>(out IInteractableSP interctuable))
             {
                 if (_first)
                 {
@@ -310,7 +310,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
     {
         if (_spawned)
         {
-            if (collision.TryGetComponent(out IInteractable interactable))
+            if (collision.TryGetComponent(out IInteractableSP interactable))
             {
                 interactable.Interact(myType, gameObject);
             }
@@ -328,7 +328,7 @@ public class SpawningObject : MonoBehaviour, IDeletable
     {
         if (_spawned)
         {
-            if (collision.gameObject.TryGetComponent(out IInteractable interactable))
+            if (collision.gameObject.TryGetComponent(out IInteractableSP interactable))
             {
                 interactable.Interact(myType, gameObject);
             }

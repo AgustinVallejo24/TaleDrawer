@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class Hook : MonoBehaviour, IInteractable
+public class Hook : MonoBehaviour, IInteractableSP
 {
     public RopeType myType;
     [SerializeField] SpawningObject _attachedObject;

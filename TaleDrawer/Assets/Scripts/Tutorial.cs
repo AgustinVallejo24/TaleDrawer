@@ -7,6 +7,8 @@ public class Tutorial : MonoBehaviour
 
     public NewSerializableDictionary<Tutorials, string> tutorialTexts;
 
+    public NewSerializableDictionary<KeyCode, Sprite> keysSprites;
+
     public static Tutorial instance;
     private void Start()
     {
@@ -34,6 +36,7 @@ public class Tutorial : MonoBehaviour
         tutorialText.text = tutorialTexts[tutorialName];
         PlayerPrefs.SetString(tutorialName.ToString(), "");
         StartCoroutine(DeactivateTutorial(duration));
+       
     }
 
 
@@ -53,3 +56,4 @@ public enum Tutorials
     MultiStokes,
     Rubber,
 }
+
