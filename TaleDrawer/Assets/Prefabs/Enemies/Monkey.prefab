@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 1336456597415503049}
   - component: {fileID: 7028045812922658278}
   - component: {fileID: 3671080615385378085}
+  - component: {fileID: 819668842820398863}
   - component: {fileID: 3594283866435252197}
   m_Layer: 15
   m_Name: Monkey
@@ -231,6 +232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monkey
   balloonPosition: {fileID: 5065237015833213901}
+  currentBalloon: {fileID: 0}
+  inWind: 0
   _health: 2
   _myType: 0
   _speed: 5
@@ -260,7 +263,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6130373045084652538}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -299,6 +302,43 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.49728, y: 1.2105951}
   m_EdgeRadius: 0
+--- !u!70 &819668842820398863
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6130373045084652538}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.050194144, y: 0.056899272}
+  m_Size: {x: 1.1673133, y: 1.183067}
+  m_Direction: 0
 --- !u!50 &3594283866435252197
 Rigidbody2D:
   serializedVersion: 5
