@@ -24,7 +24,7 @@ public abstract class Enemy : Entity
     public override void LiftEntity()
     {
         myRigidbody.gravityScale = 0;
-        _fsm.ChangeState(FSMStates.StunnedState);
+        _fsm.ChangeState(FSMStates.BalloonState);
     }
 
     public override void ReleaseFromBalloon()

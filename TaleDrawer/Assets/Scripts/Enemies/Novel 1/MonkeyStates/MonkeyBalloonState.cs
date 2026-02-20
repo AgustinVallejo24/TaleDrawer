@@ -1,37 +1,36 @@
 using UnityEngine;
 
-public class MonkeyStunnedState : BaseState
+public class MonkeyBalloonState : BaseState
 {
     Monkey _monkey;
-    public override void FixedUpdate()
-    {
-      
-    }
 
-    public MonkeyStunnedState(Monkey monkey)
+    public MonkeyBalloonState(Monkey monkey)
     {
         _monkey = monkey;
     }
+    public override void FixedUpdate()
+    {
+
+    }
+
     public override void OnEnter()
     {
         _monkey.currentState = FSMStates.StunnedState;
-        _monkey.ChangeAnimation("Stun");
+        _monkey.ChangeAnimation("Balloon");
     }
 
     public override void OnExit()
     {
-       
+
     }
 
     public override void Transitions()
     {
-        
+
     }
 
     public override void Update()
     {
-        
+
     }
-
-
 }

@@ -35,6 +35,7 @@ public class Monkey : Enemy
         _fsm.AddState(FSMStates.AttackState, new MonkeyAttackEventState(this, _character));
         _fsm.AddState(FSMStates.DeathState, new MonkeyDeathState(this, _character));
         _fsm.AddState(FSMStates.StunnedState, new MonkeyStunnedState(this));
+        _fsm.AddState(FSMStates.BalloonState, new MonkeyBalloonState(this));
         _fsm.AddState(FSMStates.SleepingState, new MonkeySleepingState(this));
         if (sleeping)
         {
@@ -97,7 +98,8 @@ public class Monkey : Enemy
         }
         if (collision.gameObject.tag == "Spikes")
         {
-            Destroy(gameObject);
+            _myAnim.SetTrigger("Explode");
+            Destroy(gameObject,5f);
         }
 
 

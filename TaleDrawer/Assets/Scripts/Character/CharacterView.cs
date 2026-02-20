@@ -45,7 +45,10 @@ public class CharacterView
         _anim.SetTrigger(_idleTrigger);
         _character.StartCoroutine(CustomResetTrigger(_idleTrigger));
     }
-
+    public void OnBeingHurt()
+    {
+        _anim.SetTrigger("Hurt");
+    }
     public void OnIdleClimb()
     {
         _anim.SetTrigger(_idleClimbTrigger);
