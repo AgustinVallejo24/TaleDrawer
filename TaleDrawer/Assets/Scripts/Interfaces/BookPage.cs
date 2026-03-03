@@ -10,6 +10,7 @@ public class BookPage : MonoBehaviour
     {
         _images[index].sprite = sprite;
         _images[index].color = Color.white;
+        _images[index].preserveAspect = true;
         index++;
     }
     public bool IsFull()

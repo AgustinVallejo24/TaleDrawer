@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
 
 
     // Update is called once per frame
-   
+
 
     //public void OnClick(Vector2 position)
     //{
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
     //        if (interactionHit != null && interactionHit.gameObject.TryGetComponent(out IInteractableSP interactable))
     //        {
-        
+
     //         //   interactable.InteractWithPlayer();
     //        }
     //        else
@@ -170,9 +170,9 @@ public class GameManager : MonoBehaviour
     //            RaycastHit2D[] results = new RaycastHit2D[1];
 
     //            int hits = Physics2D.Raycast(_clickPosition, Vector2.down, filter, results, _clickRayLength);
-                
 
-    
+
+
     //            if (hits>0)
     //            {
     //                Debug.LogError("LPM");
@@ -190,6 +190,29 @@ public class GameManager : MonoBehaviour
 
     //    }
     //}
+
+    public void SaveHint(Hints hint)
+    {
+        var save = SaveSystem.Load();
+
+        var entry = save.hubData.hints.Find(h => h.hint == hint);
+
+        if (entry != null)
+        {
+            entry.unlocked = true;
+        }
+        else
+        {
+            save.hubData.hints.Add(new HintEntry
+            {
+                hint = hint,
+                unlocked = true
+            });
+        }
+
+        SaveSystem.Save(save);
+    }
+
 
     public void SpawnObject(SpawnableObjectType objectType)
     {
