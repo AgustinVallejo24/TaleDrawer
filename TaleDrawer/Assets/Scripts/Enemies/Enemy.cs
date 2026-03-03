@@ -41,6 +41,16 @@ public abstract class Enemy : Entity
         myRigidbody.linearVelocityX = _movementVector.x;
 
     }
+
+    public void Move(float x, float speed)
+    {
+        if (x != 0)
+            Flip(CustomTools.ToVector2(transform.position) + new Vector2(x, 0));
+        _movementVector = new Vector3(x, 0) * speed;
+        myRigidbody.linearVelocityX = _movementVector.x;
+
+    }
+
     public void Flip(Vector3 position)
     {
         if (Mathf.Sign(position.x - transform.position.x) > 0)

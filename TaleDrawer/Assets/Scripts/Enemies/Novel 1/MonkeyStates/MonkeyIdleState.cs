@@ -29,7 +29,7 @@ public class MonkeyIdleState : BaseState
 
     public override void OnExit()
     {
-        _myMonkey.CoroutineManager(_cou, true);
+        //_myMonkey.CoroutineManager(_cou, true);
     }
 
     public override void Transitions()
