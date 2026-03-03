@@ -9,6 +9,11 @@ public class Entity : MonoBehaviour
     {
 
     }
+
+    public virtual void CatchBoleadoras()
+    {
+
+    }
     public virtual void LiftEntity()
     {
 

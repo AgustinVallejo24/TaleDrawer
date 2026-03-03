@@ -32,5 +32,6 @@ public enum SpawnableObjectType
     Piedra = 1 << 3,
     Casco = 1 << 4,
     Globo = 1 << 5,
+    Boleadoras = 1 << 6,
     All = ~0
 }

@@ -100,8 +100,7 @@ public class Character : Entity
 
     public List<AudioClip> stepClips;
 
-
-
+    public Dictionary<CharacterStates,StateDefinition> states = new Dictionary<CharacterStates, StateDefinition>();
     protected virtual void Awake()
     {
         instance = this;
@@ -112,18 +111,18 @@ public class Character : Entity
         var Wait = new StateE<CharacterStates>("Wait");
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
-        var Landing = new StateE<CharacterStates>("Landing");
-        var OnRope = new StateE<CharacterStates>("OnRope");
-        var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
+
+
         var Climb = new StateE<CharacterStates>("Climb");
-        var EquippingHelmet = new StateE<CharacterStates>("EquippingHelmet");
         var DoingEvent = new StateE<CharacterStates>("DoingEvent");
-        var Swaying = new StateE<CharacterStates>("Swaying");
+
         var OnLadder = new StateE<CharacterStates>("OnLadder");
         var Death = new StateE<CharacterStates>("Death");
-        var Falling = new StateE<CharacterStates>("Falling");
-        StateConfigurer.Create(Idle)
-            .SetTransition(CharacterStates.Moving, Moving)
+
+
+        var IdleC = StateConfigurer.Create(Idle);
+
+        IdleC.SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Jumping, Jumping)
              .SetTransition(CharacterStates.Climb, Climb)
              .SetTransition(CharacterStates.DoingEvent, DoingEvent)
@@ -131,9 +130,13 @@ public class Character : Entity
              .SetTransition(CharacterStates.OnLadder, OnLadder)
              .SetTransition(CharacterStates.Wait, Wait)
              .SetTransition(CharacterStates.Death, Death)
-             .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
-        StateConfigurer.Create(Moving)
-            .SetTransition(CharacterStates.Idle, Idle)
+             .Done();
+
+        states.Add(CharacterStates.Idle, new StateDefinition( Idle, IdleC));
+
+        var MovingC = StateConfigurer.Create(Moving);
+
+        MovingC.SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.OnLadder, OnLadder)
@@ -141,70 +144,81 @@ public class Character : Entity
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
             .SetTransition(CharacterStates.Death, Death)
-            .SetTransition(CharacterStates.Swaying, Swaying)
-            .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet).Done();
-        StateConfigurer.Create(Wait)
-            .SetTransition(CharacterStates.Idle, Idle)
+            .Done();
+
+        states.Add(CharacterStates.Moving, new StateDefinition( Moving, MovingC));
+
+        var WaitC = StateConfigurer.Create(Wait);
+
+         WaitC.SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.OnRope, OnRope)
             .SetTransition(CharacterStates.DoingEvent, DoingEvent)
             .SetTransition(CharacterStates.Stop, Stop)
                 .SetTransition(CharacterStates.Death, Death)
-            .SetTransition(CharacterStates.EquippingHelmet, EquippingHelmet)
             .SetTransition(CharacterStates.OnLadder, OnLadder).Done();
-        StateConfigurer.Create(Jumping)
-            .SetTransition(CharacterStates.Idle, Idle)
+
+        states.Add(CharacterStates.Wait, new StateDefinition( Wait, WaitC));
+
+        var JumpingC = StateConfigurer.Create(Jumping);
+
+        JumpingC.SetTransition(CharacterStates.Idle, Idle)
              .SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Climb, Climb)
             .Done();
-        StateConfigurer.Create(Stop)
-            .SetTransition(CharacterStates.Idle, Idle)
+
+        states.Add(CharacterStates.Jumping, new StateDefinition( Jumping, JumpingC));
+
+        var StopC = StateConfigurer.Create(Stop);
+
+        StopC.SetTransition(CharacterStates.Idle, Idle)
             .SetTransition(CharacterStates.Moving, Moving)
              .SetTransition(CharacterStates.Death, Death)
             .SetTransition(CharacterStates.Wait, Wait).Done();
-        StateConfigurer.Create(Landing)
-            .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Stop, Stop)
-            .SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(OnRope)
-            .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Stop, Stop)
-            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope)
-            .SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(Climb)
-            .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Moving, Moving)
-           .SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(EquippingHelmet)
-            .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Moving, Moving)
-           .SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(DoingEvent)
-            .SetTransition(CharacterStates.Wait, Wait)
-            .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(JumpingToRope)
-            .SetTransition(CharacterStates.Swaying, Swaying)
-            .SetTransition(CharacterStates.Moving, Moving).Done();
-        StateConfigurer.Create(Swaying)
-            .SetTransition(CharacterStates.JumpingToRope, JumpingToRope).Done();
 
-        StateConfigurer.Create(OnLadder)
-            .SetTransition(CharacterStates.Wait, Wait)
+        states.Add(CharacterStates.Stop, new StateDefinition( Stop, StopC));
+
+
+
+
+        var ClimbC = StateConfigurer.Create(Climb);
+        ClimbC.SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+           .SetTransition(CharacterStates.Idle, Idle).Done();
+
+        states.Add(CharacterStates.Climb, new StateDefinition( Climb, ClimbC));
+
+        var DoingEventC = StateConfigurer.Create(DoingEvent);
+
+        DoingEventC.SetTransition(CharacterStates.Wait, Wait)
+            .SetTransition(CharacterStates.Moving, Moving)
+            .SetTransition(CharacterStates.Idle, Idle).Done();
+
+        states.Add(CharacterStates.DoingEvent, new StateDefinition( DoingEvent, DoingEventC));
+
+
+
+
+
+        var OnLadderC = StateConfigurer.Create(OnLadder);
+
+        OnLadderC.SetTransition(CharacterStates.Wait, Wait)
             .SetTransition(CharacterStates.Jumping, Jumping)
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Climb, Climb)
             .SetTransition(CharacterStates.Idle, Idle).Done();
-        StateConfigurer.Create(Death)
-           .SetTransition(CharacterStates.Idle, Idle)
+
+
+        states.Add(CharacterStates.OnLadder, new StateDefinition( OnLadder, OnLadderC));
+
+        var DeathC = StateConfigurer.Create(Death);
+
+        DeathC.SetTransition(CharacterStates.Idle, Idle)
         .Done();
-        StateConfigurer.Create(Falling)
-           .SetTransition(CharacterStates.Idle, Idle)
-           .Done();
+
+        states.Add(CharacterStates.Death, new StateDefinition( Death, DeathC));
+
 
 
 
@@ -327,81 +341,7 @@ public class Character : Entity
 
         #endregion
 
-        #region ONROPE STATE
-
-        OnRope.OnEnter += x =>
-        {
-
-            _currentState = CharacterStates.OnRope;
-
-
-        };
-
-        OnRope.OnUpdate += () =>
-        {
-
-
-        };
-        OnRope.OnFixedUpdate += () =>
-        {
-
-        };
-        OnRope.OnExit += x => { };
-
-        #endregion
-
-        #region JUMPINGTOROPE STATE
-
-        JumpingToRope.OnEnter += x =>
-        {
-            _currentState = CharacterStates.JumpingToRope;
-        };
-
-        JumpingToRope.OnUpdate += () =>
-        {
-
-            if (grounded)
-            {
-                SendInputToFSM(CharacterStates.Moving);
-            }
-        };
-        JumpingToRope.OnFixedUpdate += () =>
-        {
-
-        };
-
-        JumpingToRope.OnExit += x =>
-        {
-
-        };
-
-        #endregion
-
-        #region SWAYING STATE
-
-        Swaying.OnEnter += x =>
-        {
-
-
-            _currentState = CharacterStates.Swaying;
-        };
-
-        Swaying.OnUpdate += () =>
-        {
-
-
-        };
-        Swaying.OnFixedUpdate += () =>
-        {
-
-        };
-
-        Swaying.OnExit += x =>
-        {
-
-        };
-
-        #endregion
+       
 
         #region ONLADDER STATE
 
@@ -535,26 +475,7 @@ public class Character : Entity
 
         #endregion
 
-        #region EQUIPPING HELMET STATE
-
-        EquippingHelmet.OnEnter += x =>
-        {
-            _currentState = CharacterStates.EquippingHelmet;
-            characterView.OnEquippingHelmet();
-
-        };
-
-        EquippingHelmet.OnUpdate += () =>
-        {
-
-        };
-        EquippingHelmet.OnFixedUpdate += () =>
-        {
-
-        };
-        EquippingHelmet.OnExit += x => { };
-
-        #endregion
+    
 
         #region DOING EVENT
 
@@ -581,7 +502,10 @@ public class Character : Entity
     }
 
 
+    public virtual void Shoot(Vector2 force)
+    {
 
+    }
     protected virtual void Start()
     {
       
@@ -631,6 +555,7 @@ public class Character : Entity
         }
      
     }
+
     private void FixedUpdate()
     {
         _eventFSM.FixedUpdate();
@@ -817,10 +742,22 @@ public enum CharacterStates
     OnRope = 1 << 5,
     JumpingToRope = 1 << 6,
     Climb = 1 << 7,
-    EquippingHelmet = 1 << 8,
-    DoingEvent = 1 << 9,
-    Swaying = 1 << 10,
-    OnLadder = 1 << 11,
-    Death = 1 << 12,
+    DoingEvent = 1 << 8,
+    Swaying = 1 << 9,
+    OnLadder = 1 << 10,
+    Death = 1 << 11,
+    Boleadoras = 1 << 12,
     All = ~0
+}
+public class StateDefinition
+{
+    public CharacterStates stateName;
+    public StateE<CharacterStates> state;
+    public StateConfigurer<CharacterStates> stateConfigurer;
+
+    public StateDefinition( StateE<CharacterStates> st, StateConfigurer<CharacterStates> stateC)
+    {
+        state = st;
+        stateConfigurer = stateC;
+    }
 }

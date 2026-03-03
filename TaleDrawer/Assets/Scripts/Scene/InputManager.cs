@@ -34,6 +34,11 @@ public class InputManager : MonoBehaviour
 
     public static InputManager instance;
 
+    public bool isAiming;
+    public Vector2 startAimPos;
+    public float aimForce;
+    public Vector2 aimForceVector;
+    public float aimAngle;
     float currentInput;
     private void Awake()
     {
@@ -73,7 +78,39 @@ public class InputManager : MonoBehaviour
             Debug.LogError(distance);
             isDragging = true;
         }
+
+        if (isAiming)
+        {
+            
+            aimForce = Mathf.Min(10, Vector2.Distance(startAimPos, mouseInput));
+            aimAngle = Vector2.Angle(startAimPos - mouseInput, Vector2.right);
+            aimAngle *= Mathf.Deg2Rad;
+            TrayectoryVisuals();
+        }
+
     }
+
+    public void TrayectoryVisuals() 
+    { 
+        var linerenderer = character.GetComponent<LineRenderer>(); 
+        float xComponent = 0; 
+        float yComponent = 0; 
+        float maxTime = 2f; 
+        int steps = 30; 
+        float timeStep = maxTime / steps; 
+        int linerendererIndex = 0;
+        Vector2 dir = (startAimPos - mouseInput).normalized * Mathf.Clamp(aimForce, 0, 25);
+        aimForceVector = dir;
+        for (int i = 0; i < 30; i++) 
+        {
+            float t = i * timeStep;
+            xComponent = character.transform.position.x + dir.x * t;
+            yComponent = character.transform.position.y + dir.y * t - 0.5f * 9.8f * Mathf.Pow(t, 2);
+            linerenderer.SetPosition(linerendererIndex, new Vector3(xComponent, yComponent, 0)); 
+            linerendererIndex++; 
+        } 
+    }
+
     private void FixedUpdate()
     {
         
@@ -160,6 +197,24 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void OnAim()
+    {
+        if(character._currentState == CharacterStates.Boleadoras)
+        {
+            isAiming = true;
+            startAimPos = mouseInput;
+        }
+    }
+
+    public void OnShoot()
+    {
+        if (isAiming)
+        {
+            character.Shoot(aimForceVector);
+            isAiming = false;
+        }
+    }
+
     public void OnBeginDraw()
     {
         pointerDown = true;
@@ -181,11 +236,11 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        //  sceneManager._dTest.BeginDraw(sceneManager._sceneCamera.ScreenToWorldPoint(Input.GetTouch(0).position));
+
     }
     public void OnDraw()
     {
-      
+        if (character._currentState == CharacterStates.Boleadoras) return;
         if (isDragging)
         {
             if (rubber != null)
