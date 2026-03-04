@@ -110,10 +110,9 @@ public class Wind : MonoBehaviour
             entity.inWind = true;
             entity.transform.DOPath(_path, 5f, PathType.CatmullRom).OnComplete(() =>
             {
-                Debug.LogError("Me subo al viento");
-                balloon.ActivateFloat();
+                Debug.LogError("Me subo al viento");                
                 movingEntity = false;
-            });
+            }).OnKill(() => movingEntity = false);
         }
         else if (collision.TryGetComponent(out Entity entity1))
         {

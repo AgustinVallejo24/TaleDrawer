@@ -441,10 +441,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 84294f876c9be9248a1ce2cb9f6a38d2, type: 3}
   - {fileID: 8300000, guid: 25fd2e45f587b024592802a0085cd662, type: 3}
   hasObject: 0
+  explosionParticle: {fileID: 0}
   subibaja: {fileID: 0}
   canClimb: 0
   boleadorasPrefab: {fileID: 900504559810866990, guid: e4107127dfad41742848eeb29b600a23, type: 3}
-  glidingSpeed: 2
+  glidingSpeed: 4
   lineRenderer: {fileID: 7363900840264280177}
   _umbrellasGravity: 0
   _umbrellasPos: {fileID: 4041946298833547475}

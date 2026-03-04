@@ -130,6 +130,7 @@ public class Robin : Character
         };
         Glide.OnExit += x => 
         {
+            transform.DOKill();
             inWind = false;
             currentSpeed = maxSpeed;
             ReleaseCurrentSpawningObject();
@@ -275,8 +276,9 @@ public class Robin : Character
     {
         base.OnCollisionEnter2D(collision);
 
-        if (collision.gameObject.layer == 6 && _currentState == CharacterStates.Glide && IsGrounded() && characterRigidbody.linearVelocityY != 0 && inWind == false)
+        if (collision.gameObject.layer == 6 && _currentState == CharacterStates.Glide && IsGrounded() && inWind == false)
         {
+            Debug.Log("YOLOYOLO");
             //_umbrella.SetActive(false);
             SendInputToFSM(CharacterStates.Idle);
         }

@@ -1,8 +1,10 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Umbrella : SpawningObject
 {
-    [SerializeField] Paint paintsSc;
+    [SerializeField] Paint _paintsSc;
+    [SerializeField] Collider2D _collisionCollider;
 
     public bool HasEntity()
     {
@@ -18,11 +20,17 @@ public class Umbrella : SpawningObject
     {
         if(_currentEntity.TryGetComponent(out Robin chara))
         {
+            if(_myrb != null)
+            {
+                Destroy(_myrb);
+                _myrb = null;
+            }
             chara.ReleaseCurrentSpawningObject();
             chara.currentSpawningObject = this;
             transform.position = chara._umbrellasPos.position;
             _mySpriteRenderer.sortingOrder = 0;            
             transform.parent = _currentEntity.transform;
+            _collisionCollider.enabled = false;
             Robin.instance.SendInputToFSM(CharacterStates.Glide);
         }       
         
@@ -32,9 +40,9 @@ public class Umbrella : SpawningObject
     public override void Delete()
     {
         base.Delete();
-        if (_currentEntity.TryGetComponent(out Character chara))
+        if (_currentEntity != null && _currentEntity.TryGetComponent(out Character chara))
         {
-            chara.ReleaseCurrentSpawningObject();
+            chara.currentSpawningObject = null;            
             chara.SendInputToFSM(CharacterStates.Idle);
         }
         Destroy(gameObject);
@@ -42,6 +50,6 @@ public class Umbrella : SpawningObject
 
     public override void Paint()
     {
-        StartCoroutine(paintsSc.PaintSprite());
+        StartCoroutine(_paintsSc.PaintSprite());
     }
 }

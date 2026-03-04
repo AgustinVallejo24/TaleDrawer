@@ -3751,7 +3751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnableObjectDictionary:
-    m_keys: 010000000200000008000000100000002000000040000000
+    m_keys: 01000000020000000800000010000000200000004000000080000000
     m_values:
     - {fileID: 6221211027025981203, guid: 7c447e44da764f346aeacf331e61195a, type: 3}
     - {fileID: 2915509300767676624, guid: 3380234b2e464b1468f39ee6f50ee307, type: 3}
@@ -3759,6 +3759,7 @@ MonoBehaviour:
     - {fileID: 744124433417250184, guid: 1a736b14f70756a42897da070b461663, type: 3}
     - {fileID: 2892484148053922830, guid: 43ba1b595936d3b40af97def998e3572, type: 3}
     - {fileID: 4329657762788618024, guid: a737f2b2fb89d774ead96ec1bea4ca51, type: 3}
+    - {fileID: 398113688813971821, guid: 54a78d6ad8f6ac44eba662cb2d3038eb, type: 3}
   spawningPos: {fileID: 0}
 --- !u!1 &6858822759446734493
 GameObject:

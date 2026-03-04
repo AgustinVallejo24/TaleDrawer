@@ -541,8 +541,7 @@ public class Character : Entity, IDeletable
     {
         if(currentSpawningObject != null)
         {
-            currentSpawningObject.Delete();
-            currentSpawningObject = null;
+            currentSpawningObject.Delete();            
         }
         
     }
