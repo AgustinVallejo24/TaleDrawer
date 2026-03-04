@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
-public class Character : Entity
+public class Character : Entity, IDeletable
 {
     #region Variables
 
@@ -44,6 +44,9 @@ public class Character : Entity
     [SerializeField] protected Animator _animator;
     public CharacterStates _currentState;
     public CharacterStates _climbingTransitions;
+
+    public CharacterStates jumpingStates;
+
     [SerializeField] protected SpriteRenderer _characterSprite;
     [SerializeField] public SpriteRenderer keySprite;
     [SerializeField] LayerMask _walkableLayerMask;
@@ -101,6 +104,8 @@ public class Character : Entity
     public List<AudioClip> stepClips;
 
     public Dictionary<CharacterStates,StateDefinition> states = new Dictionary<CharacterStates, StateDefinition>();
+
+    public bool hasObject;
     protected virtual void Awake()
     {
         instance = this;
@@ -506,6 +511,12 @@ public class Character : Entity
     {
 
     }
+
+    public virtual void TrayectoryVisuals(Vector2 dir)
+    {
+
+    }
+
     protected virtual void Start()
     {
       
@@ -726,6 +737,14 @@ public class Character : Entity
     public void SetAnimatorTrigger(string name)
     {
         _animator.SetTrigger(name);
+    }
+
+    public void Delete()
+    {
+        if (hasObject)
+        {
+            SendInputToFSM(CharacterStates.Idle);
+        }
     }
 }
 

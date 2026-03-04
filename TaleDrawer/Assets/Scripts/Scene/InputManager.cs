@@ -84,38 +84,15 @@ public class InputManager : MonoBehaviour
             
             aimForce = Mathf.Min(10, Vector2.Distance(startAimPos, mouseInput));
             aimAngle = Vector2.Angle(startAimPos - mouseInput, Vector2.right);
-            aimAngle *= Mathf.Deg2Rad;
-            TrayectoryVisuals();
+            aimAngle *= Mathf.Deg2Rad;        
+            aimForceVector = (startAimPos - mouseInput).normalized * Mathf.Clamp(aimForce, 0, 25) * 2;
+            character.TrayectoryVisuals(aimForceVector);
         }
 
     }
 
-    public void TrayectoryVisuals() 
-    { 
-        var linerenderer = character.GetComponent<LineRenderer>(); 
-        float xComponent = 0; 
-        float yComponent = 0; 
-        float maxTime = 2f; 
-        int steps = 30; 
-        float timeStep = maxTime / steps; 
-        int linerendererIndex = 0;
-        Vector2 dir = (startAimPos - mouseInput).normalized * Mathf.Clamp(aimForce, 0, 25);
-        aimForceVector = dir;
-        for (int i = 0; i < 30; i++) 
-        {
-            float t = i * timeStep;
-            xComponent = character.transform.position.x + dir.x * t;
-            yComponent = character.transform.position.y + dir.y * t - 0.5f * 9.8f * Mathf.Pow(t, 2);
-            linerenderer.SetPosition(linerendererIndex, new Vector3(xComponent, yComponent, 0)); 
-            linerendererIndex++; 
-        } 
-    }
+    
 
-    private void FixedUpdate()
-    {
-        
-       // sceneManager.levelCharacter.characterModel.Move2(input.x);
-    }
     public void ContinueDialogue()
     {
 

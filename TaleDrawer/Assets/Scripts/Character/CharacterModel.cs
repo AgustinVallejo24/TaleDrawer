@@ -25,6 +25,8 @@ public class CharacterModel
 
     public void Jump()
     {
+        if (!_myCharacter.jumpingStates.HasFlag(_myCharacter._currentState)) return;
+
         if (_myCharacter.grounded || _myCharacter._currentState == CharacterStates.OnLadder)
         {            
             if(_myCharacter._currentState == CharacterStates.OnLadder)

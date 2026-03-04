@@ -6,6 +6,9 @@ public class Robin : Character
     public Subibaja subibaja;
     public bool canClimb;
     public GameObject boleadorasPrefab;
+
+    public LineRenderer lineRenderer;
+
     protected override void Awake()
     {
         characterModel = new CharacterModel(this, characterRigidbody, floorLayerMask);
@@ -142,21 +145,33 @@ public class Robin : Character
         {
 
             _currentState = CharacterStates.Boleadoras;
+            currentSpeed = currentSpeed / 3;
         };
 
         Boleadoras.OnUpdate += () =>
         {
-            
+            characterModel.AlignToGround();
+
 
         };
         Boleadoras.OnFixedUpdate += () =>
         {
+            if (xInput != 0)
+            {
+                characterModel.Move2(xInput);
+            }
+            else
+            {
+                characterRigidbody.linearVelocityX = 0;
+
+              //  SendInputToFSM(CharacterStates.Idle);
+            }
 
         };
 
         Boleadoras.OnExit += x =>
         {
-
+            currentSpeed = maxSpeed;
         };
 
         #endregion
@@ -178,6 +193,7 @@ public class Robin : Character
     public override void CatchBoleadoras()
     {
         base.CatchBoleadoras();
+        hasObject = true;
         SendInputToFSM(CharacterStates.Boleadoras);
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -202,11 +218,31 @@ public class Robin : Character
         bol.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
 
         SendInputToFSM(CharacterStates.Idle);
-        var ln = GetComponent<LineRenderer>();
+        hasObject = false;
 
-        for (int i = 0; i < ln.positionCount; i++)
+        for (int i = 0; i < lineRenderer.positionCount; i++)
         {
-            ln.SetPosition(i, transform.position);
+            lineRenderer.SetPosition(i, transform.position);
+        }
+    }
+
+    public override void TrayectoryVisuals(Vector2 dir)
+    {
+
+        float xComponent = 0;
+        float yComponent = 0;
+        float maxTime = 1f;
+        int steps = 30;
+        float timeStep = maxTime / steps;
+        int linerendererIndex = 0;
+
+        for (int i = 0; i < 30; i++)
+        {
+            float t = i * timeStep;
+            xComponent = transform.position.x + dir.x * t;
+            yComponent = transform.position.y + dir.y * t - 0.5f * 9.8f * 2f * Mathf.Pow(t, 2);
+            lineRenderer.SetPosition(linerendererIndex, new Vector3(xComponent, yComponent, 0));
+            linerendererIndex++;
         }
     }
     public override void OnTriggerExit2D(Collider2D collision)
