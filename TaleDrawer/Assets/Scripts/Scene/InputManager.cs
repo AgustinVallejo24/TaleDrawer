@@ -66,7 +66,7 @@ public class InputManager : MonoBehaviour
         Debug.LogError(character.xInput);
         character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
-
+        character.glidingInputs = playerInput.actions["Glide"].ReadValue<Vector2>();
         
         if (!pointerDown) return;
 
@@ -288,5 +288,10 @@ public class InputManager : MonoBehaviour
             rob.characterView.OnIdle();
             Character.instance.SendInputToFSM(CharacterStates.Moving);
         }
+    }
+
+    public void OnGlide()
+    {
+
     }
 }

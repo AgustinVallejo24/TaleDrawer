@@ -90,6 +90,7 @@ public class Character : Entity, IDeletable
     public CinemachineGroupFraming groupFraming;
     public float xInput;
     public Vector2 climbingInputs;
+    public Vector2 glidingInputs;
     public float horizontalJumpDir;
 
     public LayerMask playerExcludeLayer;
