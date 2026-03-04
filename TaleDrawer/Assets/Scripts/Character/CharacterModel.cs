@@ -245,4 +245,11 @@ public class CharacterModel
         }
         
     }
+
+    public void Glide(Vector2 glidingInputs, float glidingSpeed)
+    {
+        _movementVector = (Vector2.down + glidingInputs) * glidingSpeed;
+
+        _myRigidbody.linearVelocity = _movementVector;
+    }
 }

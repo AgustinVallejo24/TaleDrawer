@@ -21,7 +21,7 @@ public class Character : Entity, IDeletable
     public float _maxLife;
     protected float _currentLife;
     public float jumpForce;
-    float _originalGravityScale;
+    protected float _originalGravityScale;
     [SerializeField] protected LayerMask _obstacleLayerMask;
     [SerializeField] protected LayerMask _floorLayerMask;
     [SerializeField] Transform feetPosition;
@@ -52,6 +52,7 @@ public class Character : Entity, IDeletable
     [SerializeField] LayerMask _walkableLayerMask;
     public Collider2D _mainCollider;
     public SpawningObject helmet;
+    public SpawningObject currentSpawningObject;
 
    
     #endregion
@@ -118,7 +119,7 @@ public class Character : Entity, IDeletable
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
 
-
+        
         var Climb = new StateE<CharacterStates>("Climb");
         var DoingEvent = new StateE<CharacterStates>("DoingEvent");
 
@@ -533,6 +534,17 @@ public class Character : Entity, IDeletable
     {
         SendInputToFSM(CharacterStates.Climb);
     }
+
+    public void ReleaseCurrentSpawningObject()
+    {
+        if(currentSpawningObject != null)
+        {
+            currentSpawningObject.Delete();
+            currentSpawningObject = null;
+        }
+        
+    }
+
     public virtual void Update()
     {
         _eventFSM.Update();
@@ -767,6 +779,7 @@ public enum CharacterStates
     OnLadder = 1 << 10,
     Death = 1 << 11,
     Boleadoras = 1 << 12,
+    Glide = 1 << 13,
     All = ~0
 }
 public class StateDefinition

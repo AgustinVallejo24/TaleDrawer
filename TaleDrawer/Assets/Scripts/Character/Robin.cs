@@ -2,13 +2,17 @@ using UnityEngine;
 using DG.Tweening;
 public class Robin : Character
 {
+    [Header("Robin")]
     public Sequence currentTween;
     public Subibaja subibaja;
     public bool canClimb;
     public GameObject boleadorasPrefab;
-
+    [SerializeField] float glidingSpeed;
     public LineRenderer lineRenderer;
-
+    //[SerializeField] GameObject _umbrella;
+    [SerializeField] float _umbrellasGravity;
+    public Transform _umbrellasPos;
+    //public SpawningObject umbrella;
     protected override void Awake()
     {
         characterModel = new CharacterModel(this, characterRigidbody, floorLayerMask);
@@ -21,6 +25,7 @@ public class Robin : Character
         var JumpingToRope = new StateE<CharacterStates>("JumpingToRope");
         var Swaying = new StateE<CharacterStates>("Swaying");
         var Boleadoras = new StateE<CharacterStates>("Boleadoras");
+        var Glide = new StateE<CharacterStates>("Glide");
 
         #endregion
 
@@ -55,9 +60,15 @@ public class Robin : Character
 
         states.Add(CharacterStates.Boleadoras, new StateDefinition(Boleadoras, BoleadorasC));
 
+        var GlideC = StateConfigurer.Create(Glide);
+
+        GlideC.SetTransition(CharacterStates.Idle, states[CharacterStates.Idle].state).Done();
+
+        states.Add(CharacterStates.Glide, new StateDefinition(Glide, GlideC));
+
         states[CharacterStates.Wait].stateConfigurer.SetTransition(CharacterStates.OnRope, OnRope).Done();
-        states[CharacterStates.Moving].stateConfigurer.SetTransition(CharacterStates.Swaying, Swaying).SetTransition(CharacterStates.Boleadoras, Boleadoras).Done();
-        states[CharacterStates.Idle].stateConfigurer.SetTransition(CharacterStates.Boleadoras, Boleadoras).Done();
+        states[CharacterStates.Moving].stateConfigurer.SetTransition(CharacterStates.Swaying, Swaying).SetTransition(CharacterStates.Boleadoras, Boleadoras).SetTransition(CharacterStates.Glide, Glide).Done();
+        states[CharacterStates.Idle].stateConfigurer.SetTransition(CharacterStates.Boleadoras, Boleadoras).SetTransition(CharacterStates.Glide, Glide).Done();
         #endregion
 
         #region ONROPE STATE
@@ -80,6 +91,52 @@ public class Robin : Character
 
         };
         OnRope.OnExit += x => { };
+
+        #endregion
+
+
+        #region GLIDE STATE
+
+        Glide.OnEnter += x =>
+        {
+            //_umbrella.SetActive(true);
+            characterView.OnIdle();
+            _currentState = CharacterStates.Glide;
+            currentSpeed = currentSpeed / 1.5f;
+            characterRigidbody.gravityScale = _umbrellasGravity;
+            //_mainCollider.isTrigger = true;
+
+        };
+
+        Glide.OnUpdate += () =>
+        {
+            characterModel.AlignToGround();
+        };
+        Glide.OnFixedUpdate += () =>
+        {
+            if (xInput != 0 && IsGrounded() && !inWind)
+            {
+                characterModel.Move2(xInput);
+            }
+            else if(IsGrounded() && !inWind)
+            {
+                characterRigidbody.linearVelocityX = 0;                
+            }
+            else if(!inWind)
+            {
+                characterModel.Glide(glidingInputs, glidingSpeed);
+            }
+
+        };
+        Glide.OnExit += x => 
+        {
+            inWind = false;
+            currentSpeed = maxSpeed;
+            ReleaseCurrentSpawningObject();
+            characterRigidbody.linearVelocity = Vector2.zero;
+            characterRigidbody.gravityScale = _originalGravityScale;
+            //_mainCollider.isTrigger = false;
+        };
 
         #endregion
 
@@ -208,6 +265,19 @@ public class Robin : Character
             
         }
 
+        
+
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+
+        if (collision.gameObject.layer == 6 && _currentState == CharacterStates.Glide && IsGrounded() && characterRigidbody.linearVelocityY != 0 && inWind == false)
+        {
+            //_umbrella.SetActive(false);
+            SendInputToFSM(CharacterStates.Idle);
+        }
     }
 
     public override void Shoot(Vector2 force)

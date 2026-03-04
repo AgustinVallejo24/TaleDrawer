@@ -103,7 +103,19 @@ public class Wind : MonoBehaviour
                 movingEntity = false;
             });
         }
-        else if(collision.TryGetComponent(out Entity entity1))
+        else if (collision.TryGetComponent(out Umbrella umbrella) && umbrella.HasEntity() && !movingEntity)
+        {
+            Entity entity = umbrella.GetCurrentEntity();
+            movingEntity = true;
+            entity.inWind = true;
+            entity.transform.DOPath(_path, 5f, PathType.CatmullRom).OnComplete(() =>
+            {
+                Debug.LogError("Me subo al viento");
+                balloon.ActivateFloat();
+                movingEntity = false;
+            });
+        }
+        else if (collision.TryGetComponent(out Entity entity1))
         {
             entity1.inWind = true;
         }

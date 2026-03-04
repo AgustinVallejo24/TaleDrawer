@@ -294,4 +294,12 @@ public class InputManager : MonoBehaviour
     {
 
     }
+
+    public void OnEndGlide()
+    {
+        if(Character.instance.TryGetComponent(out Robin rob) && rob._currentState == CharacterStates.Glide)
+        {
+            rob.SendInputToFSM(CharacterStates.Idle);
+        }
+    }
 }

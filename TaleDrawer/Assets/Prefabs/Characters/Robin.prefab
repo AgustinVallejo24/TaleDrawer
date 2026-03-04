@@ -62,6 +62,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6435546691485308052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2358898753701581377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4041946298833547475}
+  m_Layer: 7
+  m_Name: 'UmbrellaPos '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4041946298833547475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358898753701581377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.28, y: 0.47, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3265364237620506647}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2586056936956227636
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +284,7 @@ Transform:
   - {fileID: 1786089718182559142}
   - {fileID: 5795107729046904544}
   - {fileID: 7151106360322334994}
+  - {fileID: 4041946298833547475}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4798489685609265546
@@ -361,6 +393,7 @@ MonoBehaviour:
     m_Bits: 64
   _mainCollider: {fileID: 2501744969287615608}
   helmet: {fileID: 532369536678373894}
+  currentSpawningObject: {fileID: 0}
   visual: {fileID: 6435546691485308052}
   sceneCamera: {fileID: 0}
   test: 1
@@ -380,6 +413,7 @@ MonoBehaviour:
   groupFraming: {fileID: 0}
   xInput: 0
   climbingInputs: {x: 0, y: 0}
+  glidingInputs: {x: 0, y: 0}
   horizontalJumpDir: 0
   playerExcludeLayer:
     serializedVersion: 2
@@ -406,10 +440,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 484b65f349bf94c4793692354413b3d2, type: 3}
   - {fileID: 8300000, guid: 84294f876c9be9248a1ce2cb9f6a38d2, type: 3}
   - {fileID: 8300000, guid: 25fd2e45f587b024592802a0085cd662, type: 3}
+  hasObject: 0
   subibaja: {fileID: 0}
   canClimb: 0
   boleadorasPrefab: {fileID: 900504559810866990, guid: e4107127dfad41742848eeb29b600a23, type: 3}
+  glidingSpeed: 2
   lineRenderer: {fileID: 7363900840264280177}
+  _umbrellasGravity: 0
+  _umbrellasPos: {fileID: 4041946298833547475}
 --- !u!50 &4313604016444015195
 Rigidbody2D:
   serializedVersion: 5

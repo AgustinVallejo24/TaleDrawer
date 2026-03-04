@@ -33,5 +33,6 @@ public enum SpawnableObjectType
     Casco = 1 << 4,
     Globo = 1 << 5,
     Boleadoras = 1 << 6,
+    Umbrella = 1 << 7,
     All = ~0
 }

@@ -140,6 +140,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "EndGlide",
+                    "type": "Button",
+                    "id": "9c8376f2-1e2e-4082-979c-03f9dce54a06",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -428,6 +437,17 @@
                     "action": "Glide",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9066ca22-5e1e-40d6-b86a-039e8647df3e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndGlide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
