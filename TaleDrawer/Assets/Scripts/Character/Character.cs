@@ -108,6 +108,8 @@ public class Character : Entity, IDeletable
     public Dictionary<CharacterStates,StateDefinition> states = new Dictionary<CharacterStates, StateDefinition>();
 
     public bool hasObject;
+
+    public ExplosionParticle explosionParticle;
     protected virtual void Awake()
     {
         instance = this;
@@ -756,6 +758,7 @@ public class Character : Entity, IDeletable
     {
         if (hasObject)
         {
+            Instantiate(explosionParticle, transform);
             SendInputToFSM(CharacterStates.Idle);
         }
     }

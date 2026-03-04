@@ -12,7 +12,7 @@ public class Soga : SpawningObject, IInteractableP
     [SerializeField] Collider2D _detectionCollider;
     [SerializeField] Collider2D _fallingCollider;
     [SerializeField] GameObject _eKey;
-
+    public bool hasPlayer;
     public void OnErased()
     {
         gameObject.SetActive(false);
@@ -46,8 +46,10 @@ public class Soga : SpawningObject, IInteractableP
 
     public void Interact()
     {
-        if (hook != null)
+        if (hook != null && !hasPlayer)
         {
+            hasPlayer = true;
+            Character.instance.HideKeyUI();
             hook.InteractWithPlayer();
         }
     }
@@ -63,6 +65,7 @@ public class Soga : SpawningObject, IInteractableP
     }
     public void OnLeavingInteraction()
     {
-        throw new System.NotImplementedException();
+        Character.instance.currentInteraction = null;
+        hasPlayer = false;
     }
 }

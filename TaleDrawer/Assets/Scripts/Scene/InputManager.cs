@@ -40,12 +40,15 @@ public class InputManager : MonoBehaviour
     public Vector2 aimForceVector;
     public float aimAngle;
     float currentInput;
+    public RectTransform cursorImage;
+    Vector2 position = Vector2.zero;
     private void Awake()
     {
         instance = this;
     }
     void Start()
     {
+        Cursor.visible = false;
         //MoveMouse.action.performed += OnDrag;
         //Draw.action.performed += Drawing;
         //Move.action.performed += OnMove;
@@ -67,7 +70,8 @@ public class InputManager : MonoBehaviour
         character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
         character.glidingInputs = playerInput.actions["Glide"].ReadValue<Vector2>();
-        
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(cursorImage.parent.GetComponent<RectTransform>(), InputManager.instance.mouseInput, null, out position);
+        cursorImage.anchoredPosition = position;
         if (!pointerDown) return;
 
         Vector2 currentPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -158,16 +162,18 @@ public class InputManager : MonoBehaviour
            // Debug.LogError("LAPUTAMADRE");
             currentDraggable = sP;
             currentDraggable.OnBeginDrag();
+            GameManager.instance.SetCursorSprite(CursorTypes.ClosedHand);
         }
       
     }
     public void OnDrag()
     {
+       
 
-   
+
         if (currentDraggable != null)
         {
-            
+
             _clickPosition = sceneManager._sceneCamera.ScreenToWorldPoint(mouseInput);
             currentDraggable.OnDrag(mouseInput);
             // currentDraggable.transform.position = Vector2.Lerp(currentDraggable.transform.position,_clickPosition,20*Time.unscaledDeltaTime);
@@ -176,7 +182,13 @@ public class InputManager : MonoBehaviour
 
     public void OnAim()
     {
-        if(character._currentState == CharacterStates.Boleadoras)
+
+        if (CustomTools.IsTouchOverUI(mouseInput))
+        {
+
+            return;
+        }
+        if (character._currentState == CharacterStates.Boleadoras)
         {
             isAiming = true;
             startAimPos = mouseInput;
@@ -217,7 +229,7 @@ public class InputManager : MonoBehaviour
     }
     public void OnDraw()
     {
-        if (character._currentState == CharacterStates.Boleadoras) return;
+
         if (isDragging)
         {
             if (rubber != null)
@@ -228,6 +240,7 @@ public class InputManager : MonoBehaviour
             }
             else
             {
+                if (character._currentState == CharacterStates.Boleadoras) return;
                 sceneManager._dTest.OnDraw(mouseInput);
             }
  
@@ -257,6 +270,7 @@ public class InputManager : MonoBehaviour
     {
         if(currentDraggable != null)
         {
+            GameManager.instance.SetCursorSprite(CursorTypes.Brush);
             currentDraggable.OnEndDrag();
             currentDraggable = null;
            

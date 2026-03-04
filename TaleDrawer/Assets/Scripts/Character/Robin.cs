@@ -228,6 +228,7 @@ public class Robin : Character
 
         Boleadoras.OnExit += x =>
         {
+            GameManager.instance.SetCursorSprite(CursorTypes.Brush);
             currentSpeed = maxSpeed;
         };
 
@@ -251,6 +252,7 @@ public class Robin : Character
     {
         base.CatchBoleadoras();
         hasObject = true;
+        GameManager.instance.SetCursorSprite(CursorTypes.SlingShot);
         SendInputToFSM(CharacterStates.Boleadoras);
     }
     protected override void OnTriggerEnter2D(Collider2D collision)

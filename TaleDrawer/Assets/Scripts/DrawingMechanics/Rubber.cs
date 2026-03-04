@@ -21,7 +21,7 @@ public class Rubber : MonoBehaviour
         initialPos = rect.anchoredPosition;
     }
 
-    // Llamado desde tu Input Action (Drag / Pointer Position)
+
     public void OnDrag(Vector2 pos)
     {
         if (pos == Vector2.zero || isMoving) return;

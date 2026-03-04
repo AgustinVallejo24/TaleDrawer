@@ -60,6 +60,11 @@ public class GameManager : MonoBehaviour
     public bool playInitialAnimation;
 
     [SerializeField] Image _blackImage;
+
+
+    [SerializeField] NewSerializableDictionary<CursorTypes, Sprite> _cursorSprites;
+
+    [SerializeField] Image _cursorImage;
     private void Awake()
     {
         instance = this;
@@ -89,6 +94,8 @@ public class GameManager : MonoBehaviour
 
             _playerCamera.enabled = true;
         }
+
+        SetCursorSprite(CursorTypes.Brush);
     }
 
     public IEnumerator InitialTutorials()
@@ -134,6 +141,12 @@ public class GameManager : MonoBehaviour
             _spawnedObjects.Remove(obj);
         }
         
+    }
+
+    public void SetCursorSprite(CursorTypes type)
+    {
+        _cursorImage.sprite = _cursorSprites[type];
+
     }
 
 
@@ -247,6 +260,7 @@ public class GameManager : MonoBehaviour
 
         if(currentState == SceneStates.Game)
         {
+            SetCursorSprite(CursorTypes.Brush);
             if(previousState == SceneStates.Drawing)
             {
                 ExitingDrawingState();
@@ -271,6 +285,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currentState == SceneStates.Dragging)
         {
+            SetCursorSprite(CursorTypes.OpenHand);
             Tutorial.instance.PlayTutorial(Tutorials.Dragging,5);
             playerInput.SwitchCurrentActionMap("Dragging");
             //PlacementGridManager.Instance.RefreshGridAvailability();
@@ -310,4 +325,13 @@ public enum SceneStates
     GameOver,
     Spawning,
     Dialogue,
+}
+
+public enum CursorTypes
+{
+    Brush,
+    OpenHand,
+    ClosedHand,
+    SlingShot,
+
 }
