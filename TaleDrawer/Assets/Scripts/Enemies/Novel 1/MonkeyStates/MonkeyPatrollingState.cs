@@ -39,7 +39,7 @@ public class MonkeyPatrollingState : BaseState
         }
         else
         {
-            _myMonkey.myRigidbody.linearVelocity = Vector2.zero;
+            _myMonkey.entityRigidbody.linearVelocity = Vector2.zero;
             if(_myMonkey.currentNodeIndex == _myMonkey.patrollingNodes.Length - 1)
             {
                 _myMonkey.currentNodeIndex = 0;

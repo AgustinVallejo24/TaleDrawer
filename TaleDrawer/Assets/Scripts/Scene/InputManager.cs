@@ -64,8 +64,16 @@ public class InputManager : MonoBehaviour
     {
 
         character.xInput = playerInput.actions["Move"].ReadValue<Vector2>().x;
-        
 
+        if (isAiming)
+        {
+            Debug.LogError("ENtroooo");
+            aimForce = Mathf.Min(10, Vector2.Distance(startAimPos, mouseInput));
+            aimAngle = Vector2.Angle(startAimPos - mouseInput, Vector2.right);
+            aimAngle *= Mathf.Deg2Rad;
+            aimForceVector = (startAimPos - mouseInput).normalized * Mathf.Clamp(aimForce, 0, 25) * 2;
+            character.TrayectoryVisuals(aimForceVector);
+        }
         Debug.LogError(character.xInput);
         character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
@@ -77,21 +85,13 @@ public class InputManager : MonoBehaviour
         Vector2 currentPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
         float distance = Vector2.Distance(currentPos, startPos);
 
-        if (!isDragging && distance > dragThreshold)
+        if (!isDragging && distance > dragThreshold && (GameManager.instance.currentState == SceneStates.Game || GameManager.instance.currentState == SceneStates.Drawing))
         {
             Debug.LogError(distance);
             isDragging = true;
         }
 
-        if (isAiming)
-        {
-            
-            aimForce = Mathf.Min(10, Vector2.Distance(startAimPos, mouseInput));
-            aimAngle = Vector2.Angle(startAimPos - mouseInput, Vector2.right);
-            aimAngle *= Mathf.Deg2Rad;        
-            aimForceVector = (startAimPos - mouseInput).normalized * Mathf.Clamp(aimForce, 0, 25) * 2;
-            character.TrayectoryVisuals(aimForceVector);
-        }
+
 
     }
 
@@ -206,6 +206,7 @@ public class InputManager : MonoBehaviour
 
     public void OnBeginDraw()
     {
+        if (character._currentState == CharacterStates.Boleadoras || (GameManager.instance.currentState != SceneStates.Drawing && GameManager.instance.currentState != SceneStates.Game)) return;
         pointerDown = true;
         startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
         startWorldPos = Input.mousePosition;
@@ -240,7 +241,7 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                if (character._currentState == CharacterStates.Boleadoras) return;
+                if (character._currentState == CharacterStates.Boleadoras || (GameManager.instance.currentState != SceneStates.Drawing && GameManager.instance.currentState != SceneStates.Game)) return;
                 sceneManager._dTest.OnDraw(mouseInput);
             }
  

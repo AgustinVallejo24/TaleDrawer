@@ -60,7 +60,7 @@ public class Gorilla : Enemy
         {
             //transform.position = new Vector3(upperPatrollingNodes[0].transform.position.x, upperPatrollingNodes[0].transform.position.y - transform.localScale.y);
             transform.position = upperPatrollingNodes[0].transform.position;            
-            myRigidbody.gravityScale = 0;
+            entityRigidbody.gravityScale = 0;
         }
         
 
@@ -93,9 +93,9 @@ public class Gorilla : Enemy
     public void AttackFromAbove()
     {
         ChangeAnimation(_attackT2);
-        myRigidbody.linearVelocity = Vector3.zero;
-        myRigidbody.gravityScale = 0;
-        myRigidbody.AddForce(Vector2.down * _attackJumpForce, ForceMode2D.Impulse);
+        entityRigidbody.linearVelocity = Vector3.zero;
+        entityRigidbody.gravityScale = 0;
+        entityRigidbody.AddForce(Vector2.down * _attackJumpForce, ForceMode2D.Impulse);
         CustomNode nearestNode = upperPatrollingNodes.OrderBy(x  => Vector2.Distance(transform.position, x.transform.position)).First();
         currentUpperNodeIndex = Array.IndexOf(upperPatrollingNodes, nearestNode);        
     }
@@ -154,7 +154,7 @@ public class Gorilla : Enemy
         {
             floorDetection = false;
             climbing = false;
-            myRigidbody.linearVelocity = Vector2.zero;
+            entityRigidbody.linearVelocity = Vector2.zero;
             _fsm.ChangeState(FSMStates.StunnedState);
         }
 
@@ -185,8 +185,8 @@ public class Gorilla : Enemy
                 {
                     EnemyEvent();
                 }
-                else if (Physics2D.OverlapArea(transform.position - _climbingAreaSize, transform.position + new Vector3(_climbingAreaSize.x, transform.position.y), _playerMask) && climbing && _character.characterRigidbody.linearVelocity.x != 0f
-                     && Mathf.Sign(_character.characterRigidbody.linearVelocityX) != Mathf.Sign(myRigidbody.linearVelocityX))
+                else if (Physics2D.OverlapArea(transform.position - _climbingAreaSize, transform.position + new Vector3(_climbingAreaSize.x, transform.position.y), _playerMask) && climbing && _character.entityRigidbody.linearVelocity.x != 0f
+                     && Mathf.Sign(_character.entityRigidbody.linearVelocityX) != Mathf.Sign(entityRigidbody.linearVelocityX))
                 {                    
                     EnemyEvent();
                 }

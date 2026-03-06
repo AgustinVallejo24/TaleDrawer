@@ -15,7 +15,7 @@ public class Robin : Character
     //public SpawningObject umbrella;
     protected override void Awake()
     {
-        characterModel = new CharacterModel(this, characterRigidbody, floorLayerMask);
+        characterModel = new CharacterModel(this, entityRigidbody, floorLayerMask);
         characterView = new CharacterView(this, _animator, _characterSprite);
         base.Awake();
 
@@ -103,7 +103,7 @@ public class Robin : Character
             characterView.OnIdle();
             _currentState = CharacterStates.Glide;
             currentSpeed = currentSpeed / 1.5f;
-            characterRigidbody.gravityScale = _umbrellasGravity;
+            entityRigidbody.gravityScale = _umbrellasGravity;
             //_mainCollider.isTrigger = true;
 
         };
@@ -120,7 +120,7 @@ public class Robin : Character
             }
             else if(IsGrounded() && !inWind)
             {
-                characterRigidbody.linearVelocityX = 0;                
+                entityRigidbody.linearVelocityX = 0;                
             }
             else if(!inWind)
             {
@@ -134,8 +134,8 @@ public class Robin : Character
             inWind = false;
             currentSpeed = maxSpeed;
             ReleaseCurrentSpawningObject();
-            characterRigidbody.linearVelocity = Vector2.zero;
-            characterRigidbody.gravityScale = _originalGravityScale;
+            entityRigidbody.linearVelocity = Vector2.zero;
+            entityRigidbody.gravityScale = _originalGravityScale;
             //_mainCollider.isTrigger = false;
         };
 
@@ -220,7 +220,7 @@ public class Robin : Character
             }
             else
             {
-                characterRigidbody.linearVelocityX = 0;
+                entityRigidbody.linearVelocityX = 0;
 
               //  SendInputToFSM(CharacterStates.Idle);
             }

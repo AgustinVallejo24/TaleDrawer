@@ -360,6 +360,7 @@ MonoBehaviour:
   balloonPosition: {fileID: 7151106360322334994}
   currentBalloon: {fileID: 0}
   inWind: 0
+  entityRigidbody: {fileID: 4313604016444015195}
   maxSpeed: 8
   currentSpeed: 8
   inAirSpeed: 6
@@ -381,7 +382,6 @@ MonoBehaviour:
   maxClimbingPos: {x: 0, y: 0, z: 0}
   minClimbingPos: {x: 0, y: 0, z: 0}
   _hasHelmet: 0
-  characterRigidbody: {fileID: 4313604016444015195}
   _animator: {fileID: 8119255180281605833}
   _currentState: 0
   _climbingTransitions: 3
@@ -442,6 +442,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 25fd2e45f587b024592802a0085cd662, type: 3}
   hasObject: 0
   explosionParticle: {fileID: 0}
+  glideImpulse: {x: 0, y: 0}
   subibaja: {fileID: 0}
   canClimb: 0
   boleadorasPrefab: {fileID: 900504559810866990, guid: e4107127dfad41742848eeb29b600a23, type: 3}

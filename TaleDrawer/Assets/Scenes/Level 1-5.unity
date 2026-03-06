@@ -266,11 +266,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2540322536927766382, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.53
+      value: 7.62
       objectReference: {fileID: 0}
     - target: {fileID: 2540322536927766382, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.7
+      value: -35.68
       objectReference: {fileID: 0}
     - target: {fileID: 2540322536927766382, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3383,7 +3383,7 @@ Transform:
   m_GameObject: {fileID: 970947487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.54960614, w: 0.83542395}
-  m_LocalPosition: {x: 10.72, y: 11.33, z: 0}
+  m_LocalPosition: {x: 10.91, y: 12.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5208,11 +5208,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.47
+      value: 17.98
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.57
+      value: -16.49
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5428,8 +5428,8 @@ Transform:
   m_GameObject: {fileID: 1294498745}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.9823, y: -8.6659775, z: -0.13824}
-  m_LocalScale: {x: 14.544742, y: 1.8569285, z: 1}
+  m_LocalPosition: {x: -23.6106, y: -8.6659775, z: -0.13824}
+  m_LocalScale: {x: 27.288843, y: 1.8569285, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 148894456}
@@ -5878,6 +5878,7 @@ MonoBehaviour:
   loopPoints: 20
   loopRadius: 0.5
   loopTurns: 0.9
+  pathDuration: 0.75
 --- !u!120 &1375623517
 LineRenderer:
   serializedVersion: 2
@@ -7685,11 +7686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4989393403316785767, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.47
+      value: 17.98
       objectReference: {fileID: 0}
     - target: {fileID: 4989393403316785767, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.57
+      value: -16.49
       objectReference: {fileID: 0}
     - target: {fileID: 4989393403316785767, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.z

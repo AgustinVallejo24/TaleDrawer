@@ -41,7 +41,7 @@ public class GorillaPursueState : BaseState
             isAttacking = true;
             newNode = _myGorilla.patrollingNodes.OrderBy(x => Vector3.Distance(_myGorilla.transform.position, x.transform.position)).First();
             _character.SendInputToFSM(CharacterStates.Stop);
-            _character.characterRigidbody.linearVelocityX = 0;
+            _character.entityRigidbody.linearVelocityX = 0;
 
         }
 
@@ -57,7 +57,7 @@ public class GorillaPursueState : BaseState
                 //Debug.LogError("Debug1: " + Vector2.Distance(new Vector2(_myMonkey.transform.position.x, 0), new Vector2((_character.transform.position.x - _myMonkey.attackDistance), 0)));
                 if (Vector2.Distance(new Vector2(_myGorilla.transform.position.x, 0), new Vector2((_character.transform.position.x - _myGorilla.attackDistance), 0)) < 0.5f)
                 {
-                    _myGorilla.myRigidbody.linearVelocity = Vector2.zero;
+                    _myGorilla.entityRigidbody.linearVelocity = Vector2.zero;
                     _myGorilla._fsm.ChangeState(FSMStates.AttackState);
                 }
             }
@@ -67,7 +67,7 @@ public class GorillaPursueState : BaseState
                 //Debug.LogError("Debug2: " + Vector2.Distance(new Vector2(_myMonkey.transform.position.x, 0), new Vector2((_character.transform.position.x + _myMonkey.attackDistance), 0)));
                 if (Vector2.Distance(new Vector2(_myGorilla.transform.position.x, 0), new Vector2((_character.transform.position.x + _myGorilla.attackDistance), 0)) < 0.5f)
                 {
-                    _myGorilla.myRigidbody.linearVelocity = Vector2.zero;
+                    _myGorilla.entityRigidbody.linearVelocity = Vector2.zero;
                     _myGorilla._fsm.ChangeState(FSMStates.AttackState);
                 }
 

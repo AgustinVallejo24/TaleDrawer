@@ -26,7 +26,7 @@ public class DialogManager : MonoBehaviour
     }
     public void StartDialogue(Dialogue dialogueBlock)
     {
-        Character.instance.characterRigidbody.linearVelocityX = 0;
+        Character.instance.entityRigidbody.linearVelocityX = 0;
         Character.instance.SendInputToFSM(CharacterStates.Stop);
         GameManager.instance.currentState = SceneStates.Dialogue;
         block = dialogueBlock;

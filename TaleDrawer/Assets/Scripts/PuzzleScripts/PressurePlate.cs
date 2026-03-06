@@ -17,7 +17,7 @@ public class PressurePlate : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Character character) && !_currentObjects.Contains(collision.gameObject) && angle > 10)
         {
            character.transform.position += Vector3.up * .26f + Vector3.right * .3f * character.flipSign;
-            Debug.LogError("Entro aca y la velocit es: " + character.characterRigidbody.linearVelocityY);
+            Debug.LogError("Entro aca y la velocit es: " + character.entityRigidbody.linearVelocityY);
         }
         if (_currentObjects.Count == 0 && !collision.isTrigger)
         {

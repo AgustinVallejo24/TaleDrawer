@@ -14,7 +14,7 @@ public class Millie : Character
     [SerializeField] float dangerLightValue;
     protected override void Awake()
     {
-        characterModel = new CharacterModel(this, characterRigidbody, floorLayerMask);
+        characterModel = new CharacterModel(this, entityRigidbody, floorLayerMask);
         characterView = new CharacterView(this, _animator, _characterSprite);
         base.Awake();
     }

@@ -159,11 +159,11 @@ public class Caja : SpawningObject,IInteractableSP
             {
                 if (boxE.shouldClimb)
                 {
-                    _myCharacter.characterRigidbody.gravityScale = 0;
+                    _myCharacter.entityRigidbody.gravityScale = 0;
                     _myCharacter.climbAction = () =>
                     {
                         _myCharacter.SendInputToFSM(CharacterStates.Moving);
-                        _myCharacter.characterRigidbody.gravityScale = 1;
+                        _myCharacter.entityRigidbody.gravityScale = 1;
                         _myCharacter.climbAction = null;
                     };
                     _myCharacter.characterModel.Jump(

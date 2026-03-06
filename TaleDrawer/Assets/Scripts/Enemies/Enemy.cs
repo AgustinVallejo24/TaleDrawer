@@ -9,7 +9,7 @@ public abstract class Enemy : Entity
     [SerializeField] protected float _speed;
     [SerializeField] protected Vector2 _movementVector;
     [SerializeField] public LayerMask _playerMask;
-    public Rigidbody2D myRigidbody;
+   
     public SpriteRenderer spriteRenderer;
     public FSMStates currentState;
 
@@ -23,13 +23,13 @@ public abstract class Enemy : Entity
     }
     public override void LiftEntity()
     {
-        myRigidbody.gravityScale = 0;
+        entityRigidbody.gravityScale = 0;
         _fsm.ChangeState(FSMStates.BalloonState);
     }
 
     public override void ReleaseFromBalloon()
     {
-        myRigidbody.gravityScale = 1;
+        entityRigidbody.gravityScale = 1;
         _fsm.ChangeState(FSMStates.IdleState);
     }
 
@@ -38,7 +38,7 @@ public abstract class Enemy : Entity
         if (x != 0)
             Flip(CustomTools.ToVector2(transform.position) + new Vector2(x, 0));
         _movementVector = new Vector3(x, 0) * _speed;
-        myRigidbody.linearVelocityX = _movementVector.x;
+        entityRigidbody.linearVelocityX = _movementVector.x;
 
     }
 
@@ -47,7 +47,7 @@ public abstract class Enemy : Entity
         if (x != 0)
             Flip(CustomTools.ToVector2(transform.position) + new Vector2(x, 0));
         _movementVector = new Vector3(x, 0) * speed;
-        myRigidbody.linearVelocityX = _movementVector.x;
+        entityRigidbody.linearVelocityX = _movementVector.x;
 
     }
 

@@ -475,6 +475,9 @@ public class DrawingTest : MonoBehaviour
     }
     public void StartDissolve(SpawnableObjectType objectType)
     {
+
+        GameManager.instance.StateChanger(SceneStates.Spawning);
+        InputManager.instance.isDragging = false;
         StartCoroutine(DissolveLines(objectType));
     }
 

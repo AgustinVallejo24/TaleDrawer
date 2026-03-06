@@ -173,6 +173,7 @@ MonoBehaviour:
   balloonPosition: {fileID: 8742359296216864815}
   currentBalloon: {fileID: 0}
   inWind: 0
+  entityRigidbody: {fileID: 4207006840187300839}
   _health: 2
   _myType: 0
   _speed: 7
@@ -180,7 +181,6 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 1024
-  myRigidbody: {fileID: 4207006840187300839}
   spriteRenderer: {fileID: 3907661472560920890}
   currentState: 0
   climbingSpeed: 4

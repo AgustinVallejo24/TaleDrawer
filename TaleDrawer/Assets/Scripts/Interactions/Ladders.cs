@@ -122,7 +122,7 @@ public class Ladders : MonoBehaviour, IInteractableP
     private void LadderMovement()
     {
         _character.SendInputToFSM(CharacterStates.OnLadder);
-        _character.characterRigidbody.gravityScale = 0;
+        _character.entityRigidbody.gravityScale = 0;
 
     }
 

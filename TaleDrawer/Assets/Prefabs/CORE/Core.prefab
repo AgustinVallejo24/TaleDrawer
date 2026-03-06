@@ -3124,7 +3124,7 @@ Transform:
   m_GameObject: {fileID: 5723703911571501773}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 83.11, y: -22.12, z: -10}
+  m_LocalPosition: {x: 46, y: -24.9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5632,6 +5632,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5800139330607436395, guid: 76e0c634f35cb7c4bb13045863e2d3fa, type: 3}
+      propertyPath: audioEvents.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800139330607436395, guid: 76e0c634f35cb7c4bb13045863e2d3fa, type: 3}
+      propertyPath: 'audioEvents.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 635f455741d87e44badcf41baf04b79b, type: 2}
+    - target: {fileID: 5800139330607436395, guid: 76e0c634f35cb7c4bb13045863e2d3fa, type: 3}
+      propertyPath: 'audioEvents.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 54080f6922ec988438bfc092055b6998, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

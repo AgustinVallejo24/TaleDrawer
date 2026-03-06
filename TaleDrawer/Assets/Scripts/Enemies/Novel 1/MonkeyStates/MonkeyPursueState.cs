@@ -45,7 +45,7 @@ public class MonkeyPursueState : BaseState
             isAttacking = true;
             newNode = _myMonkey.patrollingNodes.OrderBy(x => Vector3.Distance(_myMonkey.transform.position, x.transform.position)).First();
             _character.SendInputToFSM(CharacterStates.Stop);
-            _character.characterRigidbody.linearVelocityX = 0;
+            _character.entityRigidbody.linearVelocityX = 0;
                     
         }
 
@@ -61,7 +61,7 @@ public class MonkeyPursueState : BaseState
                 //Debug.LogError("Debug1: " + Vector2.Distance(new Vector2(_myMonkey.transform.position.x, 0), new Vector2((_character.transform.position.x - _myMonkey.attackDistance), 0)));
                 if (Vector2.Distance(new Vector2(_myMonkey.transform.position.x, 0), new Vector2((_character.transform.position.x - _myMonkey.attackDistance), 0)) < 0.5f)
                 {
-                    _myMonkey.myRigidbody.linearVelocity = Vector2.zero;
+                    _myMonkey.entityRigidbody.linearVelocity = Vector2.zero;
                     _myMonkey._fsm.ChangeState(FSMStates.AttackState);
                 }
             }
@@ -71,7 +71,7 @@ public class MonkeyPursueState : BaseState
                 //Debug.LogError("Debug2: " + Vector2.Distance(new Vector2(_myMonkey.transform.position.x, 0), new Vector2((_character.transform.position.x + _myMonkey.attackDistance), 0)));
                 if (Vector2.Distance(new Vector2(_myMonkey.transform.position.x, 0), new Vector2((_character.transform.position.x + _myMonkey.attackDistance), 0)) < 0.5f)
                 {
-                    _myMonkey.myRigidbody.linearVelocity = Vector2.zero;
+                    _myMonkey.entityRigidbody.linearVelocity = Vector2.zero;
                     _myMonkey._fsm.ChangeState(FSMStates.AttackState);
                 }
 

@@ -24,7 +24,7 @@ public class Polea_CustomNode : CustomNode
 
     public void ConfigurePlayer()
     {
-        _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+        _myCharacter.entityRigidbody.linearVelocity = Vector2.zero;
         _myCharacter.transform.parent = _polea.transform;
         _myCharacter.characterView.OnLand();
         _polea.hasPlayer = true;
@@ -73,13 +73,13 @@ public class Polea_CustomNode : CustomNode
 
 
         }
-        _myCharacter.characterRigidbody.gravityScale = 0;
+        _myCharacter.entityRigidbody.gravityScale = 0;
         _myCharacter.transform.parent = null;
       _polea.hasPlayer = false;
         _myCharacter.climbAction = () =>
         {
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
-            _myCharacter.characterRigidbody.gravityScale = 1;
+            _myCharacter.entityRigidbody.gravityScale = 1;
             _myCharacter.climbAction = null;
         };
         _myCharacter.characterModel.Jump(

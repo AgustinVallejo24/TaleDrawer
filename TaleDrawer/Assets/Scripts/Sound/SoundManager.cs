@@ -45,5 +45,6 @@ public enum SoundsType
     PaperSteps,
     Jump,
     Death,
-
+    Clap,
+    EnemyDeath,
 }

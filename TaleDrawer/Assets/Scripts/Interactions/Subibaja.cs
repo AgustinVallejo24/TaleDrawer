@@ -251,7 +251,7 @@ public class Subibaja : MonoBehaviour, IInteractableSP
     public void CreateJoint(Character character)
     {
         myJoint = gameObject.AddComponent<RelativeJoint2D>();
-        myJoint.connectedBody = character.characterRigidbody;
+        myJoint.connectedBody = character.entityRigidbody;
         myJoint.autoConfigureOffset = true;
 
         // Ajustes recomendados

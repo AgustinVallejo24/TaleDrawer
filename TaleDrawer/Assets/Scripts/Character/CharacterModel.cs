@@ -37,7 +37,7 @@ public class CharacterModel
             SoundManager.Play(SoundsType.Jump, _myCharacter.transform.position);
             _myCharacter.characterView.OnJump();
             _myCharacter.currentSpeed = _myCharacter.inAirSpeed;
-            _myCharacter.characterRigidbody.AddForce(_myCharacter.jumpForce * Vector2.up, ForceMode2D.Impulse);
+            _myCharacter.entityRigidbody.AddForce(_myCharacter.jumpForce * Vector2.up, ForceMode2D.Impulse);
         }
      
         //  _myCharacter.characterRigidbody.linearVelocity = new Vector2(_myCharacter.horizontalJumpDir *3, 10f);
@@ -228,7 +228,7 @@ public class CharacterModel
     {
         if (_myCharacter.transform.position.y >= maxPos - 0.2f && _myCharacter.currentHook != null)
         {            
-            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.entityRigidbody.linearVelocity = Vector2.zero;
             _myCharacter.transform.position = _myCharacter.currentHook.tpPoint.position;
             _myCharacter.SendInputToFSM(CharacterStates.Climb);
         }
@@ -241,7 +241,7 @@ public class CharacterModel
         else
         {
             //_myCharacter.SendInputToFSM(CharacterStates.Idle);
-            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.entityRigidbody.linearVelocity = Vector2.zero;
         }
         
     }
@@ -249,7 +249,8 @@ public class CharacterModel
     public void Glide(Vector2 glidingInputs, float glidingSpeed)
     {
         _movementVector = (Vector2.down + glidingInputs) * glidingSpeed;
-
-        _myRigidbody.linearVelocity = _movementVector;
+        if (glidingInputs.x != 0)
+            Flip(CustomTools.ToVector2(_myCharacter.transform.position) + new Vector2(glidingInputs.x, 0));
+        _myRigidbody.linearVelocity = _movementVector + _myCharacter.glideImpulse;
     }
 }

@@ -25,7 +25,7 @@ public class Subibaje_CustomNode : CustomNode
         }
         else if (left && !subibaja.left)
         {
-            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.entityRigidbody.linearVelocity = Vector2.zero;
             _myCharacter.SendInputToFSM(CharacterStates.Idle);
         }
         else if(!left && !subibaja.left)
@@ -34,7 +34,7 @@ public class Subibaje_CustomNode : CustomNode
         }
         else
         {
-            _myCharacter.characterRigidbody.linearVelocity = Vector2.zero;
+            _myCharacter.entityRigidbody.linearVelocity = Vector2.zero;
             _myCharacter.SendInputToFSM(CharacterStates.Idle);
         }
     }
@@ -89,14 +89,14 @@ public class Subibaje_CustomNode : CustomNode
 
         }
         _myCharacter.transform.parent = null;
-        _myCharacter.characterRigidbody.gravityScale = 0;
+        _myCharacter.entityRigidbody.gravityScale = 0;
         Destroy(subibaja.myJoint);
         subibaja.hasPlayer = false;
         _myCharacter.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, transform.rotation.w);
         _myCharacter.climbAction = () =>
         {
             _myCharacter.SendInputToFSM(CharacterStates.Moving);
-            _myCharacter.characterRigidbody.gravityScale = 1;
+            _myCharacter.entityRigidbody.gravityScale = 1;
             _myCharacter.climbAction = null;
         };
         _myCharacter.characterModel.Jump(

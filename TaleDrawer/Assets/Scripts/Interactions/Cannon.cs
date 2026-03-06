@@ -39,8 +39,8 @@ public class Cannon : MonoBehaviour, IInteractableSP
                 _character.SendInputToFSM(CharacterStates.DoingEvent);
                 _character.SetAnimatorTrigger("PullRope");
           
-                character.characterRigidbody.gravityScale = 0;
-                character.characterRigidbody.linearVelocity = Vector2.zero;
+                character.entityRigidbody.gravityScale = 0;
+                character.entityRigidbody.linearVelocity = Vector2.zero;
                 animator.SetTrigger("Pull");
                 _soga.myAnim.SetTrigger("Pull");
                 if (_character.transform.position.x >= _soga.transform.position.x)
@@ -67,8 +67,8 @@ public class Cannon : MonoBehaviour, IInteractableSP
     }
     public void ReleasePlayer()
     {
-        _character.characterRigidbody.gravityScale = 3;
-        _character.characterRigidbody.AddForce(_playerVelocity *3 * Vector2.right + 4 * Vector2.up,ForceMode2D.Impulse);
+        _character.entityRigidbody.gravityScale = 3;
+        _character.entityRigidbody.AddForce(_playerVelocity *3 * Vector2.right + 4 * Vector2.up,ForceMode2D.Impulse);
         StartCoroutine(_character.SendInputToFSM(CharacterStates.Idle,.5f));
 
     }

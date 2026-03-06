@@ -21,6 +21,12 @@ public class CharacterRender : MonoBehaviour
         SoundManager.Play(SoundsType.StoneSteps,_character.transform.position);
         SoundManager.Play(SoundsType.PaperSteps, _character.transform.position);
     }
+
+    public void PlaySound(SoundsType type)
+    {
+        SoundManager.Play(type, _character.transform.position);
+    }
+
     public void TPPlayer()
     {
 
@@ -36,7 +42,7 @@ public class CharacterRender : MonoBehaviour
         {
             _character.transform.position = _character.transform.position + 1.5f * Vector3.right + 2f * Vector3.up;
         }
-        _character.characterRigidbody.gravityScale = 3;
+        _character.entityRigidbody.gravityScale = 3;
         _character.SendInputToFSM(CharacterStates.Idle);
         transform.localPosition = new Vector3(0, 0, 0);
         _character.climbAction?.Invoke();
@@ -91,7 +97,7 @@ public class CharacterRender : MonoBehaviour
     }
     public void StopRigidbody()
     {
-        _character.characterRigidbody.linearVelocity = Vector2.zero;
+        _character.entityRigidbody.linearVelocity = Vector2.zero;
     }
     public void RestoreSpeed()
     {

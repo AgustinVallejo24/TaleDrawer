@@ -168,7 +168,7 @@ public class Hook : MonoBehaviour, IInteractableSP
 
     private void HorizontalMovement()
     {
-        _character.characterRigidbody.gravityScale = 0;
+        _character.entityRigidbody.gravityScale = 0;
         _character.SendInputToFSM(CharacterStates.JumpingToRope);
         _character.characterView.OnJumpingToRope();
         if (_fromRight)
@@ -199,8 +199,8 @@ public class Hook : MonoBehaviour, IInteractableSP
             //_character.characterModel.Jump(_leftLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null;
             //    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f));
             //}, false, 0.7f, false);
-            _character.characterRigidbody.gravityScale = 3;
-            _character.characterRigidbody.AddForce(Vector2.left * 6 + Vector2.up * 6, ForceMode2D.Impulse);
+            _character.entityRigidbody.gravityScale = 3;
+            _character.entityRigidbody.AddForce(Vector2.left * 6 + Vector2.up * 6, ForceMode2D.Impulse);
             _character.currentHook = null;
         }
         else
@@ -210,8 +210,8 @@ public class Hook : MonoBehaviour, IInteractableSP
             _character.SendInputToFSM(CharacterStates.JumpingToRope);
             //_character.characterModel.Jump(_rightLandingPos.position, () => { _character.characterRigidbody.gravityScale = 3; _character.SendInputToFSM(CharacterStates.Landing); _character.currentHook = null; 
             //    StartCoroutine(_character.SendInputToFSM(CharacterStates.Moving, 0.25f)); }, false, 0.7f, false);
-            _character.characterRigidbody.gravityScale = 3;
-            _character.characterRigidbody.AddForce(Vector2.right * 6 + Vector2.up * 6, ForceMode2D.Impulse);
+            _character.entityRigidbody.gravityScale = 3;
+            _character.entityRigidbody.AddForce(Vector2.right * 6 + Vector2.up * 6, ForceMode2D.Impulse);
             _character.currentHook = null;
         }
         
@@ -253,8 +253,8 @@ public class Hook : MonoBehaviour, IInteractableSP
     {
         if(collision.TryGetComponent(out Character character) && myType == RopeType.Horizontal)
         {
-            _character.characterRigidbody.gravityScale = 0;
-            _character.characterRigidbody.linearVelocity = Vector2.zero;
+            _character.entityRigidbody.gravityScale = 0;
+            _character.entityRigidbody.linearVelocity = Vector2.zero;
             Debug.LogError("Detecto al pj");
             _character.currentHook = this;
             if (_character.transform.position.x > transform.position.x)

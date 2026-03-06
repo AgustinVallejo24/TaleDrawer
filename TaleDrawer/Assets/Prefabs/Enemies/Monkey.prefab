@@ -234,6 +234,7 @@ MonoBehaviour:
   balloonPosition: {fileID: 5065237015833213901}
   currentBalloon: {fileID: 0}
   inWind: 0
+  entityRigidbody: {fileID: 3594283866435252197}
   _health: 2
   _myType: 0
   _speed: 5
@@ -241,7 +242,6 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 1024
-  myRigidbody: {fileID: 3594283866435252197}
   spriteRenderer: {fileID: 6554443022842674270}
   currentState: 0
   _hasHelmet: 0

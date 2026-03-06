@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 public class Wind : MonoBehaviour
 {
     public GameObject windPrefab;
@@ -15,6 +16,8 @@ public class Wind : MonoBehaviour
     public int loopPoints = 20;       
     public float loopRadius = 1f;
     public float loopTurns = 1f;
+
+    public float pathDuration;
     void Start()
     {
         GeneratePath();
@@ -87,6 +90,8 @@ public class Wind : MonoBehaviour
             yield return new WaitForSeconds(.2f);
         }
     }
+
+  
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent(out Balloon balloon) && balloon.HasEntity() && !movingEntity)
@@ -96,7 +101,13 @@ public class Wind : MonoBehaviour
             entity.inWind = true;
             if(balloon.floatCoroutine!=null)
             StopCoroutine(balloon.floatCoroutine);
-            entity.transform.DOPath(_path, 5f, PathType.CatmullRom).OnComplete(() =>
+            var orderPath = _path.OrderBy(x => Vector2.Distance((Vector2)x, (Vector2)Character.instance.transform.position)).ToList();
+            var newPath = _path.ToList();
+            for (int i = Mathf.Min(_path.ToList().IndexOf(orderPath[0]), _path.ToList().IndexOf(orderPath[1])); i > 0; i--)
+            {
+                newPath.RemoveAt(i);
+            }
+            entity.transform.DOPath(newPath.ToArray(), newPath.Count / pathDuration).SetEase(Ease.Linear).OnComplete(() =>
             {
                 Debug.LogError("Me subo al viento");
                 balloon.ActivateFloat();
@@ -106,12 +117,23 @@ public class Wind : MonoBehaviour
         else if (collision.TryGetComponent(out Umbrella umbrella) && umbrella.HasEntity() && !movingEntity)
         {
             Entity entity = umbrella.GetCurrentEntity();
+            entity.entityRigidbody.linearVelocity = Vector2.zero;
             movingEntity = true;
             entity.inWind = true;
-            entity.transform.DOPath(_path, 5f, PathType.CatmullRom).OnComplete(() =>
+            var orderPath = _path.OrderBy(x => Vector2.Distance((Vector2)x, (Vector2)Character.instance.transform.position)).ToList();
+            var newPath = _path.ToList();
+            for (int i = Mathf.Min(_path.ToList().IndexOf(orderPath[0]), _path.ToList().IndexOf(orderPath[1])); i >= 0; i--)
             {
-                Debug.LogError("Me subo al viento");                
-                movingEntity = false;
+                newPath.RemoveAt(i);
+            }
+
+            entity.transform.DOPath(newPath.ToArray(), newPath.Count/pathDuration, PathType.CatmullRom).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                Debug.LogError("Me subo al viento");
+                Character.instance.AddGlideVelocity((_path[_path.Length - 1] - _path[_path.Length - 2]).normalized * 10f);
+                 movingEntity = false;
+
+
             }).OnKill(() => movingEntity = false);
         }
         else if (collision.TryGetComponent(out Entity entity1))
@@ -119,6 +141,7 @@ public class Wind : MonoBehaviour
             entity1.inWind = true;
         }
     }
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {

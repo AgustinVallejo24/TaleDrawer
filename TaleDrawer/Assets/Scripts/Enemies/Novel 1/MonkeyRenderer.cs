@@ -9,4 +9,9 @@ public class MonkeyRenderer : MonoBehaviour
     {
         _myMonkey.Attack();
     }
+
+    public void PlaySound(SoundsType type)
+    {
+        SoundManager.Play(type, _myMonkey.transform.position);
+    }
 }

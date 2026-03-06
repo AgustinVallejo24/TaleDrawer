@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
+using DG.Tweening;
 public class Character : Entity, IDeletable
 {
     #region Variables
@@ -35,12 +36,11 @@ public class Character : Entity, IDeletable
     public Vector3 maxClimbingPos;
     public Vector3 minClimbingPos;
     public bool _hasHelmet;
-    
+
     #endregion
 
     #region References
 
-    [SerializeField] public Rigidbody2D characterRigidbody;
     [SerializeField] protected Animator _animator;
     public CharacterStates _currentState;
     public CharacterStates _climbingTransitions;
@@ -54,7 +54,7 @@ public class Character : Entity, IDeletable
     public SpawningObject helmet;
     public SpawningObject currentSpawningObject;
 
-   
+
     #endregion
 
 
@@ -72,7 +72,7 @@ public class Character : Entity, IDeletable
 
     public Camera sceneCamera;
     public static Character instance;
-    
+
 
     #endregion
 
@@ -105,11 +105,13 @@ public class Character : Entity, IDeletable
 
     public List<AudioClip> stepClips;
 
-    public Dictionary<CharacterStates,StateDefinition> states = new Dictionary<CharacterStates, StateDefinition>();
+    public Dictionary<CharacterStates, StateDefinition> states = new Dictionary<CharacterStates, StateDefinition>();
 
     public bool hasObject;
 
     public ExplosionParticle explosionParticle;
+
+    public Vector2 glideImpulse;
     protected virtual void Awake()
     {
         instance = this;
@@ -121,7 +123,7 @@ public class Character : Entity, IDeletable
         var Jumping = new StateE<CharacterStates>("Jumping");
         var Stop = new StateE<CharacterStates>("Stop");
 
-        
+
         var Climb = new StateE<CharacterStates>("Climb");
         var DoingEvent = new StateE<CharacterStates>("DoingEvent");
 
@@ -141,7 +143,7 @@ public class Character : Entity, IDeletable
              .SetTransition(CharacterStates.Death, Death)
              .Done();
 
-        states.Add(CharacterStates.Idle, new StateDefinition( Idle, IdleC));
+        states.Add(CharacterStates.Idle, new StateDefinition(Idle, IdleC));
 
         var MovingC = StateConfigurer.Create(Moving);
 
@@ -155,19 +157,19 @@ public class Character : Entity, IDeletable
             .SetTransition(CharacterStates.Death, Death)
             .Done();
 
-        states.Add(CharacterStates.Moving, new StateDefinition( Moving, MovingC));
+        states.Add(CharacterStates.Moving, new StateDefinition(Moving, MovingC));
 
         var WaitC = StateConfigurer.Create(Wait);
 
-         WaitC.SetTransition(CharacterStates.Idle, Idle)
-            .SetTransition(CharacterStates.Moving, Moving)
-            .SetTransition(CharacterStates.Jumping, Jumping)
-            .SetTransition(CharacterStates.DoingEvent, DoingEvent)
-            .SetTransition(CharacterStates.Stop, Stop)
-                .SetTransition(CharacterStates.Death, Death)
-            .SetTransition(CharacterStates.OnLadder, OnLadder).Done();
+        WaitC.SetTransition(CharacterStates.Idle, Idle)
+           .SetTransition(CharacterStates.Moving, Moving)
+           .SetTransition(CharacterStates.Jumping, Jumping)
+           .SetTransition(CharacterStates.DoingEvent, DoingEvent)
+           .SetTransition(CharacterStates.Stop, Stop)
+               .SetTransition(CharacterStates.Death, Death)
+           .SetTransition(CharacterStates.OnLadder, OnLadder).Done();
 
-        states.Add(CharacterStates.Wait, new StateDefinition( Wait, WaitC));
+        states.Add(CharacterStates.Wait, new StateDefinition(Wait, WaitC));
 
         var JumpingC = StateConfigurer.Create(Jumping);
 
@@ -177,7 +179,7 @@ public class Character : Entity, IDeletable
             .SetTransition(CharacterStates.Climb, Climb)
             .Done();
 
-        states.Add(CharacterStates.Jumping, new StateDefinition( Jumping, JumpingC));
+        states.Add(CharacterStates.Jumping, new StateDefinition(Jumping, JumpingC));
 
         var StopC = StateConfigurer.Create(Stop);
 
@@ -186,7 +188,7 @@ public class Character : Entity, IDeletable
              .SetTransition(CharacterStates.Death, Death)
             .SetTransition(CharacterStates.Wait, Wait).Done();
 
-        states.Add(CharacterStates.Stop, new StateDefinition( Stop, StopC));
+        states.Add(CharacterStates.Stop, new StateDefinition(Stop, StopC));
 
 
 
@@ -196,7 +198,7 @@ public class Character : Entity, IDeletable
             .SetTransition(CharacterStates.Moving, Moving)
            .SetTransition(CharacterStates.Idle, Idle).Done();
 
-        states.Add(CharacterStates.Climb, new StateDefinition( Climb, ClimbC));
+        states.Add(CharacterStates.Climb, new StateDefinition(Climb, ClimbC));
 
         var DoingEventC = StateConfigurer.Create(DoingEvent);
 
@@ -204,7 +206,7 @@ public class Character : Entity, IDeletable
             .SetTransition(CharacterStates.Moving, Moving)
             .SetTransition(CharacterStates.Idle, Idle).Done();
 
-        states.Add(CharacterStates.DoingEvent, new StateDefinition( DoingEvent, DoingEventC));
+        states.Add(CharacterStates.DoingEvent, new StateDefinition(DoingEvent, DoingEventC));
 
 
 
@@ -219,14 +221,14 @@ public class Character : Entity, IDeletable
             .SetTransition(CharacterStates.Idle, Idle).Done();
 
 
-        states.Add(CharacterStates.OnLadder, new StateDefinition( OnLadder, OnLadderC));
+        states.Add(CharacterStates.OnLadder, new StateDefinition(OnLadder, OnLadderC));
 
         var DeathC = StateConfigurer.Create(Death);
 
         DeathC.SetTransition(CharacterStates.Idle, Idle)
         .Done();
 
-        states.Add(CharacterStates.Death, new StateDefinition( Death, DeathC));
+        states.Add(CharacterStates.Death, new StateDefinition(Death, DeathC));
 
 
 
@@ -234,7 +236,7 @@ public class Character : Entity, IDeletable
         #endregion
 
 
-        _eventFSM = new EventFSM<CharacterStates>(Idle); 
+        _eventFSM = new EventFSM<CharacterStates>(Idle);
 
 
         #region IDLE STATE
@@ -253,7 +255,7 @@ public class Character : Entity, IDeletable
             }
             else
             {
-                characterRigidbody.linearVelocityX = 0;
+                entityRigidbody.linearVelocityX = 0;
             }
 
             characterModel.AlignToGround();
@@ -286,7 +288,7 @@ public class Character : Entity, IDeletable
             }
             else
             {
-                characterRigidbody.linearVelocityX = 0;
+                entityRigidbody.linearVelocityX = 0;
 
                 SendInputToFSM(CharacterStates.Idle);
             }
@@ -295,7 +297,7 @@ public class Character : Entity, IDeletable
         };
         Moving.OnExit += x =>
         {
-         
+
 
 
         };
@@ -308,7 +310,7 @@ public class Character : Entity, IDeletable
         {
             characterView.OnIdle();
             Debug.Log("Entro aca");
-            characterRigidbody.linearVelocity = Vector2.zero;
+            entityRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Wait;
 
 
@@ -331,8 +333,8 @@ public class Character : Entity, IDeletable
 
         Jumping.OnEnter += x =>
         {
-            horizontalJumpDir = characterRigidbody.linearVelocity.x;
-            characterRigidbody.linearVelocity = Vector2.zero;
+            horizontalJumpDir = entityRigidbody.linearVelocity.x;
+            entityRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Jumping;
             characterView.OnJump();
             characterModel.Jump();
@@ -350,14 +352,14 @@ public class Character : Entity, IDeletable
 
         #endregion
 
-       
+
 
         #region ONLADDER STATE
 
         OnLadder.OnEnter += x =>
-        {            
+        {
             _currentState = CharacterStates.OnLadder;
-            characterRigidbody.gravityScale = 0;
+            entityRigidbody.gravityScale = 0;
             _mainCollider.isTrigger = true;
             if (currentHook != null)
             {
@@ -368,21 +370,21 @@ public class Character : Entity, IDeletable
 
         OnLadder.OnUpdate += () =>
         {
-            _animator.speed = Mathf.Clamp(Mathf.Abs(climbingInputs.y),0f,1);
+            _animator.speed = Mathf.Clamp(Mathf.Abs(climbingInputs.y), 0f, 1);
 
 
         };
         OnLadder.OnFixedUpdate += () =>
         {
-            if(climbingInputs.y != 0)
+            if (climbingInputs.y != 0)
             {
                 characterModel.Climb(climbingInputs.y, maxClimbingPos.y, minClimbingPos.y, climbingSpeedMultiplier);
             }
             else
             {
-                characterRigidbody.linearVelocityY = 0f;
+                entityRigidbody.linearVelocityY = 0f;
             }
-            
+
         };
 
         OnLadder.OnExit += x =>
@@ -393,23 +395,23 @@ public class Character : Entity, IDeletable
             {
                 currentInteraction.OnLeavingInteraction();
             }
-            if(currentHook!= null)
+            if (currentHook != null)
             {
-                currentHook.RopeAnimationManager(0);                
-            }           
+                currentHook.RopeAnimationManager(0);
+            }
             currentInteractable = null;
             currentHook = null;
-            characterRigidbody.gravityScale = _originalGravityScale;
+            entityRigidbody.gravityScale = _originalGravityScale;
             _mainCollider.isTrigger = false;
             maxClimbingPos = Vector3.positiveInfinity;
             maxClimbingPos = Vector3.negativeInfinity;
 
             if (!grounded)
             {
-                characterRigidbody.linearVelocityX = climbingInputs.x;
-            }            
+                entityRigidbody.linearVelocityX = climbingInputs.x;
+            }
             climbingInputs = Vector2.zero;
-            
+
         };
 
         #endregion
@@ -465,8 +467,8 @@ public class Character : Entity, IDeletable
         Climb.OnEnter += x =>
         {
             Debug.LogError("CLIMBEO");
-            characterRigidbody.gravityScale = 0;
-            characterRigidbody.linearVelocity = Vector2.zero;
+            entityRigidbody.gravityScale = 0;
+            entityRigidbody.linearVelocity = Vector2.zero;
             _currentState = CharacterStates.Climb;
             characterView.OnClimb();
 
@@ -484,7 +486,7 @@ public class Character : Entity, IDeletable
 
         #endregion
 
-    
+
 
         #region DOING EVENT
 
@@ -523,9 +525,9 @@ public class Character : Entity, IDeletable
 
     protected virtual void Start()
     {
-      
-        characterRigidbody = GetComponent<Rigidbody2D>();
-        _originalGravityScale = characterRigidbody.gravityScale;
+
+        entityRigidbody = GetComponent<Rigidbody2D>();
+        _originalGravityScale = entityRigidbody.gravityScale;
     }
     IEnumerator DeathCoroutine()
     {
@@ -539,17 +541,17 @@ public class Character : Entity, IDeletable
 
     public void ReleaseCurrentSpawningObject()
     {
-        if(currentSpawningObject != null)
+        if (currentSpawningObject != null)
         {
-            currentSpawningObject.Delete();            
+            currentSpawningObject.Delete();
         }
-        
+
     }
 
     public virtual void Update()
     {
         _eventFSM.Update();
-        if(Mathf.Abs(characterRigidbody.linearVelocityX) > 0)
+        if (Mathf.Abs(entityRigidbody.linearVelocityX) > 0)
         {
             _animator.SetInteger("XVelocity", 1);
         }
@@ -557,15 +559,15 @@ public class Character : Entity, IDeletable
         {
             _animator.SetInteger("XVelocity", 0);
         }
-        if (characterRigidbody.linearVelocityY > landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
+        if (entityRigidbody.linearVelocityY > landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
         {
             _animator.SetInteger("YVelocity", 1);
         }
-        else if (characterRigidbody.linearVelocityY < -landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
+        else if (entityRigidbody.linearVelocityY < -landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
         {
             _animator.SetInteger("YVelocity", -1);
         }
-        else if(_currentState != CharacterStates.OnLadder)
+        else if (_currentState != CharacterStates.OnLadder)
         {
             _animator.SetInteger("YVelocity", 0);
         }
@@ -578,7 +580,7 @@ public class Character : Entity, IDeletable
         {
             SendInputToFSM(CharacterStates.Climb);
         }
-     
+
     }
 
     private void FixedUpdate()
@@ -594,7 +596,7 @@ public class Character : Entity, IDeletable
     {
         base.Death();
         SendInputToFSM(CharacterStates.Death);
-        characterRigidbody.linearVelocity = Vector2.zero;
+        entityRigidbody.linearVelocity = Vector2.zero;
         if (currentBalloon != null)
         {
             currentBalloon.Delete();
@@ -628,12 +630,12 @@ public class Character : Entity, IDeletable
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-    
+
         if (collision.gameObject.tag == "Spikes")
         {
             Death();
         }
-        if(collision.TryGetComponent(out IInteractableP interactable))
+        if (collision.TryGetComponent(out IInteractableP interactable))
         {
             currentInteractable = interactable;
             ShowKeyUI(currentInteractable.InteractionKey());
@@ -662,22 +664,22 @@ public class Character : Entity, IDeletable
 
     public override void LiftEntity()
     {
-        
+
         SendInputToFSM(CharacterStates.Stop);
-        characterRigidbody.gravityScale = 0;
+        entityRigidbody.gravityScale = 0;
     }
-    
+
     public override void ReleaseFromBalloon()
     {
         currentBalloon = null;
-        characterRigidbody.gravityScale = 3;
+        entityRigidbody.gravityScale = 3;
         SendInputToFSM(CharacterStates.Idle);
     }
 
     public bool CheckCliff()
     {
 
-        if (Physics2D.Raycast(transform.position + Vector3.up *.5f, transform.right * flipSign, cliffDetectionDistance, cliffMask) && !Physics2D.Raycast(transform.position + 0.75f* Vector3.up, transform.right * flipSign, cliffDetectionDistance, cliffMask))
+        if (Physics2D.Raycast(transform.position + Vector3.up * .5f, transform.right * flipSign, cliffDetectionDistance, cliffMask) && !Physics2D.Raycast(transform.position + 0.75f * Vector3.up, transform.right * flipSign, cliffDetectionDistance, cliffMask))
         {
             if (Mathf.Abs(xInput) >= 1)
             {
@@ -696,7 +698,7 @@ public class Character : Entity, IDeletable
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one*.8f, 0, -transform.up, 0, playerExcludeLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(feetPosition.position, Vector2.one * .8f, 0, -transform.up, 0, playerExcludeLayer);
 
         if (hit.collider == null || hit.collider.isTrigger)
         {
@@ -725,7 +727,7 @@ public class Character : Entity, IDeletable
         float distance1 = cliffDetectionDistance;
 
         // 1. Rayo Inferior (desde la posición del objeto)
-        Debug.DrawRay(transform.position + Vector3.up*.5f, direction1 * distance1, Color.white);
+        Debug.DrawRay(transform.position + Vector3.up * .5f, direction1 * distance1, Color.white);
 
         // 2. Rayo Superior (desde la posición + 1 unidad hacia arriba)
         Debug.DrawRay(transform.position + Vector3.up, direction1 * distance1, Color.white);
@@ -748,6 +750,15 @@ public class Character : Entity, IDeletable
         // 3. Dibujar líneas que conecten las esquinas (opcional pero muy útil)
         Gizmos.DrawLine(startPosition, endPosition);
     }
+
+    public void AddGlideVelocity(Vector2 impulse)
+    {
+        glideImpulse = impulse;
+
+        DOTween.To(() => glideImpulse, x => glideImpulse = x, Vector2.zero, 2f);
+    }
+
+
     public void SetAnimatorTrigger(string name)
     {
         _animator.SetTrigger(name);
@@ -790,7 +801,7 @@ public class StateDefinition
     public StateE<CharacterStates> state;
     public StateConfigurer<CharacterStates> stateConfigurer;
 
-    public StateDefinition( StateE<CharacterStates> st, StateConfigurer<CharacterStates> stateC)
+    public StateDefinition(StateE<CharacterStates> st, StateConfigurer<CharacterStates> stateC)
     {
         state = st;
         stateConfigurer = stateC;

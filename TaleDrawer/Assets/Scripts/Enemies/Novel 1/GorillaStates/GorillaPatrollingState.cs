@@ -48,7 +48,7 @@ public class GorillaPatrollingState : BaseState
             }
             else
             {
-                _myGorilla.myRigidbody.linearVelocity = Vector2.zero;
+                _myGorilla.entityRigidbody.linearVelocity = Vector2.zero;
                 if (_myGorilla.currentUpperNodeIndex == _myGorilla.upperPatrollingNodes.Length - 1)
                 {
                     _myGorilla.currentUpperNodeIndex = 0;
@@ -68,7 +68,7 @@ public class GorillaPatrollingState : BaseState
             }
             else
             {
-                _myGorilla.myRigidbody.linearVelocity = Vector2.zero;
+                _myGorilla.entityRigidbody.linearVelocity = Vector2.zero;
                 if (_myGorilla.currentNodeIndex == _myGorilla.patrollingNodes.Length - 1)
                 {
                     _myGorilla.currentNodeIndex = 0;

@@ -92,6 +92,7 @@ public class ZernikeManager : MonoBehaviour
 
     public void OnSymbolRecognize(SpawnableObjectType symbolType)
     {
+
         recognitionAction?.Invoke(symbolType);
     }
     public void SaveSymbolList()
