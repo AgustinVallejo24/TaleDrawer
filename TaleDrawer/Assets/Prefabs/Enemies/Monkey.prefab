@@ -241,7 +241,7 @@ MonoBehaviour:
   _movementVector: {x: 0, y: 0}
   _playerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 8389632
   spriteRenderer: {fileID: 6554443022842674270}
   currentState: 0
   _hasHelmet: 0
@@ -256,6 +256,9 @@ MonoBehaviour:
   currentNodeIndex: 0
   attackDistance: 1.5
   sleeping: 1
+  stunnedTime: 10
+  _currenTargetName: 
+  _currentBait: {fileID: 0}
 --- !u!61 &3671080615385378085
 BoxCollider2D:
   m_ObjectHideFlags: 0

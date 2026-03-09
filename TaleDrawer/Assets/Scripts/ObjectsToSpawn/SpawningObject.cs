@@ -122,6 +122,10 @@ public class SpawningObject : MonoBehaviour, IDeletable
         
     }
 
+    public void SetEntity(Entity entity)
+    {
+        _currentEntity = entity;
+    }
     public void OnDrag(Vector2 position)
     {  
 
@@ -297,8 +301,8 @@ public class SpawningObject : MonoBehaviour, IDeletable
         _currentInteractuable = null;
         _intrectableName = "";
 
-        var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity, false);
-        transform.position = new Vector3(tuple.Item3.transform.position.x, tuple.Item3.transform.position.y, 0);
+        /*var tuple = PlacementGridManager.Instance.FindNearestValidPlacement(transform.position, Mathf.Infinity, false);
+        transform.position = new Vector3(tuple.Item3.transform.position.x, tuple.Item3.transform.position.y, 0);*/
     }
 
     public virtual void InteractionWithEntity()

@@ -12,7 +12,7 @@ public class Balloon : SpawningObject
 
     private Vector3 basePosition;
     public bool floating = false;
-
+    public bool onWind;
     public Coroutine floatCoroutine;
     public bool HasEntity()
     {
@@ -61,7 +61,7 @@ public class Balloon : SpawningObject
         floating = true;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (!floating) return;
 
@@ -69,6 +69,10 @@ public class Balloon : SpawningObject
         _currentEntity.transform.position = basePosition + new Vector3(0f, yOffset, 0f);
     }
 
+    public virtual void OnWind()
+    {
+
+    }
 
     public override void InteractionWithEntity()
     {
@@ -82,13 +86,13 @@ public class Balloon : SpawningObject
     }
 
 
-    protected void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
        // base.OnTriggerEnter2D(collision);
         if (floating && collision.gameObject.tag == "Spikes")
         {
             _currentEntity.ReleaseFromBalloon();
-            Destroy(gameObject);
+            Delete();
         }
     }
 }

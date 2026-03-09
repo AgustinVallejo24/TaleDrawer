@@ -16,8 +16,8 @@ public class GorillaStunnedState : BaseState
     public override void OnEnter()
     {
         _myGorilla.currentState = FSMStates.StunnedState;
-        _myGorilla.ChangeAnimation(_myGorilla._stunnedT);
-        _myGorilla.Stunned(_myGorilla.stunnedTime);
+        _myGorilla.ChangeAnimation(_myGorilla._stunnedT);        
+        _myGorilla.StartStun(_myGorilla.stunnedTime);
     }
 
     public override void OnExit()

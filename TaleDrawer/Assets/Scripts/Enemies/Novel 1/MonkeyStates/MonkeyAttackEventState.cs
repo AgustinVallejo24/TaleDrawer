@@ -20,7 +20,7 @@ public class MonkeyAttackEventState : BaseState
     {
         _myMonkey.currentState = FSMStates.AttackState;
         //_myMonkey.StartCoroutine(_myMonkey.Attack());
-        _myMonkey.Flip(_character.transform.position);
+        _myMonkey.Flip(_myMonkey._currentTarget.position);
         _myMonkey.ChangeAnimation(_myMonkey._attackT);
     }
 

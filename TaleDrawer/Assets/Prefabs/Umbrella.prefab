@@ -92,7 +92,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4192183
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -122,7 +122,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.14233875, y: -0.2865839}
+    - - {x: -0.0010409355, y: -0.36682606}
+      - {x: 0.04501915, y: -0.3797493}
+      - {x: 0.10706043, y: -0.3587513}
+      - {x: 0.14233875, y: -0.2865839}
       - {x: 0.11042452, y: 1.2910309}
       - {x: 1.2830558, y: 1.2387056}
       - {x: 1.2417073, y: 1.5281897}
@@ -180,7 +183,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.14233875, y: -0.2865839}
+    - - {x: -0.0010409355, y: -0.36682606}
+      - {x: 0.04501915, y: -0.3797493}
+      - {x: 0.10706043, y: -0.3587513}
+      - {x: 0.14233875, y: -0.2865839}
       - {x: 0.11042452, y: 1.2910309}
       - {x: 1.2830558, y: 1.2387056}
       - {x: 1.2417073, y: 1.5281897}

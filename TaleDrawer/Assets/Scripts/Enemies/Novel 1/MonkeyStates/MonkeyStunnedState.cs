@@ -16,6 +16,7 @@ public class MonkeyStunnedState : BaseState
     {
         _monkey.currentState = FSMStates.StunnedState;
         _monkey.ChangeAnimation("Stun");
+        _monkey.StartStun(_monkey.stunnedTime);
     }
 
     public override void OnExit()

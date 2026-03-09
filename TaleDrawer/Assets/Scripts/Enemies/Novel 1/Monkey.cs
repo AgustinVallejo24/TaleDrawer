@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class Monkey : Enemy
 {
@@ -25,6 +26,10 @@ public class Monkey : Enemy
     public int currentNodeIndex;
     public float attackDistance;
     public bool sleeping;
+    public float stunnedTime;
+    public Transform _currentTarget { get;  private set; }
+    [SerializeField] string _currenTargetName;
+    public Bait _currentBait;
     protected override void Awake()
     {
         _fsm = new FSM();
@@ -62,7 +67,19 @@ public class Monkey : Enemy
         }
     }
   
+    public void ChangeTarget(Transform target)
+    {
+        _currentTarget = target;
+        _currenTargetName = target.gameObject.name;
+        EnemyEvent();
+    }
 
+    public void StopChasingTarget(FSMStates nextState)
+    {
+        _fsm.ChangeState(nextState);
+        _currentTarget = null;
+        _currentBait = null;
+    }
 
     protected override void EnemyEvent()
     {
@@ -77,6 +94,17 @@ public class Monkey : Enemy
     private void FixedUpdate()
     {
         _fsm.FixedUpdate();
+    }
+
+    public void StartStun(float time)
+    {
+        StartCoroutine(Stunned(time));
+    }
+
+    public IEnumerator Stunned(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _fsm.ChangeState(FSMStates.IdleState);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -117,16 +145,29 @@ public class Monkey : Enemy
     
     public void Attack()
     {
-        if (_character._hasHelmet)
+        if(_currentBait != null)
         {
-            _character.DestroyHelmet();
-            _character.SendInputToFSM(CharacterStates.Idle);
-            _fsm.ChangeState(FSMStates.StunnedState);
+            _currentBait.attacked = true;
+            _currentBait.Delete();
+        }
+        else if(_currentTarget != null)
+        {
+            if (_character._hasHelmet)
+            {
+                _character.DestroyHelmet();
+                _character.SendInputToFSM(CharacterStates.Idle);
+                _fsm.ChangeState(FSMStates.StunnedState);
+            }
+            else
+            {
+                _character.Death();
+            }
         }
         else
         {
-            _character.Death();
+            _fsm.ChangeState(FSMStates.IdleState);
         }
+        
             
     }
     /*public IEnumerator Attack()
@@ -140,12 +181,22 @@ public class Monkey : Enemy
         {
             if(currentState == FSMStates.IdleState || currentState == FSMStates.PatrollState)
             {
+                var targets = Physics2D.OverlapAreaAll(transform.position - _areaSize, transform.position + _areaSize, _playerMask);
 
-                if (Physics2D.OverlapArea(transform.position - _areaSize, transform.position + _areaSize, _playerMask))
-                {
-                    Debug.Log("No me hace nada");
-                    EnemyEvent();
-                }
+                var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
+                        .OrderByDescending(x => x.bait != null)
+                        .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
+                        .FirstOrDefault();
+
+                if (sortedtargets != null)
+                { 
+                    if(sortedtargets.Collider.gameObject.TryGetComponent(out Bait bait))
+                    {
+                        _currentBait = bait;
+                        _currentBait.AddEnemy(this);
+                    }
+                    ChangeTarget(sortedtargets.Collider.transform);
+                }                
             }
             else if(currentState == FSMStates.SleepingState) 
             {
@@ -157,8 +208,7 @@ public class Monkey : Enemy
                 }
             }
 
-
-            yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.3f);
         }
     }    
 

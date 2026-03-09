@@ -34,5 +34,6 @@ public enum SpawnableObjectType
     Globo = 1 << 5,
     Boleadoras = 1 << 6,
     Umbrella = 1 << 7,
+    Bait = 1 << 8,
     All = ~0
 }

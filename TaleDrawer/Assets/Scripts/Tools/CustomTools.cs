@@ -39,5 +39,15 @@ public static class CustomTools
         return results.Count > 0;
     }
 
-
+    public static int ToLayer(LayerMask mask)
+    {
+        int bitmask = mask.value;
+        int result = 0;
+        while (bitmask > 1)
+        {
+            bitmask >>= 1;
+            result++;
+        }
+        return result;
+    }
 }
