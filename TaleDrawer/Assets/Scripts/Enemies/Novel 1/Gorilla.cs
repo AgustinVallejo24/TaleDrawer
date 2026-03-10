@@ -199,6 +199,7 @@ public class Gorilla : Enemy
                     if (targets.Any())
                     {
                         var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
+                            .Where(x => x.bait == null || x.bait.aboveFloor)
                             .OrderByDescending(x => x.bait != null)
                             .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
                             .FirstOrDefault();
@@ -221,7 +222,7 @@ public class Gorilla : Enemy
 
                     if (targets.Any())
                     {
-                        var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
+                        var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })                            
                             .OrderByDescending(x => x.bait != null)
                             .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
                             .FirstOrDefault();
@@ -247,10 +248,10 @@ public class Gorilla : Enemy
 
                         if(targets2 != null)
                         {
-                            var sortedtargets = targets2.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
-                            .OrderByDescending(x => x.bait != null)
-                            .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
-                            .FirstOrDefault();
+                            var sortedtargets = targets2.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })                                                            
+                                .OrderByDescending(x => x.bait != null)                            
+                                .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))                            
+                                .FirstOrDefault();
 
                             if(sortedtargets != null)
                             {

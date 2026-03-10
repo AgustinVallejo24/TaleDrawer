@@ -185,9 +185,10 @@ public class Monkey : Enemy
                 var targets = Physics2D.OverlapAreaAll(transform.position - _areaSize, transform.position + _areaSize, _targetMask);
 
                 var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
-                        .OrderByDescending(x => x.bait != null)
-                        .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
-                        .FirstOrDefault();
+                    .Where(x => x.bait == null || x.bait.aboveFloor)
+                    .OrderByDescending(x => x.bait != null)                        
+                    .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))                        
+                    .FirstOrDefault();
 
                 if (sortedtargets != null)
                 { 

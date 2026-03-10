@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class Bait : Balloon
 {
@@ -9,10 +11,27 @@ public class Bait : Balloon
     [SerializeField] LayerMask _inGameLayer;
     public bool attacked;
     public Transform attacker;
+    [SerializeField] Transform _basePosition;
+    [SerializeField] LayerMask _baitExcludeLayer;
+    [SerializeField] float _floorDetetctionDist;
+    public bool aboveFloor;
+    [SerializeField] float _speedMultiplier;
+
+    
+
     public override void OnSpawned()
     {
         base.OnSpawned();
-        gameObject.layer = CustomTools.ToLayer(_inGameLayer);        
+        gameObject.layer = CustomTools.ToLayer(_inGameLayer);
+
+        if (!IsGrounded())
+        {
+            MoveTowardsFloor();
+        }
+        else
+        {
+            aboveFloor = true;
+        }
     }
     public void AddEnemy(Enemy enemy)
     {
@@ -30,6 +49,39 @@ public class Bait : Balloon
         ReleaseTargets();      
 
         Destroy(gameObject);
+    }
+
+    public bool IsGrounded()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(_basePosition.position, Vector2.one * .8f, 0, -transform.up, 0, _baitExcludeLayer);
+
+        if (hit.collider == null || hit.collider.isTrigger)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void MoveTowardsFloor()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(_basePosition.position, Vector2.one * .8f, 0, -transform.up, _floorDetetctionDist, _baitExcludeLayer);
+
+        if (hit.collider != null && !hit.collider.isTrigger)
+        {
+            float speed = Math.Abs(_basePosition.position.y - hit.point.y);
+
+            if(speed < 1)
+            {
+                speed = 1;
+            }
+
+            transform.DOMoveY(hit.point.y + MathF.Abs(_basePosition.localPosition.y),
+                speed * _speedMultiplier).OnComplete(() => aboveFloor = true);
+        }
+        
     }
 
     public override void Paint()
