@@ -176,13 +176,17 @@ MonoBehaviour:
   entityRigidbody: {fileID: 4207006840187300839}
   _health: 2
   _myType: 0
+  _myClass: 1
   _speed: 7
+  stunnedTime: 10
   _movementVector: {x: 0, y: 0}
-  _playerMask:
+  _targetMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 8389632
+  _currenTargetName: 
   spriteRenderer: {fileID: 3907661472560920890}
   currentState: 0
+  _myAnim: {fileID: 0}
   climbingSpeed: 4
   _areaSize: {x: 4.5, y: 0.75, z: 0}
   _climbingAreaSize: {x: 5, y: 2, z: 0}
@@ -200,8 +204,7 @@ MonoBehaviour:
   climbing: 0
   floorDetection: 0
   _attackJumpForce: 7.5
-  stunnedTime: 10
-  _myAnim: {fileID: 0}
+  _currentBait: {fileID: 0}
 --- !u!70 &9032810689700674318
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

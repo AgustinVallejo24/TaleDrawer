@@ -5,17 +5,18 @@ using UnityEngine;
 public class Bait : Balloon
 {
     [SerializeField] Paint _paintsSc;    
-    public Action<FSMStates> onReleaseTarget;
+    public Action<Transform> onReleaseTarget;
     [SerializeField] LayerMask _inGameLayer;
     public bool attacked;
+    public Transform attacker;
     public override void OnSpawned()
     {
         base.OnSpawned();
         gameObject.layer = CustomTools.ToLayer(_inGameLayer);        
     }
-    public void AddEnemy(Monkey enemy)
+    public void AddEnemy(Enemy enemy)
     {
-        onReleaseTarget += enemy.StopChasingTarget;        
+        onReleaseTarget += enemy.HandleAggroRelease;        
     }
 
     public override void Delete()
@@ -26,20 +27,7 @@ public class Bait : Balloon
             Instantiate(clouds, transform.position, Quaternion.identity);
         }
         
-        if (onReleaseTarget != null)
-        {
-            if (!attacked)
-            {
-                onReleaseTarget.Invoke(FSMStates.IdleState);
-                onReleaseTarget = null;
-            }
-            else
-            {
-                onReleaseTarget.Invoke(FSMStates.StunnedState);
-                onReleaseTarget = null;
-            }
-            
-        }
+        ReleaseTargets();      
 
         Destroy(gameObject);
     }
@@ -49,14 +37,20 @@ public class Bait : Balloon
         StartCoroutine(_paintsSc.PaintSprite());
     }
 
-    public override void OnWind()
+
+    public void ReleaseTargets()
     {
         if(onReleaseTarget != null)
         {
-            onReleaseTarget.Invoke(FSMStates.IdleState);
+            onReleaseTarget.Invoke(attacker);
             onReleaseTarget = null;
+            attacker = null;
         }
-        
+    }
+
+    public override void OnWind()
+    {
+        ReleaseTargets();        
     }
 
     protected override void Update()

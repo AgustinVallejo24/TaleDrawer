@@ -237,27 +237,28 @@ MonoBehaviour:
   entityRigidbody: {fileID: 3594283866435252197}
   _health: 2
   _myType: 0
+  _myClass: 0
   _speed: 5
+  stunnedTime: 10
   _movementVector: {x: 0, y: 0}
-  _playerMask:
+  _targetMask:
     serializedVersion: 2
     m_Bits: 8389632
+  _currenTargetName: 
   spriteRenderer: {fileID: 6554443022842674270}
   currentState: 0
+  _myAnim: {fileID: 7305131213370599743}
   _hasHelmet: 0
   _helmet: {fileID: 4105664511588558113}
   _areaSize: {x: 4.5, y: 0.75, z: 0}
   _character: {fileID: 0}
   _dangerousObjects: 8
-  _myAnim: {fileID: 7305131213370599743}
   patrollingNodes:
   - {fileID: 0}
   - {fileID: 0}
   currentNodeIndex: 0
   attackDistance: 1.5
   sleeping: 1
-  stunnedTime: 10
-  _currenTargetName: 
   _currentBait: {fileID: 0}
 --- !u!61 &3671080615385378085
 BoxCollider2D:

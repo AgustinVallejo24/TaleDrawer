@@ -19,11 +19,12 @@ public class Gorilla : Enemy
     public bool climbing;
     public bool floorDetection;
     [SerializeField] float _attackJumpForce;
-    public float stunnedTime;
+    //public float stunnedTime;
     bool _shortStun;
+    public Bait _currentBait;
 
     [Header("Animations")]
-    [SerializeField] Animator _myAnim;
+    //[SerializeField] Animator _myAnim;
     public string _idleT { get; private set; } = "Idle";
     public string _moveT { get; private set; } = "Move";
     public string _moveT2 { get; private set; } = "Move2";
@@ -75,11 +76,18 @@ public class Gorilla : Enemy
     private void FixedUpdate()
     {
         _fsm.FixedUpdate();
+    }   
+
+    public override void HandleAggroRelease(Transform attacker)
+    {
+        base.HandleAggroRelease(attacker);
+
+        _currentBait = null;
     }
 
     protected override void EnemyEvent()
     {
-        if (climbing)
+        if ((climbing && _currentBait == null) || (climbing && currentState == FSMStates.PursuitState))
         {
             _fsm.ChangeState(FSMStates.AttackState);
         }
@@ -106,8 +114,12 @@ public class Gorilla : Enemy
     }
     
 
-    public void Attack()
+    public override void Attack()
     {
+        if (_currentBait != null)
+        {            
+            _currentBait.Delete();
+        }
         if (_character._hasHelmet)
         {
             _character.DestroyHelmet();            
@@ -115,7 +127,7 @@ public class Gorilla : Enemy
         _character.Death();
     }
 
-    public void StartStun(float time)
+    public override void StartStun(float time)
     {
         if (_shortStun)
         {
@@ -128,7 +140,7 @@ public class Gorilla : Enemy
             
     }
 
-    public void ChangeAnimation(string anim)
+    /*public void ChangeAnimation(string anim)
     {
         if(_myAnim != null)
         StartCoroutine(ChangeAnim(anim));
@@ -138,7 +150,7 @@ public class Gorilla : Enemy
         _myAnim.SetTrigger(anim);
         yield return new WaitForSeconds(.3f);
         _myAnim.ResetTrigger(anim);
-    }
+    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {        
@@ -169,36 +181,120 @@ public class Gorilla : Enemy
         }
     }
 
-    public IEnumerator Stunned(float time)
+    /*public IEnumerator Stunned(float time)
     {
         yield return new WaitForSeconds(time);
         _fsm.ChangeState(FSMStates.IdleState);
-    }
+    }*/
     public IEnumerator StartBehaviour()
     {
         while (true)
         {
             if (currentState == FSMStates.PatrollState)
             {
+                if (!climbing)
+                {
+                    var targets = Physics2D.OverlapAreaAll(transform.position - _areaSize, transform.position + _areaSize, _targetMask);
 
-                if (Physics2D.OverlapArea(transform.position - new Vector3(_areaSize.x, transform.position.y), transform.position + _areaSize, _playerMask) && !climbing)
+                    if (targets.Any())
+                    {
+                        var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
+                            .OrderByDescending(x => x.bait != null)
+                            .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
+                            .FirstOrDefault();
+
+                        if (sortedtargets != null)
+                        {
+                            if (sortedtargets.Collider.gameObject.TryGetComponent(out Bait bait))
+                            {
+                                _currentBait = bait;
+                                _currentBait.AddEnemy(this);
+                            }
+                            ChangeTarget(sortedtargets.Collider.transform);
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    var targets = Physics2D.OverlapAreaAll(transform.position - _climbingAreaSize, transform.position + new Vector3(_climbingAreaSize.x, transform.position.y), _targetMask);
+
+                    if (targets.Any())
+                    {
+                        var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
+                            .OrderByDescending(x => x.bait != null)
+                            .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
+                            .FirstOrDefault();
+                        if(sortedtargets != null)
+                        {
+                            if (sortedtargets.Collider.gameObject.TryGetComponent(out Character chara)
+                            && _character.entityRigidbody.linearVelocity.x != 0f && Mathf.Sign(_character.entityRigidbody.linearVelocityX) != Mathf.Sign(entityRigidbody.linearVelocityX))
+                            {
+                                EnemyEvent();
+                            }
+                            else if(sortedtargets.Collider.gameObject.TryGetComponent(out Bait bait))
+                            {
+                                _currentBait = bait;
+                                _currentBait.AddEnemy(this);
+                                ChangeTarget(sortedtargets.Collider.transform);
+                            }
+                        }
+                        
+                    }                    
+                    else
+                    {
+                        var targets2 = Physics2D.OverlapAreaAll(transform.position - _climbingAreaSize2, transform.position + new Vector3(_climbingAreaSize2.x, transform.position.y), _targetMask);
+
+                        if(targets2 != null)
+                        {
+                            var sortedtargets = targets2.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
+                            .OrderByDescending(x => x.bait != null)
+                            .ThenBy(x => Vector2.Distance(transform.position, x.Collider.transform.position))
+                            .FirstOrDefault();
+
+                            if(sortedtargets != null)
+                            {
+                                if (sortedtargets.Collider.gameObject.TryGetComponent(out Bait bait))
+                                {
+                                    _currentBait = bait;
+                                    _currentBait.AddEnemy(this);
+                                    ChangeTarget(sortedtargets.Collider.transform);
+                                }
+                                else
+                                {
+                                    EnemyEvent();
+                                }
+                                    
+                            }
+                        }
+
+                        
+                    }
+                }
+
+
+                
+                /*if (Physics2D.OverlapArea(transform.position - _climbingAreaSize, transform.position + new Vector3(_climbingAreaSize.x, transform.position.y), _targetMask) && climbing && _character.entityRigidbody.linearVelocity.x != 0f
+                     && Mathf.Sign(_character.entityRigidbody.linearVelocityX) != Mathf.Sign(entityRigidbody.linearVelocityX))
                 {
                     EnemyEvent();
                 }
-                else if (Physics2D.OverlapArea(transform.position - _climbingAreaSize, transform.position + new Vector3(_climbingAreaSize.x, transform.position.y), _playerMask) && climbing && _character.entityRigidbody.linearVelocity.x != 0f
-                     && Mathf.Sign(_character.entityRigidbody.linearVelocityX) != Mathf.Sign(entityRigidbody.linearVelocityX))
-                {                    
+                else if (Physics2D.OverlapArea(transform.position - _climbingAreaSize2, transform.position + new Vector3(_climbingAreaSize2.x, transform.position.y), _targetMask) && climbing)
+                {
                     EnemyEvent();
-                }
-                else if (Physics2D.OverlapArea(transform.position - _climbingAreaSize2, transform.position + new Vector3(_climbingAreaSize2.x, transform.position.y), _playerMask) && climbing)
-                {                    
+                }*/
+            }
+            else if(currentState == FSMStates.PursuitState && _currentBait != null && climbing)
+            {
+                if (Physics2D.OverlapArea(transform.position - _climbingAreaSize2, transform.position + new Vector3(_climbingAreaSize2.x, transform.position.y), _targetMask))
+                {
                     EnemyEvent();
                 }
             }
-            
 
 
-            yield return new WaitForSeconds(0.3f);
+
+                yield return new WaitForSeconds(0.3f);
         }
     }
 }

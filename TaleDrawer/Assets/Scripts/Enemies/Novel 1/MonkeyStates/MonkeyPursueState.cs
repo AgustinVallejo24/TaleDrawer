@@ -40,7 +40,7 @@ public class MonkeyPursueState : BaseState
     public override void Update()
     {
         
-        if (Physics2D.OverlapBox(_myMonkey.transform.position, Vector2.one, 0, _myMonkey._playerMask) && !isAttacking)
+        if (Physics2D.OverlapBox(_myMonkey.transform.position, Vector2.one, 0, _myMonkey._targetMask) && !isAttacking)
         {
             isAttacking = true;
             newNode = _myMonkey.patrollingNodes.OrderBy(x => Vector3.Distance(_myMonkey.transform.position, x.transform.position)).First();

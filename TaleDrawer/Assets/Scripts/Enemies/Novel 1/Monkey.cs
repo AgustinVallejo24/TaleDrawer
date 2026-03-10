@@ -14,7 +14,7 @@ public class Monkey : Enemy
     [SerializeField] SpawnableObjectType _dangerousObjects;
 
     [Header("Animations")]
-    [SerializeField] Animator _myAnim;
+    //[SerializeField] Animator _myAnim;
     public string _idleT { get; private set; } = "Idle"; 
     public string _moveT { get; private set; } = "Move";
     public string _sleepT { get; private set; } = "Sleep";
@@ -26,9 +26,9 @@ public class Monkey : Enemy
     public int currentNodeIndex;
     public float attackDistance;
     public bool sleeping;
-    public float stunnedTime;
-    public Transform _currentTarget { get;  private set; }
-    [SerializeField] string _currenTargetName;
+    //public float stunnedTime;
+    //public Transform _currentTarget { get;  private set; }
+    //[SerializeField] string _currenTargetName;
     public Bait _currentBait;
     protected override void Awake()
     {
@@ -67,17 +67,17 @@ public class Monkey : Enemy
         }
     }
   
-    public void ChangeTarget(Transform target)
+    /*public void ChangeTarget(Transform target)
     {
         _currentTarget = target;
         _currenTargetName = target.gameObject.name;
         EnemyEvent();
-    }
+    }*/    
 
-    public void StopChasingTarget(FSMStates nextState)
+    public override void HandleAggroRelease(Transform attacker)
     {
-        _fsm.ChangeState(nextState);
-        _currentTarget = null;
+        base.HandleAggroRelease(attacker);
+
         _currentBait = null;
     }
 
@@ -96,16 +96,16 @@ public class Monkey : Enemy
         _fsm.FixedUpdate();
     }
 
-    public void StartStun(float time)
+    /*public void StartStun(float time)
     {
         StartCoroutine(Stunned(time));
-    }
+    }*/
 
-    public IEnumerator Stunned(float time)
+    /*public IEnumerator Stunned(float time)
     {
         yield return new WaitForSeconds(time);
         _fsm.ChangeState(FSMStates.IdleState);
-    }
+    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -132,7 +132,7 @@ public class Monkey : Enemy
 
 
     }    
-    public void ChangeAnimation(string anim)
+   /* public void ChangeAnimation(string anim)
     {
         StartCoroutine(ChangeAnim(anim));
     }
@@ -141,13 +141,13 @@ public class Monkey : Enemy
         _myAnim.SetTrigger(anim);
         yield return new WaitForSeconds(.3f);
         _myAnim.ResetTrigger(anim);
-    }
+    }*/
     
-    public void Attack()
+    public override void Attack()
     {
         if(_currentBait != null)
         {
-            _currentBait.attacked = true;
+            _currentBait.attacker = this.transform;
             _currentBait.Delete();
         }
         else if(_currentTarget != null)
@@ -156,7 +156,8 @@ public class Monkey : Enemy
             {
                 _character.DestroyHelmet();
                 _character.SendInputToFSM(CharacterStates.Idle);
-                _fsm.ChangeState(FSMStates.StunnedState);
+                StopChasingTarget(FSMStates.StunnedState);
+                //_fsm.ChangeState(FSMStates.StunnedState);
             }
             else
             {
@@ -165,7 +166,7 @@ public class Monkey : Enemy
         }
         else
         {
-            _fsm.ChangeState(FSMStates.IdleState);
+            StopChasingTarget(FSMStates.IdleState);            
         }
         
             
@@ -181,7 +182,7 @@ public class Monkey : Enemy
         {
             if(currentState == FSMStates.IdleState || currentState == FSMStates.PatrollState)
             {
-                var targets = Physics2D.OverlapAreaAll(transform.position - _areaSize, transform.position + _areaSize, _playerMask);
+                var targets = Physics2D.OverlapAreaAll(transform.position - _areaSize, transform.position + _areaSize, _targetMask);
 
                 var sortedtargets = targets.Select(t => new { Collider = t, bait = t.GetComponent<Bait>() })
                         .OrderByDescending(x => x.bait != null)
@@ -201,7 +202,7 @@ public class Monkey : Enemy
             else if(currentState == FSMStates.SleepingState) 
             {
 
-                if (Physics2D.OverlapArea(transform.position - _areaSize/2, transform.position + _areaSize / 2, _playerMask))
+                if (Physics2D.OverlapArea(transform.position - _areaSize/2, transform.position + _areaSize / 2, _targetMask))
                 {
                     ChangeAnimation("WakeUp");
                     _fsm.ChangeState(FSMStates.IdleState);

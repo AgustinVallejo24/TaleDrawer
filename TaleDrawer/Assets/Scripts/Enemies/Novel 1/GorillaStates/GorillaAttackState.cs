@@ -18,7 +18,7 @@ public class GorillaAttackState : BaseState
     public override void OnEnter()
     {
         _myGorilla.currentState = FSMStates.AttackState;
-        _myGorilla.Flip(_character.transform.position);
+        _myGorilla.Flip(_myGorilla._currentTarget.position);
 
         if (_myGorilla.climbing)
         {
