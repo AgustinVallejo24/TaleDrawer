@@ -109,21 +109,7 @@ public class Monkey : Enemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out SpawningObject obj) && _dangerousObjects.HasFlag(obj.myType))
-        {
-            Destroy(obj.gameObject);
 
-            if (_hasHelmet)
-            {
-                Debug.Log("No me hace nada");
-            }
-            else
-            {
-                TakeDamage(2, true);
-                
-            }
-                
-        }
         if (collision.gameObject.tag == "Spikes")
         {
             _myAnim.SetTrigger("Explode");
@@ -132,16 +118,7 @@ public class Monkey : Enemy
 
 
     }    
-   /* public void ChangeAnimation(string anim)
-    {
-        StartCoroutine(ChangeAnim(anim));
-    }
-    public IEnumerator ChangeAnim(string anim)
-    {
-        _myAnim.SetTrigger(anim);
-        yield return new WaitForSeconds(.3f);
-        _myAnim.ResetTrigger(anim);
-    }*/
+
     
     public override void Attack()
     {

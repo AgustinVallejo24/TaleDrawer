@@ -39,6 +39,7 @@ public class Hook : MonoBehaviour, IInteractableSP
         
     }
 
+
     public void Interact(SpawningObject spawningObject)
     {
         if (_posibleObjects.HasFlag(spawningObject.myType))
@@ -71,6 +72,11 @@ public class Hook : MonoBehaviour, IInteractableSP
     {
         Debug.LogError("Hello");
         _attachedObject.gameObject.SetActive(false);
+        if(playerDetectionCollider != null)
+        {
+            playerDetectionCollider.enabled = false;
+
+        }
         if (_character.currentHook == this)
         {
             //_character.characterRigidbody.linearVelocity = Vector2.zero;

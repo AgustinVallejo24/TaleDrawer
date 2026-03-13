@@ -18,12 +18,12 @@ public class Roca : SpawningObject
     {
         base.OnCollisionEnter2D(collision);
 
-        if (_spawned)
-        {
-            if (collision.gameObject.TryGetComponent(out SpawningObject sObject) && _objectsToDestroy.HasFlag(sObject.myType))
-            {
-                Destroy(sObject.gameObject);
-            }
-        }
+        //if (_spawned)
+        //{
+        //    if (collision.gameObject.TryGetComponent(out SpawningObject sObject) && _objectsToDestroy.HasFlag(sObject.myType))
+        //    {
+        //        Destroy(sObject.gameObject);
+        //    }
+        //}
     }
 }

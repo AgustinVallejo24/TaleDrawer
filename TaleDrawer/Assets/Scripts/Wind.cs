@@ -11,6 +11,7 @@ public class Wind : MonoBehaviour
     Vector3[] _windpath; 
     Vector3[] _path;
     public LineRenderer lineRenderer;
+    public LineRenderer[] windPathLineRenderers;
     public Entity currentEntity;
     public bool movingEntity;
 
@@ -20,30 +21,50 @@ public class Wind : MonoBehaviour
 
     public float pathDuration;
 
-
+    public List<WindPath> windPaths;
     void Start()
     {
-        GeneratePath();
-        _windpath = new Vector3[lineRenderer.positionCount];
-
-        lineRenderer.GetPositions(_windpath);
-        _path = new Vector3[turrentSpots.Count];
-        for (int i = 0; i < _path.Length; i++)
-        {
-            _path[i] = turrentSpots[i].position;
-        }
+        ChangeWindPath(0);
         StartCoroutine(SpawnWind());
        
+    }
+
+
+    public void ChangeWindPath(int index)
+    {
+        GeneratePath(index);
+        _windpath = new Vector3[windPaths[index].windLineRenderer.positionCount];
+
+        windPaths[index].windLineRenderer.GetPositions(_windpath);
+        _path = new Vector3[windPaths[index].turrentSpots.Count];
+        for (int i = 0; i < _path.Length; i++)
+        {
+            _path[i] = windPaths[index].turrentSpots[i].position;
+        }
+        for (int i = 0; i < windPaths.Count; i++)
+        {
+            if (i != index)
+            {
+                windPaths[i].collider.enabled = false;
+            }
+            else
+            {
+                windPaths[i].collider.enabled = true;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            ChangeWindPath(1);
+        }
     }
-    void GeneratePath()
+    void GeneratePath(int index)
     {
-        LineRenderer lr = GetComponent<LineRenderer>();
+        LineRenderer lr = windPaths[index].windLineRenderer;
 
         int baseCount = lr.positionCount;
         if (baseCount < 2) return;
@@ -99,7 +120,8 @@ public class Wind : MonoBehaviour
     {
         if(collision.TryGetComponent(out Balloon balloon))
         {
-            if(balloon.HasEntity() && !movingEntity)
+            Debug.LogError("LaPutaMadre");
+            if (balloon.HasEntity() && !movingEntity)
             {
                 Entity entity = balloon.GetCurrentEntity();
                 movingEntity = true;
@@ -133,8 +155,9 @@ public class Wind : MonoBehaviour
             }
             
         }
-        else if (collision.TryGetComponent(out Umbrella umbrella) && umbrella.HasEntity() && !movingEntity)
+        if (collision.TryGetComponent(out Umbrella umbrella) )
         {
+       
             Entity entity = umbrella.GetCurrentEntity();
             entity.entityRigidbody.linearVelocity = Vector2.zero;
             movingEntity = true;
@@ -155,8 +178,9 @@ public class Wind : MonoBehaviour
 
             }).OnKill(() => movingEntity = false);
         }
-        else if (collision.TryGetComponent(out Entity entity1))
+        if (collision.TryGetComponent(out Entity entity1))
         {
+          
             entity1.inWind = true;
         }
     }
@@ -169,4 +193,13 @@ public class Wind : MonoBehaviour
             entity1.inWind = false;
         }
     }
+}
+[System.Serializable]
+public struct WindPath
+{
+    public LineRenderer windLineRenderer;
+
+    public List<Transform> turrentSpots;
+
+    public Collider2D collider;
 }

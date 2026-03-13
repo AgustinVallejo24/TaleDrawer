@@ -44,7 +44,8 @@ public class Robin : Character
         var JumpingToRopeC = StateConfigurer.Create(JumpingToRope);
 
         JumpingToRopeC.SetTransition(CharacterStates.Swaying, Swaying)
-            .SetTransition(CharacterStates.Moving, states[CharacterStates.Moving].state).Done();
+            .SetTransition(CharacterStates.Moving, states[CharacterStates.Moving].state)
+            .SetTransition(CharacterStates.Climb,states[CharacterStates.Climb].state).Done();
 
         states.Add(CharacterStates.JumpingToRope, new StateDefinition(JumpingToRope, JumpingToRopeC));
 
@@ -62,7 +63,7 @@ public class Robin : Character
 
         var GlideC = StateConfigurer.Create(Glide);
 
-        GlideC.SetTransition(CharacterStates.Idle, states[CharacterStates.Idle].state).Done();
+        GlideC.SetTransition(CharacterStates.Idle, states[CharacterStates.Idle].state).SetTransition(CharacterStates.Swaying,Swaying).Done();
 
         states.Add(CharacterStates.Glide, new StateDefinition(Glide, GlideC));
 
@@ -175,7 +176,7 @@ public class Robin : Character
         Swaying.OnEnter += x =>
         {
 
-
+            entityRigidbody.gravityScale = 0;
             _currentState = CharacterStates.Swaying;
         };
 

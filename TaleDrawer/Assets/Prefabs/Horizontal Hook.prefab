@@ -846,6 +846,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _intrectableName: 
+  _originalColor: {r: 0, g: 0, b: 0, a: 0}
   _canIntercactWithEntity: 0
   _interactingWithEntity: 0
   _canSpawn: 0
@@ -856,13 +857,17 @@ MonoBehaviour:
     m_Bits: 0
   myAnim: {fileID: 962276249131307924}
   _currentEntity: {fileID: 0}
-  clouds: {fileID: 0}
+  clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   hook: {fileID: 2274701522058585876}
   firstPoint: {fileID: 3095818359086204567}
   secondPoint: {fileID: 4633442648110295268}
   myRopeType: 1
   mySpRenderer: {fileID: 1575666862698040817}
   _interactableType: 0
+  _detectionCollider: {fileID: 0}
+  _fallingCollider: {fileID: 0}
+  _eKey: {fileID: 0}
+  hasPlayer: 0
 --- !u!61 &9208385616372124816
 BoxCollider2D:
   m_ObjectHideFlags: 0

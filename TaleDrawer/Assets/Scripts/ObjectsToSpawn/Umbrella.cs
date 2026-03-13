@@ -24,7 +24,9 @@ public class Umbrella : SpawningObject
             {
                 Destroy(_myrb);
                 _myrb = null;
+
             }
+            _currentEntity = chara;
             chara.ReleaseCurrentSpawningObject();
             chara.currentSpawningObject = this;
             transform.position = chara._umbrellasPos.position;
