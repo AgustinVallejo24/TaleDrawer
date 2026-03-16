@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
+using UnityEditor;
 
 public class Monkey : Enemy
 {
@@ -189,6 +190,15 @@ public class Monkey : Enemy
 
                 yield return new WaitForSeconds(0.3f);
         }
-    }    
+    }
+
+
+    /*private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, _areaSize);
+    }*/
 
 }
+
+
