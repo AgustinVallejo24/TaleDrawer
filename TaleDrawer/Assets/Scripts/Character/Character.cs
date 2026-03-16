@@ -80,7 +80,7 @@ public class Character : Entity, IDeletable
     [SerializeField] LayerMask _CliffMask;
     public Action climbAction;
     public Activator currentActivator;
-
+    public RailPlatform currentPlatform;
     public Hook currentHook;
 
     public LayerMask floorLayerMask;
@@ -252,7 +252,7 @@ public class Character : Entity, IDeletable
             if (xInput != 0)
             {
                 SendInputToFSM(CharacterStates.Moving);
-            }
+            }            
             else
             {
                 entityRigidbody.linearVelocityX = 0;
@@ -285,7 +285,7 @@ public class Character : Entity, IDeletable
             if (xInput != 0)
             {
                 characterModel.Move2(xInput);
-            }
+            }            
             else
             {
                 entityRigidbody.linearVelocityX = 0;

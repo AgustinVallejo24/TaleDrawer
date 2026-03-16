@@ -214,13 +214,12 @@ public class CharacterModel
     {
         if(x != 0)
         Flip(CustomTools.ToVector2(_myCharacter.transform.position) + new Vector2(x, 0));
-            _movementVector = new Vector3(x, 0) * _myCharacter.currentSpeed;
+        _movementVector = new Vector3(x, 0) * _myCharacter.currentSpeed;        
            Debug.Log(_movementVector);
         // _rb.MovePosition(_movementVector + _pl.transform.position);
-      //    _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
-        _myRigidbody.linearVelocityX = _movementVector.x;
+        //    _myRigidbody.linearVelocity = new Vector2(_movementVector.x, _myRigidbody.linearVelocity.y);
 
-   
+        _myRigidbody.linearVelocityX = _movementVector.x;   
     }
 
 

@@ -42,6 +42,7 @@ public class InputManager : MonoBehaviour
     float currentInput;
     public RectTransform cursorImage;
     Vector2 position = Vector2.zero;
+    public Action platformTest;
     private void Awake()
     {
         instance = this;
@@ -290,6 +291,8 @@ public class InputManager : MonoBehaviour
 
     public void OnBeginClimb()
     {
+        platformTest.Invoke();
+
         if(Character.instance.TryGetComponent(out Robin rob) && rob.canClimb && Character.instance._climbingTransitions.HasFlag(Character.instance._currentState) && Character.instance.grounded)
         {            
             Character.instance.currentInteractable.Interact();
