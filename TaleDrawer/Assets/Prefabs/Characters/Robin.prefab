@@ -382,7 +382,7 @@ MonoBehaviour:
   maxClimbingPos: {x: 0, y: 0, z: 0}
   minClimbingPos: {x: 0, y: 0, z: 0}
   _hasHelmet: 0
-  _animator: {fileID: 8119255180281605833}
+  animator: {fileID: 8119255180281605833}
   _currentState: 0
   _climbingTransitions: 3
   jumpingStates: 1027

@@ -41,7 +41,7 @@ public class Character : Entity, IDeletable
 
     #region References
 
-    [SerializeField] protected Animator _animator;
+    [SerializeField] public Animator animator;
     public CharacterStates _currentState;
     public CharacterStates _climbingTransitions;
 
@@ -370,7 +370,7 @@ public class Character : Entity, IDeletable
 
         OnLadder.OnUpdate += () =>
         {
-            _animator.speed = Mathf.Clamp(Mathf.Abs(climbingInputs.y), 0f, 1);
+            animator.speed = Mathf.Clamp(Mathf.Abs(climbingInputs.y), 0f, 1);
 
 
         };
@@ -390,7 +390,7 @@ public class Character : Entity, IDeletable
         OnLadder.OnExit += x =>
         {
             characterView.OnExitLadder();
-            _animator.speed = 1;
+            animator.speed = 1;
             if (currentInteraction != null)
             {
                 currentInteraction.OnLeavingInteraction();
@@ -553,28 +553,28 @@ public class Character : Entity, IDeletable
         _eventFSM.Update();
         if (Mathf.Abs(entityRigidbody.linearVelocityX) > 0)
         {
-            _animator.SetInteger("XVelocity", 1);
+            animator.SetInteger("XVelocity", 1);
         }
         else
         {
-            _animator.SetInteger("XVelocity", 0);
+            animator.SetInteger("XVelocity", 0);
         }
         if (entityRigidbody.linearVelocityY > landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
         {
-            _animator.SetInteger("YVelocity", 1);
+            animator.SetInteger("YVelocity", 1);
         }
         else if (entityRigidbody.linearVelocityY < -landingVelocityThreshold && _currentState != CharacterStates.OnLadder)
         {
-            _animator.SetInteger("YVelocity", -1);
+            animator.SetInteger("YVelocity", -1);
         }
         else if (_currentState != CharacterStates.OnLadder)
         {
-            _animator.SetInteger("YVelocity", 0);
+            animator.SetInteger("YVelocity", 0);
         }
 
         grounded = IsGrounded();
 
-        _animator.SetBool("Grounded", grounded);
+        animator.SetBool("Grounded", grounded);
 
         if (CheckCliff())
         {
@@ -606,7 +606,7 @@ public class Character : Entity, IDeletable
 
     public float GetAnimatorSpeed()
     {
-        return _animator.speed;
+        return animator.speed;
     }
     public IEnumerator SendInputToFSM(CharacterStates newState, float time)
     {
@@ -761,7 +761,7 @@ public class Character : Entity, IDeletable
 
     public void SetAnimatorTrigger(string name)
     {
-        _animator.SetTrigger(name);
+        animator.SetTrigger(name);
     }
 
     public void Delete()

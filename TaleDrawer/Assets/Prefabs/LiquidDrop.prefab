@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1528430959826479470}
   - component: {fileID: 1438527845398124286}
   - component: {fileID: 1007619803644916183}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: LiquidDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2642908198384296221}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -105,10 +105,10 @@ CircleCollider2D:
   m_Material: {fileID: 6200000, guid: cd24ba7bad564064aaa0328e46a74598, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4194368
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 12582839
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

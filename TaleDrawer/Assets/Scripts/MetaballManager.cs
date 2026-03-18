@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System.Linq;
+using System.Collections.Generic;
 public class MetaballManager : MonoBehaviour
 {
     public GameObject[] balls;
@@ -27,6 +28,10 @@ public class MetaballManager : MonoBehaviour
         }
     }
 
+    public List<Rigidbody2D> GetCloseDrops(int quantity, Vector2 pos)
+    {
+        return bodies.OrderBy(x => Vector2.Distance(x.position, pos)).Take(quantity).ToList();
+    } 
     void FixedUpdate()
     {
         // New: Compute center of mass dynamically for cohesion

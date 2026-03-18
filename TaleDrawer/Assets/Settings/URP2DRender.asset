@@ -24,8 +24,9 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: 0}
     probeSamplingDebugTexture: {fileID: 0}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: 116089753936415341}
+  m_RendererFeatureMap: 6d4a7121046f9c01
   m_UseNativeRenderPass: 0
   m_LayerMask:
     serializedVersion: 2
@@ -48,11 +49,24 @@ MonoBehaviour:
     maskTextureChannel: 1
     blendMode: 0
   m_UseDepthStencilBuffer: 1
-  m_UseCameraSortingLayersTexture: 0
-  m_CameraSortingLayersTextureBound: -1
-  m_CameraSortingLayerDownsamplingMethod: 0
+  m_UseCameraSortingLayersTexture: 1
+  m_CameraSortingLayersTextureBound: -823043085
+  m_CameraSortingLayerDownsamplingMethod: 3
   m_MaxLightRenderTextureCount: 16
   m_MaxShadowRenderTextureCount: 1
   m_PostProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_DefaultMaterialType: 0
   m_DefaultCustomMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+--- !u!114 &116089753936415341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40efd8c97e1822846b1f49ae57605fb6, type: 3}
+  m_Name: CopyColorFeature
+  m_EditorClassIdentifier: Assembly-CSharp::CopyColorFeature
+  m_Active: 1

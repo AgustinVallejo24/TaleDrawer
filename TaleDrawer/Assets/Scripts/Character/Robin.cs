@@ -16,7 +16,7 @@ public class Robin : Character
     protected override void Awake()
     {
         characterModel = new CharacterModel(this, entityRigidbody, floorLayerMask);
-        characterView = new CharacterView(this, _animator, _characterSprite);
+        characterView = new CharacterView(this, animator, _characterSprite);
         base.Awake();
 
         #region State Declaration
