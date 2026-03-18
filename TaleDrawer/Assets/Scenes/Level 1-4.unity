@@ -5473,7 +5473,7 @@ Transform:
   m_GameObject: {fileID: 440569084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.03, y: -19.91, z: 0}
+  m_LocalPosition: {x: 22.03, y: -20.02, z: 0}
   m_LocalScale: {x: 2.2816, y: 2.2816, z: 2.2816}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6584,6 +6584,34 @@ PrefabInstance:
       propertyPath: _myCharacter
       value: 
       objectReference: {fileID: 1286689599}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1145271968}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DoorActivation
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Door, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14641,6 +14669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1145271967}
   - component: {fileID: 1145271966}
+  - component: {fileID: 1145271968}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -14679,13 +14708,26 @@ Transform:
   m_GameObject: {fileID: 1145271965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 21.22, y: -28.66, z: 0}
+  m_LocalPosition: {x: 23.29, y: -28.4, z: 0}
   m_LocalScale: {x: 0.75005, y: 0.78675, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1194673259}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!114 &1145271968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145271965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666258f5741ce6e4785ff99b625fd6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  _myAnim: {fileID: 1145271966}
 --- !u!1 &1147801777
 GameObject:
   m_ObjectHideFlags: 0
@@ -15427,7 +15469,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.282, y: 4.3605, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1145271967}
@@ -15479,8 +15521,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.3122788, g: 0.3490566, b: 0.054334287, a: 1}
+  m_Sprite: {fileID: -749203766, guid: 024b78d5187723341a2facbc2f796eef, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

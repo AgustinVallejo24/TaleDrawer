@@ -2,16 +2,18 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.Events;
 public class Lever : Activator, IInteractableP
 {
 
     [SerializeField] Character _myCharacter;
     [SerializeField] Animator _animator;
     [SerializeField] bool _leverState;
-    [SerializeField] Animator _door;
+    [SerializeField] Animator _animToActivate;
     [SerializeField] Transform _playerPos;
     [SerializeField] InteractableType _interactableType;
     [SerializeField] GameObject _eKey;
+    [SerializeField] UnityEvent _leverEvent;
 
 
     public void Interact()
@@ -55,6 +57,7 @@ public class Lever : Activator, IInteractableP
     
     public IEnumerator ActivateLeverCoroutine()
     {
+        if(_myCharacter.currentActivator == this)
         _myCharacter.currentActivator = null;
         
         if (_leverState)
@@ -67,15 +70,7 @@ public class Lever : Activator, IInteractableP
             _animator.SetTrigger("Down");
             _leverState = true;
             yield return new WaitForSeconds(1f);
-            _door.SetTrigger("Open");
-           // var beforeN = new NeighbouringNodesAndActions();
-            //beforeN.node = _afterDoor;
-            //beforeN.nodeEvent = new UnityEngine.Events.UnityEvent();
-       //     var afterN = new NeighbouringNodesAndActions();
-            //afterN.node = _beforeDoor;
-            //afterN.nodeEvent = new UnityEngine.Events.UnityEvent();
-            //_beforeDoor.neighbours.Add(beforeN);
-            //_afterDoor.neighbours.Add(afterN);
+            _leverEvent.Invoke();            
             GetComponent<Collider2D>().enabled = false;
         }
     }
