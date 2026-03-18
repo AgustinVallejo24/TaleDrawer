@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bee26bcbc349b4045adb09e6a98f7f20
+guid: daad9579a90749143855b5012930c79f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,23 +110,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: floor_0
+      name: robin_floating_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 1775
-        height: 470
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 0
+        y: 990
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.40454477, y: 0.5188341}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf0334585079dac4eb7fc3cb69df0e6c
-      internalID: -1333906023
+      spriteID: c86d1882ecb31064abbcf0167d8ee577
+      internalID: -1793175033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: robin_floating_1
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 990
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.40454477, y: 0.5188341}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73ad8646e27c88447b445d1243ab36e2
+      internalID: 1604845610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: robin_floating_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 810
+        height: 990
+      alignment: 9
+      pivot: {x: 0.40454477, y: 0.5188341}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d230761d98f3f864fb2e144f957e19f0
+      internalID: 2091402282
       vertices: []
       indices: 
       edges: []
@@ -135,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9d8ba62dfa2430c45a08de57cacbf425
+    spriteID: dbe077e7e10378c47bfd5973f20d361d
     internalID: 0
     vertices: []
     indices: 
@@ -145,9 +189,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":2.0},"gridSpriteSize":{"x":810.0,"y":990.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      floor_0: -1333906023
+      robin_floating_0: -1793175033
+      robin_floating_1: 1604845610
+      robin_floating_2: 2091402282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

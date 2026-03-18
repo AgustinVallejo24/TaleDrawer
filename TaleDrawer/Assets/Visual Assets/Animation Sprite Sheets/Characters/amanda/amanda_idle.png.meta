@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bee26bcbc349b4045adb09e6a98f7f20
+guid: 377dbb2202c5e1744b40cd0364c5be48
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: floor_0
+      name: amanda_idle_0
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 0
-        width: 1775
-        height: 470
+        width: 415
+        height: 631
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf0334585079dac4eb7fc3cb69df0e6c
-      internalID: -1333906023
+      spriteID: ec19fe689ac119d48b7fc12cacef7c7a
+      internalID: 1796506917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: amanda_idle_1
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 0
+        width: 415
+        height: 631
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223dec1506d11ba48855e710d949dc61
+      internalID: -488162481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: amanda_idle_2
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 0
+        width: 415
+        height: 631
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 873c28772df795a418d94732c4d11c99
+      internalID: -1611254485
       vertices: []
       indices: 
       edges: []
@@ -135,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9d8ba62dfa2430c45a08de57cacbf425
+    spriteID: 8462dfd6c0539804287bce22ae7f3bb8
     internalID: 0
     vertices: []
     indices: 
@@ -145,9 +189,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":415.0,"y":631.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      floor_0: -1333906023
+      amanda_idle_0: 1796506917
+      amanda_idle_1: -488162481
+      amanda_idle_2: -1611254485
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
