@@ -60,7 +60,7 @@ public class RailPlatform : MonoBehaviour
     void MovePlatform()
     {
         
-        if (Vector2.Distance(_myRb.position, _waypoints[_currentWaypoint].position) < _maxDistance)
+        if (Vector2.Distance(_myRb.position, _waypoints[_currentWaypoint].position) < _maxDistance && !_isChanging)
         {
             CheckForPathChange();
             //StartCoroutine(WaitAtWaypoint());
@@ -69,18 +69,18 @@ public class RailPlatform : MonoBehaviour
         _previousPosition = _myRb.position;
 
         
-        Vector2 targetPos = _waypoints[_currentWaypoint].position;
-        Vector2 nextPos = Vector2.MoveTowards(_myRb.position, targetPos, _speed * Time.fixedDeltaTime);
-        _myRb.MovePosition(nextPos);
+        Vector2 targetPos = _waypoints[_currentWaypoint].position;        
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, _speed * Time.deltaTime);
+        
 
         
-        Vector2 deltaMovement = nextPos - _previousPosition;
+        //Vector2 deltaMovement = nextPos - _previousPosition;
 
         
-        foreach (var rb in _onPlatform)
-        {
-            rb.position += deltaMovement;
-        }
+        //foreach (var rb in _onPlatform)
+        //{
+        //    rb.position += deltaMovement;
+        //}
 
         if (Vector2.Distance(_myRb.position, targetPos) < _maxDistance)
         {
@@ -123,7 +123,7 @@ public class RailPlatform : MonoBehaviour
         }
 
         
-        if (_active)
+        if (_active && !_isChanging)
         {
             _currentWaypoint += _direction;
             _currentWaypoint = Mathf.Clamp(_currentWaypoint, 0, _waypoints.Length - 1);
@@ -184,8 +184,8 @@ public class RailPlatform : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Entity ent))
         {
-            Rigidbody2D entRB = ent.entityRigidbody;
-            if (!_onPlatform.Contains(entRB)) _onPlatform.Add(entRB);
+            //Rigidbody2D entRB = ent.entityRigidbody;
+            //if (!_onPlatform.Contains(entRB)) _onPlatform.Add(entRB);
             collision.transform.SetParent(this.transform);
             if (ent.TryGetComponent(out Character chara))
             {
@@ -200,8 +200,8 @@ public class RailPlatform : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Entity ent))
         {
-            Rigidbody2D entRB = ent.entityRigidbody;
-            _onPlatform.Remove(entRB);
+            //Rigidbody2D entRB = ent.entityRigidbody;
+            //_onPlatform.Remove(entRB);
             if (ent.TryGetComponent(out Character chara))
             {
                 chara.currentPlatform = null;
