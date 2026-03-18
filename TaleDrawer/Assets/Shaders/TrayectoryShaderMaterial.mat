@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_TrayectoryShader
+  m_Name: TrayectoryShaderMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 90e0ba8a1ae40be46a111d2ed6538fbb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
