@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+
+    public int currentLevelIndex;
     public SceneStates currentState;
     [SerializeField] CharacterStates _clicableStates;
     public DrawingTest _dTest;

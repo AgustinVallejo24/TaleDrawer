@@ -164,7 +164,7 @@ public abstract class Enemy : Entity
 
     public virtual void DeathEvent()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public virtual void CoroutineManager(IEnumerator cou, bool stop = false)
