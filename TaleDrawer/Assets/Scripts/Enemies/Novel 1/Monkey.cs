@@ -118,9 +118,16 @@ public class Monkey : Enemy
         }
 
 
-    }    
+    }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.TryGetComponent(out Activator acti))
+        {
+            acti.Activation();
+        }
+    }
+
     public override void Attack()
     {
         if(_currentBait != null)

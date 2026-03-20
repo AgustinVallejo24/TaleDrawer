@@ -1163,6 +1163,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7028045812922658278, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
+      propertyPath: sleeping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7028045812922658278, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: _character
       value: 
       objectReference: {fileID: 1286689599}
@@ -1255,7 +1259,7 @@ SpriteRenderer:
   m_Size: {x: 17.85, y: 4.74}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &68603344
@@ -2565,6 +2569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180593966}
   - component: {fileID: 180593965}
+  - component: {fileID: 180593967}
   m_Layer: 0
   m_Name: Door (1)
   m_TagString: Untagged
@@ -2610,6 +2615,19 @@ Transform:
   - {fileID: 734383605}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &180593967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180593964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666258f5741ce6e4785ff99b625fd6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  _myAnim: {fileID: 180593965}
 --- !u!1 &197573627
 GameObject:
   m_ObjectHideFlags: 0
@@ -8173,7 +8191,7 @@ SpriteRenderer:
   m_Size: {x: 17.85, y: 4.74}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &599671231
@@ -13932,6 +13950,34 @@ PrefabInstance:
       propertyPath: _myCharacter
       value: 
       objectReference: {fileID: 1286689599}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 180593967}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DoorActivation
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Door, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16874,11 +16920,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.99
+      value: 31.07
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -35.88
+      value: -10.48
       objectReference: {fileID: 0}
     - target: {fileID: 3265364237620506647, guid: b4116543f9caa2043ac4db48ed1329b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23866,11 +23912,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4989393403316785767, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.99
+      value: 31.07
       objectReference: {fileID: 0}
     - target: {fileID: 4989393403316785767, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -35.88
+      value: -10.48
       objectReference: {fileID: 0}
     - target: {fileID: 4989393403316785767, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.z
