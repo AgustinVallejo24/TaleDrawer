@@ -390,7 +390,7 @@ MonoBehaviour:
   keySprite: {fileID: 5129029740285269470}
   _walkableLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16777280
   _mainCollider: {fileID: 2501744969287615608}
   helmet: {fileID: 532369536678373894}
   currentSpawningObject: {fileID: 0}
@@ -401,10 +401,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 524288
   currentActivator: {fileID: 0}
+  currentPlatform: {fileID: 0}
   currentHook: {fileID: 0}
   floorLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16777280
   cliffMask:
     serializedVersion: 2
     m_Bits: 524288
@@ -417,7 +418,7 @@ MonoBehaviour:
   horizontalJumpDir: 0
   playerExcludeLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 16777408
   landingVelocityThreshold: 2.42
   grounded: 0
   distance: 0

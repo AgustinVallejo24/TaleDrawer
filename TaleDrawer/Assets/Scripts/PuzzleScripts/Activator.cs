@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Activator : MonoBehaviour
+public class Activator : Puzzle
 {
     public virtual void Activation()
     {

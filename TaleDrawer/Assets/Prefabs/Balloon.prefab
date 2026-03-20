@@ -76,6 +76,8 @@ MonoBehaviour:
   riseDuration: 0.6
   amplitude: 0.15
   speed: 2
+  floating: 0
+  onWind: 0
 --- !u!61 &560351800926788011
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -193,6 +195,10 @@ PrefabInstance:
     - target: {fileID: 3936348055136213961, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936348055136213961, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3936348055136213961, guid: 9fc0c02ef829e91489cab88cf5a8de92, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

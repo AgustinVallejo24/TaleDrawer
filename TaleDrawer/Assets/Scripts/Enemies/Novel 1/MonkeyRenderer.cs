@@ -49,4 +49,9 @@ public class MonkeyRenderer : MonoBehaviour
     {
         SoundManager.Play(type, _myMonkey.transform.position);
     }
+
+    public void Death()
+    {
+        _myMonkey.DeathEvent();
+    }
 }

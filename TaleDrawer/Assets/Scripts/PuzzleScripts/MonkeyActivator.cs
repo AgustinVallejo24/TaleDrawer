@@ -24,7 +24,14 @@ public class MonkeyActivator : Activator, IInteractableP
         managerCheck.Invoke();
         Character myCharacter = Character.instance;
         myCharacter.currentActivator = null;
+        completed = true;
        
+    }
+
+    public override void AutoCompletePuzzle()
+    {
+        base.AutoCompletePuzzle();
+        Activation();
     }
     public void InsideInteraction()
     {

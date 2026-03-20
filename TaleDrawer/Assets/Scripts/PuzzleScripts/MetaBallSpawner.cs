@@ -90,7 +90,7 @@ public class MetaBallSpawner : MonoBehaviour
 
     void UpdateManager()
     {
-        manager.balls = new GameObject[activeBalls.Count];
+        manager.balls = new List<GameObject>(activeBalls.Count);
 
         for (int i = 0; i < activeBalls.Count; i++)
         {

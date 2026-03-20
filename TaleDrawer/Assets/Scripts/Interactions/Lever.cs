@@ -14,7 +14,16 @@ public class Lever : Activator, IInteractableP
     [SerializeField] InteractableType _interactableType;
     [SerializeField] GameObject _eKey;
     [SerializeField] UnityEvent _leverEvent;
-
+    
+    public override void AutoCompletePuzzle()
+    {
+        base.AutoCompletePuzzle();
+        _animator.SetTrigger("Down");
+        _leverState = true;
+        _leverEvent.Invoke();
+        completed = true;
+        GetComponent<Collider2D>().enabled = false;
+    }
 
     public void Interact()
     {
@@ -70,7 +79,8 @@ public class Lever : Activator, IInteractableP
             _animator.SetTrigger("Down");
             _leverState = true;
             yield return new WaitForSeconds(1f);
-            _leverEvent.Invoke();            
+            _leverEvent.Invoke();
+            completed = true;
             GetComponent<Collider2D>().enabled = false;
         }
     }

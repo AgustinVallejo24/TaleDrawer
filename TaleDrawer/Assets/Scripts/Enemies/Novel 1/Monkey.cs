@@ -114,7 +114,7 @@ public class Monkey : Enemy
         if (collision.gameObject.tag == "Spikes")
         {
             _myAnim.SetTrigger("Explode");
-            Destroy(gameObject,5f);
+            
         }
 
 

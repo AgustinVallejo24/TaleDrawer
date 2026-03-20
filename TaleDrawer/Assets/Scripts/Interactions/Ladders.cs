@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-public class Ladders : MonoBehaviour, IInteractableP
+public class Ladders : Puzzle, IInteractableP
 {
     [SerializeField] Transform _upperPoint;
     [SerializeField] Transform _lowerPoint;
@@ -27,7 +27,7 @@ public class Ladders : MonoBehaviour, IInteractableP
     [SerializeField] GameObject _eKey;
     [SerializeField] GameObject _wKey;
     public bool hasCharacter;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         if (_rolledUp)
@@ -57,6 +57,31 @@ public class Ladders : MonoBehaviour, IInteractableP
         }
     }
 
+    public override void AutoCompletePuzzle()
+    {
+        base.AutoCompletePuzzle();
+        if (_rolledUp)
+        {
+            if (_rolledUp && first && _bodyPieces.Any())
+            {
+                first = false;
+                Sequence sequence = DOTween.Sequence();
+
+                foreach (var item in _bodyPieces)
+                {
+                    if (item != _bodyPieces.First() && item != _bodyPieces.Last())
+                    {
+                        sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.07f));
+                    }
+
+                }
+                completed = true;
+                sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
+            }
+           
+        }
+        
+    }
     // Update is called once per frame
     void Update()
     {
@@ -79,7 +104,7 @@ public class Ladders : MonoBehaviour, IInteractableP
                 }
 
             }
-
+            completed = true;
             sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
         }
         else if (!_rolledUp)

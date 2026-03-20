@@ -7,7 +7,8 @@ public class Checkpoint : MonoBehaviour
     {
        if(collision.TryGetComponent(out Character character))
         {
-            SaveManager.instance.Save(this);
+            SaveManager.instance.Save(transform);
+            gameObject.SetActive(false);
         }
      
     }

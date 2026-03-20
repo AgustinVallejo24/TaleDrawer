@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MetaballsMaterialObsidian
+  m_Shader: {fileID: 4800000, guid: 957db0de25c592e4c896154fae4e8f62, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CausticsTex:
+        m_Texture: {fileID: 2800000, guid: 0ca4928d07163294087d16d21be9727f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortionTex:
+        m_Texture: {fileID: 2800000, guid: 27905ab2d6232c84588665df89754d51, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LiquidTex:
+        m_Texture: {fileID: 2800000, guid: 69467817d31de5548a31a0b8fcc2fc4e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 0ca4928d07163294087d16d21be9727f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 0ca4928d07163294087d16d21be9727f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Alpha: 1
+    - _BlurIntensity: 1
+    - _BlurRadius: 12
+    - _BlurSamples: 3
+    - _BlurStrength: 0.05
+    - _Distortion: 0.5
+    - _DistortionStrength: 0.1
+    - _EnableExternalAlpha: 0
+    - _FlattenStrength: 0
+    - _FlowSpeed: 1.02
+    - _FresnelPower: 0.5
+    - _FresnelStrength: 0
+    - _NoiseStrength: 0
+    - _NormalScale: 1
+    - _Radius: 0.008
+    - _RefractionStrength: 0
+    - _Softness: 0.45
+    - _SurfaceTension: 0
+    - _TextureMovement: 0
+    - _Threshold: 150
+    - _Tiling: 8
+    - _WaveStrength: 0
+    - _ZWrite: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 0.9137255}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
