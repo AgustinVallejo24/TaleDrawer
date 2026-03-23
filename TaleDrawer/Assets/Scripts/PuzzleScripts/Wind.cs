@@ -22,14 +22,24 @@ public class Wind : MonoBehaviour
     public float pathDuration;
 
     public List<WindPath> windPaths;
+
+    public bool playOnAwake = true;
     void Start()
     {
-        ChangeWindPath(0);
-        StartCoroutine(SpawnWind());
+        if (playOnAwake)
+        {
+            ChangeWindPath(0);
+            StartCoroutine(SpawnWind());
+        }
+
        
     }
 
-
+    public void ActivateWind()
+    {
+        ChangeWindPath(0);
+        StartCoroutine(SpawnWind());
+    }
     public void ChangeWindPath(int index)
     {
         GeneratePath(index);
