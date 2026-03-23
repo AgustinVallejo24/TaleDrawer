@@ -55,6 +55,11 @@ public class CharacterView
         //_character.StartCoroutine(CustomResetTrigger(_idleClimbTrigger));
     }
 
+    public void OnGlideChange(bool value)
+    {
+        _anim.SetBool("Gliding", value);
+    }
+
     public void OnLand()
     {
         _anim.SetTrigger(_landTrigger);

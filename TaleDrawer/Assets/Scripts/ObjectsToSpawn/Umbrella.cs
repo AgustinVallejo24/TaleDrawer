@@ -30,7 +30,8 @@ public class Umbrella : SpawningObject
             chara.ReleaseCurrentSpawningObject();
             chara.currentSpawningObject = this;
             transform.position = chara._umbrellasPos.position;
-            _mySpriteRenderer.sortingOrder = 0;            
+            //_mySpriteRenderer.sortingOrder = 0;
+            _mySpriteRenderer.enabled = false;
             transform.parent = _currentEntity.transform;
             _collisionCollider.enabled = false;
             Robin.instance.SendInputToFSM(CharacterStates.Glide);

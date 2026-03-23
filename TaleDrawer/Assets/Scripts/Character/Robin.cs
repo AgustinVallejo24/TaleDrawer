@@ -101,6 +101,7 @@ public class Robin : Character
         Glide.OnEnter += x =>
         {
             //_umbrella.SetActive(true);
+            characterView.OnGlideChange(true);
             characterView.OnIdle();
             _currentState = CharacterStates.Glide;
             currentSpeed = currentSpeed / 1.5f;
@@ -131,6 +132,7 @@ public class Robin : Character
         };
         Glide.OnExit += x => 
         {
+            characterView.OnGlideChange(false);
             transform.DOKill();
             inWind = false;
             currentSpeed = maxSpeed;
