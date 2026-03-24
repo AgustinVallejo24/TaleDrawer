@@ -28,7 +28,7 @@ public class Ladders : Puzzle, IInteractableP
     [SerializeField] GameObject _wKey;
     public bool hasCharacter;
 
-    void Start()
+    void Awake()
     {
         if (_rolledUp)
         {

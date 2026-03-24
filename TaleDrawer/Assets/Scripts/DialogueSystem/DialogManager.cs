@@ -64,6 +64,7 @@ public class DialogManager : MonoBehaviour
     {
         Debug.Log("Diálogo terminado");
         dialogueUI.SetActive(false);
+        GameManager.instance.currentState = SceneStates.Game;
         Character.instance.SendInputToFSM(CharacterStates.Idle);
 
     }

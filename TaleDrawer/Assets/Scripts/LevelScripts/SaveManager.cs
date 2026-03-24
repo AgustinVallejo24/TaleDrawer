@@ -17,6 +17,11 @@ public class SaveManager : MonoBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F10))
+        DeleteCurrentLevelInfo();
+    }
     public void Load()
     {
         _currentSaveData = SaveSystem.Load();
@@ -31,7 +36,7 @@ public class SaveManager : MonoBehaviour
             _currentLevelData.saveState = SaveState.Saved;
 
         }
-
+       
 
         for (int i = 0; i < _puzzles.Length; i++)
         {
@@ -86,4 +91,11 @@ public class SaveManager : MonoBehaviour
         SaveSystem.Save(_currentSaveData);
     }
 
+
+    public void DeleteCurrentLevelInfo()
+    {
+        _currentLevelData.saveState = SaveState.NotFound;
+        _currentSaveData.levelsData[_gameManager.currentLevelIndex] = _currentLevelData;
+        SaveSystem.Save(_currentSaveData);
+    }
 }

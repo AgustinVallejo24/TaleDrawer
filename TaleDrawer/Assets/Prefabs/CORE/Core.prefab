@@ -3393,7 +3393,7 @@ Transform:
   m_GameObject: {fileID: 5723703911571501773}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 46, y: -24.9, z: -10}
+  m_LocalPosition: {x: -5.406959, y: -34.28107, z: -8.088382}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3438,7 +3438,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.419175
+  orthographic size: 7.8114276
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5793,7 +5793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineGroupFraming
   FramingMode: 0
-  FramingSize: 0.038
+  FramingSize: 0.037
   CenterOffset: {x: -0.5, y: 0}
   Damping: 0.63
   SizeAdjustment: 2
