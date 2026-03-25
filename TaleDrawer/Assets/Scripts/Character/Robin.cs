@@ -308,18 +308,17 @@ public class Robin : Character
 
         float xComponent = 0;
         float yComponent = 0;
-        float maxTime = 1f;
-        int steps = 30;
+        float maxTime = .5f;
+        int steps = 10;
         float timeStep = maxTime / steps;
-        int linerendererIndex = 0;
 
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++)
         {
             float t = i * timeStep;
             xComponent = transform.position.x + dir.x * t;
             yComponent = transform.position.y + dir.y * t - 0.5f * 9.8f * 2f * Mathf.Pow(t, 2);
-            lineRenderer.SetPosition(linerendererIndex, new Vector3(xComponent, yComponent, 0));
-            linerendererIndex++;
+            lineRenderer.SetPosition(i, new Vector3(xComponent, yComponent, 0));
+
         }
     }
     public override void OnTriggerExit2D(Collider2D collision)

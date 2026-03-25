@@ -5468,6 +5468,10 @@ PrefabInstance:
       value: Monkey (1)
       objectReference: {fileID: 0}
     - target: {fileID: 7028045812922658278, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
+      propertyPath: sleeping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7028045812922658278, guid: e4905751058fbd843b8322ce68626a1d, type: 3}
       propertyPath: _character
       value: 
       objectReference: {fileID: 1783092409}

@@ -209,10 +209,10 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 20.0,
+    "m_Value": 18.5,
     "m_FloatType": 1,
     "m_RangeValues": {
-        "x": 20.0,
+        "x": 1.0,
         "y": 300.0
     },
     "m_SliderType": 0,
@@ -1004,7 +1004,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"52485b95a0557264c9a15c0ffd880932\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"ddccf682a2c854a45be02d84cf2d5d79\",\"type\":3}}",
         "m_Guid": ""
     },
     "m_DefaultType": 0
