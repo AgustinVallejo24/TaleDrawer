@@ -104,7 +104,7 @@ public class Robin : Character
             characterView.OnGlideChange(true);
             characterView.OnIdle();
             _currentState = CharacterStates.Glide;
-            currentSpeed = currentSpeed / 1.5f;
+            //currentSpeed = currentSpeed / 1.5f;
             entityRigidbody.gravityScale = _umbrellasGravity;
             //_mainCollider.isTrigger = true;
 
@@ -135,7 +135,7 @@ public class Robin : Character
             characterView.OnGlideChange(false);
             transform.DOKill();
             inWind = false;
-            currentSpeed = maxSpeed;
+            //currentSpeed = maxSpeed;
             ReleaseCurrentSpawningObject();
             entityRigidbody.linearVelocity = Vector2.zero;
             entityRigidbody.gravityScale = _originalGravityScale;
