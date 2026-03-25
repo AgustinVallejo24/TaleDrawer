@@ -9594,6 +9594,7 @@ MonoBehaviour:
     - {fileID: 1869572123}
     - {fileID: 1156615458}
     collider: {fileID: 1798518293}
+  playOnAwake: 1
 --- !u!50 &1375623518
 Rigidbody2D:
   serializedVersion: 5
@@ -12156,15 +12157,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 296664858156214670, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.860474
+      value: 15.944436
       objectReference: {fileID: 0}
     - target: {fileID: 296664858156214670, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.610001
+      value: -12.309999
       objectReference: {fileID: 0}
     - target: {fileID: 296664858156214670, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.3605096
+      value: -2.7644641
       objectReference: {fileID: 0}
     - target: {fileID: 2821728989508870076, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

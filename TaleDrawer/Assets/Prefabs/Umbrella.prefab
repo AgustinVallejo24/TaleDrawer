@@ -76,6 +76,9 @@ MonoBehaviour:
   clouds: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   _paintsSc: {fileID: 6600385236423744030}
   _collisionCollider: {fileID: 7973645550704781720}
+  _newLayer:
+    serializedVersion: 2
+    m_Bits: 33554432
 --- !u!60 &7973645550704781720
 PolygonCollider2D:
   m_ObjectHideFlags: 0

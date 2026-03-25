@@ -768,7 +768,17 @@ public class Character : Entity, IDeletable
     {
         if (hasObject)
         {
-            Instantiate(explosionParticle, transform);
+            if(currentSpawningObject != null)
+            {
+                currentSpawningObject.Delete();
+                currentSpawningObject = null;
+            }
+            else
+            {
+                Instantiate(explosionParticle, transform);
+            }
+
+            hasObject = false;            
             SendInputToFSM(CharacterStates.Idle);
         }
     }

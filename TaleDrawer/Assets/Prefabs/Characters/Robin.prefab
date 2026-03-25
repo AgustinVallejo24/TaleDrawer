@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 4313604016444015195}
   - component: {fileID: 7472058952954398058}
   - component: {fileID: 2501744969287615608}
+  - component: {fileID: 3797856739098012287}
   - component: {fileID: 7363900840264280177}
   m_Layer: 10
   m_Name: Robin
@@ -442,7 +443,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 84294f876c9be9248a1ce2cb9f6a38d2, type: 3}
   - {fileID: 8300000, guid: 25fd2e45f587b024592802a0085cd662, type: 3}
   hasObject: 0
-  explosionParticle: {fileID: 0}
+  explosionParticle: {fileID: 755909446852136197, guid: 136938ebab19326499fa03eb8794332a, type: 3}
   glideImpulse: {x: 0, y: 0}
   subibaja: {fileID: 0}
   canClimb: 0
@@ -612,6 +613,52 @@ CapsuleCollider2D:
   m_Offset: {x: -0.068727195, y: -0.12942123}
   m_Size: {x: 0.97885346, y: 2.2215977}
   m_Direction: 0
+--- !u!61 &3797856739098012287
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385830380348539002}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 67043319
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.113111496, y: -0.078306675}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.469841, y: 2.339919}
+  m_EdgeRadius: 0
 --- !u!120 &7363900840264280177
 LineRenderer:
   serializedVersion: 2

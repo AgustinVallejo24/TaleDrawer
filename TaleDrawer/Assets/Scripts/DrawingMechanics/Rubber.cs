@@ -44,9 +44,10 @@ public class Rubber : MonoBehaviour
     {
         Vector3 pos = GameManager.instance._sceneCamera.ScreenToWorldPoint(transform.position);
         var interactionHit = Physics2D.OverlapCircle(pos, 1f, spawningOwbjects);
-
+        
         if (interactionHit != null && interactionHit.gameObject.TryGetComponent(out IDeletable sP))
         {
+            Debug.LogError(interactionHit.name);
             sP.Delete();
         }
         BackToPosition();

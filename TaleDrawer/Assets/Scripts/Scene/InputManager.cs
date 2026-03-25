@@ -74,8 +74,7 @@ public class InputManager : MonoBehaviour
             aimAngle *= Mathf.Deg2Rad;
             aimForceVector = (startAimPos - mouseInput).normalized * Mathf.Clamp(aimForce, 0, 25) * 2;
             character.TrayectoryVisuals(aimForceVector);
-        }
-        Debug.LogError(character.xInput);
+        }        
         character.climbingInputs = playerInput.actions["Climb"].ReadValue<Vector2>();
         mouseInput = playerInput.actions["Input"].ReadValue<Vector2>();
         character.glidingInputs = playerInput.actions["Glide"].ReadValue<Vector2>();

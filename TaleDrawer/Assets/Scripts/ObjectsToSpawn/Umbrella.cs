@@ -5,7 +5,7 @@ public class Umbrella : SpawningObject
 {
     [SerializeField] Paint _paintsSc;
     [SerializeField] Collider2D _collisionCollider;
-
+    [SerializeField] LayerMask _newLayer;
     public bool HasEntity()
     {
         return _currentEntity != null;
@@ -29,11 +29,12 @@ public class Umbrella : SpawningObject
             _currentEntity = chara;
             chara.ReleaseCurrentSpawningObject();
             chara.currentSpawningObject = this;
-            transform.position = chara._umbrellasPos.position;
-            //_mySpriteRenderer.sortingOrder = 0;
+            chara.hasObject = true;
+            transform.position = chara._umbrellasPos.position;            
             _mySpriteRenderer.enabled = false;
             transform.parent = _currentEntity.transform;
             _collisionCollider.enabled = false;
+            gameObject.layer = CustomTools.ToLayer(_newLayer);
             Robin.instance.SendInputToFSM(CharacterStates.Glide);
         }       
         
