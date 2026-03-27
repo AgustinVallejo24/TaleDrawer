@@ -1847,6 +1847,18 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 1783092409}
+    - target: {fileID: 9036272597094142494, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: _typesAndImages.keyValuePairs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9036272597094142494, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: _typesAndImages.keyValuePairs.Array.data[5].Key
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 9036272597094142494, guid: dd2b85c14bae27a429926284cf190a6e, type: 3}
+      propertyPath: _typesAndImages.keyValuePairs.Array.data[5].Value
+      value: 
+      objectReference: {fileID: 21300000, guid: 5936d62ee65be3447b5f8e645cf66650, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2189,16 +2201,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloorTrap
   _floor: {fileID: 610715188}
   open: 0
-  innerNodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  outerNodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  jumpPositions:
-  - {fileID: 131438755}
-  - {fileID: 2111052520}
-  _interactionCollider: {fileID: 1315011858}
 --- !u!95 &610715188
 Animator:
   serializedVersion: 7
