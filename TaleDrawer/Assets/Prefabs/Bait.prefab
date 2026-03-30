@@ -217,6 +217,13 @@ MonoBehaviour:
   floating: 0
   onWind: 0
   _paintsSc: {fileID: 2459615646797647329}
+  _sprites:
+  - {fileID: 21300000, guid: e49b79bd56370ff44a92244fd40455b2, type: 3}
+  - {fileID: 1683788401, guid: 6cfbd89c5bcb16d4fb046aaf20b76aef, type: 3}
+  - {fileID: 640986727, guid: 6cfbd89c5bcb16d4fb046aaf20b76aef, type: 3}
+  - {fileID: -2007847749, guid: 6cfbd89c5bcb16d4fb046aaf20b76aef, type: 3}
+  - {fileID: -1765401438, guid: 6cfbd89c5bcb16d4fb046aaf20b76aef, type: 3}
+  - {fileID: -1041319871, guid: 6cfbd89c5bcb16d4fb046aaf20b76aef, type: 3}
   _inGameLayer:
     serializedVersion: 2
     m_Bits: 8388608

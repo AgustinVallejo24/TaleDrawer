@@ -6,7 +6,8 @@ using UnityEngine.Splines;
 
 public class Bait : Balloon
 {
-    [SerializeField] Paint _paintsSc;    
+    [SerializeField] Paint _paintsSc;
+    [SerializeField] Sprite[] _sprites;
     public Action<Transform> onReleaseTarget;
     [SerializeField] LayerMask _inGameLayer;
     public bool attacked;
@@ -17,7 +18,14 @@ public class Bait : Balloon
     public bool aboveFloor;
     [SerializeField] float _speedMultiplier;
 
-    
+    public override void Start()
+    {
+        base.Start();
+        int random = UnityEngine.Random.Range(0, _sprites.Length);
+
+        _mySpriteRenderer.sprite = _sprites[random];
+
+    }
 
     public override void OnSpawned()
     {
