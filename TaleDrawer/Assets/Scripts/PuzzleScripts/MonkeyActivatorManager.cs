@@ -9,7 +9,7 @@ public class MonkeyActivatorManager : ActivatorManager
     [SerializeField] GameObject[] _monkeySprites;
     [SerializeField] CinemachineCamera _eventCamera;
     [SerializeField] CinemachineCamera _playerCamera;
-    [SerializeField] SpecialFloor _floor;
+    //[SerializeField] SpecialFloor _floor;    
     public override void OnActivation()
     {
         if (_rubies.Any())
@@ -24,8 +24,36 @@ public class MonkeyActivatorManager : ActivatorManager
         {
             _monkeySprites[0].SetActive(false);
             _monkeySprites[1].SetActive(true);
+
+            if (hasCinematic)
+            {
+                MonkeyHeadEvent();
+            }
         }
         
+    }
+
+    public override void OnActivationViaInteraction()
+    {
+        foreach (var item in _rubies)
+        {
+            if (!item.shiningRuby.activeSelf)
+            {
+                item.shiningRuby.SetActive(true);
+                item.grayRuby.SetActive(false);
+            }
+        }
+
+        if (currentActivatorsOn == activators.Length)
+        {
+            _monkeySprites[0].SetActive(false);
+            _monkeySprites[1].SetActive(true);
+
+            if (hasCinematic)
+            {
+                MonkeyHeadEvent();
+            }
+        }
     }
 
     public void MonkeyHeadEvent()
@@ -37,7 +65,10 @@ public class MonkeyActivatorManager : ActivatorManager
         _playerCamera.enabled = false;
         _eventCamera.enabled = true;
         yield return new WaitForSeconds(2f);
-        _floor.Activate();
+        if (hasCinematic)
+        {
+            activationEvent.Invoke();
+        }             
         yield return new WaitForSeconds(2f);
         _playerCamera.enabled = true;
         _eventCamera.enabled = false;

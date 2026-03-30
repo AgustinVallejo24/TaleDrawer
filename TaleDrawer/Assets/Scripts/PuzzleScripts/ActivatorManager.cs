@@ -4,7 +4,9 @@ using UnityEngine.Events;
 public class ActivatorManager : MonoBehaviour
 {
     [SerializeField] protected MonkeyActivator[] activators;
-    [SerializeField] UnityEvent activationEvent;
+    [SerializeField] public UnityEvent activationEvent;
+    [SerializeField] protected bool hasCinematic;
+    [SerializeField] protected bool needsInteraction;
     [SerializeField] ParticleSystem confetty;
     protected int currentActivatorsOn;
     private void Start()
@@ -17,8 +19,12 @@ public class ActivatorManager : MonoBehaviour
     public void Activation()
     {
         currentActivatorsOn++;
-        OnActivation();
-        if (currentActivatorsOn == activators.Length)
+        if (!needsInteraction)
+        {
+            OnActivation();
+        }
+        
+        if (currentActivatorsOn == activators.Length && !hasCinematic && !needsInteraction)
         {
             Debug.LogError("MeActivo");
             activationEvent?.Invoke();
@@ -28,6 +34,25 @@ public class ActivatorManager : MonoBehaviour
             Character.instance.SendInputToFSM(CharacterStates.Idle);
         }
        
+    }
+
+    public void ActivationViaInteraction()
+    {
+        if(currentActivatorsOn == activators.Length)
+        {
+            OnActivationViaInteraction();
+            activationEvent?.Invoke();
+        }
+        else
+        {
+            Character.instance.SendInputToFSM(CharacterStates.Idle);
+        }
+
+    }
+
+    public virtual void OnActivationViaInteraction()
+    {
+
     }
 
     public void Confetti()

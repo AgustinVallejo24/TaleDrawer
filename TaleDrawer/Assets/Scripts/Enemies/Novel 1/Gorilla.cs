@@ -22,7 +22,9 @@ public class Gorilla : Enemy
     //public float stunnedTime;
     bool _shortStun;
     public Bait _currentBait;
-
+    public Gem myGem;
+    
+    
     [Header("Animations")]
     //[SerializeField] Animator _myAnim;
     public string _idleT { get; private set; } = "Idle";
@@ -64,6 +66,10 @@ public class Gorilla : Enemy
             entityRigidbody.gravityScale = 0;
         }
         
+        if(myGem != null)
+        {
+            myGem._onActivation += RemoveGem;
+        }
 
         StartCoroutine(StartBehaviour());
     }
@@ -113,6 +119,10 @@ public class Gorilla : Enemy
         _shortStun = state;        
     }
     
+    public void RemoveGem()
+    {
+        myGem = null;
+    }
 
     public override void Attack()
     {

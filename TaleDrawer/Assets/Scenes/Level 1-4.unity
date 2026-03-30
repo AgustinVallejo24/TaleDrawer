@@ -7010,16 +7010,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloorTrap
   _floor: {fileID: 577109675}
   open: 0
-  innerNodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  outerNodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  jumpPositions:
-  - {fileID: 995927351}
-  - {fileID: 2079766708}
-  _interactionCollider: {fileID: 1457840565}
 --- !u!4 &577109674
 Transform:
   m_ObjectHideFlags: 0
@@ -10369,9 +10359,9 @@ MonoBehaviour:
   activationEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 897571588}
-        m_TargetAssemblyTypeName: MonkeyActivatorManager, Assembly-CSharp
-        m_MethodName: MonkeyHeadEvent
+      - m_Target: {fileID: 986351524}
+        m_TargetAssemblyTypeName: SpecialFloor, Assembly-CSharp
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10381,6 +10371,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  hasCinematic: 1
+  needsInteraction: 0
   confetty: {fileID: 0}
   _rubies:
   - _obj: {fileID: 1941455586}
@@ -10394,7 +10386,6 @@ MonoBehaviour:
   - {fileID: 511319968}
   _eventCamera: {fileID: 1061804327}
   _playerCamera: {fileID: 2102936368}
-  _floor: {fileID: 986351524}
 --- !u!1 &903898688
 GameObject:
   m_ObjectHideFlags: 0
