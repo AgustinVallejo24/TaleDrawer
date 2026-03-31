@@ -16,6 +16,33 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "EndDrag",
+                    "type": "Button",
+                    "id": "cc3b5b67-15f8-4d69-9c64-6a5357f78d9d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Drag",
+                    "type": "Value",
+                    "id": "9ea22a19-fae6-453f-af94-cbc71d88e145",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "BeginDrag",
+                    "type": "Button",
+                    "id": "192ed2a9-aa10-4094-a165-162cf4fba819",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "EndDraw",
                     "type": "Button",
                     "id": "58ecf1b1-d4c0-43f4-8ca5-b791b1e5c077",
@@ -228,6 +255,50 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "edf1ae31-1e51-4fed-865f-2350ae0e726b",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abb22086-4ae5-4694-92b6-9936f66f2c99",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abf5076f-c69a-4ae9-956c-5f69371c931f",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeginDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1298389-a2d1-4261-9aa6-93ae6567024a",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeginDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

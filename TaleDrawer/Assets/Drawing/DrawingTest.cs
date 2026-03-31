@@ -110,7 +110,7 @@ public class DrawingTest : MonoBehaviour
                 return;
             }
 
-            float margenPorcentaje = 0.1f; // 10%
+            float margenPorcentaje = 0.05f; // 10%
 
             float margenX = Screen.width * margenPorcentaje;
             float margenY = Screen.height * margenPorcentaje;
@@ -122,6 +122,7 @@ public class DrawingTest : MonoBehaviour
 
             if (cercaIzquierda || cercaDerecha || cercaArriba || cercaAbajo)
             {
+                Debug.LogError("CERCAAA");
                 return;
             }
 
@@ -156,7 +157,7 @@ public class DrawingTest : MonoBehaviour
             //audioSource.Play();
             audioSource.Stop();
 
-            if (_linerendererIndex >= _lineRenderers.Count) return;
+           if (_linerendererIndex >= _lineRenderers.Count) return;
 
 
             if (GetLineLength(_lineRenderers[_linerendererIndex]) < 1.5f)

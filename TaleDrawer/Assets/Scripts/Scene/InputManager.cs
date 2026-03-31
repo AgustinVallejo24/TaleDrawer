@@ -63,7 +63,7 @@ public class InputManager : MonoBehaviour
     }
     private void Update()
     {
-
+        Debug.LogError(playerInput.currentActionMap);
         character.xInput = playerInput.actions["Move"].ReadValue<Vector2>().x;
 
         if (isAiming)
@@ -91,7 +91,7 @@ public class InputManager : MonoBehaviour
             isDragging = true;
         }
 
-
+       
 
     }
 
@@ -211,7 +211,7 @@ public class InputManager : MonoBehaviour
         startPos = sceneManager._sceneCamera.ScreenToWorldPoint(Input.mousePosition);
         startWorldPos = Input.mousePosition;
 
-
+        Debug.LogError("ENTROACACAC");
         PointerEventData data = new PointerEventData(eventSystem);
         data.position = startWorldPos;
 

@@ -232,7 +232,9 @@ public class GameManager : MonoBehaviour
     public void SpawnObject(SpawnableObjectType objectType)
     {
         StateChanger(SceneStates.Spawning);
-        playerInput.SwitchCurrentActionMap("Drawing");
+
+
+
         GameObject newObj = Instantiate(_spawnableManager.spawnableObjectDictionary[objectType].gameObject, _dTest.currentCentroid, Quaternion.identity);
 
 
@@ -246,7 +248,6 @@ public class GameManager : MonoBehaviour
     {
         if (currentState == SceneStates.Drawing) return;
         currentState = SceneStates.Drawing;
-        playerInput.SwitchCurrentActionMap("Drawing");
         _drawingBackground.SetActive(true);
         _drawingDraggingCanvas.SetActive(true);
 
@@ -267,13 +268,8 @@ public class GameManager : MonoBehaviour
             {
                 ExitingDrawingState();
             }
-            playerInput.SwitchCurrentActionMap("Movement");
-       //    PlacementGridManager.Instance.SetGridVisibility(false);
-                        
-            
-                      
-          //  _dTest.gameObject.SetActive(true);
-            
+
+
             Time.timeScale = 1.0f;
         }
         else if(currentState == SceneStates.Drawing)
@@ -289,9 +285,9 @@ public class GameManager : MonoBehaviour
         {
             SetCursorSprite(CursorTypes.OpenHand);
             Tutorial.instance.PlayTutorial(Tutorials.Dragging,5);
-            playerInput.SwitchCurrentActionMap("Dragging");
+
             //PlacementGridManager.Instance.RefreshGridAvailability();
-          //  PlacementGridManager.Instance.SetGridVisibility(true);
+            //  PlacementGridManager.Instance.SetGridVisibility(true);
             ExitingDrawingState();
         } 
     }

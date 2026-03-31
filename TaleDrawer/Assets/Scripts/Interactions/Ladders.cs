@@ -62,22 +62,22 @@ public class Ladders : Puzzle, IInteractableP
         base.AutoCompletePuzzle();
         if (_rolledUp)
         {
-            if (_rolledUp && first && _bodyPieces.Any())
-            {
-                first = false;
-                Sequence sequence = DOTween.Sequence();
+            //if (_rolledUp && first && _bodyPieces.Any())
+            //{
+            //    first = false;
+            //    Sequence sequence = DOTween.Sequence();
 
-                foreach (var item in _bodyPieces)
-                {
-                    if (item != _bodyPieces.First() && item != _bodyPieces.Last())
-                    {
-                        sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.07f));
-                    }
+            //    foreach (var item in _bodyPieces)
+            //    {
+            //        if (item != _bodyPieces.First() && item != _bodyPieces.Last())
+            //        {
+            //            sequence.Append(item.DOMoveY(_bodyPos[Array.IndexOf(_bodyPieces, item)], 0.07f));
+            //        }
 
-                }
-                completed = true;
-                sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
-            }
+            //    }
+            //    completed = true;
+            //    sequence.Play().OnComplete(() => { _rolledUp = false; _lowerCollider.enabled = true; });
+          //  }
            
         }
         
