@@ -3870,6 +3870,34 @@ PrefabInstance:
       propertyPath: _myCharacter
       value: 
       objectReference: {fileID: 1783092409}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1968495599}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DoorActivation
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Door, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
+      propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5080,6 +5108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1477868784}
   - component: {fileID: 1477868785}
+  - component: {fileID: 1477868786}
   m_Layer: 0
   m_Name: tr
   m_TagString: Untagged
@@ -5097,7 +5126,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.282, y: 4.3605, z: 1}
+  m_LocalScale: {x: 1, y: 0.9125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1968495598}
@@ -5148,9 +5177,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.3122788, g: 0.3490566, b: 0.054334287, a: 1}
+  m_SortingOrder: -3
+  m_Sprite: {fileID: -749203766, guid: 024b78d5187723341a2facbc2f796eef, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5160,6 +5189,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1477868786
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477868783}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.23, y: 5.28}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.23, y: 5.28}
+  m_EdgeRadius: 0
 --- !u!1 &1483368130
 GameObject:
   m_ObjectHideFlags: 0
@@ -7469,6 +7544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968495598}
   - component: {fileID: 1968495597}
+  - component: {fileID: 1968495599}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -7514,6 +7590,19 @@ Transform:
   - {fileID: 1477868784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1968495599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968495596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666258f5741ce6e4785ff99b625fd6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  _myAnim: {fileID: 1968495597}
 --- !u!1 &2013490116
 GameObject:
   m_ObjectHideFlags: 0

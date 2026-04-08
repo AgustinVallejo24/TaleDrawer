@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _blurEffect;
     public Camera _sceneCamera;
     float _blendBetweenCameras;    
-    [SerializeField]private CinemachineCamera _playerCamera;
+    [SerializeField]public CinemachineCamera _playerCamera;
     private CinemachineFollow _playerCFollowC;
     
     [SerializeField] float _playerCameraOriginalSize;
@@ -302,6 +302,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void StopAll()
+    {
+
+    }
     
     /*void EnteringDrawingState()
     {

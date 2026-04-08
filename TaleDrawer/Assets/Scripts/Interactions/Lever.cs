@@ -20,7 +20,7 @@ public class Lever : Activator, IInteractableP
         base.AutoCompletePuzzle();
         _animator.SetTrigger("Down");
         _leverState = true;
-        _leverEvent.Invoke();
+        _activatorEvent.Invoke();
         completed = true;
         GetComponent<Collider2D>().enabled = false;
     }
@@ -79,7 +79,15 @@ public class Lever : Activator, IInteractableP
             _animator.SetTrigger("Down");
             _leverState = true;
             yield return new WaitForSeconds(1f);
-            _leverEvent.Invoke();
+            if (!shouldLookAction)
+            {
+                _activatorEvent.Invoke();
+            }
+            else
+            {
+                LookAction();
+            }
+    
             completed = true;
             GetComponent<Collider2D>().enabled = false;
         }
