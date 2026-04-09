@@ -7752,7 +7752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
       propertyPath: shouldMakeCameraTransition
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8466931597552323968, guid: 71ae6feec628ac64bb8c8d8b2b38291c, type: 3}
       propertyPath: _leverEvent.m_PersistentCalls.m_Calls.Array.size
