@@ -43,6 +43,25 @@ public class Activator : Puzzle
 
     public IEnumerator CameraChange()
     {
-        yield return null;
+        GameManager.instance.FadeOut();
+        yield return new WaitForSeconds(1f);
+        GameManager.instance._sceneCamera.transform.GetComponent<CinemachineBrain>().DefaultBlend.Time = 0;
+        GameManager.instance._playerCamera.enabled = false;
+        lookCamera.enabled = true;
+        GameManager.instance.FadeIn();
+        yield return new WaitForSeconds(1f);
+        _activatorEvent.Invoke();
+
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.FadeOut();
+        yield return new WaitForSeconds(1f);
+        lookCamera.enabled = false;
+        GameManager.instance._playerCamera.enabled = true;
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.FadeIn();
+
+
+        yield return new WaitForSeconds(2f);
+        GameManager.instance._sceneCamera.transform.GetComponent<CinemachineBrain>().DefaultBlend.Time = 2;
     }
 }

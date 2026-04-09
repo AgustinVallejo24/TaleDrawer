@@ -136,6 +136,21 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
+    public void FadeIn()
+    {
+        StartCoroutine(FadeINCoroutine());
+    }
+    public IEnumerator FadeINCoroutine()
+    {
+        float t = 1;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            _blackImage.color = new Color(0, 0, 0, t);
+            yield return null;
+        }
+    }
+
     public void RemoveSpawningObjectFromList(SpawningObject obj)
     {
         if (_spawnedObjects.Contains(obj))
