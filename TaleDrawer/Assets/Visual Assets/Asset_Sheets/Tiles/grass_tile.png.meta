@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd86b1b5bf003c14db92f7957eb8fdb9
+guid: e94680e2d25dc02438998a5d6bc8f7c4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,35 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pillar_RisingPlatform_0
+      name: grass_tile_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 597
-        width: 255
-        height: 68
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 81471abb14fb05049afc5520c9bc8971
-      internalID: -1053484288
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pillar_RisingPlatform_1
-      rect:
-        serializedVersion: 2
-        x: 11
+        x: 0
         y: 0
-        width: 286
-        height: 119
+        width: 327
+        height: 231
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a954229789dad334dba03481c3fcb67a
-      internalID: -2037965361
+      spriteID: b95a03cfcd0f7a54aac39eb1739ccfcb
+      internalID: -1991833698
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pillar_RisingPlatform_2
+      name: grass_tile_1
       rect:
         serializedVersion: 2
-        x: 67
-        y: 374
-        width: 164
-        height: 223
+        x: 327
+        y: 0
+        width: 550
+        height: 231
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2362529c511990c41ba299d20384be78
-      internalID: -1921026422
+      spriteID: a530a0fb379ca674fb5ba8733fb90518
+      internalID: 249056985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pillar_RisingPlatform_3
+      name: grass_tile_2
       rect:
         serializedVersion: 2
-        x: 67
-        y: 119
-        width: 164
-        height: 255
+        x: 877
+        y: 0
+        width: 341
+        height: 231
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,8 +169,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c304cab8fc0e00447b4da0ae5c4bec6b
-      internalID: -189084331
+      spriteID: 2952e672800c67d4d976b61274c52c59
+      internalID: -88508164
       vertices: []
       indices: 
       edges: []
@@ -201,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4ecac29ea4d136e4a8529f977e6b9006
+    spriteID: 604834f68f345e64a803dff8f99f1f5c
     internalID: 0
     vertices: []
     indices: 
@@ -209,12 +187,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":406.0,"y":231.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Pillar_RisingPlatform_0: -1053484288
-      Pillar_RisingPlatform_1: -2037965361
-      Pillar_RisingPlatform_2: -1921026422
-      Pillar_RisingPlatform_3: -189084331
+      grass_tile_0: -1991833698
+      grass_tile_1: 249056985
+      grass_tile_2: -88508164
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

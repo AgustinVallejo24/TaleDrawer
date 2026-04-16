@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd86b1b5bf003c14db92f7957eb8fdb9
+guid: 982d7f7552cfaa74da0e5dd3878c423c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,35 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pillar_RisingPlatform_0
+      name: floorseamlessspritr2_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 597
-        width: 255
-        height: 68
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 81471abb14fb05049afc5520c9bc8971
-      internalID: -1053484288
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pillar_RisingPlatform_1
-      rect:
-        serializedVersion: 2
-        x: 11
+        x: 7
         y: 0
-        width: 286
-        height: 119
+        width: 1346
+        height: 641
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a954229789dad334dba03481c3fcb67a
-      internalID: -2037965361
+      spriteID: 4613abb1a93b5064bbb3f1ec2ce8c839
+      internalID: -708426645
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pillar_RisingPlatform_2
+      name: floorseamlessspritr2_1
       rect:
         serializedVersion: 2
-        x: 67
-        y: 374
-        width: 164
-        height: 223
+        x: 895
+        y: 630
+        width: 6
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2362529c511990c41ba299d20384be78
-      internalID: -1921026422
+      spriteID: d25271b6bcfc64c4cb3a5ffdc8b38295
+      internalID: -1619199006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pillar_RisingPlatform_3
+      name: floorseamlessspritr2_2
       rect:
         serializedVersion: 2
-        x: 67
-        y: 119
-        width: 164
-        height: 255
+        x: 1135
+        y: 631
+        width: 5
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,8 +169,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c304cab8fc0e00447b4da0ae5c4bec6b
-      internalID: -189084331
+      spriteID: 209e9a2ad8c46b44abf8154101fa3c9b
+      internalID: -1871256883
       vertices: []
       indices: 
       edges: []
@@ -201,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4ecac29ea4d136e4a8529f977e6b9006
+    spriteID: 41d67b4b30cb1f54195775e06ff2167b
     internalID: 0
     vertices: []
     indices: 
@@ -209,12 +187,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Pillar_RisingPlatform_0: -1053484288
-      Pillar_RisingPlatform_1: -2037965361
-      Pillar_RisingPlatform_2: -1921026422
-      Pillar_RisingPlatform_3: -189084331
+      floorseamlessspritr2_0: -708426645
+      floorseamlessspritr2_1: -1619199006
+      floorseamlessspritr2_2: -1871256883
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
